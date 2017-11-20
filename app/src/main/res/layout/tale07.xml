@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+            <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_background"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+            <ImageView
+                android:visibility="visible"
+                android:alpha="0.3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_sample"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_dokdo"
+                app:scale_width="628"
+                app:scale_height="478"
+                app:scale_left="430"
+                app:scale_top="1020"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_seagull_01"
+                app:scale_width="304"
+                app:scale_height="408"
+                app:scale_left="68"
+                app:scale_top="670"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_seagull_02"
+                app:scale_width="606"
+                app:scale_height="512"
+                app:scale_left="530"
+                app:scale_top="79"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_seagull_03"
+                app:scale_width="1448"
+                app:scale_height="928"
+                app:scale_left="1090"
+                app:scale_top="544"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_shadow_01"
+                app:scale_width="494"
+                app:scale_height="368"
+                app:scale_left="100"
+                app:scale_top="1020"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_shadow_02"
+                app:scale_width="540"
+                app:scale_height="720"
+                app:scale_left="130"
+                app:scale_top="60"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_shadow_03"
+                app:scale_width="1412"
+                app:scale_height="708"
+                app:scale_left="1130"
+                app:scale_top="20"/>
+
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+            <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_background"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_mountain"
+                app:scale_width="2560"
+                app:scale_height="1348"
+                app:scale_left="0"
+                app:scale_top="200"/>
+
+
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_10_birds"
+            app:scale_width="2560"
+            app:scale_height="536"
+            app:scale_left="0"
+            app:scale_top="57"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_byul_body"
+                app:scale_width="272"
+                app:scale_height="298"
+                app:scale_left="198"
+                app:scale_top="1064"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_byul_hand"
+                app:scale_width="76"
+                app:scale_height="176"
+                app:scale_left="248"
+                app:scale_top="1070"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_byul_head"
+                app:scale_width="318"
+                app:scale_height="244"
+                app:scale_left="150"
+                app:scale_top="923"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_seagull"
+                app:scale_width="796"
+                app:scale_height="474"
+                app:scale_left="520"
+                app:scale_top="950"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_birds"
+                app:scale_width="2560"
+                app:scale_height="536"
+                app:scale_left="0"
+                app:scale_top="57"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_rocks"
+                app:scale_width="1100"
+                app:scale_height="544"
+                app:scale_left="0"
+                app:scale_top="980"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_birds"
+                app:scale_width="2560"
+                app:scale_height="536"
+                app:scale_left="0"
+                app:scale_top="57"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_birds"
+                app:scale_width="2560"
+                app:scale_height="536"
+                app:scale_left="0"
+                app:scale_top="57"/>
+
+
+            <ImageView
+                android:visibility="visible"
+                android:alpha="0.3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_sample"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>

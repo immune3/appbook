@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_20_background"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+            <ImageView
+                android:visibility="invisible"
+                android:alpha="1.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_sample"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>
