@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    >
+    android:gravity="center">
+
     <com.example.dokdofamily01.CustomScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
@@ -32,13 +32,7 @@
                 android:alpha="0.4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_08_sample"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
-
-
+                android:src="@drawable/img_08_sample"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -87,7 +81,6 @@
                 app:scale_height="442"
                 app:scale_left="1940"
                 app:scale_top="290"/>
-
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

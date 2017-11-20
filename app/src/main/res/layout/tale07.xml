@@ -30,6 +30,7 @@
             <ImageView
                 android:visibility="visible"
                 android:alpha="0.3"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_sample"
@@ -100,7 +101,6 @@
                 app:scale_height="708"
                 app:scale_left="1130"
                 app:scale_top="20"/>
-
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

@@ -113,8 +113,6 @@
                 <!--app:scale_left="0"-->
                 <!--app:scale_top="0"/>-->
 
-
-
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
     </com.example.dokdofamily01.CustomScrollView>

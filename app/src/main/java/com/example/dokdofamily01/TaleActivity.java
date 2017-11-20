@@ -15,12 +15,8 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by heronation on 2017-11-06.
