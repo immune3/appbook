@@ -18,7 +18,7 @@
             app:scale_base_height="1544">
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_background"
@@ -26,17 +26,76 @@
                 app:scale_height="1544"
                 app:scale_left="0"
                 app:scale_top="0"/>
-
             <ImageView
                 android:visibility="visible"
-                android:alpha="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_06_sample"
+                android:src="@drawable/img_06_sea"
                 app:scale_width="2560"
-                app:scale_height="1544"
+                app:scale_height="452"
                 app:scale_left="0"
-                app:scale_top="0"/>
+                app:scale_top="1100"/>
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_smallwave_01"
+                app:scale_width="1336"
+                app:scale_height="178"
+                app:scale_left="20"
+                app:scale_top="1350"/>
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_smallwave_02"
+                app:scale_width="506"
+                app:scale_height="130"
+                app:scale_left="22"
+                app:scale_top="1230"/>
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_smallwave_03"
+                app:scale_width="446"
+                app:scale_height="116"
+                app:scale_left="300"
+                app:scale_top="1285"/>
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_smallwave_04"
+                app:scale_width="746"
+                app:scale_height="134"
+                app:scale_left="700"
+                app:scale_top="1220"/>
+            <ImageView
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_waveshadow"
+                app:scale_width="2560"
+                app:scale_height="430"
+                app:scale_left="0"
+                app:scale_top="1110"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_bigwave_03"
+                app:scale_width="574"
+                app:scale_height="234"
+                app:scale_left="1571"
+                app:scale_top="1122"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_bigwave_02"
+                app:scale_width="1200"
+                app:scale_height="488"
+                app:scale_left="1366"
+                app:scale_top="975"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,6 +104,23 @@
                 app:scale_height="266"
                 app:scale_left="1272"
                 app:scale_top="1243"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_seagull_01"
+                app:scale_width="414"
+                app:scale_height="136"
+                app:scale_left="1950"
+                app:scale_top="480"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_seagull_02"
+                app:scale_width="232"
+                app:scale_height="136"
+                app:scale_left="2235"
+                app:scale_top="660"/>
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

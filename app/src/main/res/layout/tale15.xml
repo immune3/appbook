@@ -18,7 +18,6 @@
             app:scale_base_height="1544">
 
             <ImageView
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_background"
@@ -26,17 +25,50 @@
                 app:scale_height="1544"
                 app:scale_left="0"
                 app:scale_top="0"/>
-
             <ImageView
-                android:visibility="visible"
-                android:alpha="1.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_15_sample"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
+                android:src="@drawable/img_15_cave"
+                app:scale_width="1422"
+                app:scale_height="1278"
+                app:scale_left="1130"
                 app:scale_top="0"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_land"
+                app:scale_width="2560"
+                app:scale_height="1123"
+                app:scale_left="0"
+                app:scale_top="425"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_byul"
+                app:scale_width="948"
+                app:scale_height="938"
+                app:scale_left="265"
+                app:scale_top="450"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_man"
+                app:scale_width="1378"
+                app:scale_height="1554"
+                app:scale_left="985"
+                app:scale_top="-110"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_seaweed"
+                app:scale_width="686"
+                app:scale_height="770"
+                app:scale_left="1015"
+                app:scale_top="775"/>
+
+
+
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

@@ -18,7 +18,7 @@
             app:scale_base_height="1544">
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_background"
@@ -28,11 +28,92 @@
                 app:scale_top="0"/>
 
             <ImageView
-                android:visibility="visible"
-                android:alpha="1.0"
+                android:visibility="invisible"
+                android:alpha="0.3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_sample"
+                app:scale_width="2560"
+                app:scale_height="1544"
+                app:scale_left="0"
+                app:scale_top="0"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_byul"
+                app:scale_width="1470"
+                app:scale_height="1000"
+                app:scale_left="5"
+                app:scale_top="549"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_curtain"
+                app:scale_width="1440"
+                app:scale_height="650"
+                app:scale_left="620"
+                app:scale_top="-8"/>
+            <ImageView
+                android:alpha="0.6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_light"
+                app:scale_width="572"
+                app:scale_height="546"
+                app:scale_left="645"
+                app:scale_top="610"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_01"
+                app:scale_width="378"
+                app:scale_height="390"
+                app:scale_left="740"
+                app:scale_top="675"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_03"
+                app:scale_width="100"
+                app:scale_height="100"
+                app:scale_left="1350"
+                app:scale_top="690"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_04"
+                app:scale_width="75"
+                app:scale_height="75"
+                app:scale_left="1475"
+                app:scale_top="695"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_02"
+                app:scale_width="154"
+                app:scale_height="156"
+                app:scale_left="1120"
+                app:scale_top="823"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_03"
+                app:scale_width="94"
+                app:scale_height="94"
+                app:scale_left="1753"
+                app:scale_top="417"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_04"
+                app:scale_width="86"
+                app:scale_height="84"
+                app:scale_left="1820"
+                app:scale_top="246"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_light"
                 app:scale_width="2560"
                 app:scale_height="1544"
                 app:scale_left="0"

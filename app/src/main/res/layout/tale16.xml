@@ -18,7 +18,7 @@
             app:scale_base_height="1544">
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_background"
@@ -28,15 +28,37 @@
                 app:scale_top="0"/>
 
             <ImageView
-                android:visibility="visible"
-                android:alpha="1.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_16_sample"
-                app:scale_width="2560"
-                app:scale_height="1544"
+                android:src="@drawable/img_16_dokdo_father"
+                app:scale_width="1400"
+                app:scale_height="1164"
                 app:scale_left="0"
+                app:scale_top="385"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_16_dokdo_mom"
+                app:scale_width="1190"
+                app:scale_height="1142"
+                app:scale_left="1350"
+                app:scale_top="410"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_16_moon"
+                app:scale_width="774"
+                app:scale_height="484"
+                app:scale_left="995"
                 app:scale_top="0"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_16_wave"
+                app:scale_width="2560"
+                app:scale_height="644"
+                app:scale_left="0"
+                app:scale_top="900"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
