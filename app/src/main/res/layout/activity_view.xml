@@ -47,11 +47,10 @@
             />
         <Button
             android:id="@+id/showMenu"
-            android:background="@drawable/button_bg_round"
+            android:background="@drawable/menu"
             android:layout_width="200px"
             android:layout_height="200px"
-            android:layout_gravity="center"
-            android:text="menu"/>
+            android:layout_gravity="center"/>
         <Button
             android:id="@+id/menuBtn"
             android:layout_width="200px"
@@ -60,6 +59,7 @@
             android:orientation="horizontal"
             android:background="#00000000" />
         <LinearLayout
+            android:background="#a0000000"
             android:id="@+id/menuContainer"
             android:layout_width="match_parent"
             android:layout_height="100px"

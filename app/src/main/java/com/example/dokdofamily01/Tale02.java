@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,8 +28,10 @@ public class Tale02 extends BaseFragment {
     ImageView seagullBody;
     ImageView star;
     TranslateAnimation ani;
-    Animation fadeIn;
-    Animation fadeOut;
+    Animation seagullAppear;
+    RotateAnimation seagullClick;
+    int width;
+    int height;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,17 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+        seagullHand.post(new Runnable() {
+            @Override
+            public void run() {
+                width = (int)(seagullHand.getWidth()*0.85);
+                height = (int)(seagullHand.getHeight()*0.8);
+                seagullClick = new RotateAnimation(15,-15,width,height);
+                seagullClick.setDuration(500);
+                seagullClick.setRepeatCount(7);
+                seagullClick.setRepeatMode(Animation.REVERSE);
+            }
+        });
     }
 
     @Override
@@ -63,10 +77,7 @@ public class Tale02 extends BaseFragment {
         ani.setDuration(1000);
         ani.setFillAfter(true);
         ani.setAnimationListener(new MyAnimationListener());
-        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-        fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.fade_out);
-
+        seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
     }
 
     @Override
@@ -76,9 +87,15 @@ public class Tale02 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 byulhead.startAnimation(ani);
-                seagullBody.startAnimation(fadeIn);
-                seagullHand.startAnimation(fadeIn);
-
+                seagullHand.startAnimation(seagullAppear);
+                seagullBody.setAnimation(seagullAppear);
+            }
+        });
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byulhead.startAnimation(ani);
+                seagullHand.startAnimation(seagullClick);
             }
         });
     }
