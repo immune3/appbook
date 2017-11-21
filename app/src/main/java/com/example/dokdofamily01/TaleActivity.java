@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -58,7 +59,7 @@ public class TaleActivity extends AppCompatActivity{
         showMenu.setTranslationY(100);
 
         vp = (CustomViewPager) findViewById(R.id.vp);
-        vp.setOffscreenPageLimit(1);
+        vp.setOffscreenPageLimit(0);
         vp.setAdapter(new pagerAdapter(getSupportFragmentManager()));
         vp.setCurrentItem(0);
         vp.setPageScrollEnabled(false);
@@ -193,6 +194,8 @@ public class TaleActivity extends AppCompatActivity{
 
     private class pagerAdapter extends FragmentStatePagerAdapter
     {
+//        Fragment[] fragments = new Fragment[20];
+
         public pagerAdapter(android.support.v4.app.FragmentManager fm)
         {
             super(fm);
@@ -261,6 +264,7 @@ public class TaleActivity extends AppCompatActivity{
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
         }
+
     }
     private class MyAnimationListener implements Animation.AnimationListener {
 

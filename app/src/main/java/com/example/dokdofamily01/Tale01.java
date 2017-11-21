@@ -13,12 +13,18 @@ import android.widget.RelativeLayout;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import static android.content.ContentValues.TAG;
+import static java.lang.Integer.parseInt;
 
 /**
  * Created by heronation on 2017-11-06.
  */
 
 public class Tale01 extends BaseFragment{
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

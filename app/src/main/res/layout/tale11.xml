@@ -86,23 +86,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_11_leaf_01"
-                app:scale_width="39"
-                app:scale_height="104"
-                app:scale_left="1480"
-                app:scale_top="330"/>
+                android:src="@drawable/img_11_dokdo"
+                app:scale_width="700"
+                app:scale_height="964"
+                app:scale_left="10"
+                app:scale_top="310"/>
 
-
-            <ImageView
-                android:visibility="invisible"
-                android:alpha="0.5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_11_sample"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

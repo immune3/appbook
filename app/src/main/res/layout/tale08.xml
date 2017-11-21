@@ -28,13 +28,6 @@
                 app:scale_top="0"/>
 
             <ImageView
-                android:visibility="visible"
-                android:alpha="0.4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_08_sample"/>
-
-            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_08_dokdo"

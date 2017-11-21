@@ -88,18 +88,6 @@
                 app:scale_left="560"
                 app:scale_top="125"/>
 
-
-            <ImageView
-                android:visibility="invisible"
-                android:alpha="0.9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_05_sample"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
-
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
     </com.example.dokdofamily01.CustomScrollView>

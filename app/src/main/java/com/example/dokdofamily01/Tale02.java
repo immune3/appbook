@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,7 +23,13 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class Tale02 extends BaseFragment {
     ImageView byulhead;
+    ImageView seagullHand;
+    ImageView seagullBody;
+    ImageView star;
     TranslateAnimation ani;
+    Animation fadeIn;
+    Animation fadeOut;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,9 @@ public class Tale02 extends BaseFragment {
     public void bindViews() {
         super.bindViews();
         byulhead = (ImageView)layout.findViewById(R.id.byulhead);
+        seagullHand = (ImageView)layout.findViewById(R.id.seagullHand);
+        seagullBody = (ImageView) layout.findViewById(R.id.seagullBody);
+        star = (ImageView)layout.findViewById(R.id.star);
     }
 
     @Override
@@ -50,9 +60,13 @@ public class Tale02 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
         ani = new TranslateAnimation(0,0,100,0);
-        ani.setDuration(1500);
+        ani.setDuration(1000);
         ani.setFillAfter(true);
         ani.setAnimationListener(new MyAnimationListener());
+        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+        fadeIn.setAnimationListener(new MyAnimationListener());
+        fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.fade_out);
+
     }
 
     @Override
@@ -62,6 +76,9 @@ public class Tale02 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 byulhead.startAnimation(ani);
+                seagullBody.startAnimation(fadeIn);
+                seagullHand.startAnimation(fadeIn);
+
             }
         });
     }
