@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.media.Image;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 /**
  * Created by heronation on 2017-11-06.
@@ -36,6 +45,7 @@ public class Tale02 extends BaseFragment {
     RotateAnimation seagullClick;
     int width;
     int height;
+
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -77,7 +87,6 @@ public class Tale02 extends BaseFragment {
         }
 
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

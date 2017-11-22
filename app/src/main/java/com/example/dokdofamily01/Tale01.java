@@ -17,6 +17,21 @@ import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.ssomai.android.scalablelayout.ScalableLayout;
+
+import static android.content.ContentValues.TAG;
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by heronation on 2017-11-06.
  */
@@ -72,7 +87,6 @@ public class Tale01 extends BaseFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -121,7 +135,6 @@ public class Tale01 extends BaseFragment{
     public void setupEvents() {
         super.setupEvents();
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

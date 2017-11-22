@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         BaseFragment.firstFlag = 0;
     }
 }

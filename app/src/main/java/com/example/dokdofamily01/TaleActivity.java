@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -56,6 +57,7 @@ public class TaleActivity extends AppCompatActivity{
         showMenu = (Button)findViewById(R.id.showMenu);
         menuBtn = (Button)findViewById(R.id.menuBtn);
         goPage = (Spinner)findViewById(R.id.goPage);
+
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         showFlag = true;
         menuContainer.setTranslationY(100);
