@@ -8,6 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +26,14 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale04 extends BaseFragment {
+    ImageView dokdo;
+    ImageView sun;
+    ImageView sunLight;
+    TranslateAnimation sunRiseAni;
+    Animation sunLightAppear;
+
+    int[] sunLightLocation = new int[2];
+    int[] sunLocation = new int[2];
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -37,21 +49,21 @@ public class Tale04 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
-                System.out.println(4+"Visible");
-                if(mp == null){
+                System.out.println(4 + "Visible");
+                if (mp == null) {
                     mp = MediaPlayer.create(getActivity(), R.raw.scene_4);
                 }
 
                 mp.start();
 
                 Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
+                timer.schedule(new MyThread(), 0, 500);
 
             } else {
-                System.out.println(3+"notVisible");
-                if(mp!=null && mp.isPlaying()){
+                System.out.println(3 + "notVisible");
+                if (mp != null && mp.isPlaying()) {
                     mp.pause();
                     mp.stop();
                     mp.release();
@@ -75,11 +87,11 @@ public class Tale04 extends BaseFragment {
 
         subtitleList = new ArrayList<>();
         subtitleList = makeSubTitleList(
-                new String[]{"저기~ 해님이 앉아있는 섬이 보물섬 독도야.","5000"},
+                new String[]{"저기~ 해님이 앉아있는 섬이 보물섬 독도야.", "5000"},
                 new String[]{"정답게 마주앉은 동도할머니와 서도할아버지 사이에서", "10500"},
-                new String[]{"잘 자고 일어난 뽀얀 얼굴의 해님이 쭉쭉 기지개를 켜요. ","16000"},
-                new String[]{"쌩~ 지나가던 바람이 되돌아와 아주아주 큰소리로 외쳐요","22500"},
-                new String[]{"별이가 왔어요! 별이가 왔다구요!","26500"}
+                new String[]{"잘 자고 일어난 뽀얀 얼굴의 해님이 쭉쭉 기지개를 켜요. ", "16000"},
+                new String[]{"쌩~ 지나가던 바람이 되돌아와 아주아주 큰소리로 외쳐요", "22500"},
+                new String[]{"별이가 왔어요! 별이가 왔다구요!", "26500"}
         );
 
         subtitleTextView.setText(null);
@@ -90,29 +102,76 @@ public class Tale04 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        dokdo = (ImageView) layout.findViewById(R.id.dokdo);
+        sun = (ImageView) layout.findViewById(R.id.sun);
+        sunLight = (ImageView) layout.findViewById(R.id.sunLight);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        dokdo.post(new Runnable() {
+            @Override
+            public void run() {
+                sunLight.getLocationOnScreen(sunLightLocation);
+                sun.getLocationOnScreen(sunLocation);
+
+                sun.setY(sunLightLocation[1]);
+//                Log.d("SunLightLocation:", "LocationX"+sunLightLocation[0]);
+//                Log.d("SunLightLocation:", "LocationY"+sunLightLocation[1]);
+
+                sunRiseAni = new TranslateAnimation(0, 0, 0, -150);
+                sunRiseAni.setDuration(1500);
+                sunRiseAni.setFillAfter(true);
+                sunRiseAni.setAnimationListener(new MyAnimationListener());
+
+
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        sunLightAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_04_sunlight_appear);
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        dokdo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sun.startAnimation(sunRiseAni);
+            }
+        });
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            sunLight.setVisibility(View.VISIBLE);
+            sunLight.startAnimation(sunLightAppear);
+        }
+
     }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
+        System.out.println(2 + "onDestroyView");
+        if (mp != null && mp.isPlaying()) {
             mp.pause();
             mp.stop();
             mp.release();
@@ -123,9 +182,9 @@ public class Tale04 extends BaseFragment {
     private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
         ArrayList<SubTitleData> list = new ArrayList<>();
 
-        for(String[] s : params){
+        for (String[] s : params) {
             SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
+                    s[0], Integer.parseInt(s[1])
             );
             list.add(subTitleData);
         }
@@ -137,6 +196,7 @@ public class Tale04 extends BaseFragment {
     class MyThread extends TimerTask {
         int finishTime = 0;
         int subtitleIndex = 0;
+
         @Override
         public void run() {
             if (mp != null && mp.isPlaying()) {
@@ -146,13 +206,13 @@ public class Tale04 extends BaseFragment {
 
                 finishTime = subtitleList.get(subtitleIndex).getFinishTime();
 
-                if(playingTime <= finishTime){
+                if (playingTime <= finishTime) {
                     msg.what = subtitleIndex;
-                }else{
+                } else {
                     increaseIndex();
-                    if(playingTime > finishTime){
+                    if (playingTime > finishTime) {
                         increaseIndex();
-                    }else{
+                    } else {
                         msg.what = subtitleIndex;
                     }
                 }
@@ -166,15 +226,16 @@ public class Tale04 extends BaseFragment {
             }
         }
 
-        private void increaseIndex(){
+        private void increaseIndex() {
             subtitleIndex++;
             finishTime = subtitleList.get(subtitleIndex).getFinishTime();
         }
     }
+
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
 
-            if(msg.what>=0)
+            if (msg.what >= 0)
                 subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
             else
                 subtitleTextView.setText(null);
@@ -183,7 +244,9 @@ public class Tale04 extends BaseFragment {
         }
     };
 
-
-
-
 }
+
+
+
+
+
