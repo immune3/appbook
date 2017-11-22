@@ -36,7 +36,7 @@ public class Tale02 extends BaseFragment {
     RotateAnimation seagullClick;
     int width;
     int height;
-
+    int animationFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -66,7 +66,7 @@ public class Tale02 extends BaseFragment {
                 timer.schedule(new MyThread(),0, 500);
 
                 byulhead.startAnimation(ani);
-                seagullHand.startAnimation(seagullAppear);
+//                seagullHand.startAnimation(seagullAppear);
                 seagullBody.setAnimation(seagullAppear);
 
             } else {
@@ -128,11 +128,11 @@ public class Tale02 extends BaseFragment {
             public void run() {
                 width = (int)(seagullHand.getWidth()*0.85);
                 height = (int)(seagullHand.getHeight()*0.8);
-                seagullClick = new RotateAnimation(15,-15,width,height);
-                seagullClick.setDuration(500);
-                seagullClick.setRepeatCount(7);
+                seagullClick = new RotateAnimation(10,-10,width,height);
+                seagullClick.setDuration(200);
+                seagullClick.setRepeatCount(4);
                 seagullClick.setRepeatMode(Animation.REVERSE);
-                seagullClick.setFillAfter(true);
+                seagullClick.setFillAfter(false);
             }
         });
     }
@@ -141,10 +141,11 @@ public class Tale02 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
         ani = new TranslateAnimation(0,0,100,0);
-        ani.setDuration(1000);
+        ani.setDuration(3000);
         ani.setFillAfter(true);
-        ani.setAnimationListener(new MyAnimationListener());
+//        ani.setAnimationListener(new MyAnimationListener());
         seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
+        seagullAppear.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
@@ -161,6 +162,9 @@ public class Tale02 extends BaseFragment {
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                animationFlag=1;
+                seagullHand.setVisibility(View.VISIBLE);
+                ani.setStartOffset(1500);
                 byulhead.startAnimation(ani);
                 seagullHand.startAnimation(seagullClick);
             }
@@ -171,6 +175,11 @@ public class Tale02 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            if(animationFlag==1){
+                animationFlag=2;
+                seagullHand.clearAnimation();
+                seagullHand.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override

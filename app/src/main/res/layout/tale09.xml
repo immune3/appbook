@@ -27,26 +27,8 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
 
-
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_09_byul_body"
-                app:scale_width="290"
-                app:scale_height="164"
-                app:scale_left="980"
-                app:scale_top="384"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_09_byul_head"
-                app:scale_width="226"
-                app:scale_height="130"
-                app:scale_left="1030"
-                app:scale_top="310"/>
-
-            <ImageView
+                android:id="@+id/bird"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_bird_01"
@@ -65,6 +47,7 @@
                 app:scale_top="0"/>
 
             <ImageView
+                android:id="@+id/birds1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_birds_01"
@@ -74,6 +57,7 @@
                 app:scale_top="445"/>
 
             <ImageView
+                android:id="@+id/birds2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_birds_02"
@@ -83,6 +67,7 @@
                 app:scale_top="475"/>
 
             <ImageView
+                android:id="@+id/birds3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_birds_03"
@@ -92,6 +77,7 @@
                 app:scale_top="475"/>
 
             <ImageView
+                android:id="@+id/birds4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_birds_04"
@@ -99,8 +85,18 @@
                 app:scale_height="196"
                 app:scale_left="708"
                 app:scale_top="466"/>
+            <ImageView
+                android:id="@+id/birds5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_birds_05"
+                app:scale_width="1036"
+                app:scale_height="308"
+                app:scale_left="615"
+                app:scale_top="453"/>
 
             <ImageView
+                android:id="@+id/birds6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_birds_06"
@@ -155,14 +151,117 @@
                 app:scale_height="890"
                 app:scale_left="1160"
                 app:scale_top="660"/>
+
+
+            <ImageView
+                android:id="@+id/byulBody1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_body"
+                android:rotation="40"
+                app:scale_width="174"
+                app:scale_height="98"
+                app:scale_left="1680"
+                app:scale_top="634"/>
+            <ImageView
+                android:id="@+id/byulBody2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_body"
+                android:rotation="30"
+                app:scale_width="232"
+                app:scale_height="131"
+                app:scale_left="1350"
+                app:scale_top="454"/>
+            <ImageView
+                android:id="@+id/byulBody3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_body"
+                app:scale_width="290"
+                app:scale_height="164"
+                app:scale_left="980"
+                app:scale_top="384"/>
+            <ImageView
+                android:id="@+id/byulBody4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_body"
+                android:rotation="-5"
+                app:scale_width="261"
+                app:scale_height="147"
+                app:scale_left="680"
+                app:scale_top="454"/>
+            <ImageView
+                android:id="@+id/byulBody5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_body"
+                android:rotation="-10"
+                app:scale_width="203"
+                app:scale_height="114"
+                app:scale_left="530"
+                app:scale_top="540"/>
+
+
+            <ImageView
+                android:id="@+id/byulHead1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_head"
+                android:rotation="40"
+                app:scale_width="135"
+                app:scale_height="78"
+                app:scale_left="1734"
+                app:scale_top="610"/>
+            <ImageView
+                android:id="@+id/byulHead2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_head"
+                android:rotation="-30"
+                app:scale_width="180"
+                app:scale_height="104"
+                app:scale_left="1405"
+                app:scale_top="380"/>
+            <ImageView
+                android:id="@+id/byulHead3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_head"
+                app:scale_width="226"
+                app:scale_height="130"
+                app:scale_left="1030"
+                app:scale_top="310"/>
+            <ImageView
+                android:id="@+id/byulHead4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_head"
+                android:rotation="-50"
+                app:scale_width="203"
+                app:scale_height="117"
+                app:scale_left="695"
+                app:scale_top="370"/>
+            <ImageView
+                android:id="@+id/byulHead5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_byul_head"
+                android:rotation="-10"
+                app:scale_width="158"
+                app:scale_height="91"
+                app:scale_left="555"
+                app:scale_top="490"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_deco"
-                app:scale_width="2560"
                 app:scale_height="694"
                 app:scale_left="0"
-                app:scale_top="850"/>
+                app:scale_top="850"
+                app:scale_width="2560" />
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>

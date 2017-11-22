@@ -85,6 +85,7 @@
                 app:scale_left="570"
                 app:scale_top="711"/>
             <ImageView
+                android:visibility="invisible"
                 android:id="@+id/seagullHand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

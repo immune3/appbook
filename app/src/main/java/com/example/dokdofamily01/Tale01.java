@@ -157,6 +157,7 @@ public class Tale01 extends BaseFragment{
         fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.anim_01_fadeout);
         fadeOut.setFillAfter(true);
         fadeOut.setAnimationListener(new MyAnimationListener());
+
     }
 
     @Override
@@ -190,8 +191,10 @@ public class Tale01 extends BaseFragment{
                     break;
                 case 2:
                     animationFlag = 3;
-                    bedLight.startAnimation(fadeOut);
+
+                    fadeOut.setStartOffset(1000);
                     head.startAnimation(fadeOut);
+                    bedLight.startAnimation(fadeOut);
                     blanket.startAnimation(fadeOut);
                     break;
                 case 3:
@@ -213,6 +216,8 @@ public class Tale01 extends BaseFragment{
                     break;
                 case 6:
                     animationFlag = 7;
+                    fadeIn.setStartOffset(1000);
+                    fadeOut.setStartOffset(1000);
                     hand.startAnimation(fadeIn);
                     curtain.startAnimation(fadeOut);
                     light.startAnimation(fadeIn);
@@ -220,9 +225,9 @@ public class Tale01 extends BaseFragment{
                 case 7:
                     animationFlag = 8;
                     curtain.setVisibility(View.INVISIBLE);
-                    hand.clearAnimation();
-                    curtain.clearAnimation();
-                    light.clearAnimation();
+//                    hand.clearAnimation();
+//                    curtain.clearAnimation();
+//                    light.clearAnimation();
                     break;
             }
         }
