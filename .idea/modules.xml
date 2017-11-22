@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DokdoFamily01.iml" filepath="$PROJECT_DIR$/DokdoFamily01.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook-master.iml" filepath="D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appbook.iml" filepath="$PROJECT_DIR$/appbook.iml" />
     </modules>
   </component>
 </project>

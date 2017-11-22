@@ -32,6 +32,9 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
+
+                android:id="@+id/letter5"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_06"
@@ -48,6 +51,8 @@
                 app:scale_left="500"
                 app:scale_top="480"/>
             <ImageView
+
+                android:id="@+id/letter0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_01"
@@ -56,6 +61,8 @@
                 app:scale_left="1570"
                 app:scale_top="220"/>
             <ImageView
+                android:id="@+id/letter1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_02"
@@ -64,6 +71,9 @@
                 app:scale_left="1740"
                 app:scale_top="350"/>
             <ImageView
+
+                android:id="@+id/letter2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_03"
@@ -72,6 +82,9 @@
                 app:scale_left="1365"
                 app:scale_top="635"/>
             <ImageView
+
+                android:id="@+id/letter3"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_04"
@@ -80,6 +93,8 @@
                 app:scale_left="305"
                 app:scale_top="207"/>
             <ImageView
+                android:id="@+id/letter4"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_05_letter_05"
