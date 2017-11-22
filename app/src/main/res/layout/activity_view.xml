@@ -15,26 +15,30 @@
         >
 
     </com.example.dokdofamily01.CustomViewPager>
+
+    <com.example.dokdofamily01.CustomTextView
+        android:id="@+id/CustomTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200px"
+        android:text="테스트테스트테스트테스트테스트테스트"
+        android:textColor="#ffffffff"
+        example:textStroke="true"
+        example:textStrokeWidth="7.0"
+        example:textStrokeColor="#000000"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+
+        />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         >
-        <com.example.dokdofamily01.CustomTextView
-            android:id="@+id/CustomTextView"
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:text="테스트테스트테스트테스트테스트테스트"
-            android:textColor="#ffffffff"
-            android:singleLine="true"
-            example:textStroke="true"
-            example:textStrokeWidth="7.0"
-            example:textStrokeColor="#000000"
-            android:textSize="30dp"
-            android:gravity="center"
-            android:layout_gravity="bottom"
-            />
+
         <TextView
             android:visibility="gone"
             android:layout_width="match_parent"

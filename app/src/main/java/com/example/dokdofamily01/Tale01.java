@@ -103,7 +103,7 @@ public class Tale01 extends BaseFragment{
         );
 
 
-        subtitleTextView.setText(subtitleList.get(0).getSubTitle());
+        subtitleTextView.setText(null);
         if (mp == null && BaseFragment.firstFlag == 0) {
             mp = MediaPlayer.create(getActivity(), R.raw.scene_1);
             mp.start();
