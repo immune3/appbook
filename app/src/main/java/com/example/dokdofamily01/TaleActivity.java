@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -37,6 +38,7 @@ public class TaleActivity extends AppCompatActivity{
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
     static int height;
+    int showMenuHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,16 +49,27 @@ public class TaleActivity extends AppCompatActivity{
         height = displayMetrics.heightPixels;
         menuContainer = (LinearLayout)findViewById(R.id.menuContainer);
 
-        Button goFront = (Button)findViewById(R.id.goFront);
-        Button goBack = (Button)findViewById(R.id.goBack);
-        Button goHome = (Button)findViewById(R.id.goHome);
+        ImageView goFront = (ImageView)findViewById(R.id.goFront);
+        ImageView goBack = (ImageView)findViewById(R.id.goBack);
+        ImageView goHome = (ImageView)findViewById(R.id.goHome);
+        ImageView showPage = (ImageView)findViewById(R.id.showPage);
         showMenu = (Button)findViewById(R.id.showMenu);
         menuBtn = (Button)findViewById(R.id.menuBtn);
         goPage = (Spinner)findViewById(R.id.goPage);
         showFlag = true;
-        menuContainer.setTranslationY(100);
-        menuBtn.setTranslationY(100);
-        showMenu.setTranslationY(100);
+
+        showMenu.post(new Runnable() {
+            @Override
+            public void run() {
+                int showMenuWidth = showMenu.getWidth();
+                showMenuHeight = showMenu.getHeight()/2;
+                menuContainer.setTranslationY(showMenuHeight);
+                menuBtn.setTranslationY(showMenuHeight);
+                showMenu.setTranslationY(showMenuHeight);
+                Log.i("showmenu", ""+showMenuWidth+","+showMenuHeight);
+                setAnimation();
+            }
+        });
 
         vp = (CustomViewPager) findViewById(R.id.vp);
         vp.setOffscreenPageLimit(0);
@@ -127,7 +140,6 @@ public class TaleActivity extends AppCompatActivity{
             }
 
         });
-        setAnimation();
 
 
         goFront.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +162,11 @@ public class TaleActivity extends AppCompatActivity{
                 Intent intent = new Intent(MainActivity.context, MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        showPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -274,7 +291,7 @@ public class TaleActivity extends AppCompatActivity{
                 menuBtn.setTranslationY(0);
                 showFlag = false;
             }else{
-                menuBtn.setTranslationY(100);
+                menuBtn.setTranslationY(showMenuHeight);
                 showFlag = true;
             }
         }
@@ -293,9 +310,9 @@ public class TaleActivity extends AppCompatActivity{
         @Override
         public void onAnimationEnd(Animation animation) {
             if(showFlag) {
-                menuContainer.setTranslationY(0);
+//                menuContainer.setTranslationY(0);
             }else{
-                menuContainer.setTranslationY(100);
+//                menuContainer.setTranslationY(100);
             }
         }
 
@@ -310,22 +327,23 @@ public class TaleActivity extends AppCompatActivity{
     }
 
     private void setAnimation(){
-        ani_menu_up = new TranslateAnimation(0,0,100,0);
+
+        ani_menu_up = new TranslateAnimation(0,0,showMenuHeight,0);
         ani_menu_up.setDuration(500);
         ani_menu_up.setFillAfter(true);
         ani_menu_up.setAnimationListener(new MyAnimationListener());
 
-        ani_menu_down = new TranslateAnimation(0,0,0,100);
+        ani_menu_down = new TranslateAnimation(0,0,0,showMenuHeight);
         ani_menu_down.setDuration(500);
         ani_menu_down.setFillAfter(true);
         ani_menu_down.setAnimationListener(new MyAnimationListener());
 
-        ani_menuContainer_up = new TranslateAnimation(0,0,100,0);
+        ani_menuContainer_up = new TranslateAnimation(0,0,showMenuHeight,0);
         ani_menuContainer_up.setDuration(500);
         ani_menuContainer_up.setFillAfter(true);
         ani_menuContainer_up.setAnimationListener(new MyAnimationListener1());
 
-        ani_menuContainer_down = new TranslateAnimation(0,0,0,100);
+        ani_menuContainer_down = new TranslateAnimation(0,0,0,showMenuHeight);
         ani_menuContainer_down.setDuration(500);
         ani_menuContainer_down.setFillAfter(true);
         ani_menuContainer_down.setAnimationListener(new MyAnimationListener1());

@@ -66,6 +66,7 @@ public class Tale02 extends BaseFragment {
                 seagullClick.setDuration(500);
                 seagullClick.setRepeatCount(7);
                 seagullClick.setRepeatMode(Animation.REVERSE);
+                seagullClick.setFillAfter(true);
             }
         });
     }

@@ -22,9 +22,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_02_background"
-                app:scale_width="2600"
+                app:scale_width="2560"
                 app:scale_height="1544"
-                app:scale_left="-20"
+                app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
                 android:layout_width="wrap_content"

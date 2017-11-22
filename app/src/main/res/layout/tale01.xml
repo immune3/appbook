@@ -35,6 +35,7 @@
                 app:scale_left="342"
                 app:scale_top="992"/>
             <ImageView
+                android:id="@+id/head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_head"
@@ -43,6 +44,7 @@
                 app:scale_left="208"
                 app:scale_top="600"/>
             <ImageView
+                android:id="@+id/lamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_lamp"
@@ -51,6 +53,8 @@
                 app:scale_left="510"
                 app:scale_top="130"/>
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/lampLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_lamp_light"
@@ -59,6 +63,7 @@
                 app:scale_left="550"
                 app:scale_top="213"/>
             <ImageView
+                android:id="@+id/blanket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_blanket"
@@ -67,6 +72,8 @@
                 app:scale_left="171"
                 app:scale_top="645"/>
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/bedLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_bed_light"
@@ -83,7 +90,7 @@
                 app:scale_left="1383"
                 app:scale_top="0"/>
             <ImageView
-                android:visibility="invisible"
+                android:id="@+id/curtain"
                 android:layout_width="wrap_content"
                 android:layout_height="375dp"
                 android:src="@drawable/img_01_curtain_01"
@@ -92,6 +99,8 @@
                 app:scale_top="0"
                 app:scale_width="578" />
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/hand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_hand"
@@ -100,7 +109,8 @@
                 app:scale_left="1661"
                 app:scale_top="285"/>
             <ImageView
-
+                android:visibility="invisible"
+                android:id="@+id/byul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_byul"
@@ -109,6 +119,8 @@
                 app:scale_left="1506"
                 app:scale_top="162"/>
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_01_light"
