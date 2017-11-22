@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * Created by heronation on 2017-11-06.
@@ -37,6 +38,9 @@ public class TaleActivity extends AppCompatActivity{
     Button menuBtn;
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
+
+    static public TextView subtitleTextView;
+
     static int height;
     int showMenuHeight;
 
@@ -56,6 +60,8 @@ public class TaleActivity extends AppCompatActivity{
         showMenu = (Button)findViewById(R.id.showMenu);
         menuBtn = (Button)findViewById(R.id.menuBtn);
         goPage = (Spinner)findViewById(R.id.goPage);
+
+        subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         showFlag = true;
 
         showMenu.post(new Runnable() {
