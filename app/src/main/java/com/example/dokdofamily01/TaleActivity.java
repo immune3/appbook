@@ -42,6 +42,7 @@ public class TaleActivity extends AppCompatActivity{
     static public TextView subtitleTextView;
 
     static int height;
+    static int width;
     int showMenuHeight;
 
     @Override
@@ -51,6 +52,7 @@ public class TaleActivity extends AppCompatActivity{
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
         menuContainer = (LinearLayout)findViewById(R.id.menuContainer);
 
         ImageView goFront = (ImageView)findViewById(R.id.goFront);

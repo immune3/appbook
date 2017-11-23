@@ -14,18 +14,9 @@
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/img_10_background"
             app:scale_base_width="2560"
             app:scale_base_height="1544">
-
-            <ImageView
-                android:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_10_background"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -38,13 +29,13 @@
 
 
             <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_10_birds"
-            app:scale_width="2560"
-            app:scale_height="536"
-            app:scale_left="0"
-            app:scale_top="57"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_birds"
+                app:scale_width="2560"
+                app:scale_height="536"
+                app:scale_left="0"
+                app:scale_top="57"/>
 
             <ImageView
                 android:layout_width="wrap_content"

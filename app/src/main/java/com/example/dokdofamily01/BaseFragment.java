@@ -48,9 +48,15 @@ public class BaseFragment extends Fragment{
         sl.post(new Runnable() {
             @Override
             public void run() {
+                int deviceWidth = TaleActivity.width;
                 int deviceHeight = TaleActivity.height;
+                int innerWidth = sl.getWidth();
                 int innerHeight = sl.getHeight();
-                sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                if(innerWidth>deviceWidth){
+                    sv.scrollTo((innerWidth-deviceWidth)/2,0);
+                }else{
+                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                }
             }
         });
         sv.setScrolling(false);
