@@ -14,24 +14,17 @@
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/img_15_background"
             app:scale_base_width="2560"
             app:scale_base_height="1544">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_15_background"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@drawable/img_15_cave"
                 app:scale_width="1422"
                 app:scale_height="1278"
-                app:scale_left="1130"
+                app:scale_left="1135"
                 app:scale_top="0"/>
             <ImageView
                 android:layout_width="wrap_content"

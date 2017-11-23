@@ -14,18 +14,10 @@
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/img_13_background"
             app:scale_base_width="2560"
             app:scale_base_height="1544">
 
-            <ImageView
-                android:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_background"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -123,7 +115,7 @@
                 android:src="@drawable/img_13_wall"
                 app:scale_width="1286"
                 app:scale_height="1432"
-                app:scale_left="1260"
+                app:scale_left="1280"
                 app:scale_top="110"/>
 
             <ImageView
@@ -141,7 +133,7 @@
                 android:src="@drawable/img_13_fishes"
                 app:scale_width="648"
                 app:scale_height="292"
-                app:scale_left="1900"
+                app:scale_left="1920"
                 app:scale_top="660"/>
 
 
@@ -160,7 +152,7 @@
                 android:src="@drawable/img_13_sealeaf_04"
                 app:scale_width="1674"
                 app:scale_height="682"
-                app:scale_left="890"
+                app:scale_left="900"
                 app:scale_top="865"/>
 
             <ImageView
