@@ -25,6 +25,8 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
+
+                android:id="@+id/sun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_04_sun"
@@ -33,6 +35,7 @@
                 app:scale_left="10"
                 app:scale_top="0"/>
             <ImageView
+                android:id="@+id/dokdo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_04_dokdo"
@@ -49,6 +52,7 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
+                android:id="@+id/sunLight"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

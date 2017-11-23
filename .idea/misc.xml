@@ -24,13 +24,13 @@
       </value>
     </option>
   </component>
-
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
@@ -47,5 +47,6 @@
       </state>
     </states>
   </component>
-
+=======
+>>>>>>> 76e9785e90395567e1b39e7a6a66dee54998e0e3
 </project>

@@ -41,7 +41,10 @@
                 app:scale_width="2560"
                 app:scale_height="632"
                 app:scale_left="0"
-                app:scale_top="914"/>
+                app:scale_top="914"
+                android:id="@+id/dokdo_undersea"
+                android:visibility="invisible"
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +52,9 @@
                 app:scale_width="2560"
                 app:scale_height="248"
                 app:scale_left="0"
-                app:scale_top="923"/>
+                app:scale_top="923"
+                android:id="@+id/wave_shadow_01"
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +62,9 @@
                 app:scale_width="2560"
                 app:scale_height="248"
                 app:scale_left="0"
-                app:scale_top="923"/>
+                app:scale_top="923"
+                android:id="@+id/wave_shadow_02"
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +80,9 @@
                 app:scale_width="144"
                 app:scale_height="148"
                 app:scale_left="439"
-                app:scale_top="189"/>
+                app:scale_top="189"
+                android:id="@+id/star"
+                />
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
