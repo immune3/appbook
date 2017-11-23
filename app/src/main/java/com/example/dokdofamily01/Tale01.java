@@ -166,17 +166,16 @@ public class Tale01 extends BaseFragment{
         lamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag==0) {
-                    animationFlag = 1;
-                    lampLight.startAnimation(fadeIn);
-                    bedLight.startAnimation(fadeIn);
-                    head.setVisibility(View.VISIBLE);
-                    blanket.setVisibility(View.VISIBLE);
-                    curtain.setVisibility(View.VISIBLE);
-                    light.setVisibility(View.INVISIBLE);
-                    byul.setVisibility(View.INVISIBLE);
-                    hand.setVisibility(View.INVISIBLE);
-                }
+                animationFlag = 1;
+                lampLight.startAnimation(fadeIn);
+                bedLight.startAnimation(fadeIn);
+                head.setVisibility(View.VISIBLE);
+                blanket.setVisibility(View.VISIBLE);
+                curtain.setVisibility(View.VISIBLE);
+                light.setVisibility(View.INVISIBLE);
+                byul.setVisibility(View.INVISIBLE);
+                hand.setVisibility(View.INVISIBLE);
+
             }
         });
     }
@@ -192,6 +191,7 @@ public class Tale01 extends BaseFragment{
                     break;
                 case 2:
                     animationFlag = 3;
+
                     fadeOut.setStartOffset(1000);
                     head.startAnimation(fadeOut);
                     bedLight.startAnimation(fadeOut);
