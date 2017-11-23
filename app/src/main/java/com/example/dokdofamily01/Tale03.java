@@ -8,8 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -26,9 +28,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale03 extends BaseFragment{
-
-
-
     ImageView[] cloud = new ImageView[6];
     ImageView byulHand;
     Animation fadein;
@@ -135,12 +134,14 @@ public class Tale03 extends BaseFragment{
                 cloudAnimation[0] = new TranslateAnimation(-cloud[0].getWidth(), 0, -cloud[0].getHeight(), 0);
                 cloudAnimation[0].setDuration(3000);
                 cloudAnimation[0].setFillAfter(true);
+                cloudAnimation[0].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 왼쪽 아래 구름(cloud[1], cloud[2])
                 cloudAnimation[1] = new TranslateAnimation(-cloud[2].getWidth(), 0, cloud[2].getHeight(), 0);
                 cloudAnimation[1].setStartOffset(500);
                 cloudAnimation[1].setDuration(2500);
                 cloudAnimation[1].setFillAfter(true);
+                cloudAnimation[1].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 중앙 위 구름(cloud[3])
                 cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight(), 0);
@@ -148,18 +149,21 @@ public class Tale03 extends BaseFragment{
                 cloudAnimation[2].setDuration(2000);
                 cloudAnimation[2].setFillAfter(true);
                 cloudAnimation[2].setAnimationListener(new MyAnimationListener());
+                cloudAnimation[2].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 오른쪽 아래 구름(cloud[4])
                 cloudAnimation[3] = new TranslateAnimation(cloud[4].getWidth(), 0, 0, 0);
                 cloudAnimation[3].setStartOffset(500);
                 cloudAnimation[3].setDuration(2000);
                 cloudAnimation[3].setFillAfter(true);
+                cloudAnimation[3].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 오른쪽 위 구름(cloud[5])
                 cloudAnimation[4] = new TranslateAnimation(cloud[5].getWidth(), 0, -cloud[5].getHeight(), 0);
                 cloudAnimation[4].setStartOffset(1500);
                 cloudAnimation[4].setDuration(2000);
                 cloudAnimation[4].setFillAfter(true);
+                cloudAnimation[4].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 byulHand.setVisibility(View.INVISIBLE);
                 if(animationFlag == 0) {
