@@ -19,6 +19,8 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/bee1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_bee_01"
@@ -28,6 +30,7 @@
                 app:scale_top="250"/>
 
             <ImageView
+                android:id="@+id/bee2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_bee_02"
@@ -37,6 +40,8 @@
                 app:scale_top="75"/>
 
             <ImageView
+                android:id="@+id/butterfly"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_butterfly"
@@ -46,6 +51,7 @@
                 app:scale_top="-11"/>
 
             <ImageView
+                android:id="@+id/originalFlower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_original_flower"
@@ -55,6 +61,8 @@
                 app:scale_top="170"/>
 
             <ImageView
+                android:id="@+id/byul"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_byul"
@@ -63,8 +71,19 @@
                 app:scale_left="950"
                 app:scale_top="407"/>
 
-
             <ImageView
+                android:id="@+id/cutFlower"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_11_cut_flower"
+                app:scale_width="1423"
+                app:scale_height="1246"
+                app:scale_left="1140"
+                app:scale_top="305"/>
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/flowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_flowers"
@@ -74,6 +93,7 @@
                 app:scale_top="278"/>
 
             <ImageView
+                android:id="@+id/dokdo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_11_dokdo"

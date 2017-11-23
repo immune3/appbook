@@ -28,6 +28,7 @@
                 app:scale_left="315"
                 app:scale_top="110"/>
             <ImageView
+                android:id="@+id/cloud0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_01"
@@ -36,6 +37,7 @@
                 app:scale_left="10"
                 app:scale_top="350"/>
             <ImageView
+                android:id="@+id/cloud1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_03"
@@ -44,6 +46,7 @@
                 app:scale_left="890"
                 app:scale_top="1190"/>
             <ImageView
+                android:id="@+id/cloud2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_02"
@@ -52,6 +55,7 @@
                 app:scale_left="0"
                 app:scale_top="970"/>
             <ImageView
+                android:id="@+id/cloud3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_04"
@@ -60,6 +64,7 @@
                 app:scale_left="780"
                 app:scale_top="10"/>
             <ImageView
+                android:id="@+id/cloud4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_05"
@@ -68,6 +73,7 @@
                 app:scale_left="1865"
                 app:scale_top="925"/>
             <ImageView
+                android:id="@+id/cloud5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_cloud_06"
@@ -76,6 +82,8 @@
                 app:scale_left="1865"
                 app:scale_top="0"/>
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/byulHand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_hand"

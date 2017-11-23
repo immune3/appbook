@@ -8,6 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +28,11 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale03 extends BaseFragment{
+    ImageView[] cloud = new ImageView[6];
+    ImageView byulHand;
+    Animation fadein;
+    TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +60,18 @@ public class Tale03 extends BaseFragment{
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                byulHand.setVisibility(View.INVISIBLE);
+
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    cloud[0].startAnimation(cloudAnimation[0]);
+                    cloud[1].startAnimation(cloudAnimation[1]);
+                    cloud[2].startAnimation(cloudAnimation[1]);
+                    cloud[3].startAnimation(cloudAnimation[2]);
+                    cloud[4].startAnimation(cloudAnimation[3]);
+                    cloud[5].startAnimation(cloudAnimation[4]);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -92,21 +115,98 @@ public class Tale03 extends BaseFragment{
     @Override
     public void bindViews() {
         super.bindViews();
+        cloud[0] = (ImageView) layout.findViewById(R.id.cloud0);
+        cloud[1] = (ImageView) layout.findViewById(R.id.cloud1);
+        cloud[2] = (ImageView) layout.findViewById(R.id.cloud2);
+        cloud[3] = (ImageView) layout.findViewById(R.id.cloud3);
+        cloud[4] = (ImageView) layout.findViewById(R.id.cloud4);
+        cloud[5] = (ImageView) layout.findViewById(R.id.cloud5);
+        byulHand = (ImageView) layout.findViewById(R.id.byulHand);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        byulHand.post(new Runnable() {
+            @Override
+            public void run() {
+                // 왼쪽 위 구름(cloud[0])
+                cloudAnimation[0] = new TranslateAnimation(-cloud[0].getWidth(), 0, -cloud[0].getHeight(), 0);
+                cloudAnimation[0].setDuration(3000);
+                cloudAnimation[0].setFillAfter(true);
+                cloudAnimation[0].setInterpolator(new AccelerateDecelerateInterpolator());
+
+                // 왼쪽 아래 구름(cloud[1], cloud[2])
+                cloudAnimation[1] = new TranslateAnimation(-cloud[2].getWidth(), 0, cloud[2].getHeight(), 0);
+                cloudAnimation[1].setStartOffset(500);
+                cloudAnimation[1].setDuration(2500);
+                cloudAnimation[1].setFillAfter(true);
+                cloudAnimation[1].setInterpolator(new AccelerateDecelerateInterpolator());
+
+                // 중앙 위 구름(cloud[3])
+                cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight(), 0);
+                cloudAnimation[2].setStartOffset(2000);
+                cloudAnimation[2].setDuration(2000);
+                cloudAnimation[2].setFillAfter(true);
+                cloudAnimation[2].setAnimationListener(new MyAnimationListener());
+                cloudAnimation[2].setInterpolator(new AccelerateDecelerateInterpolator());
+
+                // 오른쪽 아래 구름(cloud[4])
+                cloudAnimation[3] = new TranslateAnimation(cloud[4].getWidth(), 0, 0, 0);
+                cloudAnimation[3].setStartOffset(500);
+                cloudAnimation[3].setDuration(2000);
+                cloudAnimation[3].setFillAfter(true);
+                cloudAnimation[3].setInterpolator(new AccelerateDecelerateInterpolator());
+
+                // 오른쪽 위 구름(cloud[5])
+                cloudAnimation[4] = new TranslateAnimation(cloud[5].getWidth(), 0, -cloud[5].getHeight(), 0);
+                cloudAnimation[4].setStartOffset(1500);
+                cloudAnimation[4].setDuration(2000);
+                cloudAnimation[4].setFillAfter(true);
+                cloudAnimation[4].setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulHand.setVisibility(View.INVISIBLE);
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    cloud[0].startAnimation(cloudAnimation[0]);
+                    cloud[1].startAnimation(cloudAnimation[1]);
+                    cloud[2].startAnimation(cloudAnimation[1]);
+                    cloud[3].startAnimation(cloudAnimation[2]);
+                    cloud[4].startAnimation(cloudAnimation[3]);
+                    cloud[5].startAnimation(cloudAnimation[4]);
+                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(1000);
     }
 
     @Override
-    public void setupEvents() {
-        super.setupEvents();
+    public void setupEvents() { super.setupEvents(); }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            byulHand.setVisibility(View.VISIBLE);
+            byulHand.startAnimation(fadein);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            byulHand.setVisibility(View.INVISIBLE);
+        }
+
     }
 
 

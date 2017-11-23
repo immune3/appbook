@@ -8,6 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,7 +28,20 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale11 extends BaseFragment {
+    ImageView bee1;
+    ImageView bee2;
+    ImageView butterfly;
+    ImageView originalFlower;
+    ImageView cutFlower;
+    ImageView flowers;
+    ImageView dokdo;
+    ImageView byul;
 
+    TranslateAnimation dokdoAnimation;
+    TranslateAnimation originalFlowerAnimation;
+    TranslateAnimation byulAnimation;
+    Animation flowerAnimation;
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -50,6 +69,13 @@ public class Tale11 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    dokdo.startAnimation(dokdoAnimation);
+                    originalFlower.startAnimation(originalFlowerAnimation);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -177,20 +203,82 @@ public class Tale11 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        bee1 = (ImageView)layout.findViewById(R.id.bee1);
+        bee2 = (ImageView)layout.findViewById(R.id.bee2);
+        butterfly = (ImageView)layout.findViewById(R.id.butterfly);
+        originalFlower = (ImageView)layout.findViewById(R.id.originalFlower);
+        cutFlower = (ImageView)layout.findViewById(R.id.cutFlower);
+        flowers = (ImageView)layout.findViewById(R.id.flowers);
+        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
+        byul = (ImageView)layout.findViewById(R.id.byul);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        originalFlower.post(new Runnable() {
+            @Override
+            public void run() {
+                originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
+                originalFlowerAnimation.setDuration(2000);
+                originalFlowerAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                originalFlowerAnimation.setAnimationListener(new MyAnimationListener());
+
+                dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
+                dokdoAnimation.setDuration(2000);
+                dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulAnimation = new TranslateAnimation(byul.getWidth(), 0, byul.getHeight(), 0);
+                byulAnimation.setDuration(1000);
+                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulAnimation.setInterpolator(new BounceInterpolator());
+
+
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    dokdo.startAnimation(dokdoAnimation);
+                    originalFlower.startAnimation(originalFlowerAnimation);
+                }
+
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        flowerAnimation = new AlphaAnimation(0, 1);
+        flowerAnimation.setStartOffset(200);
+        flowerAnimation.setDuration(300);
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            byul.setVisibility(View.VISIBLE);
+            cutFlower.setVisibility(View.VISIBLE);
+            flowers.setVisibility(View.VISIBLE);
+            byul.startAnimation(byulAnimation);
+            flowers.startAnimation(flowerAnimation);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            byul.setVisibility(View.INVISIBLE);
+            cutFlower.setVisibility(View.INVISIBLE);
+            flowers.setVisibility(View.INVISIBLE);
+        }
+
     }
 }

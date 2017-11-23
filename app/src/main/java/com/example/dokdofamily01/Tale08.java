@@ -8,6 +8,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +27,17 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale08 extends BaseFragment {
+    ImageView plant;
+    ImageView dokdo;
+    ImageView land;
+    ImageView seagull;
+    ImageView byul;
+    TranslateAnimation plantAnimation;
+    TranslateAnimation dokdoAnimation;
+    TranslateAnimation landAnimation;
+    TranslateAnimation seagullAnimation;
+    TranslateAnimation byulAnimation;
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +65,16 @@ public class Tale08 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                byul.setVisibility(View.INVISIBLE);
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    plant.startAnimation(plantAnimation);
+                    dokdo.startAnimation(dokdoAnimation);
+                    seagull.startAnimation(seagullAnimation);
+                    land.startAnimation(landAnimation);
+
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -173,11 +199,54 @@ public class Tale08 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        plant = (ImageView)layout.findViewById(R.id.plant);
+        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
+        land = (ImageView)layout.findViewById(R.id.land);
+        seagull = (ImageView)layout.findViewById(R.id.seagull);
+        byul = (ImageView)layout.findViewById(R.id.byul);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        land.post(new Runnable() {
+            @Override
+            public void run() {
+                plantAnimation = new TranslateAnimation(-plant.getWidth(), 0, 0, 0);
+                plantAnimation.setDuration(2500);
+                plantAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
+                dokdoAnimation.setDuration(2000);
+                dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                landAnimation = new TranslateAnimation(0, 0, land.getHeight(), 0);
+                landAnimation.setStartOffset(500);
+                landAnimation.setDuration(2000);
+                landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                landAnimation.setAnimationListener(new MyAnimationListener());
+
+                seagullAnimation = new TranslateAnimation(seagull.getWidth(), 0, -seagull.getHeight(), 0);
+                seagullAnimation.setStartOffset(500);
+                seagullAnimation.setDuration(1500);
+                seagullAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulAnimation = new TranslateAnimation(byul.getWidth(), 0, -byul.getHeight(), 0);
+                byulAnimation.setDuration(1000);
+                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulAnimation.setInterpolator(new BounceInterpolator());
+
+                byul.setVisibility(View.INVISIBLE);
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    plant.startAnimation(plantAnimation);
+                    dokdo.startAnimation(dokdoAnimation);
+                    seagull.startAnimation(seagullAnimation);
+                    land.startAnimation(landAnimation);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -188,5 +257,25 @@ public class Tale08 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            byul.setVisibility(View.VISIBLE);
+            byul.startAnimation(byulAnimation);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            byul.setVisibility(View.INVISIBLE);
+        }
+
     }
 }
