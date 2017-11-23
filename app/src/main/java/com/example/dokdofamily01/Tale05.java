@@ -152,11 +152,8 @@ public class Tale05 extends BaseFragment {
                     animationFlag = 1;
                     // letter[0] 사라지고 letter[1]나온다.
                     letter[5].setVisibility(View.INVISIBLE);
-                    letter[0].startAnimation(letterDisappear);
+//                    letter[0].startAnimation(letterDisappear);
                     letter[1].startAnimation(letterAppear);
-                }
-                else{
-                    Toast.makeText(getContext(),"TEST",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -196,56 +193,59 @@ public class Tale05 extends BaseFragment {
                     break;
                 case 1:
                     animationFlag=2;
-                    letter[0].setVisibility(View.INVISIBLE);
-                    letter[0].clearAnimation();
+//                    letter[0].setVisibility(View.INVISIBLE);
+//                    letter[0].clearAnimation();
                     letter[1].clearAnimation();
                     break;
                 case 2:
                     // letter[1] 사라지고 letter[2]나온다.
                     animationFlag=3;
-                    letter[1].startAnimation(letterDisappear);
+//                    letter[1].startAnimation(letterDisappear);
                     letter[2].startAnimation(letterAppear);
                     break;
                 case 3 :
                     animationFlag=4;
-                    letter[1].setVisibility(View.INVISIBLE);
-                    letter[1].clearAnimation();
+//                    letter[1].setVisibility(View.INVISIBLE);
+//                    letter[1].clearAnimation();
                     letter[2].clearAnimation();
+                    letter[2].setVisibility(View.VISIBLE);
                     break;
                 case 4:
                     // letter[2] 사라지고 letter[3]나온다.
                     animationFlag=5;
-                    letter[2].startAnimation(letterDisappear);
+//                    letter[2].startAnimation(letterDisappear);
                     letter[3].startAnimation(letterAppear);
                     break;
                 case 5 :
                     animationFlag=6;
-                    letter[2].setVisibility(View.INVISIBLE);
-                    letter[2].clearAnimation();
+//                    letter[2].setVisibility(View.INVISIBLE);
+//                    letter[2].clearAnimation();
                     letter[3].clearAnimation();
+                    letter[3].setVisibility(View.VISIBLE);
                     break;
                 case 6:
                     // letter[3] 사라지고 letter[4]나온다.
                     animationFlag=7;
-                    letter[3].startAnimation(letterDisappear);
+//                    letter[3].startAnimation(letterDisappear);
                     letter[4].startAnimation(letterAppear);
                     break;
                 case 7 :
                     animationFlag=8;
-                    letter[3].setVisibility(View.INVISIBLE);
-                    letter[3].clearAnimation();
+//                    letter[3].setVisibility(View.INVISIBLE);
+//                    letter[3].clearAnimation();
                     letter[4].clearAnimation();
+                    letter[4].setVisibility(View.VISIBLE);
                     break;
                 case 8:
                     // letter[4] 사라지고 letter[5]나온다.
                     animationFlag=9;
-                    letter[4].startAnimation(letterDisappear);
+//                    letter[4].startAnimation(letterDisappear);
                     letter[5].startAnimation(letterAppear);
                     break;
                 case 9:
-                    animationFlag=0;
-                    letter[4].setVisibility(View.INVISIBLE);
-                    letter[4].clearAnimation();
+                    animationFlag=10;
+//                    letter[4].setVisibility(View.INVISIBLE);
+//                    letter[4].clearAnimation();
                     letter[5].setVisibility(View.VISIBLE);
                     letter[5].clearAnimation();
                     break;

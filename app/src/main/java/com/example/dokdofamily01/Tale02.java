@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
@@ -31,7 +32,8 @@ public class Tale02 extends BaseFragment {
     ImageView seagullHand;
     ImageView seagullBody;
     ImageView star;
-    TranslateAnimation ani;
+    TranslateAnimation headUp;
+    TranslateAnimation headDown;
     Animation seagullAppear;
     RotateAnimation seagullClick;
     int width;
@@ -64,10 +66,10 @@ public class Tale02 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
-
-                byulhead.startAnimation(ani);
+                byulhead.startAnimation(headUp);
 //                seagullHand.startAnimation(seagullAppear);
                 seagullBody.setAnimation(seagullAppear);
+
 
             } else {
                 System.out.println(2+"notVisible");
@@ -126,13 +128,34 @@ public class Tale02 extends BaseFragment {
         seagullHand.post(new Runnable() {
             @Override
             public void run() {
+
                 width = (int)(seagullHand.getWidth()*0.85);
                 height = (int)(seagullHand.getHeight()*0.8);
+
+                seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
+                seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAppear.setAnimationListener(new MyAnimationListener());
+
                 seagullClick = new RotateAnimation(10,-10,width,height);
-                seagullClick.setDuration(200);
-                seagullClick.setRepeatCount(4);
+                seagullClick.setDuration(300);
+                seagullClick.setRepeatCount(1);
                 seagullClick.setRepeatMode(Animation.REVERSE);
-                seagullClick.setFillAfter(false);
+                seagullClick.setFillAfter(true);
+                seagullClick.setInterpolator(new AccelerateDecelerateInterpolator());
+                headUp = new TranslateAnimation(0,0,byulhead.getHeight(),0);
+                headUp.setDuration(3000);
+                headUp.setFillAfter(true);
+                headUp.setInterpolator(new AccelerateDecelerateInterpolator());
+                headUp.setAnimationListener(new MyAnimationListener());
+                headDown= new TranslateAnimation(0,0,0,byulhead.getHeight());
+                headDown.setDuration(300);
+                headDown.setFillAfter(true);
+                headDown.setInterpolator(new AccelerateDecelerateInterpolator());
+                headDown.setAnimationListener(new MyAnimationListener());
+
+                byulhead.startAnimation(headUp);
+//                seagullHand.startAnimation(seagullAppear);
+                seagullBody.setAnimation(seagullAppear);
             }
         });
     }
@@ -140,33 +163,22 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        ani = new TranslateAnimation(0,0,100,0);
-        ani.setDuration(3000);
-        ani.setFillAfter(true);
-//        ani.setAnimationListener(new MyAnimationListener());
-        seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
-        seagullAppear.setAnimationListener(new MyAnimationListener());
+
+
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
-        byulhead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                byulhead.startAnimation(ani);
-//                seagullHand.startAnimation(seagullAppear);
-//                seagullBody.setAnimation(seagullAppear);
-            }
-        });
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                animationFlag=1;
-                seagullHand.setVisibility(View.VISIBLE);
-                ani.setStartOffset(1500);
-                byulhead.startAnimation(ani);
-                seagullHand.startAnimation(seagullClick);
+                if(animationFlag==1) {
+                    animationFlag = 2;
+                    seagullHand.setVisibility(View.VISIBLE);
+                    byulhead.startAnimation(headDown);
+                    seagullHand.startAnimation(seagullClick);
+                }
             }
         });
     }
@@ -175,10 +187,20 @@ public class Tale02 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if(animationFlag==1){
-                animationFlag=2;
-                seagullHand.clearAnimation();
-                seagullHand.setVisibility(View.INVISIBLE);
+            switch (animationFlag){
+                case 0:
+                    animationFlag=1;
+//                    byulhead.clearAnimation();
+                    break;
+                case 2:
+                    animationFlag=3;
+                    byulhead.startAnimation(headUp);
+                    break;
+                case 3:
+                    animationFlag=1;
+                    seagullHand.clearAnimation();
+                    seagullHand.setVisibility(View.INVISIBLE);
+                    break;
             }
         }
 

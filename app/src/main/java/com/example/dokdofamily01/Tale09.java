@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,28 +262,24 @@ public class Tale09 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag==0) {
                     animationFlag = 1;
-                    birds1.setVisibility(View.VISIBLE);
-                    birds2.setVisibility(View.VISIBLE);
-                    birds3.setVisibility(View.VISIBLE);
-                    birds4.setVisibility(View.VISIBLE);
-                    birds5.setVisibility(View.VISIBLE);
-                    birds6.setVisibility(View.VISIBLE);
-                    birds1.startAnimation(seagullAppear);
-                    birds2.startAnimation(seagullAppear);
-                    birds3.startAnimation(seagullAppear);
-                    birds4.startAnimation(seagullAppear);
-                    birds5.startAnimation(seagullAppear);
-                    birds6.startAnimation(seagullAppear);
+//                    birds1.setVisibility(View.VISIBLE);
+//                    birds2.setVisibility(View.VISIBLE);
+//                    birds3.setVisibility(View.VISIBLE);
+//                    birds4.setVisibility(View.VISIBLE);
+//                    birds5.setVisibility(View.VISIBLE);
+//                    birds6.setVisibility(View.VISIBLE);
+//                    birds1.startAnimation(seagullAppear);
+//                    birds2.startAnimation(seagullAppear);
+//                    birds3.startAnimation(seagullAppear);
+//                    birds4.startAnimation(seagullAppear);
+//                    birds5.startAnimation(seagullAppear);
+//                    birds6.startAnimation(seagullAppear);
 
-                    fadeIn.setStartOffset(2000);
-                    fadeOut.setStartOffset(2000);
-
-                    byulBody1.startAnimation(fadeOut);
-                    byulHead1.startAnimation(fadeOut);
-                    byulBody2.startAnimation(fadeIn);
-                    byulHead2.startAnimation(fadeIn);
-                    byulBody5.setVisibility(View.INVISIBLE);
-                    byulHead5.setVisibility(View.INVISIBLE);
+                    byulBody1.startAnimation(fadeIn);
+                    byulHead1.startAnimation(fadeIn);
+                    Log.e("click", "onClick:"+animationFlag);
+                }else{
+                    Log.e("click", "onClick:"+animationFlag);
                 }
             }
         });
@@ -294,8 +291,18 @@ public class Tale09 extends BaseFragment {
             switch (animationFlag){
                 case 1:
                     animationFlag=2;
-                    fadeIn.setStartOffset(0);
-                    fadeOut.setStartOffset(0);
+                    byulBody1.clearAnimation();
+                    byulHead1.clearAnimation();
+                    break;
+                case 2:
+                    animationFlag=3;
+                    byulBody1.startAnimation(fadeOut);
+                    byulHead1.startAnimation(fadeOut);
+                    byulBody2.startAnimation(fadeIn);
+                    byulHead2.startAnimation(fadeIn);
+                    break;
+                case 3:
+                    animationFlag=4;
                     byulBody1.setVisibility(View.INVISIBLE);
                     byulHead1.setVisibility(View.INVISIBLE);
                     byulBody1.clearAnimation();
@@ -303,15 +310,15 @@ public class Tale09 extends BaseFragment {
                     byulBody2.clearAnimation();
                     byulHead2.clearAnimation();
                     break;
-                case 2:
-                    animationFlag=3;
+                case 4:
+                    animationFlag=5;
                     byulBody2.startAnimation(fadeOut);
                     byulHead2.startAnimation(fadeOut);
                     byulBody3.startAnimation(fadeIn);
                     byulHead3.startAnimation(fadeIn);
                     break;
-                case 3:
-                    animationFlag=4;
+                case 5:
+                    animationFlag=6;
                     byulBody2.setVisibility(View.INVISIBLE);
                     byulHead2.setVisibility(View.INVISIBLE);
                     byulBody2.clearAnimation();
@@ -319,15 +326,15 @@ public class Tale09 extends BaseFragment {
                     byulBody3.clearAnimation();
                     byulHead3.clearAnimation();
                     break;
-                case 4:
-                    animationFlag=5;
+                case 6:
+                    animationFlag=7;
                     byulBody3.startAnimation(fadeOut);
                     byulHead3.startAnimation(fadeOut);
                     byulBody4.startAnimation(fadeIn);
                     byulHead4.startAnimation(fadeIn);
                     break;
-                case 5:
-                    animationFlag=6;
+                case 7:
+                    animationFlag=8;
                     byulBody3.setVisibility(View.INVISIBLE);
                     byulHead3.setVisibility(View.INVISIBLE);
                     byulBody3.clearAnimation();
@@ -335,15 +342,15 @@ public class Tale09 extends BaseFragment {
                     byulBody4.clearAnimation();
                     byulHead4.clearAnimation();
                     break;
-                case 6:
-                    animationFlag=7;
+                case 8:
+                    animationFlag=9;
                     byulBody4.startAnimation(fadeOut);
                     byulHead4.startAnimation(fadeOut);
                     byulBody5.startAnimation(fadeIn);
                     byulHead5.startAnimation(fadeIn);
                     break;
-                case 7:
-                    animationFlag=0;
+                case 9:
+                    animationFlag=10;
                     byulBody4.setVisibility(View.INVISIBLE);
                     byulHead4.setVisibility(View.INVISIBLE);
                     byulBody4.clearAnimation();
@@ -351,7 +358,15 @@ public class Tale09 extends BaseFragment {
                     byulBody5.clearAnimation();
                     byulHead5.clearAnimation();
                     break;
-
+                case 10:
+                    animationFlag=11;
+                    byulBody5.startAnimation(fadeOut);
+                    byulHead5.startAnimation(fadeOut);
+                    break;
+                case 11:
+                    animationFlag=0;
+                    byulBody5.clearAnimation();
+                    byulHead5.clearAnimation();
             }
         }
 
@@ -363,18 +378,22 @@ public class Tale09 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag){
                 case 1:
+                    byulBody1.setVisibility(View.VISIBLE);
+                    byulHead1.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
                     byulBody2.setVisibility(View.VISIBLE);
                     byulHead2.setVisibility(View.VISIBLE);
                     break;
-                case 3:
+                case 5:
                     byulBody3.setVisibility(View.VISIBLE);
                     byulHead3.setVisibility(View.VISIBLE);
                     break;
-                case 5:
+                case 7:
                     byulBody4.setVisibility(View.VISIBLE);
                     byulHead4.setVisibility(View.VISIBLE);
                     break;
-                case 7:
+                case 9:
                     byulBody5.setVisibility(View.VISIBLE);
                     byulHead5.setVisibility(View.VISIBLE);
                     break;

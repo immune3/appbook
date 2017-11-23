@@ -21,6 +21,7 @@
 
     </com.example.dokdofamily01.CustomViewPager>
 
+
     <com.example.dokdofamily01.CustomTextView
         android:id="@+id/CustomTextView"
         android:layout_width="match_parent"

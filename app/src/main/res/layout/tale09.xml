@@ -38,7 +38,7 @@
                 app:scale_top="0"/>
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 app:scale_top="445"/>
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:scale_top="475"/>
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 app:scale_top="475"/>
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 app:scale_left="708"
                 app:scale_top="466"/>
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 app:scale_top="453"/>
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/birds6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,6 +151,7 @@
 
 
             <ImageView
+                android:visibility="invisible"
                 android:id="@+id/byulBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,6 +207,7 @@
 
 
             <ImageView
+                android:visibility="invisible"
                 android:id="@+id/byulHead1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -166,16 +166,23 @@ public class Tale01 extends BaseFragment{
         lamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                animationFlag = 1;
-                lampLight.startAnimation(fadeIn);
-                bedLight.startAnimation(fadeIn);
-                head.setVisibility(View.VISIBLE);
-                blanket.setVisibility(View.VISIBLE);
-                curtain.setVisibility(View.VISIBLE);
-                light.setVisibility(View.INVISIBLE);
-                byul.setVisibility(View.INVISIBLE);
-                hand.setVisibility(View.INVISIBLE);
-
+                if(animationFlag==0) {
+                    animationFlag = 1;
+                    lampLight.startAnimation(fadeIn);
+                    bedLight.startAnimation(fadeIn);
+                    head.setVisibility(View.VISIBLE);
+                    blanket.setVisibility(View.VISIBLE);
+                    curtain.setVisibility(View.VISIBLE);
+                    light.setVisibility(View.INVISIBLE);
+                    byul.setVisibility(View.INVISIBLE);
+                    hand.setVisibility(View.INVISIBLE);
+                }else if(animationFlag==8){
+                    fadeIn.setStartOffset(0);
+                    fadeOut.setStartOffset(0);
+                    lampLight.startAnimation(fadeOut);
+                }else if(animationFlag==10){
+                    lampLight.startAnimation(fadeIn);
+                }
             }
         });
     }
@@ -191,7 +198,6 @@ public class Tale01 extends BaseFragment{
                     break;
                 case 2:
                     animationFlag = 3;
-
                     fadeOut.setStartOffset(1000);
                     head.startAnimation(fadeOut);
                     bedLight.startAnimation(fadeOut);
@@ -225,9 +231,15 @@ public class Tale01 extends BaseFragment{
                 case 7:
                     animationFlag = 8;
                     curtain.setVisibility(View.INVISIBLE);
-//                    hand.clearAnimation();
-//                    curtain.clearAnimation();
-//                    light.clearAnimation();
+                    hand.clearAnimation();
+                    curtain.clearAnimation();
+                    light.clearAnimation();
+                    break;
+                case 9:
+                    animationFlag =10;
+                    break;
+                case 11:
+                    animationFlag = 8;
                     break;
             }
         }
@@ -246,6 +258,10 @@ public class Tale01 extends BaseFragment{
             } else if (animationFlag == 7) {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
+            }else if(animationFlag==8){
+                animationFlag=9;
+            }else if(animationFlag==10){
+                animationFlag=11;
             }
         }
     }
