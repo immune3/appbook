@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -34,8 +35,8 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale05 extends BaseFragment {
     ImageView[] letter = new ImageView[6];
-    Animation letterAppear;
-    Animation letterDisappear;
+    Animation[] letterAppear = new Animation[6];
+    Animation[] letterDisappear = new Animation[6];
     int letterIter = 0;
 
 
@@ -97,7 +98,7 @@ public class Tale05 extends BaseFragment {
                 new String[]{"어서 오렴~ 나는 편지를 아주 재미나게 읽어주는 빨간 우체통 엄마란다.", "17500"},
                 new String[]{"별이의 편지도 내가 읽어주었지~ 호호호~ ", "21700"},
                 new String[]{"독도를 생각하는 별이의 마음이 어찌나 예쁘던지... 쪽~ 쪽~ 쪼오옥~ ", "30000"},
-                new String[]{"아줌마 너무 간지러워요. 까르르~", "36500"}
+                new String[]{"아줌마 너무 간지러워요. 까르르~", "40000"}
         );
 
         subtitleTextView.setText(null);
@@ -130,9 +131,22 @@ public class Tale05 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
 
-        letterAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_appear);
-        letterDisappear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_disappear);
-        letterDisappear.setAnimationListener(new MyAnimationListener());
+
+
+        for(int iter=0; iter<6 ; iter++) {
+
+            letterAppear[iter] = new AlphaAnimation(0, 1);
+            letterAppear[iter].setDuration(1000);
+            letterAppear[iter].setFillAfter(true);
+            letterAppear[iter].setStartOffset(iter*1000);
+
+
+            letterDisappear[iter] = new AlphaAnimation(1, 0);
+            letterDisappear[iter].setDuration(1000);
+            letterDisappear[iter].setFillAfter(true);
+            letterDisappear[iter].setStartOffset(iter*1000);
+        }
+
     }
 
     @Override
@@ -141,8 +155,11 @@ public class Tale05 extends BaseFragment {
         letter[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                letterIter = 0;
-                letter[0].startAnimation(letterDisappear);
+                for(int iter = 0; iter < 5 ; iter++) {
+                    letter[iter].startAnimation(letterDisappear[iter]);
+                    letter[iter+1].startAnimation(letterAppear[iter]);
+                }
+//                letter[1].startAnimation(letterAppear);
             }
         });
     }
@@ -151,38 +168,7 @@ public class Tale05 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            switch (letterIter) {
-                case 1:
-                    letterIter = 2;
-                    letter[0].clearAnimation();
-                    letter[1].clearAnimation();
-                    letter[1].startAnimation(letterDisappear);
-                    break;
-//                case 3:
-//                    letterIter = 4;
-//                    letter[1].clearAnimation();
-////                    letter[2].clearAnimation();
-//                    letter[2].startAnimation(letterDisappear);
-//                    break;
-//                case 5:
-//                    letterIter = 6;
-//                    letter[2].clearAnimation();
-////                    letter[3].clearAnimation();
-//                    letter[3].startAnimation(letterDisappear);
-//                    break;
-//                case 7:
-//                    letterIter = 8;
-//                    letter[3].clearAnimation();
-////                    letter[4].clearAnimation();
-//                    letter[4].startAnimation(letterDisappear);
-//                    break;
-//                case 9:
-//                    letter[4].clearAnimation();
-////                    letter[5].clearAnimation();
-//                    break;
-            }
-//            letter[letterIter].setVisibility(View.INVISIBLE);
-//            letter[letterIter+1].startAnimation(letterAppear);
+
         }
 
         @Override
@@ -191,36 +177,8 @@ public class Tale05 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            switch (letterIter) {
-                case 0:
-                    letterIter = 1;
-                    letter[1].setVisibility(View.VISIBLE);
-                    letter[1].startAnimation(letterAppear);
-                    break;
-                case 2:
-                    letterIter = 3;
-                    letter[2].setVisibility(View.VISIBLE);
-                    letter[2].startAnimation(letterAppear);
-                    break;
-//                case 4:
-//                    letterIter=5;
-//                    letter[3].setVisibility(View.VISIBLE);
-//                    letter[3].startAnimation(letterAppear);
-//                    break;
-//                case 6:
-//                    letterIter=7;
-//                    letter[4].setVisibility(View.VISIBLE);
-//                    letter[4].startAnimation(letterAppear);
-//                    break;
-//                case 8:
-//                    letterIter=9;
-//                    letter[5].setVisibility(View.VISIBLE);
-//                    letter[5].startAnimation(letterAppear);
-//                    break;
-            }
-//            letter[letterIter].startAnimation(letterDisappear);
-        }
 
+        }
     }
 
 

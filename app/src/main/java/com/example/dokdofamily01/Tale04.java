@@ -128,8 +128,8 @@ public class Tale04 extends BaseFragment {
 //                Log.d("SunLightLocation:", "LocationX"+sunLightLocation[0]);
 //                Log.d("SunLightLocation:", "LocationY"+sunLightLocation[1]);
 
-                sunRiseAni = new TranslateAnimation(0, 0, 0, -150);
-                sunRiseAni.setDuration(1500);
+                sunRiseAni = new TranslateAnimation(0, 0, 0, sunLocation[1]-200);
+                sunRiseAni.setDuration(3000);
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
 
