@@ -31,9 +31,9 @@ public class Tale04 extends BaseFragment {
     ImageView sunLight;
     TranslateAnimation sunRiseAni;
     Animation sunLightAppear;
+    int animationFlag = 0;
 
     int[] sunLightLocation = new int[2];
-    int[] sunLocation = new int[2];
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -114,13 +114,12 @@ public class Tale04 extends BaseFragment {
             @Override
             public void run() {
                 sunLight.getLocationOnScreen(sunLightLocation);
-                sun.getLocationOnScreen(sunLocation);
 
                 sun.setY(sunLightLocation[1]);
 //                Log.d("SunLightLocation:", "LocationX"+sunLightLocation[0]);
 //                Log.d("SunLightLocation:", "LocationY"+sunLightLocation[1]);
 
-                sunRiseAni = new TranslateAnimation(0, 0, 0, sunLocation[1]-200);
+                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()/2));
                 sunRiseAni.setDuration(3000);
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
@@ -151,7 +150,7 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-
+            animationFlag = 0;
         }
 
         @Override
@@ -160,8 +159,11 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            sunLight.setVisibility(View.VISIBLE);
-            sunLight.startAnimation(sunLightAppear);
+            if(animationFlag == 0){
+                animationFlag = 1;
+                sunLight.setVisibility(View.VISIBLE);
+                sunLight.startAnimation(sunLightAppear);
+            }
         }
 
     }

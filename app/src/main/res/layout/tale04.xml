@@ -52,7 +52,6 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
-
                 android:id="@+id/sunLight"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"

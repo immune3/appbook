@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -35,9 +36,9 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale05 extends BaseFragment {
     ImageView[] letter = new ImageView[6];
-    Animation[] letterAppear = new Animation[6];
-    Animation[] letterDisappear = new Animation[6];
-    int letterIter = 0;
+    Animation letterAppear;
+    Animation letterDisappear;
+    int animationFlag = 0;
 
 
     boolean isAttached = false;
@@ -131,21 +132,13 @@ public class Tale05 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
 
+            letterAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_05_letter_appear);
+            letterAppear.setFillAfter(true);
+            letterAppear.setAnimationListener(new MyAnimationListener());
 
 
-        for(int iter=0; iter<6 ; iter++) {
-
-            letterAppear[iter] = new AlphaAnimation(0, 1);
-            letterAppear[iter].setDuration(1000);
-            letterAppear[iter].setFillAfter(true);
-            letterAppear[iter].setStartOffset(iter*1000);
-
-
-            letterDisappear[iter] = new AlphaAnimation(1, 0);
-            letterDisappear[iter].setDuration(1000);
-            letterDisappear[iter].setFillAfter(true);
-            letterDisappear[iter].setStartOffset(iter*1000);
-        }
+            letterDisappear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_05_letter_disappear);
+            letterDisappear.setFillAfter(true);
 
     }
 
@@ -155,11 +148,16 @@ public class Tale05 extends BaseFragment {
         letter[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int iter = 0; iter < 5 ; iter++) {
-                    letter[iter].startAnimation(letterDisappear[iter]);
-                    letter[iter+1].startAnimation(letterAppear[iter]);
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    // letter[0] 사라지고 letter[1]나온다.
+                    letter[5].setVisibility(View.INVISIBLE);
+                    letter[0].startAnimation(letterDisappear);
+                    letter[1].startAnimation(letterAppear);
                 }
-//                letter[1].startAnimation(letterAppear);
+                else{
+                    Toast.makeText(getContext(),"TEST",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -167,8 +165,24 @@ public class Tale05 extends BaseFragment {
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
-        public void onAnimationEnd(Animation animation) {
-
+        public void onAnimationStart(Animation animation) {
+            switch (animationFlag){
+                case 1 :
+                    letter[1].setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    letter[2].setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    letter[3].setVisibility(View.VISIBLE);
+                    break;
+                case 6:
+                    letter[4].setVisibility(View.VISIBLE);
+                    break;
+                case 8:
+                    letter[5].setVisibility(View.VISIBLE);
+                    break;
+            }
         }
 
         @Override
@@ -176,9 +190,69 @@ public class Tale05 extends BaseFragment {
         }
 
         @Override
-        public void onAnimationStart(Animation animation) {
-
+        public void onAnimationEnd(Animation animation) {
+            switch (animationFlag){
+                case 0 :
+                    break;
+                case 1:
+                    animationFlag=2;
+                    letter[0].setVisibility(View.INVISIBLE);
+                    letter[0].clearAnimation();
+                    letter[1].clearAnimation();
+                    break;
+                case 2:
+                    // letter[1] 사라지고 letter[2]나온다.
+                    animationFlag=3;
+                    letter[1].startAnimation(letterDisappear);
+                    letter[2].startAnimation(letterAppear);
+                    break;
+                case 3 :
+                    animationFlag=4;
+                    letter[1].setVisibility(View.INVISIBLE);
+                    letter[1].clearAnimation();
+                    letter[2].clearAnimation();
+                    break;
+                case 4:
+                    // letter[2] 사라지고 letter[3]나온다.
+                    animationFlag=5;
+                    letter[2].startAnimation(letterDisappear);
+                    letter[3].startAnimation(letterAppear);
+                    break;
+                case 5 :
+                    animationFlag=6;
+                    letter[2].setVisibility(View.INVISIBLE);
+                    letter[2].clearAnimation();
+                    letter[3].clearAnimation();
+                    break;
+                case 6:
+                    // letter[3] 사라지고 letter[4]나온다.
+                    animationFlag=7;
+                    letter[3].startAnimation(letterDisappear);
+                    letter[4].startAnimation(letterAppear);
+                    break;
+                case 7 :
+                    animationFlag=8;
+                    letter[3].setVisibility(View.INVISIBLE);
+                    letter[3].clearAnimation();
+                    letter[4].clearAnimation();
+                    break;
+                case 8:
+                    // letter[4] 사라지고 letter[5]나온다.
+                    animationFlag=9;
+                    letter[4].startAnimation(letterDisappear);
+                    letter[5].startAnimation(letterAppear);
+                    break;
+                case 9:
+                    animationFlag=0;
+                    letter[4].setVisibility(View.INVISIBLE);
+                    letter[4].clearAnimation();
+                    letter[5].setVisibility(View.VISIBLE);
+                    letter[5].clearAnimation();
+                    break;
+            }
         }
+
+
     }
 
 
