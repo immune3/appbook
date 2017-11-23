@@ -1,35 +1,26 @@
 package com.example.dokdofamily01.Data;
 
 /**
- * Created by hero on 2017-11-21.
+ * Created by hero on 2017-11-22.
  */
 
 public class SubTitleData {
 
-    String subTitle;
-    int finishTime;
-
-    public SubTitleData(String subTitle, int finishTime) {
-        this.subTitle = subTitle;
-        this.finishTime = finishTime;
-    }
-
-
-    public int getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(int finishTime) {
-        this.finishTime = finishTime;
+    public SubTitleData(String s, int i){
+        this.finishtime = i;
+        this.subtitle = s;
     }
 
     public String getSubTitle() {
-        return subTitle;
+        return subtitle;
     }
 
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
+    public int getFinishTime() {
+        return finishtime;
     }
+
+    String subtitle;
+    int finishtime;
 
 
 }

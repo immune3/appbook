@@ -53,10 +53,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_man"
+                app:scale_width="689"
+                app:scale_height="777"
+                app:scale_left="1700"
+                app:scale_top="150"
+                android:id="@+id/manImage1"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_man"
+                app:scale_width="896"
+                app:scale_height="1010"
+                app:scale_left="1450"
+                app:scale_top="80"
+                android:id="@+id/manImage2"
+                android:visibility="invisible"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_man"
+                app:scale_width="1102"
+                app:scale_height="1243"
+                app:scale_left="1200"
+                app:scale_top="10"
+                android:id="@+id/manImage3"
+                android:visibility="invisible"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_man"
                 app:scale_width="1378"
                 app:scale_height="1554"
                 app:scale_left="985"
-                app:scale_top="-110"/>
+                app:scale_top="-110"
+                android:id="@+id/manImage4"
+                android:visibility="invisible"
+                />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +103,9 @@
                 app:scale_width="686"
                 app:scale_height="770"
                 app:scale_left="1015"
-                app:scale_top="775"/>
+                app:scale_top="775"
+                android:id="@+id/seaweadImage"
+                />
 
 
 

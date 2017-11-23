@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -29,6 +32,13 @@ public class Tale17 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
+    ImageView dokdo_under_sea;
+    ImageView wave_shadow1;
+    ImageView wave_shadow2;
+    ImageView star;
+
+
+    Animation fadeIn;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -179,6 +189,10 @@ public class Tale17 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        dokdo_under_sea = (ImageView)layout.findViewById(R.id.dokdo_undersea);
+        wave_shadow1= (ImageView)layout.findViewById(R.id.wave_shadow_01);
+        wave_shadow2= (ImageView)layout.findViewById(R.id.wave_shadow_02);
+        star= (ImageView)layout.findViewById(R.id.star);
     }
 
     @Override
@@ -189,10 +203,42 @@ public class Tale17 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+        fadeIn.setDuration(3000);
+        fadeIn.setFillAfter(true);
+        fadeIn.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dokdo_under_sea.startAnimation(fadeIn);
+            }
+        });
+
+    }
+
+
+    private class MyAnimationListener implements Animation.AnimationListener{
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+//            dokdo_under_sea.startAnimation(fadeIn);
+//            dokdo_under_sea.clearAnimation();
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }
