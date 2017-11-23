@@ -106,7 +106,17 @@
                 app:scale_top="775"
                 android:id="@+id/seaweadImage"
                 />
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_15_fish"
+                android:rotation="180"
+                app:scale_width="340"
+                app:scale_height="90"
+                app:scale_left="415"
+                app:scale_top="175"
+                android:id="@+id/fish"
+                />
 
 
 

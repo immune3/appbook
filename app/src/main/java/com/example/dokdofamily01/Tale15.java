@@ -36,7 +36,7 @@ public class Tale15 extends BaseFragment {
     ImageView manImage2;
     ImageView manImage3;
     ImageView manImage4;
-    ImageView seaweadImg;
+    ImageView fishImg;
 
     int animationFlag = 0;
 
@@ -199,7 +199,7 @@ public class Tale15 extends BaseFragment {
         manImage2 = (ImageView) layout.findViewById(R.id.manImage2);
         manImage3 = (ImageView) layout.findViewById(R.id.manImage3);
         manImage4 = (ImageView) layout.findViewById(R.id.manImage4);
-        seaweadImg = (ImageView) layout.findViewById(R.id.seaweadImage);
+        fishImg = (ImageView) layout.findViewById(R.id.fish);
 
     }
 
@@ -223,7 +223,7 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
-        seaweadImg.setOnClickListener(new View.OnClickListener() {
+        fishImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(animationFlag == 0){
