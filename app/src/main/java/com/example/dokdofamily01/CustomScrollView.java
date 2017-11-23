@@ -5,12 +5,13 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 
 /**
  * Created by heronation on 2017-11-17.
  */
-public class CustomScrollView extends ScrollView {
+public class CustomScrollView extends HorizontalScrollView{
     private boolean enableScrolling = true;
     public CustomScrollView(Context context) {
         super(context);

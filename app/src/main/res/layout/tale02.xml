@@ -15,17 +15,10 @@
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/img_02_background"
             app:scale_base_width="2560"
             app:scale_base_height="1544">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_02_background"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
-                app:scale_top="0"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +59,7 @@
                 android:src="@drawable/img_02_house"
                 app:scale_width="1000"
                 app:scale_height="1380"
-                app:scale_left="10"
+                app:scale_left="0"
                 app:scale_top="-5"/>
             <ImageView
                 android:layout_width="wrap_content"
