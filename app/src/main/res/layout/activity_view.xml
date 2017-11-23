@@ -31,7 +31,7 @@
         example:textStroke="true"
         example:textStrokeWidth="7.0"
         example:textStrokeColor="#000000"
-        android:textSize="30dp"
+        android:textSize="40dp"
         android:gravity="center"
         android:layout_alignParentBottom="true"
 
@@ -85,7 +85,7 @@
                     android:src="@drawable/index"/>
 
                 <Spinner
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:background="#00000000"
                     android:id="@+id/goPage"
                     android:layout_width="match_parent"

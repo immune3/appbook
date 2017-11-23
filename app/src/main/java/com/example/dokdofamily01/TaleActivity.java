@@ -72,7 +72,7 @@ public class TaleActivity extends AppCompatActivity{
                 menuContainer.setTranslationY(showMenuHeight);
                 menuBtn.setTranslationY(showMenuHeight);
                 showMenu.setTranslationY(showMenuHeight);
-                Log.i("showmenu", ""+showMenuWidth+","+showMenuHeight);
+                subtitleTextView.setTranslationY(-showMenuHeight);
                 setAnimation();
             }
         });
@@ -295,10 +295,8 @@ public class TaleActivity extends AppCompatActivity{
         public void onAnimationEnd(Animation animation) {
             if(showFlag) {
                 menuBtn.setTranslationY(0);
-                showFlag = false;
             }else{
                 menuBtn.setTranslationY(showMenuHeight);
-                showFlag = true;
             }
         }
 
@@ -316,9 +314,11 @@ public class TaleActivity extends AppCompatActivity{
         @Override
         public void onAnimationEnd(Animation animation) {
             if(showFlag) {
-//                menuContainer.setTranslationY(0);
+                menuContainer.setTranslationY(0);
+                showFlag = false;
             }else{
-//                menuContainer.setTranslationY(100);
+                menuContainer.setTranslationY(showMenuHeight);
+                showFlag = true;
             }
         }
 
