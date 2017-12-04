@@ -5,9 +5,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +31,27 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale14 extends BaseFragment {
+    ImageView cave;
+    ImageView land;
+    ImageView sqeedBody;
+    ImageView sqeedHand;
+    ImageView byul;
+    ImageView bubble;
+    ImageView bell;
+    ImageView light;
+
+    TranslateAnimation caveAppearAni;
+    TranslateAnimation byulAppearAni;
+    TranslateAnimation landAppearAni;
+    AlphaAnimation fadein;
+    AlphaAnimation blink;
+    AlphaAnimation sqeedHandFadein;
+    ScaleAnimation sqeedHandAni;
+
+    AnimationSet bellAnimSet = new AnimationSet(false);
+    AnimationSet sqeedHandAnimSet = new AnimationSet(false);
+
+    int animationFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +79,15 @@ public class Tale14 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                if(animationFlag == 0 && caveAppearAni != null){
+                    animationFlag=1;
+                    cave.startAnimation(caveAppearAni);
+                    land.startAnimation(landAppearAni);
+                    byul.startAnimation(byulAppearAni);
+                    sqeedBody.startAnimation(byulAppearAni);
+                    bell.startAnimation(bellAnimSet);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -177,20 +216,113 @@ public class Tale14 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        cave = (ImageView)layout.findViewById(R.id.cave);
+        land = (ImageView)layout.findViewById(R.id.land);
+        sqeedBody = (ImageView)layout.findViewById(R.id.sqeedBody);
+        sqeedHand = (ImageView)layout.findViewById(R.id.sqeedHand);
+        byul = (ImageView)layout.findViewById(R.id.byul);
+        bubble = (ImageView)layout.findViewById(R.id.bubble);
+        bell = (ImageView)layout.findViewById(R.id.bell);
+        light = (ImageView)layout.findViewById(R.id.light);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        land.post(new Runnable() {
+            @Override
+            public void run() {
+                caveAppearAni = new TranslateAnimation(cave.getWidth(), 0, 0, 0);
+                caveAppearAni.setDuration(1500);
+                caveAppearAni.setStartOffset(600);
+                caveAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                caveAppearAni.setFillAfter(true);
+
+                byulAppearAni = new TranslateAnimation(-sqeedBody.getWidth(),0,sqeedBody.getHeight(),0);
+                byulAppearAni.setDuration(2000);
+                byulAppearAni.setStartOffset(1000);
+                byulAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulAppearAni.setFillAfter(true);
+                byulAppearAni.setAnimationListener(new MyAnimationListener());
+
+                landAppearAni = new TranslateAnimation(0, 0, land.getHeight(), 0);
+                landAppearAni.setDuration(2000);
+                landAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                landAppearAni.setFillAfter(true);
+//                landAppearAni.setAnimationListener(new MyAnimationListener());
+
+                bellAnimSet.addAnimation(caveAppearAni);
+                bellAnimSet.addAnimation(blink);
+
+                Log.d("123123", "msg"+sqeedHand.getWidth());
+                sqeedHandAni = new ScaleAnimation(0.9f, 1, 1,1,0, sqeedHand.getHeight());
+                sqeedHandAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedHandAni.setDuration(700);
+
+                sqeedHandAnimSet.addAnimation(sqeedHandAni);
+                sqeedHandAnimSet.addAnimation(sqeedHandFadein);
+
+                if(animationFlag == 0){
+                    animationFlag=1;
+                    cave.startAnimation(caveAppearAni);
+//                    bell.startAnimation(caveAppearAni);
+                    land.startAnimation(landAppearAni);
+                    byul.startAnimation(byulAppearAni);
+                    sqeedBody.startAnimation(byulAppearAni);
+                    bell.startAnimation(bellAnimSet);
+                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(1000);
+
+        sqeedHandFadein = new AlphaAnimation(0, 1);
+        sqeedHandFadein.setDuration(300);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(1000);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqeedHand.setVisibility(View.VISIBLE);
+                sqeedHand.startAnimation(sqeedHandAnimSet);
+            }
+        });
+
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            bubble.setVisibility(View.VISIBLE);
+            bubble.startAnimation(fadein);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            sqeedHand.setVisibility(View.INVISIBLE);
+            bubble.setVisibility(View.INVISIBLE);
+        }
+
     }
 }
