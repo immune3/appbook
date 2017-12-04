@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +41,8 @@ public class Tale03 extends BaseFragment{
 
     ArrayList<SubTitleData> subtitleList;
 
+    SoundPool sp;
+    int soundID;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class Tale03 extends BaseFragment{
 
                 if(animationFlag == 0) {
                     animationFlag = 1;
+                    sp.play(soundID,1,1,0,0,1);
                     cloud[0].startAnimation(cloudAnimation[0]);
                     cloud[1].startAnimation(cloudAnimation[1]);
                     cloud[2].startAnimation(cloudAnimation[1]);
@@ -122,6 +127,8 @@ public class Tale03 extends BaseFragment{
         cloud[4] = (ImageView) layout.findViewById(R.id.cloud4);
         cloud[5] = (ImageView) layout.findViewById(R.id.cloud5);
         byulHand = (ImageView) layout.findViewById(R.id.byulHand);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
     }
 
     @Override
@@ -168,6 +175,7 @@ public class Tale03 extends BaseFragment{
                 byulHand.setVisibility(View.INVISIBLE);
                 if(animationFlag == 0) {
                     animationFlag = 1;
+                    sp.play(soundID,1,1,0,0,1);
                     cloud[0].startAnimation(cloudAnimation[0]);
                     cloud[1].startAnimation(cloudAnimation[1]);
                     cloud[2].startAnimation(cloudAnimation[1]);

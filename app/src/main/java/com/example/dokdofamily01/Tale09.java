@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,6 +57,10 @@ public class Tale09 extends BaseFragment {
     MediaPlayer mp = null;
 
     ArrayList<SubTitleData> subtitleList;
+
+    SoundPool sp;
+    int moveByul;
+    int clickBird;
 
 
     @Override
@@ -224,6 +230,10 @@ public class Tale09 extends BaseFragment {
         byulHead4 = (ImageView)layout.findViewById(R.id.byulHead4);
         byulHead5 = (ImageView)layout.findViewById(R.id.byulHead5);
 
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        moveByul = sp.load(getContext(),R.raw.effect_09_move_byul,2);
+        clickBird = sp.load(getContext(),R.raw.effect_09_click_bird,1);
+
     }
 
     @Override
@@ -262,6 +272,7 @@ public class Tale09 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag==0) {
                     animationFlag = 1;
+                    sp.play(clickBird,1,1,0,0,1);
 //                    birds1.setVisibility(View.VISIBLE);
 //                    birds2.setVisibility(View.VISIBLE);
 //                    birds3.setVisibility(View.VISIBLE);
@@ -277,9 +288,8 @@ public class Tale09 extends BaseFragment {
 
                     byulBody1.startAnimation(fadeIn);
                     byulHead1.startAnimation(fadeIn);
-                    Log.e("click", "onClick:"+animationFlag);
                 }else{
-                    Log.e("click", "onClick:"+animationFlag);
+                    sp.play(clickBird,1,1,0,0,1);
                 }
             }
         });
@@ -296,6 +306,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 2:
                     animationFlag=3;
+                    sp.play(moveByul,1,1,0,0,1);
                     byulBody1.startAnimation(fadeOut);
                     byulHead1.startAnimation(fadeOut);
                     byulBody2.startAnimation(fadeIn);
@@ -312,6 +323,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 4:
                     animationFlag=5;
+                    sp.play(moveByul,1,1,0,0,1);
                     byulBody2.startAnimation(fadeOut);
                     byulHead2.startAnimation(fadeOut);
                     byulBody3.startAnimation(fadeIn);
@@ -328,6 +340,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 6:
                     animationFlag=7;
+                    sp.play(moveByul,1,1,0,0,1);
                     byulBody3.startAnimation(fadeOut);
                     byulHead3.startAnimation(fadeOut);
                     byulBody4.startAnimation(fadeIn);
@@ -344,6 +357,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 8:
                     animationFlag=9;
+                    sp.play(moveByul,1,1,0,0,1);
                     byulBody4.startAnimation(fadeOut);
                     byulHead4.startAnimation(fadeOut);
                     byulBody5.startAnimation(fadeIn);

@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/sea"
                 android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,7 +29,8 @@
                 app:scale_left="0"
                 app:scale_top="1100"/>
             <ImageView
-                android:visibility="visible"
+                android:id="@+id/smallwave1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_smallwave_01"
@@ -37,7 +39,8 @@
                 app:scale_left="20"
                 app:scale_top="1350"/>
             <ImageView
-                android:visibility="visible"
+                android:id="@+id/smallwave2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_smallwave_02"
@@ -46,7 +49,8 @@
                 app:scale_left="22"
                 app:scale_top="1230"/>
             <ImageView
-                android:visibility="visible"
+                android:id="@+id/smallwave3"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_smallwave_03"
@@ -55,7 +59,8 @@
                 app:scale_left="300"
                 app:scale_top="1285"/>
             <ImageView
-                android:visibility="visible"
+                android:id="@+id/smallwave4"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_smallwave_04"
@@ -64,7 +69,8 @@
                 app:scale_left="700"
                 app:scale_top="1220"/>
             <ImageView
-                android:visibility="visible"
+                android:id="@+id/waveshadow"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_waveshadow"
@@ -73,6 +79,7 @@
                 app:scale_left="0"
                 app:scale_top="1110"/>
             <ImageView
+                android:id="@+id/bigwave3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_bigwave_03"
@@ -81,6 +88,7 @@
                 app:scale_left="1571"
                 app:scale_top="1122"/>
             <ImageView
+                android:id="@+id/bigwave2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_bigwave_02"
@@ -89,6 +97,7 @@
                 app:scale_left="1366"
                 app:scale_top="975"/>
             <ImageView
+                android:id="@+id/bigwave1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_bigwave_01"
@@ -97,6 +106,8 @@
                 app:scale_left="1272"
                 app:scale_top="1243"/>
             <ImageView
+                android:id="@+id/seagull1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_seagull_01"
@@ -105,6 +116,8 @@
                 app:scale_left="1950"
                 app:scale_top="480"/>
             <ImageView
+                android:id="@+id/seagull2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_seagull_02"

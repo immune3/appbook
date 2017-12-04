@@ -52,11 +52,12 @@ public class BaseFragment extends Fragment{
                 int deviceHeight = TaleActivity.height;
                 int innerWidth = sl.getWidth();
                 int innerHeight = sl.getHeight();
-                if(innerWidth>deviceWidth){
-                    sv.scrollTo((innerWidth-deviceWidth)/2,0);
-                }else{
-                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
-                }
+                sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+//                if(innerWidth>deviceWidth){
+//                    sv.scrollTo((innerWidth-deviceWidth)/2,0);
+//                }else{
+//                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+//                }
             }
         });
         sv.setScrolling(false);

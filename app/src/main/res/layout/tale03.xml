@@ -94,11 +94,67 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/img_03_wing_left_01"
+                app:scale_width="1100"
+                app:scale_height="1212"
+                app:scale_left="30"
+                app:scale_top="255"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_03_wing_right_01"
+                app:scale_width="922"
+                app:scale_height="876"
+                app:scale_left="890"
+                app:scale_top="130"/>
+            <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_03_wing_right_02"
+                app:scale_width="922"
+                app:scale_height="876"
+                app:scale_left="890"
+                app:scale_top="130"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_03_seagull_body"
+                app:scale_width="856"
+                app:scale_height="574"
+                app:scale_left="280"
+                app:scale_top="460"/>
+            <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_03_wing_left_02"
+                app:scale_width="1100"
+                app:scale_height="1212"
+                app:scale_left="30"
+                app:scale_top="255"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/img_03_byul"
-                app:scale_width="1252"
-                app:scale_height="808"
-                app:scale_left="290"
-                app:scale_top="435"/>
+                app:scale_width="790"
+                app:scale_height="780"
+                app:scale_left="750"
+                app:scale_top="490"/>
+
+
+
+            <ImageView
+                android:visibility="invisible"
+                android:alpha="0.3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_03_sample"
+                app:scale_width="2560"
+                app:scale_height="1550"
+                app:scale_left="0"
+                app:scale_top="0"/>
 
 
 

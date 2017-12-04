@@ -8,6 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +26,18 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale20 extends BaseFragment {
+    ImageView man;
+    ImageView dokdo_father;
+    ImageView sqeed;
+    ImageView dokdo_mom;
+    ImageView wave;
+
+    TranslateAnimation manAppearAnimation;
+    TranslateAnimation dokdoFatherAppearAnimation;
+    TranslateAnimation sqeedAppearAnimation;
+    TranslateAnimation dokdoMomAppearAnimation;
+    TranslateAnimation waveAppearAnimation;
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +65,15 @@ public class Tale20 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    man.startAnimation(manAppearAnimation);
+                    dokdo_father.startAnimation(dokdoFatherAppearAnimation);
+                    sqeed.startAnimation(sqeedAppearAnimation);
+                    dokdo_mom.startAnimation(dokdoMomAppearAnimation);
+                    wave.startAnimation(waveAppearAnimation);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -184,11 +209,59 @@ public class Tale20 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        man = (ImageView)layout.findViewById(R.id.man);
+        dokdo_father = (ImageView)layout.findViewById(R.id.dokdo_father);
+        sqeed = (ImageView)layout.findViewById(R.id.sqeed);
+        dokdo_mom = (ImageView)layout.findViewById(R.id.dokdo_mom);
+        wave = (ImageView)layout.findViewById(R.id.wave);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        wave.post(new Runnable() {
+            @Override
+            public void run() {
+                manAppearAnimation = new TranslateAnimation(0, 0, man.getHeight(), 0);
+                manAppearAnimation.setDuration(1000);
+                manAppearAnimation.setStartOffset(400);
+                manAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                manAppearAnimation.setFillAfter(true);
+
+                dokdoFatherAppearAnimation = new TranslateAnimation(0, 0, dokdo_father.getHeight(), 0);
+                dokdoFatherAppearAnimation.setDuration(1000);
+                dokdoFatherAppearAnimation.setStartOffset(700);
+                dokdoFatherAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                dokdoFatherAppearAnimation.setFillAfter(true);
+
+                sqeedAppearAnimation = new TranslateAnimation(0, 0, sqeed.getHeight(), 0);
+                sqeedAppearAnimation.setDuration(1000);
+                sqeedAppearAnimation.setStartOffset(200);
+                sqeedAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedAppearAnimation.setFillAfter(true);
+
+                dokdoMomAppearAnimation = new TranslateAnimation(0, 0, dokdo_mom.getHeight(), 0);
+                dokdoMomAppearAnimation.setDuration(1000);
+                dokdoMomAppearAnimation.setStartOffset(800);
+                dokdoMomAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                dokdoMomAppearAnimation.setFillAfter(true);
+                dokdoMomAppearAnimation.setAnimationListener(new MyAnimationListener());
+
+                waveAppearAnimation = new TranslateAnimation(0, 0, wave.getHeight(), 0);
+                waveAppearAnimation.setDuration(1000);
+                waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                waveAppearAnimation.setFillAfter(true);
+
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    man.startAnimation(manAppearAnimation);
+                    dokdo_father.startAnimation(dokdoFatherAppearAnimation);
+                    sqeed.startAnimation(sqeedAppearAnimation);
+                    dokdo_mom.startAnimation(dokdoMomAppearAnimation);
+                    wave.startAnimation(waveAppearAnimation);
+                }
+            }
+        });
     }
 
     @Override
@@ -199,5 +272,22 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
     }
 }

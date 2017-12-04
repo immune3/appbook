@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".TaleActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

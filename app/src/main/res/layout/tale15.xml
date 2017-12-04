@@ -46,11 +46,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_man"
-                app:scale_width="689"
-                app:scale_height="777"
-                app:scale_left="1700"
-                app:scale_top="150"
+                app:scale_width="489"
+                app:scale_height="627"
+                app:scale_left="1800"
+                app:scale_top="300"
                 android:id="@+id/manImage1"
+                android:visibility="invisible"
                 />
 
             <ImageView

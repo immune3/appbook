@@ -27,6 +27,7 @@
                 app:scale_left="1495"
                 app:scale_top="425"/>
             <ImageView
+                android:id="@+id/man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_man"
@@ -35,6 +36,7 @@
                 app:scale_left="87"
                 app:scale_top="860"/>
             <ImageView
+                android:id="@+id/dokdo_father"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_dokdo_father"
@@ -43,6 +45,7 @@
                 app:scale_left="460"
                 app:scale_top="750"/>
             <ImageView
+                android:id="@+id/sqeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_sqeed"
@@ -51,6 +54,7 @@
                 app:scale_left="1020"
                 app:scale_top="690"/>
             <ImageView
+                android:id="@+id/dokdo_mom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_dokdo_mom"
@@ -59,6 +63,7 @@
                 app:scale_left="1327"
                 app:scale_top="720"/>
             <ImageView
+                android:id="@+id/wave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_wave"
@@ -76,13 +81,22 @@
                 app:scale_top="830"/>
 
             <ImageView
-                android:layout_width="598dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_sea"
+                app:scale_width="2560"
                 app:scale_height="468"
                 app:scale_left="0"
-                app:scale_top="1080"
-                app:scale_width="2560" />
+                app:scale_top="1080" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_20_cutain"
+                app:scale_width="2560"
+                app:scale_height="2100"
+                app:scale_left="0"
+                app:scale_top="-1240" />
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +41,9 @@ public class Tale04 extends BaseFragment {
     MediaPlayer mp = null;
 
     ArrayList<SubTitleData> subtitleList;
+
+    SoundPool sp;
+    int soundID;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -105,6 +110,8 @@ public class Tale04 extends BaseFragment {
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         sun = (ImageView) layout.findViewById(R.id.sun);
         sunLight = (ImageView) layout.findViewById(R.id.sunLight);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        soundID = sp.load(getContext(),R.raw.effect_04_sunrise,1);
     }
 
     @Override
@@ -141,6 +148,7 @@ public class Tale04 extends BaseFragment {
         dokdo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(soundID,1,1,0,0,1);
                 sun.startAnimation(sunRiseAni);
             }
         });
