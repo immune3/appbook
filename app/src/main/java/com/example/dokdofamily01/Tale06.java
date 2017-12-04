@@ -5,9 +5,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -15,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.content.ContentValues.TAG;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -22,6 +29,15 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale06 extends BaseFragment {
+    ImageView sea;
+    ImageView waveshadow;
+    ImageView[] smallwave = new ImageView[4];
+    ImageView[] bigwave = new ImageView[3];
+    ImageView[] seagull = new ImageView[2];
+
+    TranslateAnimation waveAppear;
+    Animation fadeIn;
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +65,8 @@ public class Tale06 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                sea.startAnimation(waveAppear);
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -98,16 +116,52 @@ public class Tale06 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        sea = (ImageView)layout.findViewById(R.id.sea);
+        waveshadow = (ImageView)layout.findViewById(R.id.waveshadow);
+        smallwave[0] = (ImageView)layout.findViewById(R.id.smallwave1);
+        smallwave[1] = (ImageView)layout.findViewById(R.id.smallwave2);
+        smallwave[2] = (ImageView)layout.findViewById(R.id.smallwave3);
+        smallwave[3] = (ImageView)layout.findViewById(R.id.smallwave4);
+        bigwave[0] = (ImageView)layout.findViewById(R.id.bigwave1);
+        bigwave[1] = (ImageView)layout.findViewById(R.id.bigwave2);
+        bigwave[2] = (ImageView)layout.findViewById(R.id.bigwave3);
+        seagull[0] = (ImageView)layout.findViewById(R.id.seagull1);
+        seagull[1] = (ImageView)layout.findViewById(R.id.seagull2);
+
     }
 
     @Override
     public void setValues() {
         super.setValues();
+
+        sea.post(new Runnable() {
+            @Override
+            public void run() {
+                if(animationFlag==0) {
+                    animationFlag=1;
+                    waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
+                    waveAppear.setDuration(1000);
+                    waveAppear.setFillAfter(true);
+                    waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                    waveAppear.setAnimationListener(new MyAnimationListener());
+
+                    sea.startAnimation(waveAppear);
+                    bigwave[0].startAnimation(waveAppear);
+                    bigwave[1].startAnimation(waveAppear);
+                    bigwave[2].startAnimation(waveAppear);
+                    Log.i("animationFlag", ""+animationFlag);
+                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+        fadeIn.setFillAfter(true);
+        fadeIn.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
@@ -196,6 +250,48 @@ public class Tale06 extends BaseFragment {
         }
     };
 
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+        }
 
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (animationFlag){
+                case 1:
+                    Log.i("animationFlag", ""+animationFlag);
+                    animationFlag=2;
+                    sea.clearAnimation();
+                    bigwave[0].clearAnimation();
+                    bigwave[1].clearAnimation();
+                    bigwave[2].clearAnimation();
+                    smallwave[0].startAnimation(fadeIn);
+                    smallwave[1].startAnimation(fadeIn);
+                    smallwave[2].startAnimation(fadeIn);
+                    smallwave[3].startAnimation(fadeIn);
+                    waveshadow.startAnimation(fadeIn);
+                    seagull[0].startAnimation(fadeIn);
+                    seagull[1].startAnimation(fadeIn);
+                    break;
+                case 2:
+                    animationFlag=0;
+//                    smallwave[0].clearAnimation();
+//                    smallwave[1].clearAnimation();
+//                    smallwave[2].clearAnimation();
+//                    smallwave[3].clearAnimation();
+//                    waveshadow.clearAnimation();
+//                    seagull[0].clearAnimation();
+//                    seagull[1].clearAnimation();
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
+    }
 
 }

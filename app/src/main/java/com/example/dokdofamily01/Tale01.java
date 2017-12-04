@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -58,6 +60,9 @@ public class Tale01 extends BaseFragment{
 
     boolean isAttached = false;
     MediaPlayer mp = null;
+
+    SoundPool sp;
+    int soundID;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -140,6 +145,8 @@ public class Tale01 extends BaseFragment{
         hand = (ImageView)layout.findViewById(R.id.hand);
         curtain = (ImageView)layout.findViewById(R.id.curtain);
         light = (ImageView)layout.findViewById(R.id.light);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        soundID = sp.load(getContext(),R.raw.effect_01,1);
     }
 
     @Override
@@ -168,6 +175,7 @@ public class Tale01 extends BaseFragment{
             public void onClick(View view) {
                 if(animationFlag==0) {
                     animationFlag = 1;
+                    sp.play(soundID,1,1,0,0,1);
                     lampLight.startAnimation(fadeIn);
                     bedLight.startAnimation(fadeIn);
                     head.setVisibility(View.VISIBLE);
@@ -179,8 +187,10 @@ public class Tale01 extends BaseFragment{
                 }else if(animationFlag==8){
                     fadeIn.setStartOffset(0);
                     fadeOut.setStartOffset(0);
+                    sp.play(soundID,1,1,0,0,1);
                     lampLight.startAnimation(fadeOut);
                 }else if(animationFlag==10){
+                    sp.play(soundID,1,1,0,0,1);
                     lampLight.startAnimation(fadeIn);
                 }
             }

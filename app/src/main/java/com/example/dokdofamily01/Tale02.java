@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,6 +46,9 @@ public class Tale02 extends BaseFragment {
     MediaPlayer mp = null;
 
     ArrayList<SubTitleData> subtitleList;
+
+    SoundPool sp;
+    int soundID;
 
 
     @Override
@@ -120,6 +125,8 @@ public class Tale02 extends BaseFragment {
         seagullHand = (ImageView)layout.findViewById(R.id.seagullHand);
         seagullBody = (ImageView) layout.findViewById(R.id.seagullBody);
         star = (ImageView)layout.findViewById(R.id.star);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        soundID = sp.load(getContext(),R.raw.effect_02,1);
     }
 
     @Override
@@ -175,6 +182,7 @@ public class Tale02 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag==1) {
                     animationFlag = 2;
+                    sp.play(soundID,1,1,0,0,1);
                     seagullHand.setVisibility(View.VISIBLE);
                     byulhead.startAnimation(headDown);
                     seagullHand.startAnimation(seagullClick);

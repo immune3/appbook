@@ -27,6 +27,15 @@
                 app:scale_left="1105"
                 app:scale_top="0"/>
             <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_14_light"
+                app:scale_width="804"
+                app:scale_height="840"
+                app:scale_left="1640"
+                app:scale_top="418"/>
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_14_land"

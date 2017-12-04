@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,8 +39,11 @@ public class Tale17 extends BaseFragment {
     ImageView wave_shadow2;
     ImageView star;
 
-
     Animation fadeIn;
+
+    SoundPool sp;
+    int clickStar;
+    int appearDokdo;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -193,6 +198,11 @@ public class Tale17 extends BaseFragment {
         wave_shadow1= (ImageView)layout.findViewById(R.id.wave_shadow_01);
         wave_shadow2= (ImageView)layout.findViewById(R.id.wave_shadow_02);
         star= (ImageView)layout.findViewById(R.id.star);
+
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        clickStar = sp.load(getContext(),R.raw.effect_17_click_star,1);
+        appearDokdo = sp.load(getContext(),R.raw.effect_17_appear_dokdo,2);
+
     }
 
     @Override
@@ -216,6 +226,7 @@ public class Tale17 extends BaseFragment {
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(clickStar,1,1,0,0,1);
                 dokdo_under_sea.startAnimation(fadeIn);
             }
         });
@@ -232,6 +243,7 @@ public class Tale17 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            sp.play(appearDokdo,1,1,0,0,1);
 //            dokdo_under_sea.startAnimation(fadeIn);
 //            dokdo_under_sea.clearAnimation();
         }

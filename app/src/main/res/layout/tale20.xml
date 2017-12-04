@@ -76,13 +76,30 @@
                 app:scale_top="830"/>
 
             <ImageView
-                android:layout_width="598dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_sea"
+                app:scale_width="2560"
                 app:scale_height="468"
                 app:scale_left="0"
-                app:scale_top="1080"
-                app:scale_width="2560" />
+                app:scale_top="1080" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_20_cutain"
+                app:scale_width="2560"
+                app:scale_height="2100"
+                app:scale_left="0"
+                app:scale_top="-1240" />
+            <ImageView
+                android:alpha="0.3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_20_sample"
+                app:scale_width="2560"
+                app:scale_height="1550"
+                app:scale_left="0"
+                app:scale_top="0"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

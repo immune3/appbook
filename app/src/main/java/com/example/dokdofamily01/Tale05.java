@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -46,6 +48,9 @@ public class Tale05 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
+    SoundPool sp;
+    int moveLetters;
+    int clickLetter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -115,6 +120,10 @@ public class Tale05 extends BaseFragment {
         letter[3] = (ImageView) layout.findViewById(R.id.letter3);
         letter[4] = (ImageView) layout.findViewById(R.id.letter4);
         letter[5] = (ImageView) layout.findViewById(R.id.letter5);
+
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        moveLetters = sp.load(getContext(),R.raw.effect_05_move_letters,2);
+        clickLetter = sp.load(getContext(),R.raw.effect_05_click_letter,1);
     }
 
     @Override
@@ -150,10 +159,13 @@ public class Tale05 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag == 0){
                     animationFlag = 1;
+                    sp.play(clickLetter,1,1,0,0,1);
                     // letter[0] 사라지고 letter[1]나온다.
                     letter[5].setVisibility(View.INVISIBLE);
 //                    letter[0].startAnimation(letterDisappear);
                     letter[1].startAnimation(letterAppear);
+                }else{
+                    sp.play(clickLetter,1,1,0,0,1);
                 }
             }
         });
@@ -165,6 +177,7 @@ public class Tale05 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag){
                 case 1 :
+                    sp.play(moveLetters,1,1,0,0,1);
                     letter[1].setVisibility(View.VISIBLE);
                     break;
                 case 2:
@@ -201,6 +214,7 @@ public class Tale05 extends BaseFragment {
                     // letter[1] 사라지고 letter[2]나온다.
                     animationFlag=3;
 //                    letter[1].startAnimation(letterDisappear);
+                    sp.play(moveLetters,1,1,0,0,1);
                     letter[2].startAnimation(letterAppear);
                     break;
                 case 3 :
@@ -214,6 +228,7 @@ public class Tale05 extends BaseFragment {
                     // letter[2] 사라지고 letter[3]나온다.
                     animationFlag=5;
 //                    letter[2].startAnimation(letterDisappear);
+                    sp.play(moveLetters,1,1,0,0,1);
                     letter[3].startAnimation(letterAppear);
                     break;
                 case 5 :
@@ -227,6 +242,7 @@ public class Tale05 extends BaseFragment {
                     // letter[3] 사라지고 letter[4]나온다.
                     animationFlag=7;
 //                    letter[3].startAnimation(letterDisappear);
+                    sp.play(moveLetters,1,1,0,0,1);
                     letter[4].startAnimation(letterAppear);
                     break;
                 case 7 :
@@ -240,6 +256,7 @@ public class Tale05 extends BaseFragment {
                     // letter[4] 사라지고 letter[5]나온다.
                     animationFlag=9;
 //                    letter[4].startAnimation(letterDisappear);
+                    sp.play(moveLetters,1,1,0,0,1);
                     letter[5].startAnimation(letterAppear);
                     break;
                 case 9:

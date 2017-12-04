@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +44,10 @@ public class Tale15 extends BaseFragment {
 
     Animation fadeIn;
     Animation fadeOut;
+
+    SoundPool sp;
+    int clickFish;
+    int moveMan;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -201,6 +207,11 @@ public class Tale15 extends BaseFragment {
         manImage4 = (ImageView) layout.findViewById(R.id.manImage4);
         fishImg = (ImageView) layout.findViewById(R.id.fish);
 
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        clickFish = sp.load(getContext(),R.raw.effect_15_fish,1);
+        moveMan = sp.load(getContext(),R.raw.effect_15_man,2);
+
+
     }
 
     @Override
@@ -229,12 +240,11 @@ public class Tale15 extends BaseFragment {
                 if(animationFlag == 0){
                     animationFlag = 1;
                     //man1 사라지고 man2나온다.
+                    sp.play(clickFish,1,1,0,0,1);
                     manImage4.setVisibility(View.INVISIBLE);
-                    manImage1.startAnimation(fadeOut);
-                    manImage2.startAnimation(fadeIn);
+                    manImage1.startAnimation(fadeIn);
 
                 }else{
-                    Toast.makeText(getContext(),"TEST",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -247,12 +257,15 @@ public class Tale15 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag){
                 case 1 :
+                    manImage1.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
                     manImage2.setVisibility(View.VISIBLE);
                     break;
-                case 2:
+                case 5:
                     manImage3.setVisibility(View.VISIBLE);
                     break;
-                case 4:
+                case 7:
                     manImage4.setVisibility(View.VISIBLE);
                     break;
 
@@ -269,32 +282,41 @@ public class Tale15 extends BaseFragment {
                 case 1:
                     // man2 사라지고 man3나온다.
                     animationFlag=2;
-                    manImage1.setVisibility(View.INVISIBLE);
-                    manImage2.clearAnimation();
                     manImage1.clearAnimation();
                     break;
                 case 2:
                     animationFlag=3;
-                    manImage2.startAnimation(fadeOut);
-                    manImage3.startAnimation(fadeIn);
+                    manImage1.startAnimation(fadeOut);
+                    manImage2.startAnimation(fadeIn);
                     break;
                 case 3 :
                     // man3 사라지고 man4 나온다.
                     animationFlag=4;
+                    manImage1.setVisibility(View.INVISIBLE);
+                    manImage1.clearAnimation();
+                    manImage2.clearAnimation();
+                    break;
+                case 4:
+                    animationFlag=5;
+                    manImage2.startAnimation(fadeOut);
+                    manImage3.startAnimation(fadeIn);
+                    break;
+                case 5:
+                    animationFlag=6;
                     manImage2.setVisibility(View.INVISIBLE);
                     manImage2.clearAnimation();
                     manImage3.clearAnimation();
                     break;
-                case 4:
-                    animationFlag=5;
+                case 6:
+                    animationFlag=7;
+                    sp.play(moveMan,1,1,0,0,1);
                     manImage3.startAnimation(fadeOut);
                     manImage4.startAnimation(fadeIn);
                     break;
-                case 5:
+                case 7:
                     animationFlag=0;
                     manImage3.setVisibility(View.INVISIBLE);
                     manImage3.clearAnimation();
-                    manImage4.setVisibility(View.VISIBLE);
                     manImage4.clearAnimation();
                     break;
             }

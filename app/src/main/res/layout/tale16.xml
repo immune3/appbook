@@ -45,6 +45,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/img_16_bubble"
+                app:scale_width="84"
+                app:scale_height="82"
+                app:scale_left="1255"
+                app:scale_top="330"/>
+            <ImageView
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_16_bomb"
+                app:scale_width="156"
+                app:scale_height="178"
+                app:scale_left="1235"
+                app:scale_top="280"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/img_16_wave"
                 app:scale_width="2560"
                 app:scale_height="644"

@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 /**
  * Created by heronation on 2017-11-17.
  */
-public class CustomScrollView extends HorizontalScrollView{
+public class CustomScrollView extends ScrollView{
     private boolean enableScrolling = true;
     public CustomScrollView(Context context) {
         super(context);
