@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -18,24 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
-import com.ssomai.android.scalablelayout.ScalableLayout;
-
-import static android.content.ContentValues.TAG;
-import static java.lang.Integer.parseInt;
 
 /**
  * Created by heronation on 2017-11-06.
@@ -314,7 +299,7 @@ public class Tale01 extends BaseFragment{
                 int playingTime = mp.getCurrentPosition();
                 Message msg = new Message();
 
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
+               finishTime = subtitleList.get(subtitleIndex).getFinishTime();
 
                 if(playingTime <= finishTime){
                     msg.what = subtitleIndex;

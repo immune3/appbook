@@ -8,8 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -28,6 +32,16 @@ public class Tale13 extends BaseFragment {
     MediaPlayer mp = null;
 
     ArrayList<SubTitleData> subtitleList;
+
+    private android.widget.ImageView ivBuyl13;
+    private android.widget.ImageView ivWall13;
+    private android.widget.ImageView ivBottom13;
+
+    private com.ssomai.android.scalablelayout.ScalableLayout sl;
+    private CustomScrollView sv;
+
+    private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation;
+    int animationFlag = 0;
 
 
     @Override
@@ -175,11 +189,42 @@ public class Tale13 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
+        this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
+        this.ivBottom13 = (ImageView) layout.findViewById(R.id.ivBottom13);
+        this.ivWall13 = (ImageView) layout.findViewById(R.id.ivWall13);
+        this.ivBuyl13 = (ImageView) layout.findViewById(R.id.ivBuyl13);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                bottomAnimation = new TranslateAnimation(-ivBottom13.getWidth(), 0, 0, 0);
+                bottomAnimation.setDuration(2500);
+                bottomAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                wallAnimation = new TranslateAnimation(ivWall13.getWidth(), 0, 0, 0);
+                wallAnimation.setDuration(2000);
+                wallAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                characterAnimation = new TranslateAnimation(-ivBottom13.getWidth(), 0, 0, 0);
+                characterAnimation.setDuration(3000);
+                characterAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                if(animationFlag == 0){
+                    animationFlag = 1;
+                    ivBottom13.startAnimation(bottomAnimation);
+                    ivWall13.startAnimation(wallAnimation);
+                    ivBuyl13.startAnimation(characterAnimation);
+
+                }
+            }
+        });
     }
 
     @Override
