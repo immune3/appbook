@@ -20,6 +20,7 @@
 
 
             <ImageView
+                android:id="@+id/ivBuyl13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_byul"
@@ -110,6 +111,7 @@
                 app:scale_top="400"/>
 
             <ImageView
+                android:id="@+id/ivWall13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wall"
@@ -119,6 +121,7 @@
                 app:scale_top="110"/>
 
             <ImageView
+                android:id="@+id/ivBottom13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bottom"
@@ -195,10 +198,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wave_04"
-                app:scale_width="2560"
                 app:scale_height="450"
                 app:scale_left="0"
-                app:scale_top="890"/>
+                app:scale_top="890"
+                app:scale_width="2560" />
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

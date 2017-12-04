@@ -10,12 +10,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.dokdofamily01.Data.SubTitleData;
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -34,16 +36,24 @@ public class Tale15 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
-    ImageView manImage1;
-    ImageView manImage2;
-    ImageView manImage3;
-    ImageView manImage4;
-    ImageView fishImg;
+    private android.widget.ImageView ivCave15;
+    private android.widget.ImageView manImage1;
+    private android.widget.ImageView manImage2;
+    private android.widget.ImageView manImage3;
+    private android.widget.ImageView manImage4;
+    private android.widget.ImageView ivByul15;
+    private android.widget.ImageView seaweadImage;
+    private android.widget.ImageView fish;
+    private com.ssomai.android.scalablelayout.ScalableLayout sl;
+    private CustomScrollView sv;
+    private ImageView ivLand15;
 
     int animationFlag = 0;
 
     Animation fadeIn;
     Animation fadeOut;
+
+    TranslateAnimation landAnimation, byulAnimation, caveAnimation;
 
     SoundPool sp;
     int clickFish;
@@ -69,6 +79,12 @@ public class Tale15 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(), 0, 500);
+
+                if(landAnimation!=null) {
+                    ivLand15.startAnimation(landAnimation);
+                    ivCave15.startAnimation(caveAnimation);
+                    ivByul15.startAnimation(byulAnimation);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -198,30 +214,39 @@ public class Tale15 extends BaseFragment {
     }
 
     @Override
-    public void bindViews() {
-        super.bindViews();
-
-        manImage1 = (ImageView) layout.findViewById(R.id.manImage1);
-        manImage2 = (ImageView) layout.findViewById(R.id.manImage2);
-        manImage3 = (ImageView) layout.findViewById(R.id.manImage3);
-        manImage4 = (ImageView) layout.findViewById(R.id.manImage4);
-        fishImg = (ImageView) layout.findViewById(R.id.fish);
-
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
-        clickFish = sp.load(getContext(),R.raw.effect_15_fish,1);
-        moveMan = sp.load(getContext(),R.raw.effect_15_man,2);
-
-
-    }
-
-    @Override
     public void setValues() {
         super.setValues();
+        setAnimation();
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+
+                landAnimation = new TranslateAnimation(0, 0, ivLand15.getHeight(), 0);
+                landAnimation.setDuration(2500);
+                landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                caveAnimation = new TranslateAnimation(ivCave15.getWidth(), 0, 0, 0);
+                caveAnimation.setStartOffset(500);
+                caveAnimation.setDuration(2500);
+                caveAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulAnimation = new TranslateAnimation(-ivByul15.getWidth(), 0, 0, 0);
+                byulAnimation.setStartOffset(1000);
+                byulAnimation.setDuration(2500);
+                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                ivLand15.startAnimation(landAnimation);
+                ivCave15.startAnimation(caveAnimation);
+                ivByul15.startAnimation(byulAnimation);
+            }
+        });
+
         fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadein);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
@@ -234,7 +259,7 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
-        fishImg.setOnClickListener(new View.OnClickListener() {
+        fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(animationFlag == 0){
@@ -327,5 +352,28 @@ public class Tale15 extends BaseFragment {
         public void onAnimationRepeat(Animation animation) {
 
         }
+
+
+    }
+
+    @Override
+    public void bindViews() {
+        super.bindViews();
+
+        this.ivLand15 = (ImageView) layout.findViewById(R.id.ivLand15);
+        this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
+        this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
+        this.fish = (ImageView) layout.findViewById(R.id.fish);
+        this.seaweadImage = (ImageView) layout.findViewById(R.id.seaweadImage);
+        this.manImage4 = (ImageView) layout.findViewById(R.id.manImage4);
+        this.manImage3 = (ImageView) layout.findViewById(R.id.manImage3);
+        this.manImage2 = (ImageView) layout.findViewById(R.id.manImage2);
+        this.manImage1 = (ImageView) layout.findViewById(R.id.manImage1);
+        this.ivCave15 = (ImageView) layout.findViewById(R.id.ivCave15);
+        this.ivByul15 = (ImageView) layout.findViewById(R.id.ivByul15);
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
+        clickFish = sp.load(getContext(),R.raw.effect_15_fish,1);
+        moveMan = sp.load(getContext(),R.raw.effect_15_man,2);
+
     }
 }
