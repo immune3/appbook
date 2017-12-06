@@ -274,6 +274,9 @@ public class Tale08 extends BaseFragment {
                 eyeBlack.setVisibility(View.INVISIBLE);
                 eyeWhite.setVisibility(View.INVISIBLE);
                 byul.setVisibility(View.INVISIBLE);
+
+//                byul.setVisibility(View.INVISIBLE);
+
                 if(animationFlag == 0){
                     animationFlag = 1;
                     plant.startAnimation(plantAnimation);

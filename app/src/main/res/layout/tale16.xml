@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/dokdo_father"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_dokdo_father"
@@ -27,6 +28,7 @@
                 app:scale_left="0"
                 app:scale_top="385"/>
             <ImageView
+                android:id="@+id/dokdo_mom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_dokdo_mom"
@@ -35,6 +37,7 @@
                 app:scale_left="1350"
                 app:scale_top="410"/>
             <ImageView
+                android:id="@+id/moon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_moon"
@@ -43,6 +46,7 @@
                 app:scale_left="995"
                 app:scale_top="0"/>
             <ImageView
+                android:id="@+id/bubble"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_bubble"
@@ -51,6 +55,7 @@
                 app:scale_left="1255"
                 app:scale_top="330"/>
             <ImageView
+                android:id="@+id/bomb"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +65,7 @@
                 app:scale_left="1235"
                 app:scale_top="280"/>
             <ImageView
+                android:id="@+id/wave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_16_wave"

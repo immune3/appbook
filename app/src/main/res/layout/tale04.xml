@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/img_04_background"
             app:scale_base_width="2560"
-            app:scale_base_height="1544">
+            app:scale_base_height="1550">
 
             <ImageView
                 android:id="@+id/sun"
@@ -37,12 +37,13 @@
                 app:scale_left="25"
                 app:scale_top="308"/>
             <ImageView
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_04_sea"
-                app:scale_width="2560"
-                app:scale_height="1544"
-                app:scale_left="0"
+                app:scale_width="2600"
+                app:scale_height="1570"
+                app:scale_left="-25"
                 app:scale_top="0"/>
             <ImageView
                 android:id="@+id/sunLight"
@@ -60,8 +61,8 @@
                 android:src="@drawable/img_04_seagull"
                 app:scale_width="1155"
                 app:scale_height="674"
-                app:scale_left="1393"
-                app:scale_top="883"/>
+                app:scale_left="1413"
+                app:scale_top="893"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

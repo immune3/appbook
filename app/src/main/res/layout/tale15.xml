@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/ivCave15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_cave"
@@ -26,7 +27,9 @@
                 app:scale_height="1278"
                 app:scale_left="1135"
                 app:scale_top="0"/>
+
             <ImageView
+                android:id="@+id/ivLand15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_land"
@@ -34,7 +37,9 @@
                 app:scale_height="1123"
                 app:scale_left="0"
                 app:scale_top="425"/>
+
             <ImageView
+                android:id="@+id/ivByul15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_15_byul"
@@ -111,9 +116,6 @@
                 app:scale_top="175"
                 android:id="@+id/fish"
                 />
-
-
-
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
