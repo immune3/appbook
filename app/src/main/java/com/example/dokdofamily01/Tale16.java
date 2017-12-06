@@ -41,6 +41,7 @@ public class Tale16 extends BaseFragment {
     TranslateAnimation dokdoFatherAppearAnimation;
     TranslateAnimation dokdoMomAppearAnimation;
     TranslateAnimation waveAppearAnimation;
+    TranslateAnimation wavingAnimation;
     ScaleAnimation bubbleScaleAni;
     ScaleAnimation bubbleBombScaleAni;
     AlphaAnimation blink;
@@ -257,10 +258,31 @@ public class Tale16 extends BaseFragment {
                 dokdoMomAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 dokdoMomAppearAnimation.setFillAfter(true);
 
+                wavingAnimation = new TranslateAnimation(0, 0, 0, wave.getHeight()*0.05f);
+                wavingAnimation.setDuration(2000);
+                wavingAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingAnimation.setRepeatCount(Animation.INFINITE);
+                wavingAnimation.setRepeatMode(Animation.REVERSE);
+
                 waveAppearAnimation = new TranslateAnimation(0, 0, wave.getHeight(), 0);
                 waveAppearAnimation.setDuration(1500);
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
+                waveAppearAnimation.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        wave.startAnimation(wavingAnimation);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+                });
 
                 bubbleScaleAni = new ScaleAnimation(1,0.7f,1,0.7f,0,0);
                 bubbleScaleAni.setDuration(800);
