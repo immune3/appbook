@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -37,6 +41,14 @@ public class Tale16 extends BaseFragment {
     TranslateAnimation dokdoFatherAppearAnimation;
     TranslateAnimation dokdoMomAppearAnimation;
     TranslateAnimation waveAppearAnimation;
+    ScaleAnimation bubbleScaleAni;
+    ScaleAnimation bubbleBombScaleAni;
+    AlphaAnimation blink;
+    AlphaAnimation fadein;
+    AlphaAnimation fadeout;
+    AnimationSet bubbleAniSet = new AnimationSet(false);
+    AnimationSet bubbleBombAniSet = new AnimationSet(false);
+
     int animationFlag=0;
 
     boolean isAttached = false;
@@ -66,7 +78,7 @@ public class Tale16 extends BaseFragment {
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
 
-                if(animationFlag == 0){
+                if(animationFlag == 0 && moonAppearAnimation != null){
                     animationFlag = 1;
                     moon.startAnimation(moonAppearAnimation);
                     bubble.startAnimation(moonAppearAnimation);
@@ -250,6 +262,40 @@ public class Tale16 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
+                bubbleScaleAni = new ScaleAnimation(1,0.7f,1,0.7f,0,0);
+                bubbleScaleAni.setDuration(800);
+                bubbleScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                bubbleScaleAni.setRepeatCount(Animation.INFINITE);
+                bubbleScaleAni.setRepeatMode(Animation.REVERSE);
+
+                bubbleAniSet.addAnimation(bubbleScaleAni);
+                bubbleAniSet.addAnimation(blink);
+
+                bubbleBombScaleAni = new ScaleAnimation(1,0.7f,1,0.7f,0,0);
+                bubbleBombScaleAni.setDuration(1000);
+                bubbleBombScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                bubbleBombScaleAni.setRepeatCount(4);
+                bubbleBombScaleAni.setRepeatMode(Animation.REVERSE);
+                bubbleBombScaleAni.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bubble.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        bomb.setVisibility(View.VISIBLE);
+                        bomb.startAnimation(fadein);
+                    }
+                });
+
+                bubbleBombAniSet.addAnimation(bubbleBombScaleAni);
+                bubbleBombAniSet.addAnimation(fadeout);
+
                 if(animationFlag == 0){
                     animationFlag = 1;
                     moon.startAnimation(moonAppearAnimation);
@@ -265,11 +311,32 @@ public class Tale16 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setStartOffset(4000);
+        fadein.setDuration(300);
+
+        fadeout = new AlphaAnimation(1, 0);
+        fadeout.setDuration(300);
+        fadeout.setStartOffset(4000);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(1000);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        bubble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bubble.clearAnimation();
+                bubble.startAnimation(bubbleBombAniSet);
+            }
+        });
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
@@ -277,6 +344,7 @@ public class Tale16 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             animationFlag = 0;
+            bubble.startAnimation(bubbleAniSet);
         }
 
         @Override
@@ -285,6 +353,7 @@ public class Tale16 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
+            bomb.setVisibility(View.INVISIBLE);
         }
 
     }

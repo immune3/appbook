@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -40,6 +41,9 @@ public class Tale11 extends BaseFragment {
     TranslateAnimation dokdoAnimation;
     TranslateAnimation originalFlowerAnimation;
     TranslateAnimation byulAnimation;
+    TranslateAnimation beeAnimation;
+    AlphaAnimation beeButterFlyFadeIn;
+    AlphaAnimation blink;
     Animation flowerAnimation;
     int animationFlag = 0;
 
@@ -71,10 +75,11 @@ public class Tale11 extends BaseFragment {
                 timer.schedule(new MyThread(),0, 500);
 
 
-                if(animationFlag == 0){
+                if(animationFlag == 0 && originalFlowerAnimation != null){
                     animationFlag = 1;
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
+                    bee2.startAnimation(beeAnimation);
                 }
 
             } else {
@@ -233,11 +238,30 @@ public class Tale11 extends BaseFragment {
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setInterpolator(new BounceInterpolator());
 
+                beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight()*2), 0);
+                beeAnimation.setDuration(1500);
+                beeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                beeAnimation.setStartOffset(500);
+                beeAnimation.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bee2.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
 
                 if(animationFlag == 0){
                     animationFlag = 1;
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
+                    bee2.startAnimation(beeAnimation);
                 }
 
             }
@@ -247,14 +271,50 @@ public class Tale11 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+        beeButterFlyFadeIn = new AlphaAnimation(0, 1);
+        beeButterFlyFadeIn.setDuration(600);
+        beeButterFlyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
+        beeButterFlyFadeIn.setAnimationListener(new MyAnimationListener(){
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                byul.setVisibility(View.VISIBLE);
+                byul.startAnimation(byulAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                bee2.clearAnimation();
+            }
+        });
+
         flowerAnimation = new AlphaAnimation(0, 1);
         flowerAnimation.setStartOffset(200);
         flowerAnimation.setDuration(300);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(1000);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        bee2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byul.setVisibility(View.INVISIBLE);
+                bee1.setVisibility(View.VISIBLE);
+                butterfly.setVisibility(View.VISIBLE);
+                bee1.startAnimation(beeButterFlyFadeIn);
+                butterfly.startAnimation(beeButterFlyFadeIn);
+            }
+        });
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
@@ -262,10 +322,8 @@ public class Tale11 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             animationFlag = 0;
-            byul.setVisibility(View.VISIBLE);
             cutFlower.setVisibility(View.VISIBLE);
             flowers.setVisibility(View.VISIBLE);
-            byul.startAnimation(byulAnimation);
             flowers.startAnimation(flowerAnimation);
         }
 
@@ -275,9 +333,11 @@ public class Tale11 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            byul.setVisibility(View.INVISIBLE);
             cutFlower.setVisibility(View.INVISIBLE);
             flowers.setVisibility(View.INVISIBLE);
+            byul.setVisibility(View.INVISIBLE);
+            bee1.setVisibility(View.INVISIBLE);
+            butterfly.setVisibility(View.INVISIBLE);
         }
 
     }
