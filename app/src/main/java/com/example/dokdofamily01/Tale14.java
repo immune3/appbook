@@ -48,6 +48,7 @@ public class Tale14 extends BaseFragment {
     TranslateAnimation byulAppearAni;
     TranslateAnimation landAppearAni;
     AlphaAnimation fadein;
+    AlphaAnimation lightFadein;
     AlphaAnimation blink;
     AlphaAnimation sqeedHandFadein;
     ScaleAnimation sqeedHandScaleAni;
@@ -277,8 +278,7 @@ public class Tale14 extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         light.setVisibility(View.VISIBLE);
-                        bell.startAnimation(blink);
-                        light.startAnimation(fadein);
+                        light.startAnimation(lightFadein);
                     }
 
                     @Override
@@ -309,6 +309,24 @@ public class Tale14 extends BaseFragment {
         super.setAnimation();
         fadein = new AlphaAnimation(0, 1);
         fadein.setDuration(1500);
+
+        lightFadein = new AlphaAnimation(0, 1);
+        lightFadein.setStartOffset(1000);
+        lightFadein.setDuration(1500);
+        lightFadein.setAnimationListener(new MyAnimationListener(){
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                bell.startAnimation(blink);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+        });
 
         sqeedHandFadein = new AlphaAnimation(0, 1);
         sqeedHandFadein.setDuration(300);

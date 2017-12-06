@@ -48,7 +48,26 @@
                 app:scale_height="200"
                 app:scale_left="1243"
                 app:scale_top="439"/>
-
+            <ImageView
+                android:id="@+id/eyeWhite"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_eye_white"
+                app:scale_width="350"
+                app:scale_height="161"
+                app:scale_left="702"
+                app:scale_top="550"/>
+            <ImageView
+                android:id="@+id/eyeBlack"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_eye_black"
+                app:scale_width="350"
+                app:scale_height="161"
+                app:scale_left="702"
+                app:scale_top="550"/>
             <ImageView
                 android:visibility="invisible"
                 android:id="@+id/treeBody"
@@ -80,26 +99,8 @@
                 app:scale_left="227"
                 app:scale_top="158"/>
 
-            <ImageView
-                android:id="@+id/eyeWhite"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_08_eye_white"
-                app:scale_width="350"
-                app:scale_height="161"
-                app:scale_left="702"
-                app:scale_top="550"/>
-            <ImageView
-                android:id="@+id/eyeBlack"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_08_eye_black"
-                app:scale_width="350"
-                app:scale_height="161"
-                app:scale_left="702"
-                app:scale_top="550"/>
+
+
 
 
 

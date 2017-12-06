@@ -8,6 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +26,18 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale19 extends BaseFragment {
+    ImageView byul;
+    ImageView starLight;
+    ImageView star1;
+    ImageView star2;
+    ImageView star3;
+    ImageView star4;
+    ImageView star5;
+    ImageView star6;
+    ImageView light;
+
+    AlphaAnimation blink;
+    int animationFlag = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -178,16 +194,41 @@ public class Tale19 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        byul = (ImageView)layout.findViewById(R.id.byul);
+        starLight = (ImageView)layout.findViewById(R.id.starLight);
+        star1 = (ImageView)layout.findViewById(R.id.star1);
+        star2 = (ImageView)layout.findViewById(R.id.star2);
+        star3 = (ImageView)layout.findViewById(R.id.star3);
+        star4 = (ImageView)layout.findViewById(R.id.star4);
+        star5 = (ImageView)layout.findViewById(R.id.star5);
+        star6 = (ImageView)layout.findViewById(R.id.star6);
+        light = (ImageView)layout.findViewById(R.id.light);
+
+
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        light.post(new Runnable() {
+            @Override
+            public void run() {
+//                if(animationFlag == 0){
+//                    animationFlag = 1;
+//                    starLight.startAnimation(blink);
+//                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        blink = new AlphaAnimation(0.6f, 0);
+        blink.setDuration(1000);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override

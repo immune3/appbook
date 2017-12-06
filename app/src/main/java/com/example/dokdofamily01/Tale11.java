@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -42,9 +46,15 @@ public class Tale11 extends BaseFragment {
     TranslateAnimation originalFlowerAnimation;
     TranslateAnimation byulAnimation;
     TranslateAnimation beeAnimation;
-    AlphaAnimation beeButterFlyFadeIn;
+    TranslateAnimation beeTranslate;
+    TranslateAnimation butterflyTranslate;
+    RotateAnimation beeRotate;
+    RotateAnimation butterflyRotate;
+    AlphaAnimation beeButterflyFadeIn;
     AlphaAnimation blink;
     Animation flowerAnimation;
+    AnimationSet hideBeeAniSet = new AnimationSet(false);
+    AnimationSet hideButterflyAniSet = new AnimationSet(false);
     int animationFlag = 0;
 
     boolean isAttached = false;
@@ -257,8 +267,49 @@ public class Tale11 extends BaseFragment {
                     }
                 });
 
+                beeRotate = new RotateAnimation(-20,20,bee1.getWidth()/2,bee1.getHeight()/2);
+                beeRotate.setDuration(1500);
+                beeRotate.setStartOffset(500);
+                beeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+//                beeRotate.setInterpolator(new AnticipateOvershootInterpolator());
+                beeRotate.setRepeatCount(Animation.INFINITE);
+                beeRotate.setRepeatMode(Animation.REVERSE);
+
+                beeTranslate = new TranslateAnimation(0, 0,bee1.getHeight()/3,-(bee1.getHeight()/2));
+                beeTranslate.setDuration(2000);
+                beeTranslate.setStartOffset(600);
+                beeTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
+                beeTranslate.setRepeatCount(Animation.INFINITE);
+                beeTranslate.setRepeatMode(Animation.REVERSE);
+
+
+                butterflyRotate  = new RotateAnimation(50,10,butterfly.getWidth()/1.5f,butterfly.getHeight()*0.5f);
+                butterflyRotate.setDuration(1000);
+                butterflyRotate.setStartOffset(500);
+                butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+//                butterflyRotate.setInterpolator(new AnticipateOvershootInterpolator());
+                butterflyRotate.setRepeatCount(Animation.INFINITE);
+                butterflyRotate.setRepeatMode(Animation.REVERSE);
+
+                butterflyTranslate = new TranslateAnimation(0, 0,butterfly.getHeight()/6,0);
+                butterflyTranslate.setDuration(3000);
+                butterflyTranslate.setStartOffset(600);
+                butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
+                butterflyTranslate.setRepeatCount(Animation.INFINITE);
+                butterflyTranslate.setRepeatMode(Animation.REVERSE);
+
+                hideBeeAniSet.addAnimation(beeButterflyFadeIn);
+                hideBeeAniSet.addAnimation(beeRotate);
+                hideBeeAniSet.addAnimation(beeTranslate);
+
+                hideButterflyAniSet.addAnimation(beeButterflyFadeIn);
+                hideButterflyAniSet.addAnimation(butterflyRotate);
+                hideButterflyAniSet.addAnimation(butterflyTranslate);
+
+
                 if(animationFlag == 0){
                     animationFlag = 1;
+
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
                     bee2.startAnimation(beeAnimation);
@@ -271,10 +322,10 @@ public class Tale11 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        beeButterFlyFadeIn = new AlphaAnimation(0, 1);
-        beeButterFlyFadeIn.setDuration(600);
-        beeButterFlyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
-        beeButterFlyFadeIn.setAnimationListener(new MyAnimationListener(){
+        beeButterflyFadeIn = new AlphaAnimation(0, 1);
+        beeButterflyFadeIn.setDuration(600);
+        beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
+        beeButterflyFadeIn.setAnimationListener(new MyAnimationListener(){
             @Override
             public void onAnimationEnd(Animation animation) {
                 byul.setVisibility(View.VISIBLE);
@@ -311,8 +362,8 @@ public class Tale11 extends BaseFragment {
                 byul.setVisibility(View.INVISIBLE);
                 bee1.setVisibility(View.VISIBLE);
                 butterfly.setVisibility(View.VISIBLE);
-                bee1.startAnimation(beeButterFlyFadeIn);
-                butterfly.startAnimation(beeButterFlyFadeIn);
+                bee1.startAnimation(hideBeeAniSet);
+                butterfly.startAnimation(hideButterflyAniSet);
             }
         });
     }
@@ -333,6 +384,8 @@ public class Tale11 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
+            bee1.clearAnimation();
+            butterfly.clearAnimation();
             cutFlower.setVisibility(View.INVISIBLE);
             flowers.setVisibility(View.INVISIBLE);
             byul.setVisibility(View.INVISIBLE);
