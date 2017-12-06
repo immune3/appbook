@@ -20,6 +20,8 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/blinkStar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_star"
@@ -92,6 +94,7 @@
                 app:scale_left="1130"
                 app:scale_top="455"/>
             <ImageView
+                android:id="@+id/wingLeft1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_wing_left_01"
@@ -100,6 +103,7 @@
                 app:scale_left="30"
                 app:scale_top="255"/>
             <ImageView
+                android:id="@+id/wingRight1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_wing_right_01"
@@ -108,6 +112,7 @@
                 app:scale_left="890"
                 app:scale_top="130"/>
             <ImageView
+                android:id="@+id/wingRight2"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,6 +131,7 @@
                 app:scale_left="280"
                 app:scale_top="460"/>
             <ImageView
+                android:id="@+id/wingLeft2"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

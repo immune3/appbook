@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
@@ -37,6 +38,8 @@ public class Tale02 extends BaseFragment {
     TranslateAnimation headUp;
     TranslateAnimation headDown;
     Animation seagullAppear;
+    Animation fadeIn;
+    AnimationSet animSet;
     RotateAnimation seagullClick;
     int width;
     int height;
@@ -72,7 +75,6 @@ public class Tale02 extends BaseFragment {
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
                 byulhead.startAnimation(headUp);
-//                seagullHand.startAnimation(seagullAppear);
                 seagullBody.setAnimation(seagullAppear);
 
 
@@ -147,7 +149,7 @@ public class Tale02 extends BaseFragment {
                 seagullClick.setDuration(300);
                 seagullClick.setRepeatCount(1);
                 seagullClick.setRepeatMode(Animation.REVERSE);
-                seagullClick.setFillAfter(true);
+//                seagullClick.setFillAfter(true);
                 seagullClick.setInterpolator(new AccelerateDecelerateInterpolator());
                 headUp = new TranslateAnimation(0,0,byulhead.getHeight(),0);
                 headUp.setDuration(3000);
@@ -160,8 +162,14 @@ public class Tale02 extends BaseFragment {
                 headDown.setInterpolator(new AccelerateDecelerateInterpolator());
                 headDown.setAnimationListener(new MyAnimationListener());
 
+                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+
+                animSet = new AnimationSet(true);
+                animSet.setInterpolator(new AccelerateDecelerateInterpolator());
+                animSet.addAnimation(seagullClick);
+                animSet.addAnimation(fadeIn);
+
                 byulhead.startAnimation(headUp);
-//                seagullHand.startAnimation(seagullAppear);
                 seagullBody.setAnimation(seagullAppear);
             }
         });
@@ -185,7 +193,7 @@ public class Tale02 extends BaseFragment {
                     sp.play(soundID,1,1,0,0,1);
                     seagullHand.setVisibility(View.VISIBLE);
                     byulhead.startAnimation(headDown);
-                    seagullHand.startAnimation(seagullClick);
+                    seagullHand.startAnimation(animSet);
                 }
             }
         });
@@ -206,8 +214,8 @@ public class Tale02 extends BaseFragment {
                     break;
                 case 3:
                     animationFlag=1;
-                    seagullHand.clearAnimation();
-                    seagullHand.setVisibility(View.INVISIBLE);
+//                    seagullHand.clearAnimation();
+//                    seagullHand.setVisibility(View.INVISIBLE);
                     break;
             }
         }

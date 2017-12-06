@@ -31,11 +31,13 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 public class Tale06 extends BaseFragment {
     ImageView sea;
     ImageView waveshadow;
+    ImageView momDokdo;
     ImageView[] smallwave = new ImageView[4];
     ImageView[] bigwave = new ImageView[3];
     ImageView[] seagull = new ImageView[2];
 
     TranslateAnimation waveAppear;
+    TranslateAnimation momAppear;
     Animation fadeIn;
     int animationFlag = 0;
 
@@ -66,7 +68,29 @@ public class Tale06 extends BaseFragment {
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
 
-                sea.startAnimation(waveAppear);
+                if(animationFlag==0) {
+                    animationFlag=1;
+                    waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
+                    waveAppear.setDuration(1000);
+                    waveAppear.setFillAfter(true);
+                    waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                    waveAppear.setAnimationListener(new MyAnimationListener());
+
+                    momDokdo.setVisibility(View.INVISIBLE);
+                    smallwave[0].setVisibility(View.INVISIBLE);
+                    smallwave[1].setVisibility(View.INVISIBLE);
+                    smallwave[2].setVisibility(View.INVISIBLE);
+                    smallwave[3].setVisibility(View.INVISIBLE);
+                    waveshadow.setVisibility(View.INVISIBLE);
+                    seagull[0].setVisibility(View.INVISIBLE);
+                    seagull[1].setVisibility(View.INVISIBLE);
+
+                    sea.startAnimation(waveAppear);
+                    bigwave[0].startAnimation(waveAppear);
+                    bigwave[1].startAnimation(waveAppear);
+                    bigwave[2].startAnimation(waveAppear);
+                    momDokdo.startAnimation(momAppear);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -128,7 +152,7 @@ public class Tale06 extends BaseFragment {
         bigwave[2] = (ImageView)layout.findViewById(R.id.bigwave3);
         seagull[0] = (ImageView)layout.findViewById(R.id.seagull1);
         seagull[1] = (ImageView)layout.findViewById(R.id.seagull2);
-
+        momDokdo = (ImageView)layout.findViewById(R.id.momDokdo);
     }
 
     @Override
@@ -145,12 +169,26 @@ public class Tale06 extends BaseFragment {
                     waveAppear.setFillAfter(true);
                     waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                     waveAppear.setAnimationListener(new MyAnimationListener());
+                    momAppear = new TranslateAnimation(-momDokdo.getWidth(),0,0,0);
+                    momAppear.setStartOffset(500);
+                    momAppear.setDuration(1000);
+                    momAppear.setFillAfter(true);
+                    momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                    momDokdo.setVisibility(View.INVISIBLE);
+                    smallwave[0].setVisibility(View.INVISIBLE);
+                    smallwave[1].setVisibility(View.INVISIBLE);
+                    smallwave[2].setVisibility(View.INVISIBLE);
+                    smallwave[3].setVisibility(View.INVISIBLE);
+                    waveshadow.setVisibility(View.INVISIBLE);
+                    seagull[0].setVisibility(View.INVISIBLE);
+                    seagull[1].setVisibility(View.INVISIBLE);
 
                     sea.startAnimation(waveAppear);
                     bigwave[0].startAnimation(waveAppear);
                     bigwave[1].startAnimation(waveAppear);
                     bigwave[2].startAnimation(waveAppear);
-                    Log.i("animationFlag", ""+animationFlag);
+                    momDokdo.startAnimation(momAppear);
                 }
             }
         });
@@ -160,7 +198,7 @@ public class Tale06 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
         fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
-        fadeIn.setFillAfter(true);
+//        fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
     }
 
@@ -254,6 +292,20 @@ public class Tale06 extends BaseFragment {
         @Override
         public void onAnimationStart(Animation animation) {
             super.onAnimationStart(animation);
+            switch (animationFlag){
+                case 1:
+                    momDokdo.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    smallwave[0].setVisibility(View.VISIBLE);
+                    smallwave[1].setVisibility(View.VISIBLE);
+                    smallwave[2].setVisibility(View.VISIBLE);
+                    smallwave[3].setVisibility(View.VISIBLE);
+                    waveshadow.setVisibility(View.VISIBLE);
+                    seagull[0].setVisibility(View.VISIBLE);
+                    seagull[1].setVisibility(View.VISIBLE);
+                    break;
+            }
         }
 
         @Override
@@ -261,8 +313,8 @@ public class Tale06 extends BaseFragment {
             super.onAnimationEnd(animation);
             switch (animationFlag){
                 case 1:
-                    Log.i("animationFlag", ""+animationFlag);
                     animationFlag=2;
+                    Log.i("animationFlag", ""+animationFlag);
                     sea.clearAnimation();
                     bigwave[0].clearAnimation();
                     bigwave[1].clearAnimation();
@@ -277,13 +329,14 @@ public class Tale06 extends BaseFragment {
                     break;
                 case 2:
                     animationFlag=0;
-//                    smallwave[0].clearAnimation();
-//                    smallwave[1].clearAnimation();
-//                    smallwave[2].clearAnimation();
-//                    smallwave[3].clearAnimation();
-//                    waveshadow.clearAnimation();
-//                    seagull[0].clearAnimation();
-//                    seagull[1].clearAnimation();
+                    Log.i("animationFlag", ""+animationFlag);
+                    smallwave[0].clearAnimation();
+                    smallwave[1].clearAnimation();
+                    smallwave[2].clearAnimation();
+                    smallwave[3].clearAnimation();
+                    waveshadow.clearAnimation();
+                    seagull[0].clearAnimation();
+                    seagull[1].clearAnimation();
                     break;
             }
         }

@@ -32,9 +32,16 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 public class Tale03 extends BaseFragment{
     ImageView[] cloud = new ImageView[6];
     ImageView byulHand;
+    ImageView[] wing = new ImageView[4];
+    ImageView blinkStar;
+
     Animation fadein;
+    AlphaAnimation blink;
+    AlphaAnimation wingAppear1;
+    AlphaAnimation wingAppear2;
     TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
     int animationFlag = 0;
+    int clickFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -127,6 +134,11 @@ public class Tale03 extends BaseFragment{
         cloud[4] = (ImageView) layout.findViewById(R.id.cloud4);
         cloud[5] = (ImageView) layout.findViewById(R.id.cloud5);
         byulHand = (ImageView) layout.findViewById(R.id.byulHand);
+        wing[0] = (ImageView)layout.findViewById(R.id.wingLeft1);
+        wing[1] = (ImageView)layout.findViewById(R.id.wingLeft2);
+        wing[2] = (ImageView)layout.findViewById(R.id.wingRight1);
+        wing[3] = (ImageView)layout.findViewById(R.id.wingRight2);
+        blinkStar = (ImageView)layout.findViewById(R.id.blinkStar);
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
     }
@@ -192,18 +204,56 @@ public class Tale03 extends BaseFragment{
         super.setAnimation();
         fadein = new AlphaAnimation(0, 1);
         fadein.setDuration(1000);
+
+        blink = new AlphaAnimation(0.3f,1);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
+        wingAppear1 = new AlphaAnimation(1,0);
+        wingAppear1.setDuration(400);
+        wingAppear1.setRepeatCount(7);
+        wingAppear1.setRepeatMode(Animation.REVERSE);
+        wingAppear1.setAnimationListener(new MyAnimationListener());
+        wingAppear2 = new AlphaAnimation(0,1);
+        wingAppear2.setDuration(400);
+        wingAppear2.setRepeatCount(7);
+        wingAppear2.setRepeatMode(Animation.REVERSE);
+        wingAppear2.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
-    public void setupEvents() { super.setupEvents(); }
+    public void setupEvents() {
+        super.setupEvents();
+        blinkStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag==0){
+                    animationFlag=1;
+                    blinkStar.clearAnimation();
+                    wing[0].clearAnimation();
+                    wing[1].clearAnimation();
+                    wing[2].clearAnimation();
+                    wing[3].clearAnimation();
+                    wing[0].startAnimation(wingAppear1);
+                    wing[1].startAnimation(wingAppear2);
+                    wing[2].startAnimation(wingAppear1);
+                    wing[3].startAnimation(wingAppear2);
+                }
+            }
+        });
+    }
 
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-            byulHand.setVisibility(View.VISIBLE);
-            byulHand.startAnimation(fadein);
+            if(animationFlag==1) {
+                animationFlag = 0;
+                byulHand.setVisibility(View.VISIBLE);
+                byulHand.startAnimation(fadein);
+                blinkStar.startAnimation(blink);
+            }
         }
 
         @Override

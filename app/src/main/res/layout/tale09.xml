@@ -20,6 +20,7 @@
 
             <ImageView
                 android:id="@+id/bird"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_bird_01"
@@ -29,6 +30,8 @@
                 app:scale_top="80"/>
 
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/birds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_bird_02"
@@ -38,7 +41,7 @@
                 app:scale_top="0"/>
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +52,7 @@
                 app:scale_top="445"/>
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +63,7 @@
                 app:scale_top="475"/>
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +74,7 @@
                 app:scale_top="475"/>
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +84,7 @@
                 app:scale_left="708"
                 app:scale_top="466"/>
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +95,7 @@
                 app:scale_top="453"/>
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:id="@+id/birds6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,35 +106,8 @@
                 app:scale_top="363"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_09_sea"
-                app:scale_width="2560"
-                app:scale_height="694"
-                app:scale_left="0"
-                app:scale_top="850"/>
-
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_09_effect"
-                app:scale_width="2560"
-                app:scale_height="694"
-                app:scale_left="0"
-                app:scale_top="850"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_09_father_dokdo"
-                app:scale_width="1375"
-                app:scale_height="1096"
-                app:scale_left="0"
-                app:scale_top="450"/>
-
-            <ImageView
+                android:id="@+id/fatherDokdoHand"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_father_dokdo_hand"
@@ -141,6 +117,29 @@
                 app:scale_top="750"/>
 
             <ImageView
+                android:id="@+id/sea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_sea"
+                app:scale_width="2560"
+                app:scale_height="696"
+                app:scale_left="0"
+                app:scale_top="850"/>
+
+            <ImageView
+                android:id="@+id/fatherDokdo"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_father_dokdo"
+                app:scale_width="1375"
+                app:scale_height="1096"
+                app:scale_left="0"
+                app:scale_top="450"/>
+
+            <ImageView
+                android:id="@+id/momDokdo"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_mom_dokdo"
@@ -149,6 +148,16 @@
                 app:scale_left="1160"
                 app:scale_top="660"/>
 
+            <ImageView
+                android:id="@+id/effect"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_09_effect"
+                app:scale_width="2560"
+                app:scale_height="696"
+                app:scale_left="0"
+                app:scale_top="850"/>
 
             <ImageView
                 android:visibility="invisible"
@@ -262,14 +271,14 @@
                 app:scale_top="490"/>
 
             <ImageView
+                android:id="@+id/deco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_09_deco"
-                app:scale_height="694"
+                app:scale_width="2560"
+                app:scale_height="696"
                 app:scale_left="0"
-                app:scale_top="850"
-                app:scale_width="2560" />
-
+                app:scale_top="850"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

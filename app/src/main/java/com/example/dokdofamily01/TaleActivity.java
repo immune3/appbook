@@ -167,8 +167,8 @@ public class TaleActivity extends AppCompatActivity{
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.context, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.context, MainActivity.class);
+//                startActivity(intent);
                 finish();
             }
         });

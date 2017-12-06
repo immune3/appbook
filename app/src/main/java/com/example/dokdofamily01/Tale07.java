@@ -8,6 +8,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,7 +30,20 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale07 extends BaseFragment {
+    ImageView dokdo;
+    ImageView seagull[] = new ImageView[3];
+    ImageView shadow[] = new ImageView[3];
 
+    RotateAnimation seagullAppear1;
+    RotateAnimation seagullDisappear1;
+    RotateAnimation seagullAppear2;
+    RotateAnimation seagullAppear3;
+    RotateAnimation seagullDisappear3;
+    RotateAnimation rotateDokdo;
+    ScaleAnimation scaleDokdo;
+    AnimationSet moveDokdo;
+
+    int animationFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -50,6 +71,14 @@ public class Tale07 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                if(animationFlag==0){
+                    animationFlag=1;
+                    seagull[0].setVisibility(View.INVISIBLE);
+                    seagull[1].setVisibility(View.INVISIBLE);
+                    seagull[2].setVisibility(View.INVISIBLE);
+                    seagull[0].startAnimation(seagullAppear1);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -179,11 +208,75 @@ public class Tale07 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
+        seagull[0] = (ImageView)layout.findViewById(R.id.seagull1);
+        seagull[1] = (ImageView)layout.findViewById(R.id.seagull2);
+        seagull[2] = (ImageView)layout.findViewById(R.id.seagull3);
+        shadow[0] = (ImageView)layout.findViewById(R.id.shadow1);
+        shadow[1] = (ImageView)layout.findViewById(R.id.shadow1);
+        shadow[2] = (ImageView)layout.findViewById(R.id.shadow1);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                seagullAppear1 = new RotateAnimation(20,0,-(int)(seagull[0].getWidth()*4),-(int)(seagull[0].getHeight()*1.5));
+                seagullAppear1.setDuration(1500);
+                seagullAppear1.setFillAfter(true);
+                seagullAppear1.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAppear1.setAnimationListener(new MyAnimationListener());
+
+                seagullDisappear1 = new RotateAnimation(0,-40,-(int)(seagull[0].getWidth()*4),-(int)(seagull[0].getHeight()*1.5));
+                seagullDisappear1.setDuration(2000);
+                seagullDisappear1.setFillAfter(true);
+                seagullDisappear1.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullDisappear1.setAnimationListener(new MyAnimationListener());
+
+                seagullAppear2 = new RotateAnimation(35,-35,0,-(int)(seagull[1].getHeight()*5));
+                seagullAppear2.setDuration(4000);
+                seagullAppear2.setFillAfter(true);
+                seagullAppear2.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAppear2.setAnimationListener(new MyAnimationListener());
+
+                seagullAppear3 = new RotateAnimation(-30,0,-(int)(seagull[2].getWidth()*1.2),-(int)(seagull[1].getHeight()*2.5));
+                seagullAppear3.setDuration(2000);
+                seagullAppear3.setFillAfter(true);
+                seagullAppear3.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAppear3.setAnimationListener(new MyAnimationListener());
+                seagullDisappear3 = new RotateAnimation(0,40,-(int)(seagull[2].getWidth()*1.2),-(int)(seagull[1].getHeight()*2.5));
+                seagullDisappear3.setDuration(2000);
+                seagullDisappear3.setFillAfter(true);
+                seagullDisappear3.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullDisappear3.setAnimationListener(new MyAnimationListener());
+
+                scaleDokdo = new ScaleAnimation(1,0.7f,1,0.7f,(int)(dokdo.getWidth()*0.5),(int)(dokdo.getHeight()*0.5));
+                scaleDokdo.setDuration(4000);
+                scaleDokdo.setFillAfter(true);
+                scaleDokdo.setInterpolator(new AccelerateDecelerateInterpolator());
+                rotateDokdo = new RotateAnimation(0,-30,(int)(dokdo.getWidth()*0.5),(int)(dokdo.getHeight()*0.5));
+                rotateDokdo.setDuration(4000);
+                rotateDokdo.setFillAfter(true);
+                rotateDokdo.setInterpolator(new AccelerateDecelerateInterpolator());
+                moveDokdo = new AnimationSet(false);
+                moveDokdo.setFillAfter(true);
+                moveDokdo.addAnimation(scaleDokdo);
+                moveDokdo.addAnimation(rotateDokdo);
+
+
+
+                if(animationFlag==0){
+                    animationFlag=1;
+                    seagull[0].setVisibility(View.INVISIBLE);
+                    seagull[1].setVisibility(View.INVISIBLE);
+                    seagull[2].setVisibility(View.INVISIBLE);
+                    seagull[0].startAnimation(seagullAppear1);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -194,5 +287,81 @@ public class Tale07 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        seagull[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag==0){
+                    animationFlag=2;
+                    seagull[0].startAnimation(seagullDisappear1);
+                    dokdo.startAnimation(moveDokdo);
+                }
+            }
+        });
+        seagull[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag==5){
+                    animationFlag=6;
+                    seagull[2].startAnimation(seagullDisappear3);
+                    dokdo.clearAnimation();
+                }
+            }
+        });
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+            switch (animationFlag){
+                case 1:
+                    seagull[0].setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    seagull[1].setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    seagull[2].setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (animationFlag){
+                case 1:
+                    animationFlag=0;
+                    seagull[0].clearAnimation();
+                    break;
+                case 2:
+                    animationFlag=3;
+                    seagull[0].clearAnimation();
+                    seagull[0].setVisibility(View.INVISIBLE);
+                    seagull[1].startAnimation(seagullAppear2);
+                    break;
+                case 3:
+                    animationFlag=4;
+                    seagull[1].clearAnimation();
+                    seagull[1].setVisibility(View.INVISIBLE);
+                    seagull[2].startAnimation(seagullAppear3);
+                    break;
+                case 4:
+                    animationFlag=5;
+                    seagull[2].clearAnimation();
+                    break;
+                case 6:
+                    animationFlag=1;
+                    seagull[2].setVisibility(View.INVISIBLE);
+                    seagull[2].clearAnimation();
+                    seagull[0].startAnimation(seagullAppear1);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
     }
 }

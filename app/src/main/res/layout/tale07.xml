@@ -19,6 +19,17 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/dokdo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_07_dokdo"
+                android:rotation="35"
+                app:scale_width="928"
+                app:scale_height="678"
+                app:scale_left="300"
+                app:scale_top="920"/>
+            <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_dokdo"
@@ -28,6 +39,8 @@
                 app:scale_top="1020"/>
 
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/seagull1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_seagull_01"
@@ -37,15 +50,19 @@
                 app:scale_top="670"/>
 
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/seagull2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_seagull_02"
                 app:scale_width="606"
                 app:scale_height="512"
-                app:scale_left="530"
-                app:scale_top="79"/>
+                app:scale_left="830"
+                app:scale_top="129"/>
 
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/seagull3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_seagull_03"
@@ -55,6 +72,8 @@
                 app:scale_top="544"/>
 
             <ImageView
+                android:id="@+id/shadow1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_shadow_01"
@@ -64,6 +83,8 @@
                 app:scale_top="1020"/>
 
             <ImageView
+                android:id="@+id/shadow2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_shadow_02"
@@ -73,6 +94,8 @@
                 app:scale_top="60"/>
 
             <ImageView
+                android:id="@+id/shadow3"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_07_shadow_03"

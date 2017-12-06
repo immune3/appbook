@@ -10,11 +10,16 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     Button taleBtn;
     static Context context;
+    boolean splashFlag=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this,SplashActivity.class));
+
+        if(splashFlag) {
+            splashFlag=false;
+            startActivity(new Intent(this,SplashActivity.class));
+        }
 
         context = getApplicationContext();
         taleBtn = (Button)findViewById(R.id.taleBtn);
@@ -24,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, TaleActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 

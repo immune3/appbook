@@ -1,5 +1,6 @@
 package com.example.dokdofamily01;
 
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -27,6 +29,12 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale08 extends BaseFragment {
+    ImageView treeBody;
+    ImageView treeHand;
+    ImageView leaves;
+    ImageView smile;
+    ImageView eyeBlack;
+    ImageView eyeWhite;
     ImageView plant;
     ImageView dokdo;
     ImageView land;
@@ -37,6 +45,8 @@ public class Tale08 extends BaseFragment {
     TranslateAnimation landAnimation;
     TranslateAnimation seagullAnimation;
     TranslateAnimation byulAnimation;
+    TranslateAnimation treeAnimation;
+    Animation fadeIn;
     int animationFlag = 0;
 
     boolean isAttached = false;
@@ -67,6 +77,12 @@ public class Tale08 extends BaseFragment {
                 timer.schedule(new MyThread(),0, 500);
 
                 byul.setVisibility(View.INVISIBLE);
+                treeBody.setVisibility(View.INVISIBLE);
+                treeHand.setVisibility(View.INVISIBLE);
+                smile.setVisibility(View.INVISIBLE);
+                leaves.setVisibility(View.INVISIBLE);
+                eyeBlack.setVisibility(View.INVISIBLE);
+                eyeWhite.setVisibility(View.INVISIBLE);
                 if(animationFlag == 0){
                     animationFlag = 1;
                     plant.startAnimation(plantAnimation);
@@ -204,6 +220,12 @@ public class Tale08 extends BaseFragment {
         land = (ImageView)layout.findViewById(R.id.land);
         seagull = (ImageView)layout.findViewById(R.id.seagull);
         byul = (ImageView)layout.findViewById(R.id.byul);
+        treeBody = (ImageView)layout.findViewById(R.id.treeBody);
+        treeHand = (ImageView)layout.findViewById(R.id.treeHand);
+        leaves = (ImageView)layout.findViewById(R.id.leaves);
+        smile = (ImageView)layout.findViewById(R.id.smile);
+        eyeBlack = (ImageView)layout.findViewById(R.id.eyeBlack);
+        eyeWhite = (ImageView)layout.findViewById(R.id.eyeWhite);
     }
 
     @Override
@@ -236,6 +258,21 @@ public class Tale08 extends BaseFragment {
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setInterpolator(new BounceInterpolator());
 
+                treeAnimation = new TranslateAnimation((int)(treeBody.getWidth()*0.3),0,treeBody.getHeight(),0);
+                treeAnimation.setStartOffset(500);
+                treeAnimation.setDuration(500);
+                treeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                treeAnimation.setAnimationListener(new MyAnimationListener());
+
+                fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                treeBody.setVisibility(View.INVISIBLE);
+                treeHand.setVisibility(View.INVISIBLE);
+                smile.setVisibility(View.INVISIBLE);
+                leaves.setVisibility(View.INVISIBLE);
+                eyeBlack.setVisibility(View.INVISIBLE);
+                eyeWhite.setVisibility(View.INVISIBLE);
                 byul.setVisibility(View.INVISIBLE);
                 if(animationFlag == 0){
                     animationFlag = 1;
@@ -263,9 +300,30 @@ public class Tale08 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-            byul.setVisibility(View.VISIBLE);
-            byul.startAnimation(byulAnimation);
+            switch (animationFlag){
+                case 1:
+                    animationFlag = 2;
+                    byul.startAnimation(byulAnimation);
+                    treeBody.startAnimation(treeAnimation);
+                    eyeBlack.startAnimation(treeAnimation);
+                    eyeWhite.startAnimation(treeAnimation);
+
+                    break;
+                case 2:
+                    animationFlag = 3;
+                    treeHand.startAnimation(fadeIn);
+                    smile.startAnimation(fadeIn);
+                    leaves.startAnimation(fadeIn);
+                    break;
+                case 3:
+                    animationFlag = 0;
+                    treeHand.clearAnimation();
+                    smile.clearAnimation();
+                    leaves.clearAnimation();
+                    break;
+
+            }
+
         }
 
         @Override
@@ -274,8 +332,19 @@ public class Tale08 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            byul.setVisibility(View.INVISIBLE);
+            switch (animationFlag){
+                case 2:
+                    byul.setVisibility(View.VISIBLE);
+                    treeBody.setVisibility(View.VISIBLE);
+                    eyeBlack.setVisibility(View.VISIBLE);
+                    eyeWhite.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    treeHand.setVisibility(View.VISIBLE);
+                    smile.setVisibility(View.VISIBLE);
+                    leaves.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
-
     }
 }

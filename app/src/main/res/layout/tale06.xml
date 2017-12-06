@@ -17,6 +17,15 @@
             android:background="@drawable/img_06_background"
             app:scale_base_width="2560"
             app:scale_base_height="1544">
+            <ImageView
+                android:id="@+id/momDokdo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_06_dokdo"
+                app:scale_width="1636"
+                app:scale_height="1350"
+                app:scale_left="0"
+                app:scale_top="0"/>
 
             <ImageView
                 android:id="@+id/sea"
@@ -125,6 +134,7 @@
                 app:scale_height="136"
                 app:scale_left="2235"
                 app:scale_top="660"/>
+
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>

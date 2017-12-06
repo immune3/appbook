@@ -8,6 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -23,6 +29,20 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale10 extends BaseFragment {
 
+    ImageView birds;
+    ImageView mountain;
+    ImageView rock;
+    ImageView seagull;
+    ImageView byulHead;
+    ImageView byulBody;
+    ImageView byulHand;
+
+    TranslateAnimation mountainAppear;
+    TranslateAnimation rockAppear;
+    TranslateAnimation birdsAppear;
+    Animation fadeIn;
+
+    int animationFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -50,6 +70,11 @@ public class Tale10 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+                if(animationFlag==0){
+                    animationFlag=1;
+                    mountain.startAnimation(mountainAppear);
+                    rock.startAnimation(rockAppear);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -186,20 +211,115 @@ public class Tale10 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        birds = (ImageView)layout.findViewById(R.id.birds);
+        mountain = (ImageView)layout.findViewById(R.id.mountain);
+        rock = (ImageView)layout.findViewById(R.id.rock);
+        seagull = (ImageView)layout.findViewById(R.id.seagull);
+        byulHead = (ImageView)layout.findViewById(R.id.byulHead);
+        byulBody = (ImageView)layout.findViewById(R.id.byulBody);
+        byulHand = (ImageView)layout.findViewById(R.id.byulHand);
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        mountain.post(new Runnable() {
+            @Override
+            public void run() {
+                mountainAppear = new TranslateAnimation(0,0,mountain.getHeight(),0);
+                mountainAppear.setDuration(2000);
+//                mountainAppear.setFillAfter(true);
+                mountainAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                mountainAppear.setAnimationListener(new MyAnimationListener());
+
+                birdsAppear = new TranslateAnimation(0,0,birds.getHeight(),0);
+                birdsAppear.setDuration(1000);
+//                birdsAppear.setFillAfter(true);
+                birdsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                birdsAppear.setAnimationListener(new MyAnimationListener());
+
+                rockAppear = new TranslateAnimation(-rock.getWidth(),0,0,0);
+                rockAppear.setStartOffset(500);
+                rockAppear.setDuration(1500);
+//                birdsAppear.setFillAfter(true);
+                rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+//                rockAppear.setAnimationListener(new MyAnimationListener());
+
+
+                if(animationFlag==0){
+                    animationFlag=1;
+                    mountain.startAnimation(mountainAppear);
+                    rock.startAnimation(rockAppear);
+                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        fadeIn.setDuration(1000);
+        fadeIn.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+            switch (animationFlag){
+                case 1:
+                    byulHead.setVisibility(View.INVISIBLE);
+                    byulHand.setVisibility(View.INVISIBLE);
+                    byulBody.setVisibility(View.INVISIBLE);
+                    seagull.setVisibility(View.INVISIBLE);
+                    birds.setVisibility(View.INVISIBLE);
+                    mountain.setVisibility(View.VISIBLE);
+                    rock.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    byulHead.setVisibility(View.VISIBLE);
+                    byulHand.setVisibility(View.VISIBLE);
+                    byulBody.setVisibility(View.VISIBLE);
+                    seagull.setVisibility(View.VISIBLE);
+                    birds.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (animationFlag){
+                case 1:
+                    animationFlag=2;
+                    mountain.clearAnimation();
+                    rock.clearAnimation();
+                    birds.startAnimation(birdsAppear);
+                    byulBody.startAnimation(fadeIn);
+                    byulHand.startAnimation(fadeIn);
+                    byulHead.startAnimation(fadeIn);
+                    seagull.startAnimation(fadeIn);
+                    break;
+                case 2:
+                    animationFlag=0;
+                    birds.clearAnimation();
+                    byulBody.clearAnimation();
+                    byulHand.clearAnimation();
+                    byulHead.clearAnimation();
+                    seagull.clearAnimation();
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
     }
 }
