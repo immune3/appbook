@@ -66,7 +66,7 @@ public class Tale20 extends BaseFragment {
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
 
-                if(animationFlag == 0){
+                if(animationFlag == 0 && manAppearAnimation != null){
                     animationFlag = 1;
                     man.startAnimation(manAppearAnimation);
                     dokdo_father.startAnimation(dokdoFatherAppearAnimation);
