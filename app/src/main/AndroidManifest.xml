@@ -12,7 +12,8 @@
         android:largeHeap="true"
         android:theme="@style/AppFullScreenTheme">
         <activity android:name=".MainActivity"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TaleActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".SplashActivity"
             android:screenOrientation="landscape"/>
     </application>

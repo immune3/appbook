@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -40,6 +41,8 @@ public class Tale17 extends BaseFragment {
     ImageView star;
 
     Animation fadeIn;
+    AlphaAnimation blink;
+    int animationFlag=0;
 
     SoundPool sp;
     int clickStar;
@@ -65,6 +68,11 @@ public class Tale17 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+                if(blink!=null) {
+                    animationFlag=0;
+                    dokdo_under_sea.clearAnimation();
+                    star.startAnimation(blink);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -208,6 +216,16 @@ public class Tale17 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+        star.post(new Runnable() {
+            @Override
+            public void run() {
+                if(blink!=null){
+                    animationFlag=0;
+                    star.startAnimation(blink);
+                    dokdo_under_sea.clearAnimation();
+                }
+            }
+        });
     }
 
     @Override
@@ -217,6 +235,11 @@ public class Tale17 extends BaseFragment {
         fadeIn.setDuration(3000);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
+
+        blink = new AlphaAnimation(1,0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -226,8 +249,12 @@ public class Tale17 extends BaseFragment {
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(clickStar,1,1,0,0,1);
-                dokdo_under_sea.startAnimation(fadeIn);
+                if(animationFlag==0) {
+                    animationFlag=1;
+                    star.clearAnimation();
+                    sp.play(clickStar, 1, 1, 0, 0, 1);
+                    dokdo_under_sea.startAnimation(fadeIn);
+                }
             }
         });
 

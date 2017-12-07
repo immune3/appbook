@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/father18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_dokdo_father"
@@ -27,6 +28,7 @@
                 app:scale_left="560"
                 app:scale_top="1200"/>
             <ImageView
+                android:id="@+id/mom18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_dokdo_mom"
@@ -35,6 +37,7 @@
                 app:scale_left="1420"
                 app:scale_top="1275"/>
             <ImageView
+                android:id="@+id/stars18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_stars"
@@ -43,6 +46,7 @@
                 app:scale_left="0"
                 app:scale_top="0"/>
             <ImageView
+                android:id="@+id/flower18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_flowers"
@@ -51,22 +55,8 @@
                 app:scale_left="947"
                 app:scale_top="0"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_18_man"
-                app:scale_width="470"
-                app:scale_height="998"
-                app:scale_left="530"
-                app:scale_top="0"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_18_post"
-                app:scale_width="448"
-                app:scale_height="894"
-                app:scale_left="1570"
-                app:scale_top="0"/>
-            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/sqeed18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_sqeed"
@@ -75,6 +65,18 @@
                 app:scale_left="230"
                 app:scale_top="0"/>
             <ImageView
+                android:visibility="invisible"
+                android:id="@+id/man18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_18_man"
+                app:scale_width="470"
+                app:scale_height="998"
+                app:scale_left="530"
+                app:scale_top="0"/>
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/tree18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_tree"
@@ -82,6 +84,18 @@
                 app:scale_height="682"
                 app:scale_left="2010"
                 app:scale_top="0"/>
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/post18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_18_post"
+                app:scale_width="448"
+                app:scale_height="894"
+                app:scale_left="1570"
+                app:scale_top="0"/>
+
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

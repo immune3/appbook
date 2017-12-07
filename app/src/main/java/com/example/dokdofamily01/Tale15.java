@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -49,10 +50,11 @@ public class Tale15 extends BaseFragment {
     private ImageView ivLand15;
 
     int animationFlag = 0;
+    int appearFlag=0;
 
     Animation fadeIn;
     Animation fadeOut;
-
+    AlphaAnimation blink;
     TranslateAnimation landAnimation, byulAnimation, caveAnimation;
 
     SoundPool sp;
@@ -81,9 +83,11 @@ public class Tale15 extends BaseFragment {
                 timer.schedule(new MyThread(), 0, 500);
 
                 if(landAnimation!=null) {
+                    animationClear();
                     ivLand15.startAnimation(landAnimation);
                     ivCave15.startAnimation(caveAnimation);
                     ivByul15.startAnimation(byulAnimation);
+                    seaweadImage.startAnimation(landAnimation);
                 }
 
             } else {
@@ -216,19 +220,12 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        setAnimation();
-    }
-
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-
         sl.post(new Runnable() {
             @Override
             public void run() {
 
                 landAnimation = new TranslateAnimation(0, 0, ivLand15.getHeight(), 0);
-                landAnimation.setDuration(2500);
+                landAnimation.setDuration(2000);
                 landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 caveAnimation = new TranslateAnimation(ivCave15.getWidth(), 0, 0, 0);
@@ -236,24 +233,39 @@ public class Tale15 extends BaseFragment {
                 caveAnimation.setDuration(2500);
                 caveAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                byulAnimation = new TranslateAnimation(-ivByul15.getWidth(), 0, 0, 0);
+                byulAnimation = new TranslateAnimation(-ivByul15.getWidth()*1.5f, 0, 0, 0);
                 byulAnimation.setStartOffset(1000);
                 byulAnimation.setDuration(2500);
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulAnimation.setAnimationListener(new MyAnimationListener());
 
-                ivLand15.startAnimation(landAnimation);
-                ivCave15.startAnimation(caveAnimation);
-                ivByul15.startAnimation(byulAnimation);
+                fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadein);
+                fadeIn.setFillAfter(true);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadeout);
+                fadeOut.setFillAfter(true);
+
+                blink = new AlphaAnimation(0.3f, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
+                if(landAnimation!=null) {
+                    appearFlag=1;
+                    animationClear();
+                    ivLand15.startAnimation(landAnimation);
+                    seaweadImage.startAnimation(landAnimation);
+                    ivCave15.startAnimation(caveAnimation);
+                    ivByul15.startAnimation(byulAnimation);
+                }
             }
         });
+    }
 
-        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadein);
-        fadeIn.setFillAfter(true);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadeout);
-        fadeOut.setFillAfter(true);
-//        fadeOut.setAnimationListener(new MyAnimationListener());
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
     }
 
     @Override
@@ -262,17 +274,15 @@ public class Tale15 extends BaseFragment {
         fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag == 0){
+                if(animationFlag == 0 && appearFlag==0){
                     animationFlag = 1;
+                    fish.clearAnimation();
+                    fish.setVisibility(View.VISIBLE);
                     //man1 사라지고 man2나온다.
                     sp.play(clickFish,1,1,0,0,1);
                     manImage4.setVisibility(View.INVISIBLE);
                     manImage1.startAnimation(fadeIn);
-
-                }else{
                 }
-
-
             }
         });
     }
@@ -293,17 +303,12 @@ public class Tale15 extends BaseFragment {
                 case 7:
                     manImage4.setVisibility(View.VISIBLE);
                     break;
-
-
-
             }
         }
 
         @Override
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag){
-                case 0 :
-                    break;
                 case 1:
                     // man2 사라지고 man3나온다.
                     animationFlag=2;
@@ -345,6 +350,11 @@ public class Tale15 extends BaseFragment {
                     manImage4.clearAnimation();
                     break;
             }
+            if(appearFlag==1){
+                appearFlag=0;
+                fish.setVisibility(View.VISIBLE);
+                fish.startAnimation(blink);
+            }
 
         }
 
@@ -375,5 +385,24 @@ public class Tale15 extends BaseFragment {
         clickFish = sp.load(getContext(),R.raw.effect_15_fish,1);
         moveMan = sp.load(getContext(),R.raw.effect_15_man,2);
 
+    }
+
+    public void animationClear(){
+        fish.setVisibility(View.INVISIBLE);
+        manImage1.setVisibility(View.INVISIBLE);
+        manImage2.setVisibility(View.INVISIBLE);
+        manImage3.setVisibility(View.INVISIBLE);
+        manImage4.setVisibility(View.INVISIBLE);
+
+        fish.clearAnimation();
+        manImage1.clearAnimation();
+        manImage1.clearAnimation();
+        manImage2.clearAnimation();
+        manImage3.clearAnimation();
+        manImage4.clearAnimation();
+        ivByul15.clearAnimation();
+        ivCave15.clearAnimation();
+        ivLand15.clearAnimation();
+        seaweadImage.clearAnimation();
     }
 }

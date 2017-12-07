@@ -46,16 +46,6 @@
                 app:scale_left="243"
                 app:scale_top="221"/>
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_12_sqeed_l_hand"
-                app:scale_width="1676"
-                app:scale_height="922"
-                app:scale_left="230"
-                app:scale_top="460"/>
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,16 +54,6 @@
                 app:scale_height="512"
                 app:scale_left="540"
                 app:scale_top="330"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_12_byul_hand"
-                app:scale_width="418"
-                app:scale_height="232"
-                app:scale_left="287"
-                app:scale_top="416"/>
-
-
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -92,6 +72,32 @@
                 app:scale_height="874"
                 app:scale_left="1344"
                 app:scale_top="30"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_12_sea_02"
+                app:scale_width="2560"
+                app:scale_height="704"
+                app:scale_left="0"
+                app:scale_top="840"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_12_sqeed_l_hand"
+                app:scale_width="1676"
+                app:scale_height="922"
+                app:scale_left="230"
+                app:scale_top="460"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_12_byul_hand"
+                app:scale_width="418"
+                app:scale_height="232"
+                app:scale_left="287"
+                app:scale_top="416"/>
 
             <ImageView
                 android:layout_width="wrap_content"

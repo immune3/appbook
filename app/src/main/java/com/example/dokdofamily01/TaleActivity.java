@@ -1,6 +1,9 @@
 package com.example.dokdofamily01;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,6 +47,13 @@ public class TaleActivity extends AppCompatActivity{
     static int height;
     static int width;
     int showMenuHeight;
+
+    /* 추가 필드 */
+    BroadcastReceiver screenOffReceiver;
+    IntentFilter screenOffFilter;
+    static public boolean homeKeyFlag = false;
+    private int currentVpPos = -1;
+    static public boolean screenFlag = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,20 +131,16 @@ public class TaleActivity extends AppCompatActivity{
                 {
                     case MotionEvent.ACTION_DOWN:
                         x1 = motionEvent.getX();
-                        Log.i("action", "down");
                         break;
                     case MotionEvent.ACTION_UP:
                         x2 = motionEvent.getX();
-                        Log.i("action", "up");
                         float deltaX = x2 - x1;
                         if (Math.abs(deltaX) > MIN_DISTANCE)
                         {
                             if(x2>x1) {
-                                Log.i("position", "goPrev");
                                 vp.setCurrentItem(vp.getCurrentItem()-1);
                             }
                             else if(x2<x1) {
-                                Log.i("position", "goNext");
                                 vp.setCurrentItem(vp.getCurrentItem()+1);
                             }
                         }
@@ -215,6 +221,17 @@ public class TaleActivity extends AppCompatActivity{
 //
 //            }
 //        });
+        screenOffReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("SCREEN", "SCREEN OFF");
+                screenFlag = false;
+            }
+        };
+
+        screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+
+        registerReceiver(screenOffReceiver, screenOffFilter);
     }
 
     private class pagerAdapter extends FragmentStatePagerAdapter
@@ -356,6 +373,29 @@ public class TaleActivity extends AppCompatActivity{
         ani_menuContainer_down.setFillAfter(true);
         ani_menuContainer_down.setAnimationListener(new MyAnimationListener1());
 
+    }
+    /* 추가 on 메소드 */
+    @Override
+    protected void onStart() {
+        System.out.println("Activity State : onStart");
+        Log.d("homeKeyFlag", homeKeyFlag + "");
+        Log.d("currentVpPos", currentVpPos + "");
+
+        screenFlag = true;
+        if (homeKeyFlag) {
+            Log.d("home", "key");
+            vp.setCurrentItem(currentVpPos, false);
+            homeKeyFlag = false;
+        }
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        homeKeyFlag = true;
+        currentVpPos = vp.getCurrentItem();
+        super.onUserLeaveHint();
     }
 }
 

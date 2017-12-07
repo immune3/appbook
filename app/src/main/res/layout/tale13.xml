@@ -93,24 +93,6 @@
                 app:scale_top="185"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_sealeaf_01"
-                app:scale_width="764"
-                app:scale_height="758"
-                app:scale_left="57"
-                app:scale_top="790"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_sealeaf_02"
-                app:scale_width="526"
-                app:scale_height="514"
-                app:scale_left="1710"
-                app:scale_top="400"/>
-
-            <ImageView
                 android:id="@+id/ivWall13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,12 +107,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bottom"
-                app:scale_width="1844"
-                app:scale_height="226"
-                app:scale_left="710"
-                app:scale_top="1316"/>
+                app:scale_width="2560"
+                app:scale_height="800"
+                app:scale_left="0"
+                app:scale_top="750"/>
 
             <ImageView
+                android:id="@+id/ivFishes13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_fishes"
@@ -140,32 +123,6 @@
                 app:scale_top="660"/>
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_sealeaf_03"
-                app:scale_width="732"
-                app:scale_height="714"
-                app:scale_left="1821"
-                app:scale_top="834"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_sealeaf_04"
-                app:scale_width="1674"
-                app:scale_height="682"
-                app:scale_left="900"
-                app:scale_top="865"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_sealeaf_05"
-                app:scale_width="1784"
-                app:scale_height="776"
-                app:scale_left="474"
-                app:scale_top="770"/>
 
             <ImageView
                 android:layout_width="wrap_content"
