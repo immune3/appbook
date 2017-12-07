@@ -291,10 +291,10 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni.setRepeatMode(Animation.REVERSE);
 
                 bubbleAniSet.addAnimation(bubbleScaleAni);
-                bubbleAniSet.addAnimation(blink);
+//                bubbleAniSet.addAnimation(blink);
 
                 bubbleBombScaleAni = new ScaleAnimation(1,0.7f,1,0.7f,0,0);
-                bubbleBombScaleAni.setDuration(1000);
+                bubbleBombScaleAni.setDuration(800);
                 bubbleBombScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 bubbleBombScaleAni.setRepeatCount(4);
                 bubbleBombScaleAni.setRepeatMode(Animation.REVERSE);
@@ -341,7 +341,7 @@ public class Tale16 extends BaseFragment {
         fadeout.setDuration(300);
         fadeout.setStartOffset(4000);
 
-        blink = new AlphaAnimation(1, 0.3f);
+        blink = new AlphaAnimation(1, 0.5f);
         blink.setDuration(1000);
         blink.setInterpolator(new LinearInterpolator());
         blink.setRepeatCount(Animation.INFINITE);
@@ -352,10 +352,20 @@ public class Tale16 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        moon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bubble.clearAnimation();
+                moon.clearAnimation();
+                bubble.startAnimation(bubbleBombAniSet);
+            }
+        });
+
         bubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bubble.clearAnimation();
+                moon.clearAnimation();
                 bubble.startAnimation(bubbleBombAniSet);
             }
         });
@@ -367,6 +377,7 @@ public class Tale16 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             animationFlag = 0;
             bubble.startAnimation(bubbleAniSet);
+//            moon.startAnimation(blink);
         }
 
         @Override

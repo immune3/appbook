@@ -8,6 +8,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +33,28 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale19 extends BaseFragment {
+    ImageView byul;
+    ImageView starLight;
+    ImageView star1;
+    ImageView star2;
+    ImageView star3;
+    ImageView star4;
+    ImageView star5;
+    ImageView star6;
+    ImageView light;
+
+    TranslateAnimation starAppear;
+    TranslateAnimation[] starFall = new TranslateAnimation[5];
+    AlphaAnimation fadein;
+    AlphaAnimation fadeout;
+    AlphaAnimation[] starFadein = new AlphaAnimation[5];
+    AlphaAnimation[] starFadeout = new AlphaAnimation[5];
+    AlphaAnimation blink;
+    AnimationSet starAppearAniSet = new AnimationSet(false);
+    AnimationSet starLightAniSet = new AnimationSet(false);
+    AnimationSet[] starFallAniSet = new AnimationSet[5];
+    int animationFlag = 0;
+    int starFallCount = 0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +82,21 @@ public class Tale19 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                if(animationFlag == 0 && starAppearAniSet != null){
+                    star1.setVisibility(View.INVISIBLE);
+//                    starLight.setVisibility(View.INVISIBLE);
+//                    light.setVisibility(View.INVISIBLE);
+                    starLight.clearAnimation();
+                    light.clearAnimation();
+                    star2.clearAnimation();
+                    star3.clearAnimation();
+                    star4.clearAnimation();
+                    star5.clearAnimation();
+                    star6.clearAnimation();
+                    animationFlag = 1;
+                    star1.startAnimation(starAppearAniSet);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -178,20 +226,189 @@ public class Tale19 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        byul = (ImageView)layout.findViewById(R.id.byul);
+        starLight = (ImageView)layout.findViewById(R.id.starLight);
+        star1 = (ImageView)layout.findViewById(R.id.star1);
+        star2 = (ImageView)layout.findViewById(R.id.star2);
+        star3 = (ImageView)layout.findViewById(R.id.star3);
+        star4 = (ImageView)layout.findViewById(R.id.star4);
+        star5 = (ImageView)layout.findViewById(R.id.star5);
+        star6 = (ImageView)layout.findViewById(R.id.star6);
+        light = (ImageView)layout.findViewById(R.id.light);
+
+
     }
 
     @Override
     public void setValues() {
         super.setValues();
+        light.post(new Runnable() {
+            @Override
+            public void run() {
+                starAppear = new TranslateAnimation(0,0, -star1.getHeight(), 0);
+                starAppear.setDuration(3000);
+                starAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                starAppear.setInterpolator(new BounceInterpolator());
+
+                starAppear.setAnimationListener(new MyAnimationListener());
+
+                starAppearAniSet.addAnimation(starAppear);
+                starAppearAniSet.addAnimation(fadein);
+
+                float ratio = 0.6f;
+
+                for(int iter=0; iter< 5; iter++){
+                    starFadein[iter] = new AlphaAnimation(0, 1);
+                    starFadein[iter].setStartOffset(iter*300);
+                    starFadein[iter].setDuration(500);
+//                    starFadein[iter].setFillAfter(true);
+
+                    starFall[iter] = new TranslateAnimation(0,0, 0, star2.getHeight()*ratio);
+                    starFall[iter].setDuration(800);
+                    starFall[iter].setStartOffset(iter*300+500);
+                    starFall[iter].setInterpolator(new AnticipateInterpolator());
+
+                    starFadeout[iter] = new AlphaAnimation(1, 0);
+                    starFadeout[iter].setStartOffset(iter*300+1300);
+                    starFadeout[iter].setDuration(500);
+                    starFadeout[iter].setFillAfter(true);
+
+                    starFallAniSet[iter] = new AnimationSet(false);
+                    starFallAniSet[iter].addAnimation(starFadein[iter]);
+                    starFallAniSet[iter].addAnimation(starFall[iter]);
+                    starFallAniSet[iter].addAnimation(starFadeout[iter]);
+//                    starFallAniSet[iter].setFillAfter(true);
+
+                    ratio *= 1.7f;
+//                    starFallAniSet[iter].setStartOffset(1000*iter);
+                }
+
+                starFadeout[4].setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        if(starFallCount < 4) {
+                            star2.startAnimation(starFallAniSet[0]);
+                            star3.startAnimation(starFallAniSet[1]);
+                            star4.startAnimation(starFallAniSet[2]);
+                            star5.startAnimation(starFallAniSet[3]);
+                            star6.startAnimation(starFallAniSet[4]);
+                        }
+                        else{
+                            star6.clearAnimation();
+                            star2.clearAnimation();
+                            star3.clearAnimation();
+                            star4.clearAnimation();
+                            star5.clearAnimation();
+                            starLight.setVisibility(View.INVISIBLE);
+                            light.setVisibility(View.INVISIBLE);
+                            star1.startAnimation(blink);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+//                        if(starFallCount < 2) {
+//                            star2.startAnimation(starFallAniSet[0]);
+//                            star3.startAnimation(starFallAniSet[1]);
+//                            star4.startAnimation(starFallAniSet[2]);
+//                            star5.startAnimation(starFallAniSet[3]);
+//                            star6.startAnimation(starFallAniSet[4]);
+//                        }
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        starFallCount++;
+                        if(starFallCount < 4) {
+
+                        }
+                        else{
+                            starLight.startAnimation(fadeout);
+                            light.startAnimation(fadeout);
+                        }
+                    }
+                });
+
+
+                if(animationFlag == 0){
+                    star1.setVisibility(View.INVISIBLE);
+                    starLight.clearAnimation();
+                    light.clearAnimation();
+                    star2.clearAnimation();
+                    star3.clearAnimation();
+                    star4.clearAnimation();
+                    star5.clearAnimation();
+                    star6.clearAnimation();
+                    animationFlag = 1;
+                    star1.startAnimation(starAppearAniSet);
+                }
+            }
+        });
     }
 
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(2000);
+        fadein.setFillAfter(true);
+
+        fadeout = new AlphaAnimation(1, 0);
+        fadeout.setStartOffset(500);
+        fadeout.setDuration(2500);
+        fadeout.setFillAfter(true);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(700);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        star1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                starFallCount = 0;
+                animationFlag = 0;
+                star1.clearAnimation();
+//                starLight.setVisibility(View.VISIBLE);
+//                light.setVisibility(View.VISIBLE);
+                starLight.startAnimation(fadein);
+                light.startAnimation(fadein);
+
+                star2.startAnimation(starFallAniSet[0]);
+                star3.startAnimation(starFallAniSet[1]);
+                star4.startAnimation(starFallAniSet[2]);
+                star5.startAnimation(starFallAniSet[3]);
+                star6.startAnimation(starFallAniSet[4]);
+
+            }
+        });
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            star1.startAnimation(blink);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            starLight.setVisibility(View.INVISIBLE);
+            light.setVisibility(View.INVISIBLE);
+            star1.setVisibility(View.VISIBLE);
+        }
+
     }
 }

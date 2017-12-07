@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/byul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_byul"
@@ -27,6 +28,7 @@
                 app:scale_left="0"
                 app:scale_top="549"/>
             <ImageView
+                android:id="@+id/curtain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_curtain"
@@ -35,7 +37,8 @@
                 app:scale_left="620"
                 app:scale_top="-8"/>
             <ImageView
-                android:alpha="0.6"
+                android:id="@+id/starLight"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_light"
@@ -44,6 +47,8 @@
                 app:scale_left="645"
                 app:scale_top="610"/>
             <ImageView
+                android:id="@+id/star1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_01"
@@ -52,6 +57,8 @@
                 app:scale_left="740"
                 app:scale_top="675"/>
             <ImageView
+                android:id="@+id/star3"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_03"
@@ -60,6 +67,8 @@
                 app:scale_left="1350"
                 app:scale_top="690"/>
             <ImageView
+                android:id="@+id/star4"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_04"
@@ -68,6 +77,8 @@
                 app:scale_left="1475"
                 app:scale_top="695"/>
             <ImageView
+                android:id="@+id/star2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_02"
@@ -76,6 +87,8 @@
                 app:scale_left="1120"
                 app:scale_top="823"/>
             <ImageView
+                android:id="@+id/star5"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_03"
@@ -84,6 +97,8 @@
                 app:scale_left="1753"
                 app:scale_top="417"/>
             <ImageView
+                android:id="@+id/star6"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_star_04"
@@ -92,6 +107,8 @@
                 app:scale_left="1820"
                 app:scale_top="246"/>
             <ImageView
+                android:id="@+id/light"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_19_light"
