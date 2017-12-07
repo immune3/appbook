@@ -108,7 +108,6 @@
                 app:scale_left="680"
                 app:scale_top="0"/>
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,17 +116,6 @@
                 app:scale_height="398"
                 app:scale_left="70"
                 app:scale_top="810"/>
-
-            <ImageView
-                android:visibility="invisible"
-                android:alpha="0.3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_12_sample"
-                app:scale_width="2560"
-                app:scale_height="1550"
-                app:scale_left="0"
-                app:scale_top="0"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
