@@ -30,6 +30,8 @@
                 app:scale_top="50"/>
 
             <ImageView
+                android:id="@+id/bubble"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_deco"
@@ -39,6 +41,7 @@
                 app:scale_top="40"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_01"
@@ -48,6 +51,7 @@
                 app:scale_top="556"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_02"
@@ -57,6 +61,7 @@
                 app:scale_top="370"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_03"
@@ -66,6 +71,7 @@
                 app:scale_top="121"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_04"
@@ -75,6 +81,7 @@
                 app:scale_top="149"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_05"
@@ -84,6 +91,7 @@
                 app:scale_top="215"/>
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_bubble_06"

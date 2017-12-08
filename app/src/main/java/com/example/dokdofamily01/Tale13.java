@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -38,11 +41,16 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivWall13;
     private android.widget.ImageView ivBottom13;
     private android.widget.ImageView ivFishes13;
+    ImageView bubble;
 
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
 
     private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation, fishAnimation;
+    AlphaAnimation bubbleAlpha;
+    TranslateAnimation bubbleTranslate;
+    AnimationSet bubbleAppear;
+    AlphaAnimation blink;
     int animationFlag = 0;
 
 
@@ -206,6 +214,7 @@ public class Tale13 extends BaseFragment {
         this.ivWall13 = (ImageView) layout.findViewById(R.id.ivWall13);
         this.ivBuyl13 = (ImageView) layout.findViewById(R.id.ivBuyl13);
         ivFishes13=(ImageView)layout.findViewById(R.id.ivFishes13);
+        bubble = (ImageView)layout.findViewById(R.id.bubble);
     }
 
     @Override
@@ -234,6 +243,24 @@ public class Tale13 extends BaseFragment {
                 fishAnimation.setDuration(1000);
                 fishAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
+                bubbleAlpha = new AlphaAnimation(0,1);
+                bubbleAlpha.setDuration(1000);
+                bubbleAlpha.setRepeatCount(1);
+                bubbleAlpha.setRepeatMode(Animation.REVERSE);
+
+                bubbleTranslate = new TranslateAnimation(0,0,0,-bubble.getHeight()*0.5f);
+                bubbleTranslate.setDuration(2000);
+                bubbleTranslate.setInterpolator(new AnticipateInterpolator());
+
+                bubbleAppear = new AnimationSet(false);
+                bubbleAppear.addAnimation(bubbleAlpha);
+                bubbleAppear.addAnimation(bubbleTranslate);
+
+                blink = new AlphaAnimation(1,0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 if(bottomAnimation!=null){
                     animationClear();
                     animationFlag = 1;
@@ -254,6 +281,13 @@ public class Tale13 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        ivBuyl13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivBuyl13.clearAnimation();
+                bubble.startAnimation(bubbleAppear);
+            }
+        });
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
@@ -265,15 +299,16 @@ public class Tale13 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             super.onAnimationEnd(animation);
+            if(animationFlag==1){
+                animationFlag=0;
+                animationClear();
+                ivBuyl13.startAnimation(blink);
+            }
         }
 
         @Override
         public void onAnimationRepeat(Animation animation) {
             super.onAnimationRepeat(animation);
-            if(animationFlag==1){
-                animationFlag=0;
-                animationClear();
-            }
         }
     }
 
