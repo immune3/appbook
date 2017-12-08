@@ -379,6 +379,15 @@ public class TaleActivity extends AppCompatActivity{
     /* 추가 on 메소드 */
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(screenOffReceiver!=null && screenFlag == false){
+            unregisterReceiver(screenOffReceiver);
+            screenOffReceiver = null;
+        }
+    }
+
+    @Override
     protected void onResume() {
 
         super.onResume();
