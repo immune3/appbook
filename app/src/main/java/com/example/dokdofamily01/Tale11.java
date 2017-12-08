@@ -12,10 +12,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -23,9 +21,9 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -58,7 +56,11 @@ public class Tale11 extends BaseFragment {
     int animationFlag = 0;
 
     boolean isAttached = false;
+
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -71,120 +73,20 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_11);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-
-
-                if(animationFlag == 0 && originalFlowerAnimation != null){
-                    animationFlag = 1;
-                    dokdo.startAnimation(dokdoAnimation);
-                    originalFlower.startAnimation(originalFlowerAnimation);
-                    bee2.startAnimation(beeAnimation);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            try {
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-            }catch (IndexOutOfBoundsException e){
-//                finishTime = subtitleList.get(subtitleIndex-1).getFinishTime();
-            }
-
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,36 +98,41 @@ public class Tale11 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale11;
 
-
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"언제나 활짝 웃는 땅채송화들이 랄랄라~ 합창해요.","6000"},
-                new String[]{"큰 바다 한가운데 용감하게 혼자인데 무섭지 않아요.", "12500"},
-                new String[]{"큰 바다 넓은 곳에 덩그러니 혼자인데 심심하지 않아요.","19500"},
-                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.","27000"},
-                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.","32700"},
-                new String[]{"우리들은 언제나 활짝 웃고 있는 걸까요?","37000"},
-                new String[]{"별이가 반짝이는 눈으로 독도의 푸른 풍경을 초롱초롱 바라봐요.","44500"}
-        );
-
         subtitleTextView.setText(null);
-
-
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
+    }
+
 
     @Override
     public void bindViews() {
         super.bindViews();
-        bee1 = (ImageView)layout.findViewById(R.id.bee1);
-        bee2 = (ImageView)layout.findViewById(R.id.bee2);
-        butterfly = (ImageView)layout.findViewById(R.id.butterfly);
-        originalFlower = (ImageView)layout.findViewById(R.id.originalFlower);
-        cutFlower = (ImageView)layout.findViewById(R.id.cutFlower);
-        flowers = (ImageView)layout.findViewById(R.id.flowers);
-        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
-        byul = (ImageView)layout.findViewById(R.id.byul);
+        bee1 = (ImageView) layout.findViewById(R.id.bee1);
+        bee2 = (ImageView) layout.findViewById(R.id.bee2);
+        butterfly = (ImageView) layout.findViewById(R.id.butterfly);
+        originalFlower = (ImageView) layout.findViewById(R.id.originalFlower);
+        cutFlower = (ImageView) layout.findViewById(R.id.cutFlower);
+        flowers = (ImageView) layout.findViewById(R.id.flowers);
+        dokdo = (ImageView) layout.findViewById(R.id.dokdo);
+        byul = (ImageView) layout.findViewById(R.id.byul);
+
     }
 
     @Override
@@ -248,11 +155,11 @@ public class Tale11 extends BaseFragment {
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setInterpolator(new BounceInterpolator());
 
-                beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight()*2), 0);
+                beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight() * 2), 0);
                 beeAnimation.setDuration(1500);
                 beeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 beeAnimation.setStartOffset(500);
-                beeAnimation.setAnimationListener(new MyAnimationListener(){
+                beeAnimation.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         bee2.startAnimation(blink);
@@ -267,7 +174,7 @@ public class Tale11 extends BaseFragment {
                     }
                 });
 
-                beeRotate = new RotateAnimation(-20,20,bee1.getWidth()/2,bee1.getHeight()/2);
+                beeRotate = new RotateAnimation(-20, 20, bee1.getWidth() / 2, bee1.getHeight() / 2);
                 beeRotate.setDuration(1500);
                 beeRotate.setStartOffset(500);
                 beeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -325,7 +232,7 @@ public class Tale11 extends BaseFragment {
         beeButterflyFadeIn = new AlphaAnimation(0, 1);
         beeButterflyFadeIn.setDuration(600);
         beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
-        beeButterflyFadeIn.setAnimationListener(new MyAnimationListener(){
+        beeButterflyFadeIn.setAnimationListener(new MyAnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 byul.setVisibility(View.VISIBLE);
@@ -394,4 +301,30 @@ public class Tale11 extends BaseFragment {
         }
 
     }
+
+
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_11);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"언제나 활짝 웃는 땅채송화들이 랄랄라~ 합창해요.", "6000"},
+                new String[]{"큰 바다 한가운데 용감하게 혼자인데 무섭지 않아요.", "12500"},
+                new String[]{"큰 바다 넓은 곳에 덩그러니 혼자인데 심심하지 않아요.", "19500"},
+                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.", "27000"},
+                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.", "32700"},
+                new String[]{"우리들은 언제나 활짝 웃고 있는 걸까요?", "37000"},
+                new String[]{"별이가 반짝이는 눈으로 독도의 푸른 풍경을 초롱초롱 바라봐요.", "44500"});
+
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
+        if (animationFlag == 0 && originalFlowerAnimation != null) {
+            animationFlag = 1;
+            dokdo.startAnimation(dokdoAnimation);
+            originalFlower.startAnimation(originalFlowerAnimation);
+            bee2.startAnimation(beeAnimation);
+        }
+    }
+
+
 }

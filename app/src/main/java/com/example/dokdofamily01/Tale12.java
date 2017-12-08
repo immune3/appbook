@@ -21,9 +21,10 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
+
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -57,7 +58,10 @@ public class Tale12 extends BaseFragment {
     int clickedFlag = 0;
 
     boolean isAttached = false;
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -70,127 +74,20 @@ public class Tale12 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_12);
-                }
 
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-
-                if(seaAppear != null){
-                    animationFlag = 1;
-                    sea1.startAnimation(seaAppear);
-                    sea2.startAnimation(seaAppear);
-                    dokdo.startAnimation(dokdoAppear);
-                    byul.startAnimation(dokdoAppear);
-                    smallsqeed.startAnimation(smallSqeedAppear);
-                    seagull.startAnimation(seagullAppear);
-                    sqeedBody.startAnimation(sqeedAppear);
-                    sqeedHead.startAnimation(sqeedAppear);
-                    hairpin.startAnimation(sqeedAppear);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            try {
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-            }catch (IndexOutOfBoundsException e){
-//                finishTime = subtitleList.get(subtitleIndex-1).getFinishTime();
-            }
-
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -202,16 +99,6 @@ public class Tale12 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale12;
 
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"찰랑찰랑~ ","1500"},
-                new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
-                new String[]{"별아 나랑 혹돔굴에 가보자!","12000"},
-                new String[]{"우와~ 혹돔 삼촌도 만나요?","16500"},
-                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ","23700"},
-                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ","28600"}
-        );
-
         subtitleTextView.setText(null);
 
 
@@ -219,6 +106,23 @@ public class Tale12 extends BaseFragment {
     }
 
     @Override
+
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
+    }
+
     public void bindViews() {
         super.bindViews();
         sea1 = (ImageView)layout.findViewById(R.id.sea1);
@@ -249,22 +153,6 @@ public class Tale12 extends BaseFragment {
                 dokdoAppear.setStartOffset(800);
                 dokdoAppear.setDuration(1500);
                 dokdoAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-//                dokdoAppear.setAnimationListener(new MyAnimationListener(){
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-////                        animationFlag = 0;
-////                        hairpin.startAnimation(blink);
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//                    }
-//
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-////                        smallsqeed.setVisibility(View.VISIBLE);
-//                    }
-//                });
 
                 seagullAppear = new TranslateAnimation(-(seagull.getWidth()*2),0, -seagull.getHeight(), 0);
                 seagullAppear.setStartOffset(800);
@@ -374,16 +262,34 @@ public class Tale12 extends BaseFragment {
             }
         });
     }
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_12);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"찰랑찰랑~ ","1500"},
+                new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
+                new String[]{"별아 나랑 혹돔굴에 가보자!","12000"},
+                new String[]{"우와~ 혹돔 삼촌도 만나요?","16500"},
+                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ","23700"},
+                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ","28600"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
 
-//    public void abab() {
-//        hairpin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                sqeedBody.startAnimation(sqeedClinkAni);
-//                sqeedHead.startAnimation(sqeedClinkAni);
-//                hairpin.startAnimation(sqeedClinkAni);
-//            }
-//        });
-//    }
+        if(seaAppear != null){
+            animationFlag = 1;
+            sea1.startAnimation(seaAppear);
+            sea2.startAnimation(seaAppear);
+            dokdo.startAnimation(dokdoAppear);
+            byul.startAnimation(dokdoAppear);
+            smallsqeed.startAnimation(smallSqeedAppear);
+            seagull.startAnimation(seagullAppear);
+            sqeedBody.startAnimation(sqeedAppear);
+            sqeedHead.startAnimation(sqeedAppear);
+            hairpin.startAnimation(sqeedAppear);
+        }
+
+    }
+
 }
 

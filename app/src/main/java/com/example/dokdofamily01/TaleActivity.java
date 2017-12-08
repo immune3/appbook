@@ -232,7 +232,9 @@ public class TaleActivity extends AppCompatActivity{
         screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
 
         registerReceiver(screenOffReceiver, screenOffFilter);
-    }
+
+
+}
 
     private class pagerAdapter extends FragmentStatePagerAdapter
     {
@@ -375,11 +377,44 @@ public class TaleActivity extends AppCompatActivity{
 
     }
     /* 추가 on 메소드 */
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(screenOffReceiver!=null && screenFlag == false){
+            unregisterReceiver(screenOffReceiver);
+            screenOffReceiver = null;
+        }
+
+    }
+
     @Override
     protected void onStart() {
         System.out.println("Activity State : onStart");
         Log.d("homeKeyFlag", homeKeyFlag + "");
         Log.d("currentVpPos", currentVpPos + "");
+
+        if(screenOffReceiver == null ){
+            screenOffReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Log.d("SCREEN", "SCREEN OFF");
+                    screenFlag = false;
+                }
+            };
+
+            screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+
+            registerReceiver(screenOffReceiver, screenOffFilter);
+        }
+
 
         screenFlag = true;
         if (homeKeyFlag) {
