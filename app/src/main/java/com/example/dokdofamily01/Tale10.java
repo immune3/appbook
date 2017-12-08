@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -16,7 +17,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -54,7 +54,6 @@ public class Tale10 extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,6 +62,7 @@ public class Tale10 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){

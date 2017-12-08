@@ -4,6 +4,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +13,15 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -39,11 +44,12 @@ public class Tale03 extends BaseFragment{
     TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
     int animationFlag = 0;
     int clickFlag=0;
-    boolean isHint;
 
+    boolean isHint;
+    MusicController musicController;
     boolean isAttached = false;
     MediaPlayer mp = null;
-    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -58,6 +64,7 @@ public class Tale03 extends BaseFragment{
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -81,6 +88,7 @@ public class Tale03 extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale03;
+
         subtitleTextView.setText(null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -101,6 +109,7 @@ public class Tale03 extends BaseFragment{
             musicController = null;
         }
     }
+
 
 
     @Override
@@ -274,7 +283,6 @@ public class Tale03 extends BaseFragment{
             cloud[5].startAnimation(cloudAnimation[4]);
         }
     }
-
 
 
 }

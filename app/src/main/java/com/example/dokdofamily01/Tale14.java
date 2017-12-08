@@ -94,7 +94,6 @@ public class Tale14 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale14;
-
         subtitleTextView.setText(null);
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -300,6 +299,5 @@ public class Tale14 extends BaseFragment {
         }
 
     }
-
 
 }

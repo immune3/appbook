@@ -4,6 +4,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -48,14 +50,11 @@ public class Tale17 extends BaseFragment {
     int clickStar;
     int appearDokdo;
 
-
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         isAttached = true;
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -83,6 +82,7 @@ public class Tale17 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale17;
+
 
         subtitleTextView.setText(null);
 

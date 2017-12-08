@@ -2,15 +2,19 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
@@ -71,7 +75,6 @@ public class Tale07 extends BaseFragment {
             }
         }
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

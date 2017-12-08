@@ -19,6 +19,9 @@ import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -73,6 +76,7 @@ public class Tale05 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale05;
+
         subtitleTextView.setText(null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }

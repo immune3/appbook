@@ -2,6 +2,9 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,10 @@ import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -28,6 +35,7 @@ public class Tale13 extends BaseFragment {
 
 
     boolean isAttached = false;
+
     boolean isHint;
     MediaPlayer mp = null;
     MusicController musicController;
@@ -67,8 +75,6 @@ public class Tale13 extends BaseFragment {
         }
     }
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +84,7 @@ public class Tale13 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale13;
+
 
 
         subtitleTextView.setText(null);
@@ -104,6 +111,7 @@ public class Tale13 extends BaseFragment {
 
 
     @Override
+
     public void bindViews() {
         super.bindViews();
 

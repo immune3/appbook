@@ -2,17 +2,21 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.CycleInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -23,6 +27,11 @@ import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -46,6 +55,7 @@ public class Tale06 extends BaseFragment {
     int animationFlag = 0;
 
     boolean isAttached = false;
+
     boolean isHint;
     MediaPlayer mp = null;
     MusicController musicController;
@@ -62,6 +72,7 @@ public class Tale06 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -254,7 +265,6 @@ public class Tale06 extends BaseFragment {
             }
         });
     }
-
 
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{

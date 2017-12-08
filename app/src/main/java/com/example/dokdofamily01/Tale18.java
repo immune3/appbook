@@ -2,6 +2,8 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -50,6 +51,7 @@ public class Tale18 extends BaseFragment {
     RotateAnimation sqeedRotate[] = new RotateAnimation[2];
     RotateAnimation manRotate[] = new RotateAnimation[2];
 
+
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
 
@@ -70,6 +72,7 @@ public class Tale18 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -83,7 +86,6 @@ public class Tale18 extends BaseFragment {
             }
         }
     }
-
 
     @Nullable
     @Override
@@ -123,7 +125,6 @@ public class Tale18 extends BaseFragment {
         tree18 = (ImageView) layout.findViewById(R.id.tree18);
         sqeed18 = (ImageView) layout.findViewById(R.id.sqeed18);
         man18 = (ImageView) layout.findViewById(R.id.man18);
-
     }
 
     @Override
@@ -137,11 +138,7 @@ public class Tale18 extends BaseFragment {
         father18.post(new Runnable() {
             @Override
             public void run() {
-                blink = new AlphaAnimation(1, 0.3f);
-                blink.setDuration(500);
-                blink.setRepeatCount(Animation.INFINITE);
-                blink.setRepeatMode(Animation.REVERSE);
-
+                blink = new AlphaAnimation(1,0.3f);
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
                 fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -151,7 +148,7 @@ public class Tale18 extends BaseFragment {
                 momAppear.setDuration(1500);
                 momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                starsAppear = new TranslateAnimation(0, 0, -stars18.getHeight(), 0);
+                starsAppear = new TranslateAnimation(0,0,-stars18.getHeight(),0);
                 starsAppear.setStartOffset(500);
                 starsAppear.setDuration(1500);
                 starsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -162,7 +159,7 @@ public class Tale18 extends BaseFragment {
                 flowerAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 flowerAppear.setAnimationListener(new MyAnimationListener());
 
-                postAppear = new TranslateAnimation(0, 0, -post18.getHeight(), 0);
+                postAppear = new TranslateAnimation(0,0,-post18.getHeight(),0);
                 postAppear.setDuration(1500);
                 postAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 postAppear.setAnimationListener(new MyAnimationListener());
@@ -178,8 +175,7 @@ public class Tale18 extends BaseFragment {
                 sqeedAppear.setDuration(1500);
                 sqeedAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedAppear.setAnimationListener(new MyAnimationListener2());
-
-                manAppear = new TranslateAnimation(0, 0, -man18.getHeight(), 0);
+                manAppear = new TranslateAnimation(0,0,-man18.getHeight(),0);
                 manAppear.setStartOffset(1500);
                 manAppear.setDuration(1500);
                 manAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -214,7 +210,6 @@ public class Tale18 extends BaseFragment {
                 sqeedRotate[1].setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedRotate[1].setRepeatCount(Animation.INFINITE);
                 sqeedRotate[1].setRepeatMode(Animation.REVERSE);
-
                 manRotate[0] = new RotateAnimation(0, -3, (int) (man18.getWidth() * 0.5), -man18.getHeight());
                 manRotate[0].setDuration(1000);
                 manRotate[0].setInterpolator(new AccelerateDecelerateInterpolator());
@@ -254,7 +249,6 @@ public class Tale18 extends BaseFragment {
                     rotateFlag[1] = 1;
                     rotateFlag[2] = 1;
                     rotateFlag[3] = 1;
-
                     post18.setVisibility(View.VISIBLE);
                     tree18.setVisibility(View.VISIBLE);
                     sqeed18.setVisibility(View.VISIBLE);
@@ -349,8 +343,7 @@ public class Tale18 extends BaseFragment {
             }
         }
     }
-
-    private void animationClear() {
+    private void animationClear(){
         post18.setVisibility(View.INVISIBLE);
         tree18.setVisibility(View.INVISIBLE);
         sqeed18.setVisibility(View.INVISIBLE);

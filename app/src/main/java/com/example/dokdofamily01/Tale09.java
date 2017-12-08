@@ -21,6 +21,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -67,12 +68,10 @@ public class Tale09 extends BaseFragment {
     AlphaAnimation blink;
     int appearFlag=0;
     int animationFlag=0;
-
     boolean isAttached = false;
     boolean isHint;
     MediaPlayer mp = null;
     MusicController musicController;
-
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -89,6 +88,7 @@ public class Tale09 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -102,7 +102,6 @@ public class Tale09 extends BaseFragment {
             }
         }
     }
-
 
 
     @Override
@@ -121,6 +120,7 @@ public class Tale09 extends BaseFragment {
     }
 
     @Override
+
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
             soundPlayFunc();
@@ -461,7 +461,6 @@ public class Tale09 extends BaseFragment {
         }
 
     }
-
 
     public void soundPlayFunc(){
         musicController = new MusicController(getActivity(), R.raw.scene_9);

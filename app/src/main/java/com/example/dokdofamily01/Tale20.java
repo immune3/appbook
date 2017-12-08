@@ -2,6 +2,9 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +40,6 @@ public class Tale20 extends BaseFragment {
     TranslateAnimation waveAppearAnimation;
     int animationFlag = 0;
 
-
     boolean isAttached = false;
     boolean isHint;
     MediaPlayer mp = null;
@@ -54,6 +56,7 @@ public class Tale20 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
@@ -145,7 +148,7 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
-                if (animationFlag == 0) {
+                if(animationFlag == 0){
                     animationFlag = 1;
                     man.startAnimation(manAppearAnimation);
                     dokdo_father.startAnimation(dokdoFatherAppearAnimation);
@@ -183,7 +186,6 @@ public class Tale20 extends BaseFragment {
         }
 
     }
-
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_20);
         subtitleList = new ArrayList<>();

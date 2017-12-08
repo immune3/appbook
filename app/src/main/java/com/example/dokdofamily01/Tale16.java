@@ -2,6 +2,9 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +21,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -51,6 +53,7 @@ public class Tale16 extends BaseFragment {
     int animationFlag=0;
 
     boolean isAttached = false;
+
     boolean isHint;
     MediaPlayer mp = null;
     MusicController musicController;
@@ -65,6 +68,7 @@ public class Tale16 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -78,9 +82,7 @@ public class Tale16 extends BaseFragment {
             }
         }
     }
-
-
-    @Override
+   @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -90,14 +92,12 @@ public class Tale16 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale16;
 
-
         subtitleTextView.setText(null);
 
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
 
     @Override
     public void onResume() {
@@ -285,7 +285,6 @@ public class Tale16 extends BaseFragment {
         }
 
     }
-
     public void soundPlayFunc(){
         musicController = new MusicController(getActivity(), R.raw.scene_16);
         subtitleList = new ArrayList<>();

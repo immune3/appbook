@@ -2,6 +2,8 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,7 @@ public class Tale11 extends BaseFragment {
     int animationFlag = 0;
 
     boolean isAttached = false;
+
     boolean isHint;
     MediaPlayer mp = null;
     MusicController musicController;
@@ -70,6 +73,7 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -93,6 +97,7 @@ public class Tale11 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale11;
+
         subtitleTextView.setText(null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -127,6 +132,7 @@ public class Tale11 extends BaseFragment {
         flowers = (ImageView) layout.findViewById(R.id.flowers);
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         byul = (ImageView) layout.findViewById(R.id.byul);
+
     }
 
     @Override
@@ -176,7 +182,7 @@ public class Tale11 extends BaseFragment {
                 beeRotate.setRepeatCount(Animation.INFINITE);
                 beeRotate.setRepeatMode(Animation.REVERSE);
 
-                beeTranslate = new TranslateAnimation(0, 0, bee1.getHeight() / 3, -(bee1.getHeight() / 2));
+                beeTranslate = new TranslateAnimation(0, 0,bee1.getHeight()/3,-(bee1.getHeight()/2));
                 beeTranslate.setDuration(2000);
                 beeTranslate.setStartOffset(600);
                 beeTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -184,7 +190,7 @@ public class Tale11 extends BaseFragment {
                 beeTranslate.setRepeatMode(Animation.REVERSE);
 
 
-                butterflyRotate = new RotateAnimation(50, 10, butterfly.getWidth() / 1.5f, butterfly.getHeight() * 0.5f);
+                butterflyRotate  = new RotateAnimation(50,10,butterfly.getWidth()/1.5f,butterfly.getHeight()*0.5f);
                 butterflyRotate.setDuration(1000);
                 butterflyRotate.setStartOffset(500);
                 butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -192,7 +198,7 @@ public class Tale11 extends BaseFragment {
                 butterflyRotate.setRepeatCount(Animation.INFINITE);
                 butterflyRotate.setRepeatMode(Animation.REVERSE);
 
-                butterflyTranslate = new TranslateAnimation(0, 0, butterfly.getHeight() / 6, 0);
+                butterflyTranslate = new TranslateAnimation(0, 0,butterfly.getHeight()/6,0);
                 butterflyTranslate.setDuration(3000);
                 butterflyTranslate.setStartOffset(600);
                 butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -208,7 +214,7 @@ public class Tale11 extends BaseFragment {
                 hideButterflyAniSet.addAnimation(butterflyTranslate);
 
 
-                if (animationFlag == 0) {
+                if(animationFlag == 0){
                     animationFlag = 1;
 
                     dokdo.startAnimation(dokdoAnimation);
@@ -295,6 +301,7 @@ public class Tale11 extends BaseFragment {
         }
 
     }
+
 
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_11);

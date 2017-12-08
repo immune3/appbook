@@ -4,6 +4,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -59,6 +60,7 @@ public class Tale01 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -168,7 +170,6 @@ public class Tale01 extends BaseFragment {
             }
         });
     }
-
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
@@ -219,7 +220,7 @@ public class Tale01 extends BaseFragment {
                     light.clearAnimation();
                     break;
                 case 9:
-                    animationFlag = 10;
+                    animationFlag =10;
                     break;
                 case 11:
                     animationFlag = 8;

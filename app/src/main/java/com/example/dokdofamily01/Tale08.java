@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 
@@ -75,6 +74,7 @@ public class Tale08 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
@@ -136,7 +136,6 @@ public class Tale08 extends BaseFragment {
         eyeBlack = (ImageView)layout.findViewById(R.id.eyeBlack);
         eyeWhite = (ImageView)layout.findViewById(R.id.eyeWhite);
     }
-
 
     @Override
     public void setValues() {

@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class Tale02 extends BaseFragment {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
+                Log.d("MPNULLTEST2", musicController.getMp() + "");
                 if (musicController != null) {
                     musicController.getMp().release();
                 }
