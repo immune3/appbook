@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -20,6 +21,10 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
+
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,7 +38,10 @@ public class Tale13 extends BaseFragment {
 
 
     boolean isAttached = false;
+
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -59,124 +67,21 @@ public class Tale13 extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         isAttached = true;
     }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_13);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-                if(bottomAnimation!=null){
-                    animationClear();
-                    animationFlag = 1;
-                    ivBottom13.startAnimation(bottomAnimation);
-                    ivWall13.startAnimation(wallAnimation);
-                    ivBuyl13.startAnimation(characterAnimation);
-                    ivFishes13.startAnimation(fishAnimation);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            try {
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-            }catch (IndexOutOfBoundsException e){
-//                finishTime = subtitleList.get(subtitleIndex-1).getFinishTime();
-            }
-
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,16 +93,7 @@ public class Tale13 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale13;
 
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"첨벙첨벙~ 별이가 바다 안으로 들어가요. ","5000"},
-                new String[]{"별이랑 놀고 싶은 해님도 풍덩~ 따라 들어가요. ", "10000"},
-                new String[]{"맑은 바다 안이 더 환해졌어요.","14000"},
-                new String[]{"오징어 이모랑 놀고 싶은 바닷속 친구들이 몰려와서 \n" +
-                        "헤엄치다 서고, 헤엄치다 멈추면서 가요.","23000"},
-                new String[]{"보들보들 감태 숲을 지나니 간질간질 모자반 숲이에요. ","29500"},
-                new String[]{"축구하던 성게 꼬마들이 축구공과 함께 데구루루 굴러 가요. ","36500"}
-        );
+
 
         subtitleTextView.setText(null);
 
@@ -205,6 +101,25 @@ public class Tale13 extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
+    }
+
+
+    @Override
+
     public void bindViews() {
         super.bindViews();
 
@@ -319,4 +234,29 @@ public class Tale13 extends BaseFragment {
         ivBottom13.clearAnimation();
         ivBuyl13.clearAnimation();
     }
+
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_13);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"첨벙첨벙~ 별이가 바다 안으로 들어가요. ","5000"},
+                new String[]{"별이랑 놀고 싶은 해님도 풍덩~ 따라 들어가요. ", "10000"},
+                new String[]{"맑은 바다 안이 더 환해졌어요.","14000"},
+                new String[]{"오징어 이모랑 놀고 싶은 바닷속 친구들이 몰려와서 \n" +
+                        "헤엄치다 서고, 헤엄치다 멈추면서 가요.","23000"},
+                new String[]{"보들보들 감태 숲을 지나니 간질간질 모자반 숲이에요. ","29500"},
+                new String[]{"축구하던 성게 꼬마들이 축구공과 함께 데구루루 굴러 가요. ","36500"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+        if(bottomAnimation!=null){
+            animationClear();
+            animationFlag = 1;
+            ivBottom13.startAnimation(bottomAnimation);
+            ivWall13.startAnimation(wallAnimation);
+            ivBuyl13.startAnimation(characterAnimation);
+            ivFishes13.startAnimation(fishAnimation);
+        }
+    }
+
 }

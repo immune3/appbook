@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -46,7 +46,10 @@ public class Tale07 extends BaseFragment {
     int animationFlag=0;
 
     boolean isAttached = false;
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -59,123 +62,19 @@ public class Tale07 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_7);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-
-                if(animationFlag==0){
-                    animationFlag=1;
-                    seagull[0].setVisibility(View.INVISIBLE);
-                    seagull[1].setVisibility(View.INVISIBLE);
-                    seagull[2].setVisibility(View.INVISIBLE);
-                    seagull[0].startAnimation(seagullAppear1);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            try {
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-            }catch (IndexOutOfBoundsException e){
-//                finishTime = subtitleList.get(subtitleIndex-1).getFinishTime();
-            }
-
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
-
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,22 +86,27 @@ public class Tale07 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale07;
 
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"언제나 용감한 갈매기는 잠시 곰곰... 생각하더니","5300"},
-                new String[]{"별이의 보물찾기를 위해 조금 특별하게 날아야겠다고 마음먹어요.", "11500"},
-                new String[]{"끼룩끼룩~ 갈매기 롤러코스터 출발!","18000"},
-                new String[]{"올라갈 때는 바다색 날개를 펄럭이며 훨훨~ ","24500"},
-                new String[]{"내려올 때는 갈고리 바람을 타고 쌩쌩~  ","33700"},
-                new String[]{"사철나무 아빠 집까지는 단숨에 휘익~","37500"},
-                new String[]{"이야~ 까르르~ ","41500"},
-                new String[]{"구경하던 해님도 신나서 하늘 높이 폴짝~ 튀어요.","47800"}
-        );
-
         subtitleTextView.setText(null);
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
     }
 
     @Override
@@ -362,6 +266,31 @@ public class Tale07 extends BaseFragment {
         @Override
         public void onAnimationRepeat(Animation animation) {
             super.onAnimationRepeat(animation);
+        }
+    }
+
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_7);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"언제나 용감한 갈매기는 잠시 곰곰... 생각하더니","5300"},
+                new String[]{"별이의 보물찾기를 위해 조금 특별하게 날아야겠다고 마음먹어요.", "11500"},
+                new String[]{"끼룩끼룩~ 갈매기 롤러코스터 출발!","18000"},
+                new String[]{"올라갈 때는 바다색 날개를 펄럭이며 훨훨~ ","24500"},
+                new String[]{"내려올 때는 갈고리 바람을 타고 쌩쌩~  ","33700"},
+                new String[]{"사철나무 아빠 집까지는 단숨에 휘익~","37500"},
+                new String[]{"이야~ 까르르~ ","41500"},
+                new String[]{"구경하던 해님도 신나서 하늘 높이 폴짝~ 튀어요.","47800"}
+
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+        if(seagullAppear1 != null){
+            animationFlag=1;
+            seagull[0].setVisibility(View.INVISIBLE);
+            seagull[1].setVisibility(View.INVISIBLE);
+            seagull[2].setVisibility(View.INVISIBLE);
+            seagull[0].startAnimation(seagullAppear1);
         }
     }
 }

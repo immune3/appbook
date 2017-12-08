@@ -24,6 +24,10 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,7 +55,11 @@ public class Tale06 extends BaseFragment {
     int animationFlag = 0;
 
     boolean isAttached = false;
+
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -64,61 +72,19 @@ public class Tale06 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_6);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-
-                if(animationFlag==0 && momAppear != null) {
-                    animationFlag=1;
-                    seagull[0].clearAnimation();
-                    smallwave[0].clearAnimation();
-                    smallwave[1].clearAnimation();
-                    smallwave[2].clearAnimation();
-                    smallwave[3].clearAnimation();
-
-//                    waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
-//                    waveAppear.setDuration(1000);
-//                    waveAppear.setFillAfter(true);
-//                    waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-//                    waveAppear.setAnimationListener(new MyAnimationListener());
-
-                    momDokdo.setVisibility(View.INVISIBLE);
-                    smallwave[0].setVisibility(View.INVISIBLE);
-                    smallwave[1].setVisibility(View.INVISIBLE);
-                    smallwave[2].setVisibility(View.INVISIBLE);
-                    smallwave[3].setVisibility(View.INVISIBLE);
-                    waveshadow.setVisibility(View.INVISIBLE);
-                    seagull[0].setVisibility(View.INVISIBLE);
-                    seagull[1].setVisibility(View.INVISIBLE);
-
-                    sea.startAnimation(waveAppear);
-                    bigwave[0].startAnimation(waveAppear);
-                    bigwave[1].startAnimation(waveAppear);
-                    bigwave[2].startAnimation(waveAppear);
-                    momDokdo.startAnimation(momAppear);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
 
 
@@ -132,25 +98,29 @@ public class Tale06 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale06;
 
-
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"심심해서 언제나 간지럼 장난을 일삼는 투정쟁이 파도가 오늘은 넘실넘실~ 웃어요. ","8000"},
-                new String[]{"언제나 마음 따뜻한 동도할머니는 별이가 좋아서 쳐다보고 또 쳐다봐요.   ", "16500"},
-                new String[]{"독도는 정말 보물섬이에요? ","20500"},
-                new String[]{"그럼~ 보물들로 가득하단다.","25500"},
-                new String[]{"보물들은 어디에 있어요? ","29000"},
-                new String[]{"하늘에도 있고","31500"},
-                new String[]{"땅에도 있고, ","33000"},
-                new String[]{"또 바다에도 있단다.","36500"},
-                new String[]{"보물들을 보고 싶어요! ","40000"},
-                new String[]{"그래~ 별이가 독도에서 보물찾기를 하면서 놀면 되겠구나!","49000"}
-        );
-
         subtitleTextView.setText(null);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
+    }
+
 
     @Override
     public void bindViews() {
@@ -296,86 +266,6 @@ public class Tale06 extends BaseFragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            try {
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-            }catch (IndexOutOfBoundsException e){
-//                finishTime = subtitleList.get(subtitleIndex-1).getFinishTime();
-                subtitleIndex = subtitleIndex-1;
-            }
-
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
         @Override
@@ -439,4 +329,52 @@ public class Tale06 extends BaseFragment {
         }
     }
 
+
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_6);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"심심해서 언제나 간지럼 장난을 일삼는 투정쟁이 파도가 오늘은 넘실넘실~ 웃어요. ","8000"},
+                new String[]{"언제나 마음 따뜻한 동도할머니는 별이가 좋아서 쳐다보고 또 쳐다봐요.   ", "16500"},
+                new String[]{"독도는 정말 보물섬이에요? ","20500"},
+                new String[]{"그럼~ 보물들로 가득하단다.","25500"},
+                new String[]{"보물들은 어디에 있어요? ","29000"},
+                new String[]{"하늘에도 있고","31500"},
+                new String[]{"땅에도 있고, ","33000"},
+                new String[]{"또 바다에도 있단다.","36500"},
+                new String[]{"보물들을 보고 싶어요! ","40000"},
+                new String[]{"그래~ 별이가 독도에서 보물찾기를 하면서 놀면 되겠구나!","49000"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+        if(animationFlag==0 && momAppear != null) {
+            animationFlag=1;
+            seagull[0].clearAnimation();
+            smallwave[0].clearAnimation();
+            smallwave[1].clearAnimation();
+            smallwave[2].clearAnimation();
+            smallwave[3].clearAnimation();
+
+//                    waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
+//                    waveAppear.setDuration(1000);
+//                    waveAppear.setFillAfter(true);
+//                    waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+//                    waveAppear.setAnimationListener(new MyAnimationListener());
+
+            momDokdo.setVisibility(View.INVISIBLE);
+            smallwave[0].setVisibility(View.INVISIBLE);
+            smallwave[1].setVisibility(View.INVISIBLE);
+            smallwave[2].setVisibility(View.INVISIBLE);
+            smallwave[3].setVisibility(View.INVISIBLE);
+            waveshadow.setVisibility(View.INVISIBLE);
+            seagull[0].setVisibility(View.INVISIBLE);
+            seagull[1].setVisibility(View.INVISIBLE);
+
+            sea.startAnimation(waveAppear);
+            bigwave[0].startAnimation(waveAppear);
+            bigwave[1].startAnimation(waveAppear);
+            bigwave[2].startAnimation(waveAppear);
+            momDokdo.startAnimation(momAppear);
+        }
+    }
 }

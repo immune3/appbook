@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -43,8 +45,11 @@ public class Tale03 extends BaseFragment{
     int animationFlag = 0;
     int clickFlag=0;
 
+    boolean isHint;
+    MusicController musicController;
     boolean isAttached = false;
     MediaPlayer mp = null;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -59,44 +64,19 @@ public class Tale03 extends BaseFragment{
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-//                System.out.println(32+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_3);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-
-                byulHand.setVisibility(View.INVISIBLE);
-
-                if(animationFlag == 0) {
-                    animationFlag = 1;
-                    sp.play(soundID,1,1,0,0,1);
-                    cloud[0].startAnimation(cloudAnimation[0]);
-                    cloud[1].startAnimation(cloudAnimation[1]);
-                    cloud[2].startAnimation(cloudAnimation[1]);
-                    cloud[3].startAnimation(cloudAnimation[2]);
-                    cloud[4].startAnimation(cloudAnimation[3]);
-                    cloud[5].startAnimation(cloudAnimation[4]);
-                }
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-//                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
 
     @Override
@@ -109,20 +89,28 @@ public class Tale03 extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale03;
 
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ","4000"},
-                new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
-                        "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
-                new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
-                        "보물섬 독도에 가는 거야~ ","20000"},
-                new String[]{"정말? 이렇게 날아서?","23500"},
-                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~","31000"}
-        );
-
         subtitleTextView.setText(null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
+    }
+
+
 
     @Override
     public void bindViews() {
@@ -267,82 +255,34 @@ public class Tale03 extends BaseFragment{
 
     }
 
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_3);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ","4000"},
+                new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
+                        "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
+                new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
+                        "보물섬 독도에 가는 거야~ ","20000"},
+                new String[]{"정말? 이렇게 날아서?","23500"},
+                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~","31000"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
+        byulHand.setVisibility(View.INVISIBLE);
+
+        if(cloudAnimation[0]!= null) {
+            animationFlag = 1;
+            sp.play(soundID,1,1,0,0,1);
+            cloud[0].startAnimation(cloudAnimation[0]);
+            cloud[1].startAnimation(cloudAnimation[1]);
+            cloud[2].startAnimation(cloudAnimation[1]);
+            cloud[3].startAnimation(cloudAnimation[2]);
+            cloud[4].startAnimation(cloudAnimation[3]);
+            cloud[5].startAnimation(cloudAnimation[4]);
         }
     }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
-
 
 
 }

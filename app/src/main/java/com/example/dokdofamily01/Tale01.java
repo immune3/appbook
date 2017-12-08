@@ -17,18 +17,17 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
  * Created by heronation on 2017-11-06.
  */
 
-public class Tale01 extends BaseFragment{
+public class Tale01 extends BaseFragment {
 
-    int animationFlag=0;
+    int animationFlag = 0;
     ImageView lamp;
     ImageView lampLight;
     ImageView bedLight;
@@ -44,7 +43,10 @@ public class Tale01 extends BaseFragment{
     ArrayList<SubTitleData> subtitleList;
 
     boolean isAttached = false;
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
+
 
     SoundPool sp;
     int soundID;
@@ -58,29 +60,17 @@ public class Tale01 extends BaseFragment{
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-
+        if(isAttached ){
             if (isVisibleToUser) {
-                System.out.println(1 + "Visible");
-                if (mp == null) {
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_1);
-                }
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(), 0, 500);
-
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-                System.out.println(1 + "notVisible");
-                if (mp != null && mp.isPlaying()) {
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
     }
@@ -95,43 +85,42 @@ public class Tale01 extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale01;
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
-                new String[]{"콕콕... 콕콕콕...","7500"},
-                new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
-                new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
-                new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데","22500"}
-        );
-
-
         subtitleTextView.setText(null);
-        if (mp == null && BaseFragment.firstFlag == 0) {
-            mp = MediaPlayer.create(getActivity(), R.raw.scene_1);
-            mp.start();
 
-            Timer timer = new Timer();
-            timer.schedule(new MyThread(), 0, 500);
-
-            BaseFragment.firstFlag = 1;
-        }
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
     }
 
     @Override
     public void bindViews() {
         super.bindViews();
-        lamp = (ImageView)layout.findViewById(R.id.lamp);
-        lampLight = (ImageView)layout.findViewById(R.id.lampLight);
-        bedLight = (ImageView)layout.findViewById(R.id.bedLight);
-        head = (ImageView)layout.findViewById(R.id.head);
-        blanket = (ImageView)layout.findViewById(R.id.blanket);
-        byul = (ImageView)layout.findViewById(R.id.byul);
-        hand = (ImageView)layout.findViewById(R.id.hand);
-        curtain = (ImageView)layout.findViewById(R.id.curtain);
-        light = (ImageView)layout.findViewById(R.id.light);
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        soundID = sp.load(getContext(),R.raw.effect_01,1);
+        lamp = (ImageView) layout.findViewById(R.id.lamp);
+        lampLight = (ImageView) layout.findViewById(R.id.lampLight);
+        bedLight = (ImageView) layout.findViewById(R.id.bedLight);
+        head = (ImageView) layout.findViewById(R.id.head);
+        blanket = (ImageView) layout.findViewById(R.id.blanket);
+        byul = (ImageView) layout.findViewById(R.id.byul);
+        hand = (ImageView) layout.findViewById(R.id.hand);
+        curtain = (ImageView) layout.findViewById(R.id.curtain);
+        light = (ImageView) layout.findViewById(R.id.light);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        soundID = sp.load(getContext(), R.raw.effect_01, 1);
     }
 
     @Override
@@ -142,11 +131,11 @@ public class Tale01 extends BaseFragment{
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.anim_01_fadein);
+        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_01_fadein);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
-        fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.anim_01_fadeout);
+        fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_01_fadeout);
         fadeOut.setFillAfter(true);
         fadeOut.setAnimationListener(new MyAnimationListener());
 
@@ -158,9 +147,9 @@ public class Tale01 extends BaseFragment{
         lamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag==0) {
+                if (animationFlag == 0) {
                     animationFlag = 1;
-                    sp.play(soundID,1,1,0,0,1);
+                    sp.play(soundID, 1, 1, 0, 0, 1);
                     lampLight.startAnimation(fadeIn);
                     bedLight.startAnimation(fadeIn);
                     head.setVisibility(View.VISIBLE);
@@ -169,13 +158,13 @@ public class Tale01 extends BaseFragment{
                     light.setVisibility(View.INVISIBLE);
                     byul.setVisibility(View.INVISIBLE);
                     hand.setVisibility(View.INVISIBLE);
-                }else if(animationFlag==8){
+                } else if (animationFlag == 8) {
                     fadeIn.setStartOffset(0);
                     fadeOut.setStartOffset(0);
-                    sp.play(soundID,1,1,0,0,1);
+                    sp.play(soundID, 1, 1, 0, 0, 1);
                     lampLight.startAnimation(fadeOut);
-                }else if(animationFlag==10){
-                    sp.play(soundID,1,1,0,0,1);
+                } else if (animationFlag == 10) {
+                    sp.play(soundID, 1, 1, 0, 0, 1);
                     lampLight.startAnimation(fadeIn);
                 }
             }
@@ -253,87 +242,28 @@ public class Tale01 extends BaseFragment{
             } else if (animationFlag == 7) {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
-            }else if(animationFlag==8){
-                animationFlag=9;
-            }else if(animationFlag==10){
-                animationFlag=11;
+            } else if (animationFlag == 8) {
+                animationFlag = 9;
+            } else if (animationFlag == 10) {
+                animationFlag = 11;
             }
         }
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println(1 + "onDestroyView");
-        if (mp != null && mp.isPlaying()) {
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
 
+
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_1);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
+                new String[]{"콕콕... 콕콕콕...", "7500"},
+                new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
+                new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
+                new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
+                );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
 
     }
 
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-               finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-        }
-    }
-
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-        }
-    };
 }
