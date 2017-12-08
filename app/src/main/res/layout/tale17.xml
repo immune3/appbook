@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_17_background"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_dokdo"
+                app:scale_width="890"
+                app:scale_height="156"
+                app:scale_left="870"
+                app:scale_top="800"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_dokdo_undersea"
+                app:scale_width="2560"
+                app:scale_height="632"
+                app:scale_left="0"
+                app:scale_top="914"
+                android:id="@+id/dokdo_undersea"
+                android:visibility="invisible"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_wave_shadow_01"
+                app:scale_width="2560"
+                app:scale_height="248"
+                app:scale_left="0"
+                app:scale_top="923"
+                android:id="@+id/wave_shadow_01"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_wave_shadow_02"
+                app:scale_width="2560"
+                app:scale_height="248"
+                app:scale_left="0"
+                app:scale_top="923"
+                android:id="@+id/wave_shadow_02"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_stars"
+                app:scale_width="2560"
+                app:scale_height="422"
+                app:scale_left="0"
+                app:scale_top="23"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_17_star"
+                app:scale_width="144"
+                app:scale_height="148"
+                app:scale_left="439"
+                app:scale_top="189"
+                android:id="@+id/star"
+                />
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>

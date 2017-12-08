@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_13_background"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+
+            <ImageView
+                android:id="@+id/ivBuyl13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_byul"
+                app:scale_width="1490"
+                app:scale_height="786"
+                app:scale_left="308"
+                app:scale_top="50"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_deco"
+                app:scale_width="908"
+                app:scale_height="602"
+                app:scale_left="160"
+                app:scale_top="40"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_01"
+                app:scale_width="25"
+                app:scale_height="20"
+                app:scale_left="748"
+                app:scale_top="556"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_02"
+                app:scale_width="25"
+                app:scale_height="20"
+                app:scale_left="578"
+                app:scale_top="370"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_03"
+                app:scale_width="27"
+                app:scale_height="27"
+                app:scale_left="183"
+                app:scale_top="121"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_04"
+                app:scale_width="46"
+                app:scale_height="41"
+                app:scale_left="267"
+                app:scale_top="149"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_05"
+                app:scale_width="43"
+                app:scale_height="47"
+                app:scale_left="695"
+                app:scale_top="215"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bubble_06"
+                app:scale_width="20"
+                app:scale_height="21"
+                app:scale_left="605"
+                app:scale_top="185"/>
+
+            <ImageView
+                android:id="@+id/ivWall13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_wall"
+                app:scale_width="1286"
+                app:scale_height="1432"
+                app:scale_left="1280"
+                app:scale_top="110"/>
+
+            <ImageView
+                android:id="@+id/ivBottom13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_bottom"
+                app:scale_width="2560"
+                app:scale_height="800"
+                app:scale_left="0"
+                app:scale_top="750"/>
+
+            <ImageView
+                android:id="@+id/ivFishes13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_fishes"
+                app:scale_width="648"
+                app:scale_height="292"
+                app:scale_left="1920"
+                app:scale_top="660"/>
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_wave_01"
+                app:scale_width="2560"
+                app:scale_height="438"
+                app:scale_left="0"
+                app:scale_top="490"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_wave_02"
+                app:scale_width="2560"
+                app:scale_height="438"
+                app:scale_left="0"
+                app:scale_top="475"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_wave_03"
+                app:scale_width="2560"
+                app:scale_height="438"
+                app:scale_left="0"
+                app:scale_top="480"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_wave_04"
+                app:scale_height="450"
+                app:scale_left="0"
+                app:scale_top="890"
+                app:scale_width="2560" />
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>
