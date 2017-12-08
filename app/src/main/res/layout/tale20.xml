@@ -89,6 +89,7 @@
                 app:scale_left="0"
                 app:scale_top="1080" />
             <ImageView
+                android:id="@+id/cutain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_cutain"

@@ -316,7 +316,7 @@ public class Tale14 extends BaseFragment {
         lightFadein.setAnimationListener(new MyAnimationListener(){
             @Override
             public void onAnimationEnd(Animation animation) {
-                bell.startAnimation(blink);
+                //bell.startAnimation(blink);
             }
 
             @Override

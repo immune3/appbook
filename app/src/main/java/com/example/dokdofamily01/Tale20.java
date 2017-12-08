@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -31,12 +35,17 @@ public class Tale20 extends BaseFragment {
     ImageView sqeed;
     ImageView dokdo_mom;
     ImageView wave;
+    ImageView cutain;
 
     TranslateAnimation manAppearAnimation;
     TranslateAnimation dokdoFatherAppearAnimation;
     TranslateAnimation sqeedAppearAnimation;
     TranslateAnimation dokdoMomAppearAnimation;
     TranslateAnimation waveAppearAnimation;
+    TranslateAnimation cutainDownAnimation1;
+    TranslateAnimation cutainDownAnimation2;
+
+    AnimationSet cutainDownAniSet = new AnimationSet(false);
     int animationFlag = 0;
 
     boolean isAttached = false;
@@ -68,6 +77,7 @@ public class Tale20 extends BaseFragment {
 
                 if(animationFlag == 0 && manAppearAnimation != null){
                     animationFlag = 1;
+                    cutain.clearAnimation();
                     man.startAnimation(manAppearAnimation);
                     dokdo_father.startAnimation(dokdoFatherAppearAnimation);
                     sqeed.startAnimation(sqeedAppearAnimation);
@@ -214,6 +224,7 @@ public class Tale20 extends BaseFragment {
         sqeed = (ImageView)layout.findViewById(R.id.sqeed);
         dokdo_mom = (ImageView)layout.findViewById(R.id.dokdo_mom);
         wave = (ImageView)layout.findViewById(R.id.wave);
+        cutain = (ImageView)layout.findViewById(R.id.cutain);
     }
 
     @Override
@@ -252,8 +263,24 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
+                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.02f);
+                cutainDownAnimation1.setDuration(1000);
+                cutainDownAnimation1.setInterpolator(new AnticipateInterpolator());
+//                cutainDownAnimation1.setFillAfter(true);
+
+                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.4f);
+                cutainDownAnimation2.setStartOffset(1000);
+                cutainDownAnimation2.setDuration(20000);
+                cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
+//                cutainDownAnimation2.setFillAfter(true);
+
+                cutainDownAniSet.addAnimation(cutainDownAnimation1);
+                cutainDownAniSet.addAnimation(cutainDownAnimation2);
+                cutainDownAniSet.setFillAfter(true);
+
                 if(animationFlag == 0){
                     animationFlag = 1;
+                    cutain.clearAnimation();
                     man.startAnimation(manAppearAnimation);
                     dokdo_father.startAnimation(dokdoFatherAppearAnimation);
                     sqeed.startAnimation(sqeedAppearAnimation);
@@ -272,6 +299,12 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        cutain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cutain.startAnimation(cutainDownAniSet);
+            }
+        });
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
