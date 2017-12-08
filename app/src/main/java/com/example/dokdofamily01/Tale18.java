@@ -8,6 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
@@ -22,6 +28,32 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale18 extends BaseFragment {
+
+    ImageView father18;
+    ImageView mom18;
+    ImageView stars18;
+    ImageView flower18;
+    ImageView man18;
+    ImageView sqeed18;
+    ImageView post18;
+    ImageView tree18;
+
+    TranslateAnimation fatherAppear;
+    TranslateAnimation momAppear;
+    TranslateAnimation starsAppear;
+    TranslateAnimation flowerAppear;
+    TranslateAnimation sqeedAppear;
+    TranslateAnimation manAppear;
+    TranslateAnimation postAppear;
+    TranslateAnimation treeAppear;
+    AlphaAnimation blink;
+    RotateAnimation postRotate[] = new RotateAnimation[2];
+    RotateAnimation treeRotate[] = new RotateAnimation[2];
+    RotateAnimation sqeedRotate[] = new RotateAnimation[2];
+    RotateAnimation manRotate[] = new RotateAnimation[2];
+
+    int animationFlag=0;
+    int rotateFlag[] = new int[4];
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -49,6 +81,15 @@ public class Tale18 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+
+                if(fatherAppear!=null){
+                    animationClear();
+                    animationFlag=1;
+                    father18.startAnimation(fatherAppear);
+                    mom18.startAnimation(momAppear);
+                    stars18.startAnimation(starsAppear);
+                    flower18.startAnimation(flowerAppear);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -178,6 +219,15 @@ public class Tale18 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+        father18 = (ImageView)layout.findViewById(R.id.father18);
+        mom18 = (ImageView)layout.findViewById(R.id.mom18);
+        stars18 = (ImageView)layout.findViewById(R.id.stars18);
+        flower18 = (ImageView)layout.findViewById(R.id.flower18);
+        post18 = (ImageView)layout.findViewById(R.id.post18);
+        tree18 = (ImageView)layout.findViewById(R.id.tree18);
+        sqeed18 = (ImageView)layout.findViewById(R.id.sqeed18);
+        man18 = (ImageView)layout.findViewById(R.id.man18);
+
     }
 
     @Override
@@ -188,10 +238,227 @@ public class Tale18 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+        father18.post(new Runnable() {
+            @Override
+            public void run() {
+                blink = new AlphaAnimation(1,0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
+                fatherAppear = new TranslateAnimation(0,0,father18.getHeight(),0);
+                fatherAppear.setDuration(1500);
+                fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                momAppear = new TranslateAnimation(0,0,mom18.getHeight(),0);
+                momAppear.setStartOffset(300);
+                momAppear.setDuration(1500);
+                momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                starsAppear = new TranslateAnimation(0,0,-stars18.getHeight(),0);
+                starsAppear.setStartOffset(500);
+                starsAppear.setDuration(1500);
+                starsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                flowerAppear = new TranslateAnimation(0,0,-flower18.getHeight(),0);
+                flowerAppear.setStartOffset(500);
+                flowerAppear.setDuration(2000);
+                flowerAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                flowerAppear.setAnimationListener(new MyAnimationListener());
+
+                postAppear = new TranslateAnimation(0,0,-post18.getHeight(),0);
+                postAppear.setDuration(1500);
+                postAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                postAppear.setAnimationListener(new MyAnimationListener());
+
+                treeAppear = new TranslateAnimation(0,0,-tree18.getHeight(),0);
+                treeAppear.setStartOffset(500);
+                treeAppear.setDuration(1500);
+                treeAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                treeAppear.setAnimationListener(new MyAnimationListener1());
+
+                sqeedAppear = new TranslateAnimation(0,0,-sqeed18.getHeight(),0);
+                sqeedAppear.setStartOffset(1000);
+                sqeedAppear.setDuration(1500);
+                sqeedAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedAppear.setAnimationListener(new MyAnimationListener2());
+
+                manAppear = new TranslateAnimation(0,0,-man18.getHeight(),0);
+                manAppear.setStartOffset(1500);
+                manAppear.setDuration(1500);
+                manAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                manAppear.setAnimationListener(new MyAnimationListener3());
+
+                postRotate[0] = new RotateAnimation(0,-3,(int)(post18.getWidth()*0.5),-post18.getHeight());
+                postRotate[0].setDuration(1000);
+                postRotate[0].setInterpolator(new AccelerateDecelerateInterpolator());
+                postRotate[0].setAnimationListener(new MyAnimationListener());
+                postRotate[1] = new RotateAnimation(-3,3,(int)(post18.getWidth()*0.5),-post18.getHeight());
+                postRotate[1].setDuration(1000);
+                postRotate[1].setInterpolator(new AccelerateDecelerateInterpolator());
+                postRotate[1].setRepeatCount(Animation.INFINITE);
+                postRotate[1].setRepeatMode(Animation.REVERSE);
+
+                treeRotate[0] = new RotateAnimation(0,-3,(int)(tree18.getWidth()*0.5),-tree18.getHeight());
+                treeRotate[0].setDuration(1000);
+                treeRotate[0].setInterpolator(new AccelerateDecelerateInterpolator());
+                treeRotate[0].setAnimationListener(new MyAnimationListener1());
+                treeRotate[1] = new RotateAnimation(-3,3,(int)(tree18.getWidth()*0.5),-tree18.getHeight());
+                treeRotate[1].setDuration(1000);
+                treeRotate[1].setInterpolator(new AccelerateDecelerateInterpolator());
+                treeRotate[1].setRepeatCount(Animation.INFINITE);
+                treeRotate[1].setRepeatMode(Animation.REVERSE);
+
+                sqeedRotate[0] = new RotateAnimation(0,-3,(int)(sqeed18.getWidth()*0.5),-sqeed18.getHeight());
+                sqeedRotate[0].setDuration(1000);
+                sqeedRotate[0].setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedRotate[0].setAnimationListener(new MyAnimationListener2());
+                sqeedRotate[1] = new RotateAnimation(-3,3,(int)(sqeed18.getWidth()*0.5),-sqeed18.getHeight());
+                sqeedRotate[1].setDuration(1000);
+                sqeedRotate[1].setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedRotate[1].setRepeatCount(Animation.INFINITE);
+                sqeedRotate[1].setRepeatMode(Animation.REVERSE);
+
+                manRotate[0] = new RotateAnimation(0,-3,(int)(man18.getWidth()*0.5),-man18.getHeight());
+                manRotate[0].setDuration(1000);
+                manRotate[0].setInterpolator(new AccelerateDecelerateInterpolator());
+                manRotate[0].setAnimationListener(new MyAnimationListener3());
+                manRotate[1] = new RotateAnimation(-3,3,(int)(man18.getWidth()*0.5),-man18.getHeight());
+                manRotate[1].setDuration(1000);
+                manRotate[1].setInterpolator(new AccelerateDecelerateInterpolator());
+                manRotate[1].setRepeatCount(Animation.INFINITE);
+                manRotate[1].setRepeatMode(Animation.REVERSE);
+
+
+                if(animationFlag==0){
+                    animationClear();
+                    animationFlag=1;
+                    father18.startAnimation(fatherAppear);
+                    mom18.startAnimation(momAppear);
+                    stars18.startAnimation(starsAppear);
+                    flower18.startAnimation(flowerAppear);
+                }
+            }
+        });
+
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        flower18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag==0){
+                    animationFlag=2;
+                    animationClear();
+                    flower18.clearAnimation();
+
+                    rotateFlag[0]=1;
+                    rotateFlag[1]=1;
+                    rotateFlag[2]=1;
+                    rotateFlag[3]=1;
+
+                    post18.setVisibility(View.VISIBLE);
+                    tree18.setVisibility(View.VISIBLE);
+                    sqeed18.setVisibility(View.VISIBLE);
+                    man18.setVisibility(View.VISIBLE);
+                    post18.startAnimation(postAppear);
+                    tree18.startAnimation(treeAppear);
+                    sqeed18.startAnimation(sqeedAppear);
+                    man18.startAnimation(manAppear);
+                }
+            }
+        });
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (animationFlag){
+                case 1:
+                    animationFlag=0;
+                    flower18.startAnimation(blink);
+                    break;
+                case 2:
+                    animationFlag=3;
+                    post18.startAnimation(postRotate[0]);
+                    break;
+                case 3:
+                    animationFlag=4;
+                    post18.startAnimation(postRotate[1]);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
+    }
+
+    private class MyAnimationListener1 extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[1]){
+                case 1:
+                    rotateFlag[1]=2;
+                    tree18.startAnimation(treeRotate[0]);
+                    break;
+                case 2:
+                    rotateFlag[1]=0;
+                    tree18.startAnimation(treeRotate[1]);
+                    break;
+            }
+        }
+    }
+    private class MyAnimationListener2 extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[2]){
+                case 1:
+                    rotateFlag[2]=2;
+                    sqeed18.startAnimation(sqeedRotate[0]);
+                    break;
+                case 2:
+                    rotateFlag[2]=0;
+                    sqeed18.startAnimation(sqeedRotate[1]);
+                    break;
+            }
+        }
+    }
+    private class MyAnimationListener3 extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[3]){
+                case 1:
+                    rotateFlag[3]=2;
+                    man18.startAnimation(manRotate[0]);
+                    break;
+                case 2:
+                    rotateFlag[3]=0;
+                    man18.startAnimation(manRotate[1]);
+                    break;
+            }
+        }
+    }
+    private void animationClear(){
+        post18.setVisibility(View.INVISIBLE);
+        tree18.setVisibility(View.INVISIBLE);
+        sqeed18.setVisibility(View.INVISIBLE);
+        man18.setVisibility(View.INVISIBLE);
+        post18.clearAnimation();
+        tree18.clearAnimation();
+        sqeed18.clearAnimation();
+        man18.clearAnimation();
     }
 }

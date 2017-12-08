@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.content.ContentValues.TAG;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -36,13 +39,17 @@ public class Tale10 extends BaseFragment {
     ImageView byulHead;
     ImageView byulBody;
     ImageView byulHand;
+    ImageView blinkBird;
+    ImageView bird[][] = new ImageView[3][5];
 
     TranslateAnimation mountainAppear;
     TranslateAnimation rockAppear;
     TranslateAnimation birdsAppear;
     Animation fadeIn;
-
+    AlphaAnimation blink;
+    AlphaAnimation repeat;
     int animationFlag=0;
+    int repeatFlag=0;
 
     boolean isAttached = false;
     MediaPlayer mp = null;
@@ -70,7 +77,7 @@ public class Tale10 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
-                if(animationFlag==0){
+                if(mountainAppear!=null){
                     animationFlag=1;
                     mountain.startAnimation(mountainAppear);
                     rock.startAnimation(rockAppear);
@@ -218,6 +225,28 @@ public class Tale10 extends BaseFragment {
         byulHead = (ImageView)layout.findViewById(R.id.byulHead);
         byulBody = (ImageView)layout.findViewById(R.id.byulBody);
         byulHand = (ImageView)layout.findViewById(R.id.byulHand);
+        blinkBird = (ImageView)layout.findViewById(R.id.blinkBird);
+        bird[0][0] = (ImageView)layout.findViewById(R.id.bird00);
+        bird[0][1] = (ImageView)layout.findViewById(R.id.bird01);
+        bird[0][2] = (ImageView)layout.findViewById(R.id.bird02);
+        bird[0][3] = (ImageView)layout.findViewById(R.id.bird03);
+        bird[0][4] = (ImageView)layout.findViewById(R.id.bird04);
+        bird[1][0] = (ImageView)layout.findViewById(R.id.bird10);
+        bird[1][1] = (ImageView)layout.findViewById(R.id.bird11);
+        bird[1][2] = (ImageView)layout.findViewById(R.id.bird12);
+        bird[1][3] = (ImageView)layout.findViewById(R.id.bird13);
+        bird[1][4] = (ImageView)layout.findViewById(R.id.bird14);
+        bird[2][0] = (ImageView)layout.findViewById(R.id.bird20);
+        bird[2][1] = (ImageView)layout.findViewById(R.id.bird21);
+        bird[2][2] = (ImageView)layout.findViewById(R.id.bird22);
+        bird[2][3] = (ImageView)layout.findViewById(R.id.bird23);
+        bird[2][4] = (ImageView)layout.findViewById(R.id.bird24);
+//        for(int i=0; i<3; i++){
+//            for (int j=0; j<5; j++){
+//                int aa = "R.id.bird"+i+""+j;
+//                bird[i][j] = (ImageView)layout.findViewById(aa);
+//            }
+//        }
     }
 
     @Override
@@ -228,23 +257,18 @@ public class Tale10 extends BaseFragment {
             public void run() {
                 mountainAppear = new TranslateAnimation(0,0,mountain.getHeight(),0);
                 mountainAppear.setDuration(2000);
-//                mountainAppear.setFillAfter(true);
                 mountainAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 mountainAppear.setAnimationListener(new MyAnimationListener());
 
                 birdsAppear = new TranslateAnimation(0,0,birds.getHeight(),0);
                 birdsAppear.setDuration(1000);
-//                birdsAppear.setFillAfter(true);
                 birdsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 birdsAppear.setAnimationListener(new MyAnimationListener());
 
                 rockAppear = new TranslateAnimation(-rock.getWidth(),0,0,0);
                 rockAppear.setStartOffset(500);
                 rockAppear.setDuration(1500);
-//                birdsAppear.setFillAfter(true);
                 rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-//                rockAppear.setAnimationListener(new MyAnimationListener());
-
 
                 if(animationFlag==0){
                     animationFlag=1;
@@ -261,11 +285,30 @@ public class Tale10 extends BaseFragment {
         fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         fadeIn.setDuration(1000);
         fadeIn.setAnimationListener(new MyAnimationListener());
+
+        blink = new AlphaAnimation(0.3f,1);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+//        blink.setAnimationListener(new MyAnimationListener());
+
+        repeat= new AlphaAnimation(1,1);
+        repeat.setDuration(500);
+        repeat.setRepeatCount(Animation.INFINITE);
+        repeat.setRepeatMode(Animation.REVERSE);
+        repeat.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+        blinkBird.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                blinkBird.clearAnimation();
+                blinkBird.startAnimation(repeat);
+            }
+        });
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
@@ -279,6 +322,9 @@ public class Tale10 extends BaseFragment {
                     byulBody.setVisibility(View.INVISIBLE);
                     seagull.setVisibility(View.INVISIBLE);
                     birds.setVisibility(View.INVISIBLE);
+                    bird[0][0].setVisibility(View.INVISIBLE);
+                    bird[1][0].setVisibility(View.INVISIBLE);
+                    bird[2][0].setVisibility(View.INVISIBLE);
                     mountain.setVisibility(View.VISIBLE);
                     rock.setVisibility(View.VISIBLE);
                     break;
@@ -288,6 +334,13 @@ public class Tale10 extends BaseFragment {
                     byulBody.setVisibility(View.VISIBLE);
                     seagull.setVisibility(View.VISIBLE);
                     birds.setVisibility(View.VISIBLE);
+                    bird[0][0].setVisibility(View.VISIBLE);
+                    bird[1][0].setVisibility(View.VISIBLE);
+                    bird[2][0].setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    animationFlag=4;
+                    blinkBird.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -301,18 +354,22 @@ public class Tale10 extends BaseFragment {
                     mountain.clearAnimation();
                     rock.clearAnimation();
                     birds.startAnimation(birdsAppear);
+                    bird[0][0].startAnimation(birdsAppear);
+                    bird[1][0].startAnimation(birdsAppear);
+                    bird[2][0].startAnimation(birdsAppear);
                     byulBody.startAnimation(fadeIn);
                     byulHand.startAnimation(fadeIn);
                     byulHead.startAnimation(fadeIn);
                     seagull.startAnimation(fadeIn);
                     break;
                 case 2:
-                    animationFlag=0;
+                    animationFlag=3;
                     birds.clearAnimation();
                     byulBody.clearAnimation();
                     byulHand.clearAnimation();
                     byulHead.clearAnimation();
                     seagull.clearAnimation();
+                    blinkBird.startAnimation(blink);
                     break;
             }
         }
@@ -320,6 +377,63 @@ public class Tale10 extends BaseFragment {
         @Override
         public void onAnimationRepeat(Animation animation) {
             super.onAnimationRepeat(animation);
+            switch (repeatFlag){
+                case 0:
+                    repeatFlag=1;
+//                    bird[0][0].setVisibility(View.INVISIBLE);
+//                    bird[0][1].setVisibility(View.VISIBLE);
+//                    bird[0][2].setVisibility(View.INVISIBLE);
+//                    bird[0][3].setVisibility(View.INVISIBLE);
+//                    bird[0][4].setVisibility(View.INVISIBLE);
+                    bird[0][0].setImageResource(R.drawable.img_10_bird_04);
+                    bird[1][0].setImageResource(R.drawable.img_10_bird_03);
+                    bird[2][0].setImageResource(R.drawable.img_10_bird_02);
+                    break;
+                case 1:
+                    repeatFlag=2;
+//                    bird[0][0].setVisibility(View.INVISIBLE);
+//                    bird[0][1].setVisibility(View.INVISIBLE);
+//                    bird[0][2].setVisibility(View.VISIBLE);
+//                    bird[0][3].setVisibility(View.INVISIBLE);
+//                    bird[0][4].setVisibility(View.INVISIBLE);
+                    bird[0][0].setImageResource(R.drawable.img_10_bird_03);
+                    bird[1][0].setImageResource(R.drawable.img_10_bird_02);
+                    bird[2][0].setImageResource(R.drawable.img_10_bird_01);
+                    break;
+                case 2:
+                    repeatFlag=3;
+//                    bird[0][0].setVisibility(View.INVISIBLE);
+//                    bird[0][1].setVisibility(View.INVISIBLE);
+//                    bird[0][2].setVisibility(View.INVISIBLE);
+//                    bird[0][3].setVisibility(View.VISIBLE);
+//                    bird[0][4].setVisibility(View.INVISIBLE);
+                    bird[0][0].setImageResource(R.drawable.img_10_bird_02);
+                    bird[1][0].setImageResource(R.drawable.img_10_bird_01);
+                    bird[2][0].setImageResource(R.drawable.img_10_bird_05);
+                    break;
+                case 3:
+                    repeatFlag=4;
+//                    bird[0][0].setVisibility(View.INVISIBLE);
+//                    bird[0][1].setVisibility(View.INVISIBLE);
+//                    bird[0][2].setVisibility(View.INVISIBLE);
+//                    bird[0][3].setVisibility(View.INVISIBLE);
+//                    bird[0][4].setVisibility(View.VISIBLE);
+                    bird[0][0].setImageResource(R.drawable.img_10_bird_01);
+                    bird[1][0].setImageResource(R.drawable.img_10_bird_05);
+                    bird[2][0].setImageResource(R.drawable.img_10_bird_04);
+                    break;
+                case 4:
+                    repeatFlag=0;
+//                    bird[0][0].setVisibility(View.VISIBLE);
+//                    bird[0][1].setVisibility(View.INVISIBLE);
+//                    bird[0][2].setVisibility(View.INVISIBLE);
+//                    bird[0][3].setVisibility(View.INVISIBLE);
+//                    bird[0][4].setVisibility(View.INVISIBLE);
+                    bird[0][0].setImageResource(R.drawable.img_10_bird_05);
+                    bird[1][0].setImageResource(R.drawable.img_10_bird_04);
+                    bird[2][0].setImageResource(R.drawable.img_10_bird_03);
+                    break;
+            }
         }
     }
 }

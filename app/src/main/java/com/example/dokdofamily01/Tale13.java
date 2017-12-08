@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -36,11 +37,12 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivBuyl13;
     private android.widget.ImageView ivWall13;
     private android.widget.ImageView ivBottom13;
+    private android.widget.ImageView ivFishes13;
 
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
 
-    private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation;
+    private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation, fishAnimation;
     int animationFlag = 0;
 
 
@@ -64,6 +66,14 @@ public class Tale13 extends BaseFragment {
 
                 Timer timer = new Timer();
                 timer.schedule(new MyThread(),0, 500);
+                if(bottomAnimation!=null){
+                    animationClear();
+                    animationFlag = 1;
+                    ivBottom13.startAnimation(bottomAnimation);
+                    ivWall13.startAnimation(wallAnimation);
+                    ivBuyl13.startAnimation(characterAnimation);
+                    ivFishes13.startAnimation(fishAnimation);
+                }
 
             } else {
 //                System.out.println(2+"notVisible");
@@ -195,33 +205,42 @@ public class Tale13 extends BaseFragment {
         this.ivBottom13 = (ImageView) layout.findViewById(R.id.ivBottom13);
         this.ivWall13 = (ImageView) layout.findViewById(R.id.ivWall13);
         this.ivBuyl13 = (ImageView) layout.findViewById(R.id.ivBuyl13);
+        ivFishes13=(ImageView)layout.findViewById(R.id.ivFishes13);
     }
 
     @Override
     public void setValues() {
         super.setValues();
 
-        sl.post(new Runnable() {
+        ivBuyl13.post(new Runnable() {
             @Override
             public void run() {
-                bottomAnimation = new TranslateAnimation(-ivBottom13.getWidth(), 0, 0, 0);
-                bottomAnimation.setDuration(2500);
+                bottomAnimation = new TranslateAnimation(0, 0, ivBottom13.getHeight(), 0);
+                bottomAnimation.setDuration(2000);
                 bottomAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 wallAnimation = new TranslateAnimation(ivWall13.getWidth(), 0, 0, 0);
+                wallAnimation.setStartOffset(500);
                 wallAnimation.setDuration(2000);
                 wallAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 characterAnimation = new TranslateAnimation(-ivBottom13.getWidth(), 0, 0, 0);
                 characterAnimation.setDuration(3000);
                 characterAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterAnimation.setAnimationListener(new MyAnimationListener());
 
-                if(animationFlag == 0){
+                fishAnimation = new TranslateAnimation(ivFishes13.getWidth(), 0, 0, 0);
+                fishAnimation.setStartOffset(2000);
+                fishAnimation.setDuration(1000);
+                fishAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                if(bottomAnimation!=null){
+                    animationClear();
                     animationFlag = 1;
                     ivBottom13.startAnimation(bottomAnimation);
                     ivWall13.startAnimation(wallAnimation);
                     ivBuyl13.startAnimation(characterAnimation);
-
+                    ivFishes13.startAnimation(fishAnimation);
                 }
             }
         });
@@ -235,5 +254,34 @@ public class Tale13 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener{
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+            if(animationFlag==1){
+                animationFlag=0;
+                animationClear();
+            }
+        }
+    }
+
+    private void animationClear(){
+        animationFlag=0;
+        ivFishes13.clearAnimation();
+        ivWall13.clearAnimation();
+        ivBottom13.clearAnimation();
+        ivBuyl13.clearAnimation();
     }
 }

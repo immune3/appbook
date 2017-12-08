@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -35,6 +39,8 @@ public class Tale02 extends BaseFragment {
     ImageView seagullHand;
     ImageView seagullBody;
     ImageView star;
+
+    AlphaAnimation blink;
     TranslateAnimation headUp;
     TranslateAnimation headDown;
     Animation seagullAppear;
@@ -46,50 +52,30 @@ public class Tale02 extends BaseFragment {
     int animationFlag=0;
 
     boolean isAttached = false;
+    boolean isHint;
     MediaPlayer mp = null;
+    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int soundID;
 
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
         if(isAttached ){
             if (isVisibleToUser) {
-                System.out.println(2+"Visible");
-                if(mp == null){
-                    mp = MediaPlayer.create(getActivity(), R.raw.scene_2);
-                }
-
-                mp.start();
-
-                Timer timer = new Timer();
-                timer.schedule(new MyThread(),0, 500);
-                byulhead.startAnimation(headUp);
-                seagullBody.setAnimation(seagullAppear);
-
-
+                System.out.println("PlayByHint");
+                soundPlayFunc();
             } else {
-                System.out.println(2+"notVisible");
-                if(mp!=null && mp.isPlaying()){
-                    mp.pause();
-                    mp.stop();
-                    mp.release();
-                    mp = null;
+                Log.d("MPNULLTEST2", musicController.getMp() + "");
+                if (musicController != null) {
+                    musicController.getMp().release();
                 }
-
             }
         }
-
     }
 
     @Override
@@ -102,22 +88,32 @@ public class Tale02 extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale02;
 
-        subtitleList = new ArrayList<>();
-        subtitleList = makeSubTitleList(
-                new String[]{"갈매기에요","1600"},
-                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
-                        "생긋~ 웃더니 말을 해요.", "8500"},
-                new String[]{"별아 창문을 열어! ","12500"},
-                new String[]{"꿈이야...","16000"},
-                new String[]{"별이가 창문을 열어요.","19000"},
-                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
-                new String[]{"갈매기가 또 말을 해요.","27000"},
-                new String[]{"별아 내 등에 앉아!","31500"},
-                new String[]{"진짜 꿈이야...", "35500"}
-        );
         subtitleTextView.setText(null);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        isAttached = true;
+    }
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            musicController.getMp().release();
+            musicController = null;
+        }
     }
 
     @Override
@@ -143,14 +139,14 @@ public class Tale02 extends BaseFragment {
 
                 seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
                 seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                seagullAppear.setAnimationListener(new MyAnimationListener());
+//                seagullAppear.setAnimationListener(new MyAnimationListener());
 
                 seagullClick = new RotateAnimation(10,-10,width,height);
-                seagullClick.setDuration(300);
+                seagullClick.setDuration(500);
                 seagullClick.setRepeatCount(1);
                 seagullClick.setRepeatMode(Animation.REVERSE);
-//                seagullClick.setFillAfter(true);
                 seagullClick.setInterpolator(new AccelerateDecelerateInterpolator());
+
                 headUp = new TranslateAnimation(0,0,byulhead.getHeight(),0);
                 headUp.setDuration(3000);
                 headUp.setFillAfter(true);
@@ -163,14 +159,19 @@ public class Tale02 extends BaseFragment {
                 headDown.setAnimationListener(new MyAnimationListener());
 
                 fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                fadeIn.setDuration(500);
+                fadeIn.setRepeatCount(1);
+                fadeIn.setRepeatMode(Animation.REVERSE);
 
                 animSet = new AnimationSet(true);
                 animSet.setInterpolator(new AccelerateDecelerateInterpolator());
                 animSet.addAnimation(seagullClick);
-                animSet.addAnimation(fadeIn);
-
-                byulhead.startAnimation(headUp);
-                seagullBody.setAnimation(seagullAppear);
+                seagullHand.setVisibility(View.INVISIBLE);
+                if(animationFlag==0) {
+                    animationFlag=1;
+                    byulhead.startAnimation(headUp);
+                    seagullBody.setAnimation(seagullAppear);
+                }
             }
         });
     }
@@ -178,8 +179,10 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-
-
+        blink = new AlphaAnimation(1,0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -188,10 +191,10 @@ public class Tale02 extends BaseFragment {
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag==1) {
+                if(animationFlag==0) {
                     animationFlag = 2;
                     sp.play(soundID,1,1,0,0,1);
-                    seagullHand.setVisibility(View.VISIBLE);
+                    star.clearAnimation();
                     byulhead.startAnimation(headDown);
                     seagullHand.startAnimation(animSet);
                 }
@@ -204,18 +207,17 @@ public class Tale02 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag){
-                case 0:
-                    animationFlag=1;
-//                    byulhead.clearAnimation();
+                case 1:
+                    animationFlag=0;
+                    star.startAnimation(blink);
                     break;
                 case 2:
                     animationFlag=3;
                     byulhead.startAnimation(headUp);
                     break;
                 case 3:
-                    animationFlag=1;
-//                    seagullHand.clearAnimation();
-//                    seagullHand.setVisibility(View.INVISIBLE);
+                    animationFlag=0;
+                    star.startAnimation(blink);
                     break;
             }
         }
@@ -230,79 +232,28 @@ public class Tale02 extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println(2+"onDestroyView");
-        if(mp!=null && mp.isPlaying()){
-            mp.pause();
-            mp.stop();
-            mp.release();
-            mp = null;
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_2);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"갈매기에요", "1600"},
+                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
+                        "생긋~ 웃더니 말을 해요.", "8500"},
+                new String[]{"별아 창문을 열어! ", "12500"},
+                new String[]{"꿈이야...", "16000"},
+                new String[]{"별이가 창문을 열어요.", "19000"},
+                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
+                new String[]{"갈매기가 또 말을 해요.", "27000"},
+                new String[]{"별아 내 등에 앉아!", "31500"},
+                new String[]{"진짜 꿈이야...", "35000"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+        if (headUp != null) {
+            animationFlag=1;
+            byulhead.startAnimation(headUp);
+            seagullBody.setAnimation(seagullAppear);
         }
     }
-
-    private ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
-        ArrayList<SubTitleData> list = new ArrayList<>();
-
-        for(String[] s : params){
-            SubTitleData subTitleData = new SubTitleData(
-                    s[0],Integer.parseInt(s[1])
-            );
-            list.add(subTitleData);
-        }
-
-        return list;
-    }
-
-
-    class MyThread extends TimerTask {
-        int finishTime = 0;
-        int subtitleIndex = 0;
-        @Override
-        public void run() {
-            if (mp != null && mp.isPlaying()) {
-
-                int playingTime = mp.getCurrentPosition();
-                Message msg = new Message();
-
-                finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-
-                if(playingTime <= finishTime){
-                    msg.what = subtitleIndex;
-                }else{
-                    increaseIndex();
-                    if(playingTime > finishTime){
-                        increaseIndex();
-                    }else{
-                        msg.what = subtitleIndex;
-                    }
-                }
-                mHandler.sendMessage(msg);
-
-            } else {
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-                cancel();
-            }
-        }
-
-        private void increaseIndex(){
-            subtitleIndex++;
-            finishTime = subtitleList.get(subtitleIndex).getFinishTime();
-        }
-    }
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if(msg.what>=0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
-            else
-                subtitleTextView.setText(null);
-
-
-        }
-    };
 
 }
