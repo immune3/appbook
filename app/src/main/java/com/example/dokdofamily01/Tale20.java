@@ -272,6 +272,7 @@ public class Tale20 extends BaseFragment {
                 cutainDownAnimation2.setStartOffset(1000);
                 cutainDownAnimation2.setDuration(20000);
                 cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
+
 //                cutainDownAnimation2.setFillAfter(true);
 
                 cutainDownAniSet.addAnimation(cutainDownAnimation1);

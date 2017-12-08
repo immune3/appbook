@@ -20,6 +20,7 @@
 
 
             <ImageView
+                android:id="@+id/sea1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_sea_01"
@@ -29,6 +30,7 @@
                 app:scale_top="295"/>
 
             <ImageView
+                android:id="@+id/dokdo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_dokdo"
@@ -38,6 +40,7 @@
                 app:scale_top="-5"/>
 
             <ImageView
+                android:id="@+id/byul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_byul"
@@ -47,6 +50,8 @@
                 app:scale_top="221"/>
 
             <ImageView
+                android:id="@+id/sqeedRightHand"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_sqeed_r_hand"
@@ -56,24 +61,27 @@
                 app:scale_top="330"/>
 
             <ImageView
+                android:id="@+id/sqeedBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_sqeed_body"
                 app:scale_width="818"
                 app:scale_height="642"
                 app:scale_left="1055"
-                app:scale_top="500"/>
-
+                app:scale_top="910"/>
             <ImageView
+                android:id="@+id/smallSqeed"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_12_sqeed_head"
-                app:scale_width="924"
-                app:scale_height="874"
-                app:scale_left="1344"
-                app:scale_top="30"/>
-
+                android:src="@drawable/img_12_smallsqeed"
+                app:scale_width="600"
+                app:scale_height="398"
+                app:scale_left="70"
+                app:scale_top="810"/>
             <ImageView
+                android:id="@+id/sea2"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_sea_02"
@@ -82,6 +90,8 @@
                 app:scale_left="0"
                 app:scale_top="840"/>
             <ImageView
+                android:id="@+id/sqeedLeftHand"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_sqeed_l_hand"
@@ -89,8 +99,28 @@
                 app:scale_height="922"
                 app:scale_left="230"
                 app:scale_top="460"/>
+            <ImageView
+                android:id="@+id/sqeedHead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_12_sqeed_head"
+                app:scale_width="924"
+                app:scale_height="874"
+                app:scale_left="1344"
+                app:scale_top="440"/>
+            <ImageView
+                android:id="@+id/hairpin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_12_hairpin"
+                app:scale_width="188"
+                app:scale_height="138"
+                app:scale_left="1880"
+                app:scale_top="750"/>
 
             <ImageView
+                android:id="@+id/byulHand"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_byul_hand"
@@ -100,6 +130,7 @@
                 app:scale_top="416"/>
 
             <ImageView
+                android:id="@+id/seagull"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_12_seagull"
@@ -108,14 +139,9 @@
                 app:scale_left="680"
                 app:scale_top="0"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_12_smallsqeed"
-                app:scale_width="600"
-                app:scale_height="398"
-                app:scale_left="70"
-                app:scale_top="810"/>
+
+
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
