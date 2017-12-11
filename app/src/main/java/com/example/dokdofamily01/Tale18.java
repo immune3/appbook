@@ -1,9 +1,8 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -75,14 +75,13 @@ public class Tale18 extends BaseFragment {
 
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -97,6 +96,7 @@ public class Tale18 extends BaseFragment {
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
     @Override
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
@@ -109,8 +109,8 @@ public class Tale18 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -138,7 +138,7 @@ public class Tale18 extends BaseFragment {
         father18.post(new Runnable() {
             @Override
             public void run() {
-                blink = new AlphaAnimation(1,0.3f);
+                blink = new AlphaAnimation(1, 0.3f);
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
                 fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -148,7 +148,7 @@ public class Tale18 extends BaseFragment {
                 momAppear.setDuration(1500);
                 momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                starsAppear = new TranslateAnimation(0,0,-stars18.getHeight(),0);
+                starsAppear = new TranslateAnimation(0, 0, -stars18.getHeight(), 0);
                 starsAppear.setStartOffset(500);
                 starsAppear.setDuration(1500);
                 starsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -159,7 +159,7 @@ public class Tale18 extends BaseFragment {
                 flowerAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 flowerAppear.setAnimationListener(new MyAnimationListener());
 
-                postAppear = new TranslateAnimation(0,0,-post18.getHeight(),0);
+                postAppear = new TranslateAnimation(0, 0, -post18.getHeight(), 0);
                 postAppear.setDuration(1500);
                 postAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 postAppear.setAnimationListener(new MyAnimationListener());
@@ -175,7 +175,7 @@ public class Tale18 extends BaseFragment {
                 sqeedAppear.setDuration(1500);
                 sqeedAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedAppear.setAnimationListener(new MyAnimationListener2());
-                manAppear = new TranslateAnimation(0,0,-man18.getHeight(),0);
+                manAppear = new TranslateAnimation(0, 0, -man18.getHeight(), 0);
                 manAppear.setStartOffset(1500);
                 manAppear.setDuration(1500);
                 manAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -343,7 +343,8 @@ public class Tale18 extends BaseFragment {
             }
         }
     }
-    private void animationClear(){
+
+    private void animationClear() {
         post18.setVisibility(View.INVISIBLE);
         tree18.setVisibility(View.INVISIBLE);
         sqeed18.setVisibility(View.INVISIBLE);

@@ -1,10 +1,8 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,12 +76,12 @@ public class Tale19 extends BaseFragment {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +108,8 @@ public class Tale19 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -222,7 +220,6 @@ public class Tale19 extends BaseFragment {
                 });
 
 
-
                 if (animationFlag == 0) {
                     star1.setVisibility(View.INVISIBLE);
                     starLight.clearAnimation();
@@ -317,7 +314,7 @@ public class Tale19 extends BaseFragment {
                 new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "33000"},
                 new String[]{"벌떡 일어난 별이가 창문을 활짝 열며 외쳐요.", "38000"},
                 new String[]{"안녕~ 갈매기야! ", "41500"}
-                );
+        );
         musicController.excuteAsync();
         mp = musicController.getMp();
         if (animationFlag == 0 && starAppearAniSet != null) {

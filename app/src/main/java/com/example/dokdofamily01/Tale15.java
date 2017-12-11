@@ -3,9 +3,8 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
+
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -51,7 +51,7 @@ public class Tale15 extends BaseFragment {
     private ImageView ivLand15;
 
     int animationFlag = 0;
-    int appearFlag=0;
+    int appearFlag = 0;
 
     Animation fadeIn;
     Animation fadeOut;
@@ -72,14 +72,13 @@ public class Tale15 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -111,8 +110,8 @@ public class Tale15 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -132,17 +131,17 @@ public class Tale15 extends BaseFragment {
                 caveAnimation.setDuration(2500);
                 caveAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                byulAnimation = new TranslateAnimation(-ivByul15.getWidth()*1.5f, 0, 0, 0);
+                byulAnimation = new TranslateAnimation(-ivByul15.getWidth() * 1.5f, 0, 0, 0);
                 byulAnimation.setStartOffset(1000);
                 byulAnimation.setDuration(2500);
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setAnimationListener(new MyAnimationListener());
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadein);
+                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
                 fadeIn.setFillAfter(true);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
-                fadeOut = AnimationUtils.loadAnimation(getContext(),R.anim.anim_15_fadeout);
+                fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
                 fadeOut.setFillAfter(true);
 
                 blink = new AlphaAnimation(0.3f, 1);
@@ -150,8 +149,8 @@ public class Tale15 extends BaseFragment {
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
 
-                if(landAnimation!=null) {
-                    appearFlag=1;
+                if (landAnimation != null) {
+                    appearFlag = 1;
                     animationClear();
                     ivLand15.startAnimation(landAnimation);
                     seaweadImage.startAnimation(landAnimation);
@@ -173,12 +172,12 @@ public class Tale15 extends BaseFragment {
         fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag == 0 && appearFlag==0){
+                if (animationFlag == 0 && appearFlag == 0) {
                     animationFlag = 1;
                     fish.clearAnimation();
                     fish.setVisibility(View.VISIBLE);
                     //man1 사라지고 man2나온다.
-                    sp.play(clickFish,1,1,0,0,1);
+                    sp.play(clickFish, 1, 1, 0, 0, 1);
                     manImage4.setVisibility(View.INVISIBLE);
                     manImage1.startAnimation(fadeIn);
                 }
@@ -189,8 +188,8 @@ public class Tale15 extends BaseFragment {
     private class MyAnimationListener implements Animation.AnimationListener {
         @Override
         public void onAnimationStart(Animation animation) {
-            switch (animationFlag){
-                case 1 :
+            switch (animationFlag) {
+                case 1:
                     manImage1.setVisibility(View.VISIBLE);
                     break;
                 case 3:
@@ -207,50 +206,50 @@ public class Tale15 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            switch (animationFlag){
+            switch (animationFlag) {
                 case 1:
                     // man2 사라지고 man3나온다.
-                    animationFlag=2;
+                    animationFlag = 2;
                     manImage1.clearAnimation();
                     break;
                 case 2:
-                    animationFlag=3;
+                    animationFlag = 3;
                     manImage1.startAnimation(fadeOut);
                     manImage2.startAnimation(fadeIn);
                     break;
-                case 3 :
+                case 3:
                     // man3 사라지고 man4 나온다.
-                    animationFlag=4;
+                    animationFlag = 4;
                     manImage1.setVisibility(View.INVISIBLE);
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
                     break;
                 case 4:
-                    animationFlag=5;
+                    animationFlag = 5;
                     manImage2.startAnimation(fadeOut);
                     manImage3.startAnimation(fadeIn);
                     break;
                 case 5:
-                    animationFlag=6;
+                    animationFlag = 6;
                     manImage2.setVisibility(View.INVISIBLE);
                     manImage2.clearAnimation();
                     manImage3.clearAnimation();
                     break;
                 case 6:
-                    animationFlag=7;
-                    sp.play(moveMan,1,1,0,0,1);
+                    animationFlag = 7;
+                    sp.play(moveMan, 1, 1, 0, 0, 1);
                     manImage3.startAnimation(fadeOut);
                     manImage4.startAnimation(fadeIn);
                     break;
                 case 7:
-                    animationFlag=0;
+                    animationFlag = 0;
                     manImage3.setVisibility(View.INVISIBLE);
                     manImage3.clearAnimation();
                     manImage4.clearAnimation();
                     break;
             }
-            if(appearFlag==1){
-                appearFlag=0;
+            if (appearFlag == 1) {
+                appearFlag = 0;
                 fish.setVisibility(View.VISIBLE);
                 fish.startAnimation(blink);
             }
@@ -280,13 +279,13 @@ public class Tale15 extends BaseFragment {
         this.manImage1 = (ImageView) layout.findViewById(R.id.manImage1);
         this.ivCave15 = (ImageView) layout.findViewById(R.id.ivCave15);
         this.ivByul15 = (ImageView) layout.findViewById(R.id.ivByul15);
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
-        clickFish = sp.load(getContext(),R.raw.effect_15_fish,1);
-        moveMan = sp.load(getContext(),R.raw.effect_15_man,2);
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        clickFish = sp.load(getContext(), R.raw.effect_15_fish, 1);
+        moveMan = sp.load(getContext(), R.raw.effect_15_man, 2);
 
     }
 
-    public void animationClear(){
+    public void animationClear() {
         fish.setVisibility(View.INVISIBLE);
         manImage1.setVisibility(View.INVISIBLE);
         manImage2.setVisibility(View.INVISIBLE);
@@ -305,7 +304,7 @@ public class Tale15 extends BaseFragment {
         seaweadImage.clearAnimation();
     }
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_15);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
@@ -322,7 +321,7 @@ public class Tale15 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
-        if(landAnimation!=null) {
+        if (landAnimation != null) {
             animationClear();
             ivLand15.startAnimation(landAnimation);
             ivCave15.startAnimation(caveAnimation);

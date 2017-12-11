@@ -52,7 +52,7 @@ public class Tale14 extends BaseFragment {
     AnimationSet bellAnimSet = new AnimationSet(false);
     AnimationSet sqeedHandScaleAnimSet = new AnimationSet(false);
 
-    int animationFlag=0;
+    int animationFlag = 0;
 
 
     boolean isAttached = false;
@@ -60,7 +60,6 @@ public class Tale14 extends BaseFragment {
     MediaPlayer mp = null;
     MusicController musicController;
     ArrayList<SubTitleData> subtitleList;
-
 
 
     @Override
@@ -73,14 +72,13 @@ public class Tale14 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -111,8 +109,8 @@ public class Tale14 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -120,14 +118,14 @@ public class Tale14 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
-        cave = (ImageView)layout.findViewById(R.id.cave);
-        land = (ImageView)layout.findViewById(R.id.land);
-        sqeedBody = (ImageView)layout.findViewById(R.id.sqeedBody);
-        sqeedHand = (ImageView)layout.findViewById(R.id.sqeedHand);
-        byul = (ImageView)layout.findViewById(R.id.byul);
-        bubble = (ImageView)layout.findViewById(R.id.bubble);
-        bell = (ImageView)layout.findViewById(R.id.bell);
-        light = (ImageView)layout.findViewById(R.id.light);
+        cave = (ImageView) layout.findViewById(R.id.cave);
+        land = (ImageView) layout.findViewById(R.id.land);
+        sqeedBody = (ImageView) layout.findViewById(R.id.sqeedBody);
+        sqeedHand = (ImageView) layout.findViewById(R.id.sqeedHand);
+        byul = (ImageView) layout.findViewById(R.id.byul);
+        bubble = (ImageView) layout.findViewById(R.id.bubble);
+        bell = (ImageView) layout.findViewById(R.id.bell);
+        light = (ImageView) layout.findViewById(R.id.light);
     }
 
     @Override
@@ -142,7 +140,7 @@ public class Tale14 extends BaseFragment {
                 caveAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 caveAppearAni.setFillAfter(true);
 
-                byulAppearAni = new TranslateAnimation(-sqeedBody.getWidth(),0,sqeedBody.getHeight(),0);
+                byulAppearAni = new TranslateAnimation(-sqeedBody.getWidth(), 0, sqeedBody.getHeight(), 0);
                 byulAppearAni.setDuration(2000);
                 byulAppearAni.setStartOffset(1400);
                 byulAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -159,7 +157,7 @@ public class Tale14 extends BaseFragment {
                 bellAnimSet.addAnimation(blink);
 
 //                Log.d("123123", "msg"+sqeedHand.getWidth());
-                sqeedHandScaleAni = new ScaleAnimation(0.95f, 1, 1,1,0, sqeedHand.getHeight());
+                sqeedHandScaleAni = new ScaleAnimation(0.95f, 1, 1, 1, 0, sqeedHand.getHeight());
                 sqeedHandScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedHandScaleAni.setInterpolator(new AnticipateOvershootInterpolator());
                 sqeedHandScaleAni.setStartOffset(700);
@@ -172,7 +170,7 @@ public class Tale14 extends BaseFragment {
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandScaleAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandRotateAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandFadein);
-                sqeedHandScaleAnimSet.setAnimationListener(new MyAnimationListener(){
+                sqeedHandScaleAnimSet.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         light.setVisibility(View.VISIBLE);
@@ -190,8 +188,8 @@ public class Tale14 extends BaseFragment {
                     }
                 });
 
-                if(animationFlag == 0){
-                    animationFlag=1;
+                if (animationFlag == 0) {
+                    animationFlag = 1;
                     cave.startAnimation(caveAppearAni);
                     land.startAnimation(landAppearAni);
                     byul.startAnimation(byulAppearAni);
@@ -211,7 +209,7 @@ public class Tale14 extends BaseFragment {
         lightFadein = new AlphaAnimation(0, 1);
         lightFadein.setStartOffset(1000);
         lightFadein.setDuration(1500);
-        lightFadein.setAnimationListener(new MyAnimationListener(){
+        lightFadein.setAnimationListener(new MyAnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 //bell.startAnimation(blink);
@@ -272,25 +270,25 @@ public class Tale14 extends BaseFragment {
 
     }
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_14);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
-                new String[]{"혹돔굴에 가까워질수록 어둡고 깜깜해져요. ","5000"},
+                new String[]{"혹돔굴에 가까워질수록 어둡고 깜깜해져요. ", "5000"},
                 new String[]{"졸졸 따라오던 해님도 안보여요. ", "8500"},
-                new String[]{"왠지 으스스한 느낌이 들어서 ","11500"},
-                new String[]{"별이는 오징어 이모한테 찰싹~ 붙어요. ","16000"},
-                new String[]{"드디어 혹돔굴이에요. ","19000"},
+                new String[]{"왠지 으스스한 느낌이 들어서 ", "11500"},
+                new String[]{"별이는 오징어 이모한테 찰싹~ 붙어요. ", "16000"},
+                new String[]{"드디어 혹돔굴이에요. ", "19000"},
                 new String[]{"오징어 이모가 다시 긴 다리를 쭈욱 늘여 \n" +
-                        "초인종을 꾸욱 눌러요. ","25500"},
-                new String[]{"딩동딩동~","28500"}
+                        "초인종을 꾸욱 눌러요. ", "25500"},
+                new String[]{"딩동딩동~", "28500"}
 
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        if(animationFlag == 0 && caveAppearAni != null){
-            animationFlag=1;
+        if (animationFlag == 0 && caveAppearAni != null) {
+            animationFlag = 1;
             cave.startAnimation(caveAppearAni);
             land.startAnimation(landAppearAni);
             byul.startAnimation(byulAppearAni);

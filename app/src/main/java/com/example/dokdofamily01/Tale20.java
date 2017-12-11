@@ -1,10 +1,8 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -73,9 +70,8 @@ public class Tale20 extends BaseFragment {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -105,8 +101,8 @@ public class Tale20 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -114,12 +110,12 @@ public class Tale20 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
-        man = (ImageView)layout.findViewById(R.id.man);
-        dokdo_father = (ImageView)layout.findViewById(R.id.dokdo_father);
-        sqeed = (ImageView)layout.findViewById(R.id.sqeed);
-        dokdo_mom = (ImageView)layout.findViewById(R.id.dokdo_mom);
-        wave = (ImageView)layout.findViewById(R.id.wave);
-        cutain = (ImageView)layout.findViewById(R.id.cutain);
+        man = (ImageView) layout.findViewById(R.id.man);
+        dokdo_father = (ImageView) layout.findViewById(R.id.dokdo_father);
+        sqeed = (ImageView) layout.findViewById(R.id.sqeed);
+        dokdo_mom = (ImageView) layout.findViewById(R.id.dokdo_mom);
+        wave = (ImageView) layout.findViewById(R.id.wave);
+        cutain = (ImageView) layout.findViewById(R.id.cutain);
     }
 
     @Override
@@ -158,12 +154,12 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
-                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.02f);
+                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, cutain.getHeight() * 0.02f);
                 cutainDownAnimation1.setDuration(1000);
                 cutainDownAnimation1.setInterpolator(new AnticipateInterpolator());
 //                cutainDownAnimation1.setFillAfter(true);
 
-                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.4f);
+                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight() * 0.4f);
                 cutainDownAnimation2.setStartOffset(1000);
                 cutainDownAnimation2.setDuration(20000);
                 cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
@@ -174,7 +170,7 @@ public class Tale20 extends BaseFragment {
                 cutainDownAniSet.addAnimation(cutainDownAnimation2);
                 cutainDownAniSet.setFillAfter(true);
 
-                if(animationFlag == 0){
+                if (animationFlag == 0) {
                     animationFlag = 1;
                     cutain.clearAnimation();
                     man.startAnimation(manAppearAnimation);
@@ -219,6 +215,7 @@ public class Tale20 extends BaseFragment {
         }
 
     }
+
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_20);
         subtitleList = new ArrayList<>();
@@ -239,7 +236,7 @@ public class Tale20 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
-        if( manAppearAnimation != null){
+        if (manAppearAnimation != null) {
             animationFlag = 1;
             cutain.clearAnimation();
             man.clearAnimation();
