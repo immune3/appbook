@@ -55,6 +55,7 @@ public class Tale03 extends BaseFragment{
 
     SoundPool sp;
     int soundID;
+    int wings;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class Tale03 extends BaseFragment{
         blinkStar = (ImageView)layout.findViewById(R.id.blinkStar);
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
+        wings = sp.load(getContext(),R.raw.effect_03_wings,2);
     }
 
     @Override
@@ -227,6 +229,7 @@ public class Tale03 extends BaseFragment{
                     wing[1].startAnimation(wingAppear2);
                     wing[2].startAnimation(wingAppear1);
                     wing[3].startAnimation(wingAppear2);
+                    sp.play(wings,1,1,1,4,1);
                 }
             }
         });
