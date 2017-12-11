@@ -120,17 +120,6 @@
                 app:scale_left="0"
                 app:scale_top="750"/>
 
-            <ImageView
-                android:id="@+id/ivFishes13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_13_fishes"
-                app:scale_width="648"
-                app:scale_height="292"
-                app:scale_left="1920"
-                app:scale_top="660"/>
-
-
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -167,6 +156,16 @@
                 app:scale_left="0"
                 app:scale_top="890"
                 app:scale_width="2560" />
+
+            <ImageView
+                android:id="@+id/ivFishes13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_13_fishes"
+                app:scale_width="648"
+                app:scale_height="292"
+                app:scale_left="1920"
+                app:scale_top="660"/>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

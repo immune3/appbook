@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -56,14 +57,13 @@ public class Tale04 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -96,8 +96,8 @@ public class Tale04 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -108,8 +108,8 @@ public class Tale04 extends BaseFragment {
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         sun = (ImageView) layout.findViewById(R.id.sun);
         sunLight = (ImageView) layout.findViewById(R.id.sunLight);
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        soundID = sp.load(getContext(),R.raw.effect_04_sunrise,1);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        soundID = sp.load(getContext(), R.raw.effect_04_sunrise, 1);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class Tale04 extends BaseFragment {
 //                Log.d("SunLightLocation:", "LocationX"+sunLightLocation[0]);
 //                Log.d("SunLightLocation:", "LocationY"+sunLightLocation[1]);
 
-                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()/2));
+                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight() / 2));
                 sunRiseAni.setDuration(3000);
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
@@ -146,7 +146,7 @@ public class Tale04 extends BaseFragment {
         dokdo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundID,1,1,0,0,1);
+                sp.play(soundID, 1, 1, 0, 0, 1);
                 sun.startAnimation(sunRiseAni);
             }
         });
@@ -165,7 +165,7 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            if(animationFlag == 0){
+            if (animationFlag == 0) {
                 animationFlag = 1;
                 sunLight.setVisibility(View.VISIBLE);
                 sunLight.startAnimation(sunLightAppear);
@@ -175,7 +175,7 @@ public class Tale04 extends BaseFragment {
     }
 
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_4);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
