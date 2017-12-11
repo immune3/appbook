@@ -1,6 +1,7 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 
@@ -77,14 +79,13 @@ public class Tale08 extends BaseFragment {
 
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -116,25 +117,25 @@ public class Tale08 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
     @Override
     public void bindViews() {
         super.bindViews();
-        plant = (ImageView)layout.findViewById(R.id.plant);
-        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
-        land = (ImageView)layout.findViewById(R.id.land);
-        seagull = (ImageView)layout.findViewById(R.id.seagull);
-        byul = (ImageView)layout.findViewById(R.id.byul);
-        treeBody = (ImageView)layout.findViewById(R.id.treeBody);
-        treeHand = (ImageView)layout.findViewById(R.id.treeHand);
-        leaves = (ImageView)layout.findViewById(R.id.leaves);
-        smile = (ImageView)layout.findViewById(R.id.smile);
-        eyeBlack = (ImageView)layout.findViewById(R.id.eyeBlack);
-        eyeWhite = (ImageView)layout.findViewById(R.id.eyeWhite);
+        plant = (ImageView) layout.findViewById(R.id.plant);
+        dokdo = (ImageView) layout.findViewById(R.id.dokdo);
+        land = (ImageView) layout.findViewById(R.id.land);
+        seagull = (ImageView) layout.findViewById(R.id.seagull);
+        byul = (ImageView) layout.findViewById(R.id.byul);
+        treeBody = (ImageView) layout.findViewById(R.id.treeBody);
+        treeHand = (ImageView) layout.findViewById(R.id.treeHand);
+        leaves = (ImageView) layout.findViewById(R.id.leaves);
+        smile = (ImageView) layout.findViewById(R.id.smile);
+        eyeBlack = (ImageView) layout.findViewById(R.id.eyeBlack);
+        eyeWhite = (ImageView) layout.findViewById(R.id.eyeWhite);
     }
 
     @Override
@@ -166,7 +167,7 @@ public class Tale08 extends BaseFragment {
                 byulAnimation.setDuration(1000);
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setInterpolator(new BounceInterpolator());
-                byulAnimation.setAnimationListener(new MyAnimationListener(){
+                byulAnimation.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         byul.startAnimation(blink);
@@ -182,7 +183,7 @@ public class Tale08 extends BaseFragment {
                     }
                 });
 
-                treeAnimation = new TranslateAnimation((int)(treeBody.getWidth()*0.3),0,treeBody.getHeight(),0);
+                treeAnimation = new TranslateAnimation((int) (treeBody.getWidth() * 0.3), 0, treeBody.getHeight(), 0);
                 treeAnimation.setStartOffset(500);
                 treeAnimation.setDuration(500);
                 treeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -197,7 +198,7 @@ public class Tale08 extends BaseFragment {
                 treeEyeRotate.setRepeatCount(Animation.INFINITE);
                 treeEyeRotate.setRepeatMode(Animation.REVERSE);
 
-                treeEyeToByul = new TranslateAnimation(0,eyeBlack.getWidth()/15,0,0);
+                treeEyeToByul = new TranslateAnimation(0, eyeBlack.getWidth() / 15, 0, 0);
                 treeEyeToByul.setDuration(1000);
                 treeEyeToByul.setInterpolator(new AccelerateDecelerateInterpolator());
                 treeEyeToByul.setFillAfter(true);
@@ -209,7 +210,7 @@ public class Tale08 extends BaseFragment {
                 treeHandRotate.setInterpolator(new AnticipateOvershootInterpolator());
                 treeHandRotate.setInterpolator(new BounceInterpolator());
 
-                leafTranslateAni = new TranslateAnimation(0, 0, 0,leaves.getHeight()*0.2f);
+                leafTranslateAni = new TranslateAnimation(0, 0, 0, leaves.getHeight() * 0.2f);
                 leafTranslateAni.setStartOffset(1200);
                 leafTranslateAni.setDuration(3000);
                 leafTranslateAni.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -220,7 +221,7 @@ public class Tale08 extends BaseFragment {
                 leafAniSet.addAnimation(leafFadeout);
 
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
                 treeBody.setVisibility(View.INVISIBLE);
@@ -233,7 +234,7 @@ public class Tale08 extends BaseFragment {
 
 //                byul.setVisibility(View.INVISIBLE);
 
-                if(animationFlag == 0){
+                if (animationFlag == 0) {
                     animationFlag = 1;
                     byul.clearAnimation();
                     eyeBlack.clearAnimation();
@@ -254,7 +255,7 @@ public class Tale08 extends BaseFragment {
         leafFadeout.setStartOffset(3000);
         leafFadeout.setDuration(1500);
         leafFadeout.setInterpolator(new AccelerateDecelerateInterpolator());
-        leafFadeout.setAnimationListener(new MyAnimationListener(){
+        leafFadeout.setAnimationListener(new MyAnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 leaves.setVisibility(View.INVISIBLE);
@@ -303,7 +304,7 @@ public class Tale08 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            switch (animationFlag){
+            switch (animationFlag) {
                 case 1:
                     animationFlag = 2;
                     byul.startAnimation(byulAnimation);
@@ -336,7 +337,7 @@ public class Tale08 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            switch (animationFlag){
+            switch (animationFlag) {
                 case 2:
                     byul.setVisibility(View.VISIBLE);
                     treeBody.setVisibility(View.VISIBLE);
@@ -352,18 +353,18 @@ public class Tale08 extends BaseFragment {
         }
     }
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_8);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이랑 언제나 든든한 사철나무 아빠가 도란도란 얘기해요.","6000"},
+                new String[]{"별이랑 언제나 든든한 사철나무 아빠가 도란도란 얘기해요.", "6000"},
                 new String[]{"사철나무 아빠는 왜 자꾸 두리번두리번 해요?", "12000"},
-                new String[]{"나는 가족을 지키는 아빠니까 이렇게 잘 살펴봐야 한단다. ","18500"},
-                new String[]{"뾰족한 절벽에서 살면 엉덩이가 안 아파요?","24500"},
-                new String[]{"100년도 넘어서 이제 아무렇지도 않단다.","29000"},
-                new String[]{"100년? 그럼 사철나무 할아버지예요?","35000"},
+                new String[]{"나는 가족을 지키는 아빠니까 이렇게 잘 살펴봐야 한단다. ", "18500"},
+                new String[]{"뾰족한 절벽에서 살면 엉덩이가 안 아파요?", "24500"},
+                new String[]{"100년도 넘어서 이제 아무렇지도 않단다.", "29000"},
+                new String[]{"100년? 그럼 사철나무 할아버지예요?", "35000"},
                 new String[]{"하하하~ 우리 독도에는 아~주아~주 먼 옛날에 \n" +
-                        "태어나신 서도할아버지가 계신 걸~ ","43500"}
+                        "태어나신 서도할아버지가 계신 걸~ ", "43500"}
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
@@ -375,7 +376,7 @@ public class Tale08 extends BaseFragment {
         leaves.setVisibility(View.INVISIBLE);
         eyeBlack.setVisibility(View.INVISIBLE);
         eyeWhite.setVisibility(View.INVISIBLE);
-        if(animationFlag == 0 && plantAnimation != null){
+        if (animationFlag == 0 && plantAnimation != null) {
             animationFlag = 1;
             byul.clearAnimation();
             eyeBlack.clearAnimation();

@@ -4,6 +4,7 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,9 +20,6 @@ import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -55,14 +53,14 @@ public class Tale05 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -93,8 +91,8 @@ public class Tale05 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -108,9 +106,9 @@ public class Tale05 extends BaseFragment {
         letter[4] = (ImageView) layout.findViewById(R.id.letter4);
         letter[5] = (ImageView) layout.findViewById(R.id.letter5);
 
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
-        moveLetters = sp.load(getContext(),R.raw.effect_05_move_letters,2);
-        clickLetter = sp.load(getContext(),R.raw.effect_05_click_letter,1);
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        moveLetters = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
+        clickLetter = sp.load(getContext(), R.raw.effect_05_click_letter, 1);
     }
 
     @Override
@@ -128,13 +126,13 @@ public class Tale05 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
 
-            letterAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_05_letter_appear);
-            letterAppear.setFillAfter(true);
-            letterAppear.setAnimationListener(new MyAnimationListener());
+        letterAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_appear);
+        letterAppear.setFillAfter(true);
+        letterAppear.setAnimationListener(new MyAnimationListener());
 
 
-            letterDisappear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_05_letter_disappear);
-            letterDisappear.setFillAfter(true);
+        letterDisappear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_disappear);
+        letterDisappear.setFillAfter(true);
 
     }
 
@@ -144,15 +142,15 @@ public class Tale05 extends BaseFragment {
         letter[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag == 0){
+                if (animationFlag == 0) {
                     animationFlag = 1;
-                    sp.play(clickLetter,1,1,0,0,1);
+                    sp.play(clickLetter, 1, 1, 0, 0, 1);
                     // letter[0] 사라지고 letter[1]나온다.
                     letter[5].setVisibility(View.INVISIBLE);
 //                    letter[0].startAnimation(letterDisappear);
                     letter[1].startAnimation(letterAppear);
-                }else{
-                    sp.play(clickLetter,1,1,0,0,1);
+                } else {
+                    sp.play(clickLetter, 1, 1, 0, 0, 1);
                 }
             }
         });
@@ -162,9 +160,9 @@ public class Tale05 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
-            switch (animationFlag){
-                case 1 :
-                    sp.play(moveLetters,1,1,0,0,1);
+            switch (animationFlag) {
+                case 1:
+                    sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[1].setVisibility(View.VISIBLE);
                     break;
                 case 2:
@@ -188,24 +186,24 @@ public class Tale05 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            switch (animationFlag){
-                case 0 :
+            switch (animationFlag) {
+                case 0:
                     break;
                 case 1:
-                    animationFlag=2;
+                    animationFlag = 2;
 //                    letter[0].setVisibility(View.INVISIBLE);
 //                    letter[0].clearAnimation();
                     letter[1].clearAnimation();
                     break;
                 case 2:
                     // letter[1] 사라지고 letter[2]나온다.
-                    animationFlag=3;
+                    animationFlag = 3;
 //                    letter[1].startAnimation(letterDisappear);
-                    sp.play(moveLetters,1,1,0,0,1);
+                    sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[2].startAnimation(letterAppear);
                     break;
-                case 3 :
-                    animationFlag=4;
+                case 3:
+                    animationFlag = 4;
 //                    letter[1].setVisibility(View.INVISIBLE);
 //                    letter[1].clearAnimation();
                     letter[2].clearAnimation();
@@ -213,13 +211,13 @@ public class Tale05 extends BaseFragment {
                     break;
                 case 4:
                     // letter[2] 사라지고 letter[3]나온다.
-                    animationFlag=5;
+                    animationFlag = 5;
 //                    letter[2].startAnimation(letterDisappear);
-                    sp.play(moveLetters,1,1,0,0,1);
+                    sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[3].startAnimation(letterAppear);
                     break;
-                case 5 :
-                    animationFlag=6;
+                case 5:
+                    animationFlag = 6;
 //                    letter[2].setVisibility(View.INVISIBLE);
 //                    letter[2].clearAnimation();
                     letter[3].clearAnimation();
@@ -227,13 +225,13 @@ public class Tale05 extends BaseFragment {
                     break;
                 case 6:
                     // letter[3] 사라지고 letter[4]나온다.
-                    animationFlag=7;
+                    animationFlag = 7;
 //                    letter[3].startAnimation(letterDisappear);
-                    sp.play(moveLetters,1,1,0,0,1);
+                    sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[4].startAnimation(letterAppear);
                     break;
-                case 7 :
-                    animationFlag=8;
+                case 7:
+                    animationFlag = 8;
 //                    letter[3].setVisibility(View.INVISIBLE);
 //                    letter[3].clearAnimation();
                     letter[4].clearAnimation();
@@ -241,13 +239,13 @@ public class Tale05 extends BaseFragment {
                     break;
                 case 8:
                     // letter[4] 사라지고 letter[5]나온다.
-                    animationFlag=9;
+                    animationFlag = 9;
 //                    letter[4].startAnimation(letterDisappear);
-                    sp.play(moveLetters,1,1,0,0,1);
+                    sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[5].startAnimation(letterAppear);
                     break;
                 case 9:
-                    animationFlag=10;
+                    animationFlag = 10;
 //                    letter[4].setVisibility(View.INVISIBLE);
 //                    letter[4].clearAnimation();
                     letter[5].setVisibility(View.VISIBLE);
@@ -260,7 +258,7 @@ public class Tale05 extends BaseFragment {
     }
 
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_5);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(

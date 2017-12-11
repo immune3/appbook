@@ -3,9 +3,8 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +12,12 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -31,7 +27,7 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  * Created by heronation on 2017-11-06.
  */
 
-public class Tale03 extends BaseFragment{
+public class Tale03 extends BaseFragment {
     ImageView[] cloud = new ImageView[6];
     ImageView byulHand;
     ImageView[] wing = new ImageView[4];
@@ -43,7 +39,7 @@ public class Tale03 extends BaseFragment{
     AlphaAnimation wingAppear2;
     TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
     int animationFlag = 0;
-    int clickFlag=0;
+    int clickFlag = 0;
 
     boolean isHint;
     MusicController musicController;
@@ -68,14 +64,13 @@ public class Tale03 extends BaseFragment{
 
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -106,11 +101,10 @@ public class Tale03 extends BaseFragment{
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
-
 
 
     @Override
@@ -131,6 +125,7 @@ public class Tale03 extends BaseFragment{
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
         wings = sp.load(getContext(),R.raw.effect_03_wings,2);
+
     }
 
     @Override
@@ -175,9 +170,9 @@ public class Tale03 extends BaseFragment{
                 cloudAnimation[4].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 byulHand.setVisibility(View.INVISIBLE);
-                if(animationFlag == 0) {
+                if (animationFlag == 0) {
                     animationFlag = 1;
-                    sp.play(soundID,1,1,0,0,1);
+                    sp.play(soundID, 1, 1, 0, 0, 1);
                     cloud[0].startAnimation(cloudAnimation[0]);
                     cloud[1].startAnimation(cloudAnimation[1]);
                     cloud[2].startAnimation(cloudAnimation[1]);
@@ -195,17 +190,17 @@ public class Tale03 extends BaseFragment{
         fadein = new AlphaAnimation(0, 1);
         fadein.setDuration(1000);
 
-        blink = new AlphaAnimation(0.3f,1);
+        blink = new AlphaAnimation(0.3f, 1);
         blink.setDuration(500);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
 
-        wingAppear1 = new AlphaAnimation(1,0);
+        wingAppear1 = new AlphaAnimation(1, 0);
         wingAppear1.setDuration(400);
         wingAppear1.setRepeatCount(7);
         wingAppear1.setRepeatMode(Animation.REVERSE);
         wingAppear1.setAnimationListener(new MyAnimationListener());
-        wingAppear2 = new AlphaAnimation(0,1);
+        wingAppear2 = new AlphaAnimation(0, 1);
         wingAppear2.setDuration(400);
         wingAppear2.setRepeatCount(7);
         wingAppear2.setRepeatMode(Animation.REVERSE);
@@ -218,8 +213,8 @@ public class Tale03 extends BaseFragment{
         blinkStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(animationFlag==0){
-                    animationFlag=1;
+                if (animationFlag == 0) {
+                    animationFlag = 1;
                     blinkStar.clearAnimation();
                     wing[0].clearAnimation();
                     wing[1].clearAnimation();
@@ -239,7 +234,7 @@ public class Tale03 extends BaseFragment{
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if(animationFlag==1) {
+            if (animationFlag == 1) {
                 animationFlag = 0;
                 byulHand.setVisibility(View.VISIBLE);
                 byulHand.startAnimation(fadein);
@@ -258,26 +253,26 @@ public class Tale03 extends BaseFragment{
 
     }
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_3);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ","4000"},
+                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ", "4000"},
                 new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
                         "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
                 new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
-                        "보물섬 독도에 가는 거야~ ","20000"},
-                new String[]{"정말? 이렇게 날아서?","23500"},
-                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~","31000"}
+                        "보물섬 독도에 가는 거야~ ", "20000"},
+                new String[]{"정말? 이렇게 날아서?", "23500"},
+                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~", "31000"}
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
 
         byulHand.setVisibility(View.INVISIBLE);
 
-        if(cloudAnimation[0]!= null) {
+        if (cloudAnimation[0] != null) {
             animationFlag = 1;
-            sp.play(soundID,1,1,0,0,1);
+            sp.play(soundID, 1, 1, 0, 0, 1);
             cloud[0].startAnimation(cloudAnimation[0]);
             cloud[1].startAnimation(cloudAnimation[1]);
             cloud[2].startAnimation(cloudAnimation[1]);

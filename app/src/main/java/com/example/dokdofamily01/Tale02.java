@@ -3,9 +3,9 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,10 +66,27 @@ public class Tale02 extends BaseFragment {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                Log.d("MPNULLTEST2", musicController.getMp() + "");
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                new AsyncTask<Void, Void, MediaPlayer>() {
+                    @Override
+                    protected MediaPlayer doInBackground(Void... voids) {
+                        MediaPlayer mp_async;
+                        mp_async = musicController.getMp();
+                        return mp_async ;
+                    }
+
+                    @Override
+                    protected void onPostExecute(MediaPlayer mediaPlayer) {
+                        super.onPostExecute(mediaPlayer);
+                        try {
+                            mediaPlayer.release();
+                        }catch (Exception e){
+                            e.getStackTrace();
+                            doInBackground();
+                        }
+
+                    }
+                }.execute();
+
             }
         }
     }
@@ -107,8 +124,8 @@ public class Tale02 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
