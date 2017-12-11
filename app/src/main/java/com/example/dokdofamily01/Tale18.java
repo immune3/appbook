@@ -158,7 +158,7 @@ public class Tale18 extends BaseFragment {
                 blink.setDuration(500);
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
-                
+
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
                 fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());

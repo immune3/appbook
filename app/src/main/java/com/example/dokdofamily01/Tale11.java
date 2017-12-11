@@ -1,7 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -60,6 +61,9 @@ public class Tale11 extends BaseFragment {
     MediaPlayer mp = null;
     MusicController musicController;
 
+    private SoundPool beeSoundPool;
+    private int beeSound;
+
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -81,7 +85,7 @@ public class Tale11 extends BaseFragment {
                 soundPlayFunc();
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+                checkMP.execute();
             }
         }
     }
@@ -114,7 +118,7 @@ public class Tale11 extends BaseFragment {
         super.onDestroyView();
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+            checkMP.execute();
         }
     }
 
@@ -130,6 +134,9 @@ public class Tale11 extends BaseFragment {
         flowers = (ImageView) layout.findViewById(R.id.flowers);
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         byul = (ImageView) layout.findViewById(R.id.byul);
+
+        beeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        beeSound = beeSoundPool.load(getContext(), R.raw.effect_11_bee, 1);
 
     }
 
@@ -269,6 +276,7 @@ public class Tale11 extends BaseFragment {
                 butterfly.setVisibility(View.VISIBLE);
                 bee1.startAnimation(hideBeeAniSet);
                 butterfly.startAnimation(hideButterflyAniSet);
+                beeSoundPool.play(beeSound, 1, 1, 0, 1, 1);
             }
         });
     }

@@ -82,6 +82,7 @@ public class Tale16 extends BaseFragment {
                 soundPlayFunc();
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
+                sp = null;
           checkMP.execute();
             }
         }
@@ -194,12 +195,12 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni.setAnimationListener(new MyAnimationListener(){
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        sp.play(bubbleEffect,0.3f,0.3f,1,0,1);
+                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-                        sp.play(bubbleEffect,0.3f,0.3f,1,0,1);
+                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
                 });
 
@@ -221,14 +222,14 @@ public class Tale16 extends BaseFragment {
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-                        sp.play(bubbleEffect,0.3f,0.3f,1,0,1);
+                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
 
                     @Override
                     public void onAnimationStart(Animation animation) {
                         bomb.setVisibility(View.VISIBLE);
                         bomb.startAnimation(fadein);
-                        sp.play(bubbleEffect,0.3f,0.3f,1,0,1);
+                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
                 });
 

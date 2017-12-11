@@ -1,7 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -66,6 +67,10 @@ public class Tale08 extends BaseFragment {
     MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
+
+    SoundPool laughingSoundPool, eyeSoundPool;
+    int laughingSound;
+    int eyeSound;
 
 
     @Override
@@ -136,6 +141,10 @@ public class Tale08 extends BaseFragment {
         smile = (ImageView) layout.findViewById(R.id.smile);
         eyeBlack = (ImageView) layout.findViewById(R.id.eyeBlack);
         eyeWhite = (ImageView) layout.findViewById(R.id.eyeWhite);
+        laughingSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        eyeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        laughingSound = laughingSoundPool.load(getContext(), R.raw.effect_08_laughing, 0);
+        eyeSound = eyeSoundPool.load(getContext(), R.raw.effect_08_eyesound, 0);
     }
 
     @Override
@@ -220,7 +229,6 @@ public class Tale08 extends BaseFragment {
                 leafAniSet.addAnimation(leafFadein);
                 leafAniSet.addAnimation(leafFadeout);
 
-
                 fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
@@ -296,6 +304,8 @@ public class Tale08 extends BaseFragment {
                 leaves.setVisibility(View.VISIBLE);
                 leaves.startAnimation(leafAniSet);
                 eyeBlack.startAnimation(treeEyeToByul);
+                laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
+                eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
             }
         });
     }

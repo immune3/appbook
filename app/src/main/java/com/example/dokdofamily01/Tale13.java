@@ -1,7 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -54,6 +55,10 @@ public class Tale13 extends BaseFragment {
     AnimationSet bubbleAppear;
     AlphaAnimation blink;
     int animationFlag = 0;
+
+    private SoundPool bubbleSoundPool, tickSoundPool;
+    private int bubbleSound, tickSound;
+
 
 
     @Override
@@ -123,6 +128,10 @@ public class Tale13 extends BaseFragment {
         this.ivBuyl13 = (ImageView) layout.findViewById(R.id.ivBuyl13);
         ivFishes13 = (ImageView) layout.findViewById(R.id.ivFishes13);
         bubble = (ImageView) layout.findViewById(R.id.bubble);
+        bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_13_bubble, 1);
+        tickSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        tickSound = tickSoundPool.load(getContext(), R.raw.effect_13_tick, 1);
     }
 
     @Override
@@ -194,6 +203,8 @@ public class Tale13 extends BaseFragment {
             public void onClick(View view) {
                 ivBuyl13.clearAnimation();
                 bubble.startAnimation(bubbleAppear);
+                tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
+                bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
             }
         });
     }

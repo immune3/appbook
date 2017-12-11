@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -51,6 +53,9 @@ public class Tale06 extends BaseFragment {
     MediaPlayer mp = null;
     MusicController musicController;
 
+    SoundPool gullSoundPool, waveSoundPool;
+    int gullSound;
+    int waveSound;
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -129,6 +134,10 @@ public class Tale06 extends BaseFragment {
         seagull[0] = (ImageView) layout.findViewById(R.id.seagull1);
         seagull[1] = (ImageView) layout.findViewById(R.id.seagull2);
         momDokdo = (ImageView) layout.findViewById(R.id.momDokdo);
+        gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
+        waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
     }
 
     @Override
@@ -253,6 +262,9 @@ public class Tale06 extends BaseFragment {
                 smallwave[1].startAnimation(wavingTranslateAni[4]);
                 smallwave[2].startAnimation(wavingTranslateAni[5]);
                 smallwave[3].startAnimation(wavingTranslateAni[6]);
+
+                gullSoundPool.play(gullSound,1,1,0,0,1);
+                waveSoundPool.play(waveSound,1,1,0,0,1);
             }
         });
     }

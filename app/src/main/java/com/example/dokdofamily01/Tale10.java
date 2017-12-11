@@ -1,7 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -51,8 +54,14 @@ public class Tale10 extends BaseFragment {
     boolean isHint;
     MediaPlayer mp = null;
     private MusicController musicController;
+    private SoundPool tweetSoundPool, tweetTouchSoundPool;
+    private int tweetSound, tweetSoundLoop;
+    private int tweetLoopStreamID;
 
     ArrayList<SubTitleData> subtitleList;
+
+    Timer tweetTimer;
+    TimerTask task;
 
 
     @Override
@@ -72,8 +81,15 @@ public class Tale10 extends BaseFragment {
                 soundPlayFunc();
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+                checkMP.execute();
             }
+        }
+
+        if(!isVisibleToUser && tweetTimer != null) {
+            tweetSoundPool.stop(tweetLoopStreamID);
+            tweetTimer.cancel();
+            tweetTimer.purge();
+            tweetTimer = null;
         }
     }
 
@@ -104,8 +120,16 @@ public class Tale10 extends BaseFragment {
         super.onDestroyView();
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+            checkMP.execute();
         }
+
+        if(tweetTimer != null) {
+            tweetSoundPool.stop(tweetLoopStreamID);
+            tweetTimer.cancel();
+            tweetTimer.purge();
+            tweetTimer = null;
+        }
+
     }
 
 
@@ -135,6 +159,11 @@ public class Tale10 extends BaseFragment {
         bird[2][2] = (ImageView) layout.findViewById(R.id.bird22);
         bird[2][3] = (ImageView) layout.findViewById(R.id.bird23);
         bird[2][4] = (ImageView) layout.findViewById(R.id.bird24);
+        tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
+        tweetTouchSoundPool = new SoundPool(2, AudioManager.STREAM_RING, 0);
+        tweetSoundLoop = tweetTouchSoundPool.load(getContext(), R.raw.effect_10_tweet_touch, 0);
+
 //        for(int i=0; i<3; i++){
 //            for (int j=0; j<5; j++){
 //                int aa = "R.id.bird"+i+""+j;
@@ -201,6 +230,17 @@ public class Tale10 extends BaseFragment {
             public void onClick(View view) {
                 blinkBird.clearAnimation();
                 blinkBird.startAnimation(repeat);
+                tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+
+                tweetTimer = new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
+                    }
+                };
+                tweetTimer.schedule(task, 0, 3700);
+
             }
         });
     }

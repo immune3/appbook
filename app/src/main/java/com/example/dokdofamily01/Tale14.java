@@ -1,7 +1,10 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +63,9 @@ public class Tale14 extends BaseFragment {
     MediaPlayer mp = null;
     MusicController musicController;
     ArrayList<SubTitleData> subtitleList;
+
+    private SoundPool bubbleSoundPool, lightSoundPool, bellSoundPool;
+    private int bubbleSound, lightSound, bellSound;
 
 
     @Override
@@ -126,6 +132,12 @@ public class Tale14 extends BaseFragment {
         bubble = (ImageView) layout.findViewById(R.id.bubble);
         bell = (ImageView) layout.findViewById(R.id.bell);
         light = (ImageView) layout.findViewById(R.id.light);
+        bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bellSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        lightSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bubble, 1);
+        bellSound = bellSoundPool.load(getContext(), R.raw.effect_14_bell, 1);
+        lightSound = lightSoundPool.load(getContext(), R.raw.effect_14_light, 1);
     }
 
     @Override
@@ -243,6 +255,20 @@ public class Tale14 extends BaseFragment {
             public void onClick(View view) {
                 sqeedHand.setVisibility(View.VISIBLE);
                 sqeedHand.startAnimation(sqeedHandScaleAnimSet);
+
+                bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                            }
+                        }, 1100);
+                    }
+                }, 1200);
             }
         });
 

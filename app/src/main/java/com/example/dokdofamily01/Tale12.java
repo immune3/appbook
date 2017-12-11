@@ -1,8 +1,10 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +63,9 @@ public class Tale12 extends BaseFragment {
 
 
     ArrayList<SubTitleData> subtitleList;
+
+    private SoundPool whackSoundPool, handSoundPool;
+    private int whackSound, handSound;
 
 
     @Override
@@ -133,6 +138,10 @@ public class Tale12 extends BaseFragment {
         sqeedBody = (ImageView) layout.findViewById(R.id.sqeedBody);
         sqeedHead = (ImageView) layout.findViewById(R.id.sqeedHead);
         hairpin = (ImageView) layout.findViewById(R.id.hairpin);
+        whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        whackSound = whackSoundPool.load(getContext(), R.raw.effect_12_whack, 1);
+        handSound = handSoundPool.load(getContext(), R.raw.effect_12_hand, 1);
     }
 
     @Override
@@ -255,6 +264,14 @@ public class Tale12 extends BaseFragment {
                 sqeedBody.startAnimation(sqeedClinkAni);
                 sqeedHead.startAnimation(sqeedClinkAni);
                 hairpin.startAnimation(sqeedClinkAni);
+
+                whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handSoundPool.play(handSound, 1, 1, 0, 0, 1);
+                    }
+                }, 2000);
             }
         });
     }
