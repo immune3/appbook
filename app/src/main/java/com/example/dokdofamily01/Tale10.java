@@ -121,8 +121,15 @@ public class Tale10 extends BaseFragment {
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
             checkMP.execute();
-
         }
+
+        if(tweetTimer != null) {
+            tweetSoundPool.stop(tweetLoopStreamID);
+            tweetTimer.cancel();
+            tweetTimer.purge();
+            tweetTimer = null;
+        }
+
     }
 
 
@@ -232,7 +239,6 @@ public class Tale10 extends BaseFragment {
                         tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
                     }
                 };
-
                 tweetTimer.schedule(task, 0, 3700);
 
             }
