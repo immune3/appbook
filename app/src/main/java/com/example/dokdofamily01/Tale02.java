@@ -40,9 +40,13 @@ public class Tale02 extends BaseFragment {
     TranslateAnimation headUp;
     TranslateAnimation headDown;
     Animation seagullAppear;
-    Animation fadeIn;
-    AnimationSet animSet;
+    AnimationSet handAppear;
+    AnimationSet handDisappear;
     RotateAnimation seagullClick;
+    RotateAnimation handUp;
+    RotateAnimation handDown;
+    AlphaAnimation fadeIn;
+    AlphaAnimation fadeOut;
     int width;
     int height;
     int animationFlag=0;
@@ -159,26 +163,80 @@ public class Tale02 extends BaseFragment {
                 seagullClick.setRepeatCount(1);
                 seagullClick.setRepeatMode(Animation.REVERSE);
                 seagullClick.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullClick.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        seagullHand.startAnimation(handDisappear);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                handUp = new RotateAnimation(-10,10,width,height);
+                handUp.setDuration(500);
+                handUp.setInterpolator(new AccelerateDecelerateInterpolator());
+                handUp.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        seagullHand.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        seagullHand.startAnimation(seagullClick);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                handDown = new RotateAnimation(10,-10,width,height);
+                handDown.setDuration(500);
+                handDown.setInterpolator(new AccelerateDecelerateInterpolator());
+                handDown.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        seagullHand.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 headUp = new TranslateAnimation(0,0,byulhead.getHeight(),0);
                 headUp.setDuration(3000);
                 headUp.setFillAfter(true);
                 headUp.setInterpolator(new AccelerateDecelerateInterpolator());
                 headUp.setAnimationListener(new MyAnimationListener());
+
                 headDown= new TranslateAnimation(0,0,0,byulhead.getHeight());
                 headDown.setDuration(300);
                 headDown.setFillAfter(true);
                 headDown.setInterpolator(new AccelerateDecelerateInterpolator());
                 headDown.setAnimationListener(new MyAnimationListener());
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                fadeIn = new AlphaAnimation(0,1);
                 fadeIn.setDuration(500);
-                fadeIn.setRepeatCount(1);
-                fadeIn.setRepeatMode(Animation.REVERSE);
+                fadeOut = new AlphaAnimation(1,0);
+                fadeOut.setDuration(500);
 
-                animSet = new AnimationSet(true);
-                animSet.setInterpolator(new AccelerateDecelerateInterpolator());
-                animSet.addAnimation(seagullClick);
+                handAppear = new AnimationSet(true);
+                handAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                handAppear.addAnimation(handUp);
+                handAppear.addAnimation(fadeIn);
+
+                handDisappear = new AnimationSet(true);
+                handDisappear.setInterpolator(new AccelerateDecelerateInterpolator());
+                handDisappear.addAnimation(handDown);
+                handDisappear.addAnimation(fadeOut);
+
                 seagullHand.setVisibility(View.INVISIBLE);
                 if(animationFlag==0) {
                     animationFlag=1;
@@ -209,7 +267,7 @@ public class Tale02 extends BaseFragment {
                     sp.play(soundID,1,1,0,0,1);
                     star.clearAnimation();
                     byulhead.startAnimation(headDown);
-                    seagullHand.startAnimation(animSet);
+                    seagullHand.startAnimation(handAppear);
                 }
             }
         });
@@ -264,9 +322,9 @@ public class Tale02 extends BaseFragment {
         mp = musicController.getMp();
         if (headUp != null) {
             animationFlag=1;
+            star.clearAnimation();
             byulhead.startAnimation(headUp);
             seagullBody.setAnimation(seagullAppear);
         }
     }
-
 }
