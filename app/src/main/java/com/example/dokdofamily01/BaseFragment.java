@@ -3,23 +3,17 @@ package com.example.dokdofamily01;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-
 import android.widget.RelativeLayout;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
+
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 
 /**
  * Created by heronation on 2017-11-17.
@@ -31,6 +25,11 @@ public class BaseFragment extends Fragment{
     public RelativeLayout layout;
     public int xml = 0;
     static public int firstFlag = 0;
+    public MusicController musicController;
+    boolean isHint;
+    boolean isAttached = false;
+    private CustomViewPager vp;
+    MyChangeListener change ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class BaseFragment extends Fragment{
 //                }else{
 //                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
 //                }
+
             }
         });
         sv.setScrolling(false);
@@ -85,11 +85,94 @@ public class BaseFragment extends Fragment{
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        isAttached = true;
+        vp = ((TaleActivity) getActivity()).vp;
+
+        Log.d("VP",vp+"");
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-        }else{
-            System.gc();
+        if (isAttached) {
+            if (isVisibleToUser) {
+                System.out.println("PlayByHint");
+                soundPlayFunc();
+
+                vp.setOnTouchListener(null);
+                vp.setOnTouchListener(new MyChangeListener());
+
+            } else {
+                CheckMP checkMP = new CheckMP(musicController);
+                checkMP.execute();
+            }
         }
     }
+
+    public void soundPlayFunc() {
+
+    }
+
+    class MyChangeListener extends CustomTouchListener{
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            Log.d("Touch","On");
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public void decreaseFunc() {
+            Log.d("Start","DESC");
+            if(musicController != null){
+                Log.d("Start","DESC");
+
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            Log.d("Start","ASC");
+            if(musicController!=null){
+                Log.d("Start","ASC2");
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        if (isHint && !homeKeyFlag && screenFlag) {
+            soundPlayFunc();
+            vp.setOnTouchListener(null);
+            vp.setOnTouchListener(new MyChangeListener());
+        }
+        super.onResume();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (musicController != null) {
+            CheckMP checkMP = new CheckMP(musicController);
+            checkMP.execute();
+        }
+    }
+
 }

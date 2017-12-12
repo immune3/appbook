@@ -43,37 +43,12 @@ public class Tale01 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
-    boolean isAttached = false;
-    boolean isHint;
+
     MediaPlayer mp = null;
-    MusicController musicController;
 
 
     SoundPool sp;
     int soundID;
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
 
     @Override
@@ -90,22 +65,7 @@ public class Tale01 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -126,6 +86,7 @@ public class Tale01 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
     }
 
     @Override
@@ -252,19 +213,54 @@ public class Tale01 extends BaseFragment {
     }
 
 
+    @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_1);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
-                new String[]{"콕콕... 콕콕콕...", "7500"},
-                new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
-                new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
-                new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
 
+            musicController = new MusicController(getActivity(), R.raw.scene_1);
+            subtitleList = new ArrayList<>();
+            subtitleList = musicController.makeSubTitleList(
+                    new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
+                    new String[]{"콕콕... 콕콕콕...", "7500"},
+                    new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
+                    new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
+                    new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
+            );
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+
+            lampLight.clearAnimation();
+            byul.clearAnimation();
+            bedLight.clearAnimation();
+            curtain.clearAnimation();
+            light.clearAnimation();
+            hand.clearAnimation();
+            blanket.clearAnimation();
+            head.clearAnimation();
+            head.setVisibility(View.VISIBLE);
+            blanket.setVisibility(View.VISIBLE);
+            curtain.setVisibility(View.VISIBLE);
+            light.setVisibility(View.INVISIBLE);
+            lampLight.setVisibility(View.INVISIBLE);
+            hand.setVisibility(View.INVISIBLE);
+            bedLight.setVisibility(View.INVISIBLE);
+            byul.setVisibility(View.INVISIBLE);
+            animationFlag=0;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         lampLight.clearAnimation();
         byul.clearAnimation();
         bedLight.clearAnimation();
@@ -282,6 +278,11 @@ public class Tale01 extends BaseFragment {
         bedLight.setVisibility(View.INVISIBLE);
         byul.setVisibility(View.INVISIBLE);
         animationFlag=0;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
 }
