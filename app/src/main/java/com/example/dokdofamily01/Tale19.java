@@ -153,12 +153,13 @@ public class Tale19 extends BaseFragment {
                     starFadein[iter] = new AlphaAnimation(0, 1);
                     starFadein[iter].setStartOffset(iter * 300);
                     starFadein[iter].setDuration(500);
-//                    starFadein[iter].setFillAfter(true);
+                    starFadein[iter].setFillAfter(true);
 
                     starFall[iter] = new TranslateAnimation(0, 0, 0, star2.getHeight() * ratio);
                     starFall[iter].setDuration(800);
                     starFall[iter].setStartOffset(iter * 300 + 500);
                     starFall[iter].setInterpolator(new AnticipateInterpolator());
+                    starFall[iter].setFillAfter(true);
 
                     starFadeout[iter] = new AlphaAnimation(1, 0);
                     starFadeout[iter].setStartOffset(iter * 300 + 1300);
@@ -169,7 +170,7 @@ public class Tale19 extends BaseFragment {
                     starFallAniSet[iter].addAnimation(starFadein[iter]);
                     starFallAniSet[iter].addAnimation(starFall[iter]);
                     starFallAniSet[iter].addAnimation(starFadeout[iter]);
-//                    starFallAniSet[iter].setFillAfter(true);
+                    starFallAniSet[iter].setFillAfter(true);
 
                     ratio *= 1.7f;
 //                    starFallAniSet[iter].setStartOffset(1000*iter);
@@ -178,19 +179,20 @@ public class Tale19 extends BaseFragment {
                 starFadeout[4].setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-
+//                        star6.clearAnimation();
+//                        star2.clearAnimation();
+//                        star3.clearAnimation();
+//                        star4.clearAnimation();
+//                        star5.clearAnimation();
                         if (starFallCount < 4) {
+                            star6.setVisibility(View.INVISIBLE);
                             star2.startAnimation(starFallAniSet[0]);
                             star3.startAnimation(starFallAniSet[1]);
                             star4.startAnimation(starFallAniSet[2]);
                             star5.startAnimation(starFallAniSet[3]);
                             star6.startAnimation(starFallAniSet[4]);
                         } else {
-                            star6.clearAnimation();
-                            star2.clearAnimation();
-                            star3.clearAnimation();
-                            star4.clearAnimation();
-                            star5.clearAnimation();
+
                             starLight.setVisibility(View.INVISIBLE);
                             light.setVisibility(View.INVISIBLE);
                             star1.startAnimation(blink);
@@ -199,29 +201,19 @@ public class Tale19 extends BaseFragment {
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-
-//                        if(starFallCount < 2) {
-//                            star2.startAnimation(starFallAniSet[0]);
-//                            star3.startAnimation(starFallAniSet[1]);
-//                            star4.startAnimation(starFallAniSet[2]);
-//                            star5.startAnimation(starFallAniSet[3]);
-//                            star6.startAnimation(starFallAniSet[4]);
-//                        }
                     }
 
                     @Override
                     public void onAnimationStart(Animation animation) {
                         starFallCount++;
                         if (starFallCount < 4) {
-
+//                            star6.setVisibility(View.INVISIBLE);
                         } else {
                             starLight.startAnimation(fadeout);
                             light.startAnimation(fadeout);
                         }
                     }
                 });
-
-
 
                 if (animationFlag == 0) {
                     star1.setVisibility(View.INVISIBLE);
