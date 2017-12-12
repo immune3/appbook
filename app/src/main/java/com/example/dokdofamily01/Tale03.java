@@ -6,7 +6,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,8 +18,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -43,9 +40,6 @@ public class Tale03 extends BaseFragment {
     int animationFlag = 0;
     int clickFlag = 0;
 
-    boolean isHint;
-    MusicController musicController;
-    boolean isAttached = false;
     MediaPlayer mp = null;
 
 
@@ -53,30 +47,9 @@ public class Tale03 extends BaseFragment {
 
     SoundPool sp;
     int soundID;
+    int wings;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                vp = ((TaleActivity)getActivity()).vp;
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-                vp.setOnTouchListener(new MyChangeListener ());
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,24 +65,7 @@ public class Tale03 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-            vp = ((TaleActivity)getActivity()).vp;
-            vp.setOnTouchListener(new MyChangeListener ());
-        }
-        super.onResume();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
 
     @Override
@@ -122,13 +78,15 @@ public class Tale03 extends BaseFragment {
         cloud[4] = (ImageView) layout.findViewById(R.id.cloud4);
         cloud[5] = (ImageView) layout.findViewById(R.id.cloud5);
         byulHand = (ImageView) layout.findViewById(R.id.byulHand);
-        wing[0] = (ImageView) layout.findViewById(R.id.wingLeft1);
-        wing[1] = (ImageView) layout.findViewById(R.id.wingLeft2);
-        wing[2] = (ImageView) layout.findViewById(R.id.wingRight1);
-        wing[3] = (ImageView) layout.findViewById(R.id.wingRight2);
-        blinkStar = (ImageView) layout.findViewById(R.id.blinkStar);
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundID = sp.load(getContext(), R.raw.effect_03_clouds, 1);
+        wing[0] = (ImageView)layout.findViewById(R.id.wingLeft1);
+        wing[1] = (ImageView)layout.findViewById(R.id.wingLeft2);
+        wing[2] = (ImageView)layout.findViewById(R.id.wingRight1);
+        wing[3] = (ImageView)layout.findViewById(R.id.wingRight2);
+        blinkStar = (ImageView)layout.findViewById(R.id.blinkStar);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
+        wings = sp.load(getContext(),R.raw.effect_03_wings,2);
+
     }
 
     @Override
@@ -227,6 +185,7 @@ public class Tale03 extends BaseFragment {
                     wing[1].startAnimation(wingAppear2);
                     wing[2].startAnimation(wingAppear1);
                     wing[3].startAnimation(wingAppear2);
+                    sp.play(wings,1,1,1,4,1);
                 }
             }
         });
@@ -255,6 +214,7 @@ public class Tale03 extends BaseFragment {
 
     }
 
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_3);
         subtitleList = new ArrayList<>();
@@ -284,35 +244,23 @@ public class Tale03 extends BaseFragment {
         }
     }
 
-    class MyChangeListener extends CustomTouchListener{
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            customViewPager = vp;
-            return super.onTouch(view, motionEvent);
-        }
-
-        @Override
-        public void decreaseFunc() {
-            if(musicController != null){
-                if(musicController.previousPart()){
-
-                }else{
-                    super.decreaseFunc();
-                }
-            }
-        }
-
-        @Override
-        public void increaseFunc() {
-            if(musicController!=null){
-                if(musicController.nextPart()){
-
-                }else{
-                    super.increaseFunc();
-                }
-            }
-        }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

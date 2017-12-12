@@ -1,6 +1,9 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -59,35 +62,16 @@ public class Tale08 extends BaseFragment {
     AnimationSet leafAniSet = new AnimationSet(false);
     int animationFlag = 0;
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
+
 
     ArrayList<SubTitleData> subtitleList;
 
+    SoundPool laughingSoundPool, eyeSoundPool;
+    int laughingSound;
+    int eyeSound;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,22 +88,6 @@ public class Tale08 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -135,6 +103,10 @@ public class Tale08 extends BaseFragment {
         smile = (ImageView) layout.findViewById(R.id.smile);
         eyeBlack = (ImageView) layout.findViewById(R.id.eyeBlack);
         eyeWhite = (ImageView) layout.findViewById(R.id.eyeWhite);
+        laughingSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        eyeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        laughingSound = laughingSoundPool.load(getContext(), R.raw.effect_08_laughing, 0);
+        eyeSound = eyeSoundPool.load(getContext(), R.raw.effect_08_eyesound, 0);
     }
 
     @Override
@@ -219,7 +191,6 @@ public class Tale08 extends BaseFragment {
                 leafAniSet.addAnimation(leafFadein);
                 leafAniSet.addAnimation(leafFadeout);
 
-
                 fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
@@ -295,6 +266,8 @@ public class Tale08 extends BaseFragment {
                 leaves.setVisibility(View.VISIBLE);
                 leaves.startAnimation(leafAniSet);
                 eyeBlack.startAnimation(treeEyeToByul);
+                laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
+                eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
             }
         });
     }
@@ -352,6 +325,7 @@ public class Tale08 extends BaseFragment {
         }
     }
 
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_8);
         subtitleList = new ArrayList<>();
@@ -388,4 +362,23 @@ public class Tale08 extends BaseFragment {
         }
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

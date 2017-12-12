@@ -41,20 +41,30 @@ public class MusicController {
     }
 
     public boolean nextPart() {
-        if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
-            return true;
-        } else {
+        if(subtitleThread != null) {
+            if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else{
             return false;
         }
 
     }
 
     public boolean previousPart() {
-        if (subtitleThread.decreaseSubtitleMusic()) {
-            return true;
-        } else {
+        if(subtitleThread != null){
+            if (subtitleThread.decreaseSubtitleMusic()) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
             return false;
         }
+
     }
 
     public void excuteAsync() {

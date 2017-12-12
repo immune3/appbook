@@ -1,7 +1,10 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +24,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -55,33 +56,12 @@ public class Tale14 extends BaseFragment {
     int animationFlag = 0;
 
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
     ArrayList<SubTitleData> subtitleList;
 
+    private SoundPool bubbleSoundPool, lightSoundPool, bellSoundPool;
+    private int bubbleSound, lightSound, bellSound;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,23 +77,6 @@ public class Tale14 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
-
 
     @Override
     public void bindViews() {
@@ -126,6 +89,12 @@ public class Tale14 extends BaseFragment {
         bubble = (ImageView) layout.findViewById(R.id.bubble);
         bell = (ImageView) layout.findViewById(R.id.bell);
         light = (ImageView) layout.findViewById(R.id.light);
+        bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bellSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        lightSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bubble, 1);
+        bellSound = bellSoundPool.load(getContext(), R.raw.effect_14_bell, 1);
+        lightSound = lightSoundPool.load(getContext(), R.raw.effect_14_light, 1);
     }
 
     @Override
@@ -243,6 +212,20 @@ public class Tale14 extends BaseFragment {
             public void onClick(View view) {
                 sqeedHand.setVisibility(View.VISIBLE);
                 sqeedHand.startAnimation(sqeedHandScaleAnimSet);
+
+                bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                            }
+                        }, 1100);
+                    }
+                }, 1200);
             }
         });
 
@@ -269,7 +252,7 @@ public class Tale14 extends BaseFragment {
         }
 
     }
-
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_14);
         subtitleList = new ArrayList<>();
@@ -298,4 +281,23 @@ public class Tale14 extends BaseFragment {
 
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -21,8 +23,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -45,38 +45,15 @@ public class Tale06 extends BaseFragment {
     AnimationSet[] wavingAniSet = new AnimationSet[3];
     int animationFlag = 0;
 
-    boolean isAttached = false;
 
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
+    SoundPool gullSoundPool, waveSoundPool;
+    int gullSound;
+    int waveSound;
 
     ArrayList<SubTitleData> subtitleList;
 
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
-
-            }
-        }
-    }
 
 
     @Override
@@ -94,25 +71,6 @@ public class Tale06 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
-
-
     @Override
     public void bindViews() {
         super.bindViews();
@@ -129,6 +87,10 @@ public class Tale06 extends BaseFragment {
         seagull[0] = (ImageView) layout.findViewById(R.id.seagull1);
         seagull[1] = (ImageView) layout.findViewById(R.id.seagull2);
         momDokdo = (ImageView) layout.findViewById(R.id.momDokdo);
+        gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
+        waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
     }
 
     @Override
@@ -253,6 +215,9 @@ public class Tale06 extends BaseFragment {
                 smallwave[1].startAnimation(wavingTranslateAni[4]);
                 smallwave[2].startAnimation(wavingTranslateAni[5]);
                 smallwave[3].startAnimation(wavingTranslateAni[6]);
+
+                gullSoundPool.play(gullSound,1,1,0,0,1);
+                waveSoundPool.play(waveSound,1,1,0,0,1);
             }
         });
     }
@@ -320,7 +285,7 @@ public class Tale06 extends BaseFragment {
         }
     }
 
-
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_6);
         subtitleList = new ArrayList<>();
@@ -369,4 +334,23 @@ public class Tale06 extends BaseFragment {
         }
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

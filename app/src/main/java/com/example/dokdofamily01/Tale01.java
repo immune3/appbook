@@ -6,7 +6,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,8 +16,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -27,7 +24,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale01 extends BaseFragment {
 
-    private CustomViewPager vp;
     int animationFlag = 0;
     ImageView lamp;
     ImageView lampLight;
@@ -43,39 +39,12 @@ public class Tale01 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
-    boolean isAttached = false;
-    boolean isHint;
+
     MediaPlayer mp = null;
-    MusicController musicController;
 
 
     SoundPool sp;
     int soundID;
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                vp = ((TaleActivity) getActivity()).vp;
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-                vp.setOnTouchListener(new MyChangeListener());
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
-            }
-        }
-    }
 
 
     @Override
@@ -92,24 +61,7 @@ public class Tale01 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-            vp = ((TaleActivity)getActivity()).vp;
-            vp.setOnTouchListener(new MyChangeListener ());
-        }
-        super.onResume();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-            checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -130,6 +82,7 @@ public class Tale01 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
     }
 
     @Override
@@ -256,50 +209,41 @@ public class Tale01 extends BaseFragment {
     }
 
 
+    @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_1);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
-                new String[]{"콕콕... 콕콕콕...", "7500"},
-                new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
-                new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
-                new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+
+            musicController = new MusicController(getActivity(), R.raw.scene_1);
+            subtitleList = new ArrayList<>();
+            subtitleList = musicController.makeSubTitleList(
+                    new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
+                    new String[]{"콕콕... 콕콕콕...", "7500"},
+                    new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
+                    new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
+                    new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
+            );
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+
 
     }
 
-    class MyChangeListener extends CustomTouchListener{
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            customViewPager = vp;
-            return super.onTouch(view, motionEvent);
-        }
-
-        @Override
-        public void decreaseFunc() {
-            if(musicController != null){
-                if(musicController.previousPart()){
-
-                }else{
-                    super.decreaseFunc();
-                }
-            }
-        }
-
-        @Override
-        public void increaseFunc() {
-            if(musicController!=null){
-                if(musicController.nextPart()){
-
-                }else{
-                    super.increaseFunc();
-                }
-            }
-        }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

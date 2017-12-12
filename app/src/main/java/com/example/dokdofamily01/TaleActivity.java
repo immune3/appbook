@@ -38,7 +38,7 @@ public class TaleActivity extends AppCompatActivity{
     Button showMenu;
     Button menuBtn;
     private float x1,x2;
-    static final int MIN_DISTANCE = 150;
+    static final int MIN_DISTANCE = 300;
 
     static public TextView subtitleTextView;
 

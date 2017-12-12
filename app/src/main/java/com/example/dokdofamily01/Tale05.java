@@ -4,7 +4,6 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -32,10 +29,7 @@ public class Tale05 extends BaseFragment {
     Animation letterDisappear;
     int animationFlag = 0;
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -43,27 +37,7 @@ public class Tale05 extends BaseFragment {
     int moveLetters;
     int clickLetter;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,22 +53,6 @@ public class Tale05 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -274,7 +232,25 @@ public class Tale05 extends BaseFragment {
 
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
 
 

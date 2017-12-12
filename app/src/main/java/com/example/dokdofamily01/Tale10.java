@@ -1,6 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,9 +18,9 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -46,35 +48,17 @@ public class Tale10 extends BaseFragment {
     int animationFlag = 0;
     int repeatFlag = 0;
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    private MusicController musicController;
+    private SoundPool tweetSoundPool, tweetTouchSoundPool;
+    private int tweetSound, tweetSoundLoop;
+    private int tweetLoopStreamID;
 
     ArrayList<SubTitleData> subtitleList;
 
+    Timer tweetTimer;
+    TimerTask task;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
-            }
-        }
-    }
 
 
     @Override
@@ -90,22 +74,8 @@ public class Tale10 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-            checkMP.execute();
-        }
-    }
+
 
 
     @Override
@@ -134,6 +104,11 @@ public class Tale10 extends BaseFragment {
         bird[2][2] = (ImageView) layout.findViewById(R.id.bird22);
         bird[2][3] = (ImageView) layout.findViewById(R.id.bird23);
         bird[2][4] = (ImageView) layout.findViewById(R.id.bird24);
+        tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
+        tweetTouchSoundPool = new SoundPool(2, AudioManager.STREAM_RING, 0);
+        tweetSoundLoop = tweetTouchSoundPool.load(getContext(), R.raw.effect_10_tweet_touch, 0);
+
 //        for(int i=0; i<3; i++){
 //            for (int j=0; j<5; j++){
 //                int aa = "R.id.bird"+i+""+j;
@@ -200,6 +175,17 @@ public class Tale10 extends BaseFragment {
             public void onClick(View view) {
                 blinkBird.clearAnimation();
                 blinkBird.startAnimation(repeat);
+                tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+
+                tweetTimer = new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
+                    }
+                };
+                tweetTimer.schedule(task, 0, 3700);
+
             }
         });
     }
@@ -330,6 +316,7 @@ public class Tale10 extends BaseFragment {
         }
     }
 
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_10);
         subtitleList = new ArrayList<>();
@@ -355,5 +342,40 @@ public class Tale10 extends BaseFragment {
             mountain.startAnimation(mountainAppear);
             rock.startAnimation(rockAppear);
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(!isVisibleToUser && tweetTimer != null) {
+            tweetSoundPool.stop(tweetLoopStreamID);
+            tweetTimer.cancel();
+            tweetTimer.purge();
+            tweetTimer = null;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(tweetTimer != null) {
+            tweetSoundPool.stop(tweetLoopStreamID);
+
+            tweetTimer.cancel();
+            tweetTimer.purge();
+            tweetTimer = null;
+        }
+
     }
 }

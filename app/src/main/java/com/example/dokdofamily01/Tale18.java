@@ -1,7 +1,8 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,8 +19,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -54,36 +53,23 @@ public class Tale18 extends BaseFragment {
 
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
+    boolean clickFlag=false;
 
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
+    SoundPool sp;
+    int appear;
+    int starEffect;
+    int scale[] = new int[6];
+
+
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -97,22 +83,6 @@ public class Tale18 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -125,6 +95,16 @@ public class Tale18 extends BaseFragment {
         tree18 = (ImageView) layout.findViewById(R.id.tree18);
         sqeed18 = (ImageView) layout.findViewById(R.id.sqeed18);
         man18 = (ImageView) layout.findViewById(R.id.man18);
+
+        sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+        appear = sp.load(getContext(), R.raw.effect_18_appear, 1);
+        starEffect = sp.load(getContext(), R.raw.effect_18_star, 2);
+        scale[0] = sp.load(getContext(), R.raw.effect_18_do, 3);
+        scale[1] = sp.load(getContext(), R.raw.effect_18_re, 4);
+        scale[2] = sp.load(getContext(), R.raw.effect_18_mi, 5);
+        scale[3] = sp.load(getContext(), R.raw.effect_18_fa, 6);
+        scale[4] = sp.load(getContext(), R.raw.effect_18_so, 7);
+        scale[5] = sp.load(getContext(), R.raw.effect_18_la, 8);
     }
 
     @Override
@@ -139,6 +119,10 @@ public class Tale18 extends BaseFragment {
             @Override
             public void run() {
                 blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
                 fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -228,6 +212,7 @@ public class Tale18 extends BaseFragment {
                     mom18.startAnimation(momAppear);
                     stars18.startAnimation(starsAppear);
                     flower18.startAnimation(flowerAppear);
+
                 }
             }
         });
@@ -240,6 +225,11 @@ public class Tale18 extends BaseFragment {
         flower18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!clickFlag){
+                    sp.play(starEffect,1,1,1,0,1);
+                }else{
+                    sp.play(starEffect,1,1,1,0,1);
+                }
                 if (animationFlag == 0) {
                     animationFlag = 2;
                     animationClear();
@@ -258,6 +248,42 @@ public class Tale18 extends BaseFragment {
                     sqeed18.startAnimation(sqeedAppear);
                     man18.startAnimation(manAppear);
                 }
+            }
+        });
+        sqeed18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[0],1,1,1,0,1);
+            }
+        });
+        man18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[1],1,1,1,0,1);
+            }
+        });
+        post18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[2],1,1,1,0,1);
+            }
+        });
+        tree18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[3],1,1,1,0,1);
+            }
+        });
+        father18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[4],1,1,1,0,1);
+            }
+        });
+        mom18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[5],1,1,1,0,1);
             }
         });
     }
@@ -294,6 +320,14 @@ public class Tale18 extends BaseFragment {
     }
 
     private class MyAnimationListener1 extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+            if(rotateFlag[1]==1){
+                sp.play(appear,1,1,1,0,1);
+            }
+        }
+
         @Override
         public void onAnimationEnd(Animation animation) {
             super.onAnimationEnd(animation);
@@ -335,6 +369,7 @@ public class Tale18 extends BaseFragment {
                 case 1:
                     rotateFlag[3] = 2;
                     man18.startAnimation(manRotate[0]);
+                    clickFlag=true;
                     break;
                 case 2:
                     rotateFlag[3] = 0;
@@ -382,5 +417,25 @@ public class Tale18 extends BaseFragment {
             flower18.startAnimation(flowerAppear);
         }
 
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

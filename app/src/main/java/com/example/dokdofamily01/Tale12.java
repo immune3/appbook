@@ -1,8 +1,10 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +22,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -54,36 +54,14 @@ public class Tale12 extends BaseFragment {
     int animationFlag = 0;
     int clickedFlag = 0;
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
 
     ArrayList<SubTitleData> subtitleList;
 
+    private SoundPool whackSoundPool, handSoundPool;
+    private int whackSound, handSound;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,21 +81,6 @@ public class Tale12 extends BaseFragment {
 
     @Override
 
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     public void bindViews() {
         super.bindViews();
@@ -133,6 +96,10 @@ public class Tale12 extends BaseFragment {
         sqeedBody = (ImageView) layout.findViewById(R.id.sqeedBody);
         sqeedHead = (ImageView) layout.findViewById(R.id.sqeedHead);
         hairpin = (ImageView) layout.findViewById(R.id.hairpin);
+        whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        whackSound = whackSoundPool.load(getContext(), R.raw.effect_12_whack, 1);
+        handSound = handSoundPool.load(getContext(), R.raw.effect_12_hand, 1);
     }
 
     @Override
@@ -255,10 +222,20 @@ public class Tale12 extends BaseFragment {
                 sqeedBody.startAnimation(sqeedClinkAni);
                 sqeedHead.startAnimation(sqeedClinkAni);
                 hairpin.startAnimation(sqeedClinkAni);
+
+                whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handSoundPool.play(handSound, 1, 1, 0, 0, 1);
+                    }
+                }, 2000);
             }
         });
     }
 
+
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_12);
         subtitleList = new ArrayList<>();
@@ -288,5 +265,24 @@ public class Tale12 extends BaseFragment {
 
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
 

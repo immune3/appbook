@@ -1,7 +1,6 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,8 +19,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -51,35 +48,14 @@ public class Tale16 extends BaseFragment {
 
     int animationFlag = 0;
 
-    boolean isAttached = false;
-
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
     ArrayList<SubTitleData> subtitleList;
 
+//    SoundPool sp;
+    int bubbleEffect;
+    int bumbEffect;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,22 +73,6 @@ public class Tale16 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
 
     @Override
@@ -124,6 +84,9 @@ public class Tale16 extends BaseFragment {
         dokdo_father = (ImageView) layout.findViewById(R.id.dokdo_father);
         dokdo_mom = (ImageView) layout.findViewById(R.id.dokdo_mom);
         wave = (ImageView) layout.findViewById(R.id.wave);
+//        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+//        bubbleEffect = sp.load(getContext(), R.raw.effect_16_bubble, 1);
+//        bumbEffect = sp.load(getContext(), R.raw.effect_16_bumb, 2);
     }
 
     @Override
@@ -182,6 +145,17 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 bubbleScaleAni.setRepeatCount(Animation.INFINITE);
                 bubbleScaleAni.setRepeatMode(Animation.REVERSE);
+                bubbleScaleAni.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+//                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+//                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
+                    }
+                });
 
                 bubbleAniSet.addAnimation(bubbleScaleAni);
 //                bubbleAniSet.addAnimation(blink);
@@ -195,16 +169,20 @@ public class Tale16 extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         bubble.setVisibility(View.INVISIBLE);
+//                        sp.stop(bubbleEffect);
+//                        sp.play(bumbEffect,1,1,1,0,1);
                     }
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
+//                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
 
                     @Override
                     public void onAnimationStart(Animation animation) {
                         bomb.setVisibility(View.VISIBLE);
                         bomb.startAnimation(fadein);
+//                        sp.play(bubbleEffect,0.1f,0.1f,1,0,1);
                     }
                 });
 
@@ -251,6 +229,8 @@ public class Tale16 extends BaseFragment {
                 bubble.clearAnimation();
                 moon.clearAnimation();
                 bubble.startAnimation(bubbleBombAniSet);
+//                sp.stop(bubbleEffect);
+//                sp.play(bumbEffect,1,1,1,0,1);
             }
         });
 
@@ -260,6 +240,8 @@ public class Tale16 extends BaseFragment {
                 bubble.clearAnimation();
                 moon.clearAnimation();
                 bubble.startAnimation(bubbleBombAniSet);
+//                sp.stop(bubbleEffect);
+//                sp.play(bumbEffect,1,1,1,0,1);
             }
         });
     }
@@ -284,6 +266,7 @@ public class Tale16 extends BaseFragment {
 
     }
 
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_16);
         subtitleList = new ArrayList<>();
@@ -319,4 +302,23 @@ public class Tale16 extends BaseFragment {
 
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

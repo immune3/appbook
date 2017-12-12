@@ -6,7 +6,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -22,8 +21,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -49,34 +46,14 @@ public class Tale02 extends BaseFragment {
     int height;
     int animationFlag=0;
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int soundID;
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                vp = ((TaleActivity)getActivity()).vp;
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-                vp.setOnTouchListener(new MyChangeListener ());
 
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
-            }
-        }
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,30 +70,6 @@ public class Tale02 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-            vp = ((TaleActivity)getActivity()).vp;
-            vp.setOnTouchListener(new MyChangeListener ());
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void bindViews() {
@@ -258,36 +211,23 @@ public class Tale02 extends BaseFragment {
         }
     }
 
-
-    class MyChangeListener extends CustomTouchListener{
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            customViewPager = vp;
-            return super.onTouch(view, motionEvent);
-        }
-
-        @Override
-        public void decreaseFunc() {
-            if(musicController != null){
-                if(musicController.previousPart()){
-
-                }else{
-                    super.decreaseFunc();
-                }
-            }
-        }
-
-        @Override
-        public void increaseFunc() {
-            if(musicController!=null){
-                if(musicController.nextPart()){
-
-                }else{
-                    super.increaseFunc();
-                }
-            }
-        }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
