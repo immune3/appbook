@@ -36,12 +36,14 @@ public class Tale07 extends BaseFragment {
     RotateAnimation seagullDisappear1;
     RotateAnimation seagullAppear2;
     RotateAnimation seagullAppear3;
+    RotateAnimation seagullAppear4;
     RotateAnimation seagullDisappear3;
     RotateAnimation rotateDokdo;
     ScaleAnimation scaleDokdo;
     AnimationSet moveDokdo;
 
     int animationFlag = 0;
+    boolean clickFlag = false;
 
     boolean isAttached = false;
     boolean isHint;
@@ -143,7 +145,7 @@ public class Tale07 extends BaseFragment {
                 seagullDisappear1.setAnimationListener(new MyAnimationListener());
 
                 seagullAppear2 = new RotateAnimation(30, -35, 0, -(int) (seagull[1].getHeight() * 5));
-                seagullAppear2.setDuration(3500);
+                seagullAppear2.setDuration(2000);
                 seagullAppear2.setFillAfter(true);
                 seagullAppear2.setInterpolator(new AccelerateDecelerateInterpolator());
                 seagullAppear2.setAnimationListener(new MyAnimationListener());
@@ -159,6 +161,12 @@ public class Tale07 extends BaseFragment {
                 seagullDisappear3.setInterpolator(new AccelerateDecelerateInterpolator());
                 seagullDisappear3.setAnimationListener(new MyAnimationListener());
 
+                seagullAppear4 = new RotateAnimation(20, -40, -(int) (seagull[0].getWidth() * 4), -(int) (seagull[0].getHeight() * 1.5));
+                seagullAppear4.setDuration(2000);
+                seagullAppear4.setFillAfter(true);
+                seagullAppear4.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAppear4.setAnimationListener(new MyAnimationListener());
+
                 scaleDokdo = new ScaleAnimation(1, 0.7f, 1, 0.7f, (int) (dokdo.getWidth() * 0.5), (int) (dokdo.getHeight() * 0.5));
                 scaleDokdo.setDuration(4000);
                 scaleDokdo.setFillAfter(true);
@@ -168,6 +176,7 @@ public class Tale07 extends BaseFragment {
                 rotateDokdo.setFillAfter(true);
                 rotateDokdo.setInterpolator(new AccelerateDecelerateInterpolator());
                 moveDokdo = new AnimationSet(false);
+                moveDokdo.setStartOffset(500);
                 moveDokdo.setFillAfter(true);
                 moveDokdo.addAnimation(scaleDokdo);
                 moveDokdo.addAnimation(rotateDokdo);
@@ -175,6 +184,10 @@ public class Tale07 extends BaseFragment {
 
                 if (animationFlag == 0) {
                     animationFlag = 1;
+                    animationFlag = 1;
+                    dokdo.clearAnimation();
+                    seagull[1].clearAnimation();
+                    seagull[2].clearAnimation();
                     seagull[0].setVisibility(View.INVISIBLE);
                     seagull[1].setVisibility(View.INVISIBLE);
                     seagull[2].setVisibility(View.INVISIBLE);
@@ -197,10 +210,10 @@ public class Tale07 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (animationFlag == 0) {
+                    clickFlag=true;
                     animationFlag = 2;
                     sp.play(seagullEffect, 1, 1, 0, 0, 1);
                     seagull[0].startAnimation(seagullDisappear1);
-                    dokdo.startAnimation(moveDokdo);
                 }
             }
         });
@@ -210,7 +223,7 @@ public class Tale07 extends BaseFragment {
                 if (animationFlag == 5) {
                     animationFlag = 6;
                     seagull[2].startAnimation(seagullDisappear3);
-                    dokdo.clearAnimation();
+//                    dokdo.clearAnimation();
                 }
             }
         });
@@ -248,6 +261,11 @@ public class Tale07 extends BaseFragment {
                     seagull[0].clearAnimation();
                     seagull[0].setVisibility(View.INVISIBLE);
                     seagull[1].startAnimation(seagullAppear2);
+                    if(clickFlag){
+                        clickFlag=false;
+                        dokdo.startAnimation(moveDokdo);
+                    }
+
                     break;
                 case 3:
                     animationFlag = 4;
@@ -260,10 +278,12 @@ public class Tale07 extends BaseFragment {
                     seagull[2].clearAnimation();
                     break;
                 case 6:
-                    animationFlag = 1;
+                    animationFlag = 2;
                     seagull[2].setVisibility(View.INVISIBLE);
                     seagull[2].clearAnimation();
-                    seagull[0].startAnimation(seagullAppear1);
+                    seagull[0].setVisibility(View.VISIBLE);
+                    seagull[0].startAnimation(seagullAppear4);
+                    sp.play(seagullEffect, 1, 1, 0, 0, 1);
                     break;
             }
         }
@@ -292,6 +312,9 @@ public class Tale07 extends BaseFragment {
         mp = musicController.getMp();
         if (seagullAppear1 != null) {
             animationFlag = 1;
+            dokdo.clearAnimation();
+            seagull[1].clearAnimation();
+            seagull[2].clearAnimation();
             seagull[0].setVisibility(View.INVISIBLE);
             seagull[1].setVisibility(View.INVISIBLE);
             seagull[2].setVisibility(View.INVISIBLE);
