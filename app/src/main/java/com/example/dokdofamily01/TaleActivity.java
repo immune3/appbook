@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,7 +27,7 @@ import android.widget.TextView;
  */
 
 public class TaleActivity extends AppCompatActivity{
-    CustomViewPager vp;
+    public CustomViewPager vp;
     Spinner goPage;
     LinearLayout menuContainer;
     boolean showFlag;
@@ -124,36 +122,36 @@ public class TaleActivity extends AppCompatActivity{
 
             }
         });
-        vp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        x1 = motionEvent.getX();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        x2 = motionEvent.getX();
-                        float deltaX = x2 - x1;
-                        if (Math.abs(deltaX) > MIN_DISTANCE)
-                        {
-                            if(x2>x1) {
-                                vp.setCurrentItem(vp.getCurrentItem()-1);
-                            }
-                            else if(x2<x1) {
-                                vp.setCurrentItem(vp.getCurrentItem()+1);
-                            }
-                        }
-                        else
-                        {
-                            Log.i("position", "short");
-                        }
-                        break;
-                }
-                return true;
-            }
-
-        });
+//        vp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                switch(motionEvent.getAction())
+//                {
+//                    case MotionEvent.ACTION_DOWN:
+//                        x1 = motionEvent.getX();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        x2 = motionEvent.getX();
+//                        float deltaX = x2 - x1;
+//                        if (Math.abs(deltaX) > MIN_DISTANCE)
+//                        {
+//                            if(x2>x1) {
+//                                vp.setCurrentItem(vp.getCurrentItem()-1);
+//                            }
+//                            else if(x2<x1) {
+//                                vp.setCurrentItem(vp.getCurrentItem()+1);
+//                            }
+//                        }
+//                        else
+//                        {
+//                            Log.i("position", "short");
+//                        }
+//                        break;
+//                }
+//                return true;
+//            }
+//
+//        });
 
 
         goFront.setOnClickListener(new View.OnClickListener() {

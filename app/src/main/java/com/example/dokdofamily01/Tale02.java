@@ -3,10 +3,10 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -31,6 +31,8 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale02 extends BaseFragment {
+
+    private CustomViewPager vp;
     ImageView byulhead;
     ImageView seagullHand;
     ImageView seagullBody;
@@ -61,34 +63,19 @@ public class Tale02 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
+                vp = ((TaleActivity)getActivity()).vp;
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                vp.setOnTouchListener(new MyChangeListener ());
+
             } else {
-                new AsyncTask<Void, Void, MediaPlayer>() {
-                    @Override
-                    protected MediaPlayer doInBackground(Void... voids) {
-                        MediaPlayer mp_async;
-                        mp_async = musicController.getMp();
-                        return mp_async ;
-                    }
-
-                    @Override
-                    protected void onPostExecute(MediaPlayer mediaPlayer) {
-                        super.onPostExecute(mediaPlayer);
-                        try {
-                            mediaPlayer.release();
-                        }catch (Exception e){
-                            e.getStackTrace();
-                            doInBackground();
-                        }
-
-                    }
-                }.execute();
-
+                CheckMP checkMP = new CheckMP(musicController);
+                checkMP.execute();
             }
         }
+
     }
 
     @Override
@@ -116,6 +103,8 @@ public class Tale02 extends BaseFragment {
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
             soundPlayFunc();
+            vp = ((TaleActivity)getActivity()).vp;
+            vp.setOnTouchListener(new MyChangeListener ());
         }
         super.onResume();
     }
@@ -266,6 +255,38 @@ public class Tale02 extends BaseFragment {
             animationFlag=1;
             byulhead.startAnimation(headUp);
             seagullBody.setAnimation(seagullAppear);
+        }
+    }
+
+
+    class MyChangeListener extends CustomTouchListener{
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public void decreaseFunc() {
+            if(musicController != null){
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            if(musicController!=null){
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
         }
     }
 

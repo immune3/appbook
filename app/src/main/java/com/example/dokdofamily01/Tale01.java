@@ -6,6 +6,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,6 +27,7 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale01 extends BaseFragment {
 
+    private CustomViewPager vp;
     int animationFlag = 0;
     ImageView lamp;
     ImageView lampLight;
@@ -64,11 +66,13 @@ public class Tale01 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (isVisibleToUser) {
+                vp = ((TaleActivity) getActivity()).vp;
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                vp.setOnTouchListener(new MyChangeListener());
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+                checkMP.execute();
             }
         }
     }
@@ -92,6 +96,8 @@ public class Tale01 extends BaseFragment {
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
             soundPlayFunc();
+            vp = ((TaleActivity)getActivity()).vp;
+            vp.setOnTouchListener(new MyChangeListener ());
         }
         super.onResume();
     }
@@ -101,7 +107,7 @@ public class Tale01 extends BaseFragment {
         super.onDestroyView();
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+            checkMP.execute();
         }
     }
 
@@ -263,6 +269,37 @@ public class Tale01 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
+    }
+
+    class MyChangeListener extends CustomTouchListener{
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public void decreaseFunc() {
+            if(musicController != null){
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            if(musicController!=null){
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
+        }
     }
 
 }

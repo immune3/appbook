@@ -27,6 +27,7 @@ public class MusicController {
     private int resID;
     static ArrayList<SubTitleData> subtitleList;
     private MyAsynTask createMP;
+    private MyThread subtitleThread;
 
 
     public MusicController(Context context, int resID) {
@@ -39,6 +40,22 @@ public class MusicController {
         return createMP.getMp();
     }
 
+    public boolean nextPart() {
+        if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean previousPart() {
+        if (subtitleThread.decreaseSubtitleMusic()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void excuteAsync() {
         createMP = new MyAsynTask();
@@ -71,7 +88,7 @@ public class MusicController {
                 if (mediaPlayer != null) {
                     mediaPlayer.start();
                     Timer timer = new Timer();
-                    MyThread subtitleThread = new MyThread();
+                    subtitleThread = new MyThread();
                     subtitleThread.setMP(mediaPlayer);
                     timer.schedule(subtitleThread, 0, 500);
                     Log.d("mpLength", mediaPlayer.getDuration() + "");
@@ -92,6 +109,8 @@ public class MusicController {
         public MediaPlayer getMp() {
             return mp;
         }
+
+
     }
 
 
@@ -109,7 +128,7 @@ public class MusicController {
         @Override
         public void run() {
 
-            Log.d("scrFlagInMC",screenFlag+"");
+            Log.d("scrFlagInMC", screenFlag + "");
             if (!homeKeyFlag && screenFlag) {
                 try {
                     if (mp != null && mp.isPlaying()) {
@@ -122,9 +141,9 @@ public class MusicController {
                         if (playingTime <= finishTime) {
                             msg.what = subtitleIndex;
                         } else {
-                            increaseIndex();
+                            increaseIndexAuto();
                             if (playingTime > finishTime) {
-                                increaseIndex();
+                                increaseIndexAuto();
                             } else {
                                 msg.what = subtitleIndex;
                             }
@@ -148,12 +167,44 @@ public class MusicController {
 
         }
 
-        private void increaseIndex() {
+        private void increaseIndexAuto() {
             if (subtitleIndex != subtitleList.size()) {
                 subtitleIndex++;
                 finishTime = subtitleList.get(subtitleIndex).getFinishTime();
             }
+        }
 
+        public boolean increaseSubtitleMusic() {
+            if (subtitleIndex < subtitleList.size() - 1 && mp.isPlaying()) {
+                subtitleIndex++;
+                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                return true;
+            } else if (subtitleIndex == subtitleList.size() - 1) {
+                subtitleIndex++;
+                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                return false;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean decreaseSubtitleMusic() {
+            Log.d("subtitleIndex ", subtitleIndex + "");
+            if (mp.isPlaying()) {
+                if (subtitleIndex > 1) {
+                    subtitleIndex -= 2;
+                    mp.seekTo(subtitleList.get(subtitleIndex).getFinishTime());
+                    return true;
+                } else if (subtitleIndex == 1) {
+                    subtitleIndex = 0;
+                    mp.seekTo(0);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
 
         }
     }

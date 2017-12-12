@@ -1,10 +1,10 @@
 package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -25,11 +25,14 @@ import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
+
 /**
  * Created by heronation on 2017-11-06.
  */
 
 public class Tale19 extends BaseFragment {
+
+    private CustomViewPager vp;
     ImageView byul;
     ImageView starLight;
     ImageView star1;
@@ -73,11 +76,14 @@ public class Tale19 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (isVisibleToUser) {
+                vp = ((TaleActivity)getActivity()).vp;
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                vp.setOnTouchListener(new MyChangeListener ());
+
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
+                checkMP.execute();
             }
         }
     }
@@ -100,7 +106,11 @@ public class Tale19 extends BaseFragment {
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
             soundPlayFunc();
+            vp = ((TaleActivity)getActivity()).vp;
+            vp.setOnTouchListener(new MyChangeListener ());
         }
+
+
         super.onResume();
     }
 
@@ -330,6 +340,37 @@ public class Tale19 extends BaseFragment {
             star6.clearAnimation();
             animationFlag = 1;
             star1.startAnimation(starAppearAniSet);
+        }
+    }
+
+    class MyChangeListener extends CustomTouchListener{
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public void decreaseFunc() {
+            if(musicController != null){
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            if(musicController!=null){
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
         }
     }
 }

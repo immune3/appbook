@@ -3,10 +3,10 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -28,6 +28,8 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale03 extends BaseFragment {
+
+    private CustomViewPager vp;
     ImageView[] cloud = new ImageView[6];
     ImageView byulHand;
     ImageView[] wing = new ImageView[4];
@@ -65,8 +67,10 @@ public class Tale03 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (isVisibleToUser) {
+                vp = ((TaleActivity)getActivity()).vp;
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                vp.setOnTouchListener(new MyChangeListener ());
             } else {
                 CheckMP checkMP = new CheckMP(musicController);
           checkMP.execute();
@@ -92,6 +96,8 @@ public class Tale03 extends BaseFragment {
     public void onResume() {
         if (isHint && !homeKeyFlag && screenFlag) {
             soundPlayFunc();
+            vp = ((TaleActivity)getActivity()).vp;
+            vp.setOnTouchListener(new MyChangeListener ());
         }
         super.onResume();
     }
@@ -278,5 +284,35 @@ public class Tale03 extends BaseFragment {
         }
     }
 
+    class MyChangeListener extends CustomTouchListener{
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public void decreaseFunc() {
+            if(musicController != null){
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            if(musicController!=null){
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
+        }
+    }
 
 }
