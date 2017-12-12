@@ -31,6 +31,8 @@ public class Tale03 extends BaseFragment {
     ImageView byulHand;
     ImageView[] wing = new ImageView[4];
     ImageView blinkStar;
+    ImageView head;
+    ImageView body;
 
     Animation fadein;
     AlphaAnimation blink;
@@ -38,7 +40,8 @@ public class Tale03 extends BaseFragment {
     AlphaAnimation wingAppear2;
     TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
     int animationFlag = 0;
-    int clickFlag = 0;
+    int repeatFlag=0;
+    int headHeight=0;
 
     MediaPlayer mp = null;
 
@@ -83,6 +86,9 @@ public class Tale03 extends BaseFragment {
         wing[2] = (ImageView)layout.findViewById(R.id.wingRight1);
         wing[3] = (ImageView)layout.findViewById(R.id.wingRight2);
         blinkStar = (ImageView)layout.findViewById(R.id.blinkStar);
+        head = (ImageView)layout.findViewById(R.id.head);
+        body = (ImageView)layout.findViewById(R.id.body);
+
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
         soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
         wings = sp.load(getContext(),R.raw.effect_03_wings,2);
@@ -96,6 +102,8 @@ public class Tale03 extends BaseFragment {
             @Override
             public void run() {
                 // 왼쪽 위 구름(cloud[0])
+                headHeight = (int)(head.getHeight()*0.2);
+
                 cloudAnimation[0] = new TranslateAnimation(-cloud[0].getWidth(), 0, -cloud[0].getHeight(), 0);
                 cloudAnimation[0].setDuration(3000);
                 cloudAnimation[0].setFillAfter(true);
@@ -130,6 +138,65 @@ public class Tale03 extends BaseFragment {
                 cloudAnimation[4].setFillAfter(true);
                 cloudAnimation[4].setInterpolator(new AccelerateDecelerateInterpolator());
 
+                wingAppear1 = new AlphaAnimation(1, 0);
+                wingAppear1.setDuration(400);
+                wingAppear1.setRepeatCount(7);
+                wingAppear1.setRepeatMode(Animation.REVERSE);
+
+                wingAppear2 = new AlphaAnimation(1, 1);
+                wingAppear2.setDuration(400);
+                wingAppear2.setRepeatCount(5);
+                wingAppear2.setRepeatMode(Animation.REVERSE);
+                wingAppear2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        byulHand.setVisibility(View.INVISIBLE);
+                        head.setTranslationY(headHeight);
+                        body.setTranslationY(headHeight);
+                        wing[0].setVisibility(View.INVISIBLE);
+                        wing[1].setVisibility(View.VISIBLE);
+                        wing[2].setVisibility(View.INVISIBLE);
+                        wing[3].setVisibility(View.VISIBLE);
+                        wing[1].setTranslationY(headHeight);
+                        wing[3].setTranslationY(headHeight);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag=0;
+                        head.setTranslationY(0);
+                        body.setTranslationY(0);
+                        wing[0].setVisibility(View.VISIBLE);
+                        wing[1].setVisibility(View.INVISIBLE);
+                        wing[2].setVisibility(View.VISIBLE);
+                        wing[3].setVisibility(View.INVISIBLE);
+                        byulHand.setVisibility(View.VISIBLE);
+                        byulHand.startAnimation(fadein);
+                        blinkStar.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        if(repeatFlag==0){
+                            repeatFlag=1;
+                            wing[0].setVisibility(View.VISIBLE);
+                            wing[1].setVisibility(View.INVISIBLE);
+                            wing[2].setVisibility(View.VISIBLE);
+                            wing[3].setVisibility(View.INVISIBLE);
+                            head.setTranslationY(0);
+                            body.setTranslationY(0);
+                        }else{
+                            repeatFlag=0;
+                            wing[0].setVisibility(View.INVISIBLE);
+                            wing[1].setVisibility(View.VISIBLE);
+                            wing[2].setVisibility(View.INVISIBLE);
+                            wing[3].setVisibility(View.VISIBLE);
+                            head.setTranslationY(headHeight);
+                            body.setTranslationY(headHeight);
+                        }
+                    }
+                });
+
                 byulHand.setVisibility(View.INVISIBLE);
                 if (animationFlag == 0) {
                     animationFlag = 1;
@@ -155,17 +222,6 @@ public class Tale03 extends BaseFragment {
         blink.setDuration(500);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
-
-        wingAppear1 = new AlphaAnimation(1, 0);
-        wingAppear1.setDuration(400);
-        wingAppear1.setRepeatCount(7);
-        wingAppear1.setRepeatMode(Animation.REVERSE);
-        wingAppear1.setAnimationListener(new MyAnimationListener());
-        wingAppear2 = new AlphaAnimation(0, 1);
-        wingAppear2.setDuration(400);
-        wingAppear2.setRepeatCount(7);
-        wingAppear2.setRepeatMode(Animation.REVERSE);
-        wingAppear2.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
@@ -177,16 +233,17 @@ public class Tale03 extends BaseFragment {
                 if (animationFlag == 0) {
                     animationFlag = 1;
                     blinkStar.clearAnimation();
-                    wing[0].clearAnimation();
+//                    wing[0].clearAnimation();
                     wing[1].clearAnimation();
-                    wing[2].clearAnimation();
-                    wing[3].clearAnimation();
-                    wing[0].startAnimation(wingAppear1);
-                    wing[1].startAnimation(wingAppear2);
-                    wing[2].startAnimation(wingAppear1);
-                    wing[3].startAnimation(wingAppear2);
-                    sp.play(wings,1,1,1,4,1);
+//                    wing[2].clearAnimation();
+//                    wing[3].clearAnimation();
+//                    wing[0].startAnimation(wingAppear1);
+                    blinkStar.startAnimation(wingAppear2);
+//                    wing[2].startAnimation(wingAppear1);
+//                    wing[3].startAnimation(wingAppear2);
+                    sp.play(wings,1,1,1,1,1);
                 }
+
             }
         });
     }
@@ -205,6 +262,7 @@ public class Tale03 extends BaseFragment {
 
         @Override
         public void onAnimationRepeat(Animation animation) {
+
         }
 
         @Override

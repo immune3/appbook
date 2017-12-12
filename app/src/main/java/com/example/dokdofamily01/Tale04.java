@@ -67,7 +67,7 @@ public class Tale04 extends BaseFragment {
         sun = (ImageView) layout.findViewById(R.id.sun);
         sunLight = (ImageView) layout.findViewById(R.id.sunLight);
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundID = sp.load(getContext(), R.raw.effect_04_sunrise, 1);
+        soundID = sp.load(getContext(), R.raw.effect_04_sun, 1);
     }
 
     @Override
@@ -87,7 +87,10 @@ public class Tale04 extends BaseFragment {
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
 
-
+                animationFlag=0;
+                sun.clearAnimation();
+                sunLight.clearAnimation();
+                sunLight.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -104,8 +107,10 @@ public class Tale04 extends BaseFragment {
         dokdo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundID, 1, 1, 0, 0, 1);
-                sun.startAnimation(sunRiseAni);
+                if(animationFlag==0){
+                    sp.play(soundID, 1, 1, 0, 0, 1);
+                    sun.startAnimation(sunRiseAni);
+                }
             }
         });
     }
@@ -114,7 +119,6 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
         }
 
         @Override
@@ -146,6 +150,10 @@ public class Tale04 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
+        animationFlag=0;
+        sun.clearAnimation();
+        sunLight.clearAnimation();
+        sunLight.setVisibility(View.INVISIBLE);
     }
 
     @Override

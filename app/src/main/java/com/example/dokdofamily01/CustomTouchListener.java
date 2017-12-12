@@ -48,11 +48,11 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void decreaseFunc(){
-        customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1);
+        customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, false);
 
     }
 
     public void increaseFunc(){
-        customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1);
+        customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,false);
     }
 }

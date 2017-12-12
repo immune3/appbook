@@ -102,6 +102,7 @@ public class BaseFragment extends Fragment{
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+
                 vp.setOnTouchListener(null);
                 vp.setOnTouchListener(new MyChangeListener());
 
@@ -130,6 +131,7 @@ public class BaseFragment extends Fragment{
             Log.d("Start","DESC");
             if(musicController != null){
                 Log.d("Start","DESC");
+
                 if(musicController.previousPart()){
 
                 }else{

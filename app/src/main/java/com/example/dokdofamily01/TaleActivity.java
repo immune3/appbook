@@ -158,14 +158,14 @@ public class TaleActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 int position = vp.getCurrentItem()-1;
-                vp.setCurrentItem(position);
+                vp.setCurrentItem(position, false);
             }
         });
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = vp.getCurrentItem()+1;
-                vp.setCurrentItem(position);
+                vp.setCurrentItem(position,false);
             }
         });
         goHome.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +184,7 @@ public class TaleActivity extends AppCompatActivity{
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                vp.setCurrentItem(i);
+                vp.setCurrentItem(i,false);
             }
 
             @Override

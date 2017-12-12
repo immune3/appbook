@@ -185,14 +185,10 @@ public class MusicController {
         }
 
         public boolean increaseSubtitleMusic() {
-            if (subtitleIndex < subtitleList.size() - 1 && mp.isPlaying()) {
+            if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
                 subtitleIndex++;
                 mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                 return true;
-            } else if (subtitleIndex == subtitleList.size() - 1) {
-                subtitleIndex++;
-                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
-                return false;
             } else {
                 return false;
             }

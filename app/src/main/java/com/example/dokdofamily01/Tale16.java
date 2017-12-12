@@ -291,7 +291,7 @@ public class Tale16 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
-        if (animationFlag == 0 && moonAppearAnimation != null) {
+        if (moonAppearAnimation != null) {
             animationFlag = 1;
             moon.startAnimation(moonAppearAnimation);
             bubble.startAnimation(moonAppearAnimation);
