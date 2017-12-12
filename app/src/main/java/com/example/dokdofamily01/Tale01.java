@@ -4,8 +4,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
+
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -63,14 +62,13 @@ public class Tale01 extends BaseFragment {
 
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -102,8 +100,8 @@ public class Tale01 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
@@ -170,6 +168,7 @@ public class Tale01 extends BaseFragment {
             }
         });
     }
+
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
@@ -220,7 +219,7 @@ public class Tale01 extends BaseFragment {
                     light.clearAnimation();
                     break;
                 case 9:
-                    animationFlag =10;
+                    animationFlag = 10;
                     break;
                 case 11:
                     animationFlag = 8;
@@ -260,7 +259,7 @@ public class Tale01 extends BaseFragment {
                 new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
                 new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
                 new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
-                );
+        );
         musicController.excuteAsync();
         mp = musicController.getMp();
 

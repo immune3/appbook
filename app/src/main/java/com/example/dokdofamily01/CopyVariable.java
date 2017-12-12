@@ -16,7 +16,7 @@ public class CopyVariable extends Activity {
 
     private android.widget.ImageView ivCave15;
     private android.widget.ImageView ivLand15;
-    private android.widget.ImageView ivBuyl15;
+    private android.widget.ImageView ivByul15;
     private android.widget.ImageView manImage1;
     private android.widget.ImageView manImage2;
     private android.widget.ImageView manImage3;
@@ -38,9 +38,11 @@ public class CopyVariable extends Activity {
         this.manImage3 = (ImageView) findViewById(R.id.manImage3);
         this.manImage2 = (ImageView) findViewById(R.id.manImage2);
         this.manImage1 = (ImageView) findViewById(R.id.manImage1);
-        this.ivBuyl15 = (ImageView) findViewById(R.id.ivByul15);
+        this.ivByul15 = (ImageView) findViewById(R.id.ivByul15);
         this.ivLand15 = (ImageView) findViewById(R.id.ivLand15);
         this.ivCave15 = (ImageView) findViewById(R.id.ivCave15);
+
+
 
 
     }

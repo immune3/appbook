@@ -1,11 +1,11 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
-
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -65,6 +64,9 @@ public class Tale12 extends BaseFragment {
 
     ArrayList<SubTitleData> subtitleList;
 
+    private SoundPool whackSoundPool, handSoundPool;
+    private int whackSound, handSound;
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -76,15 +78,14 @@ public class Tale12 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if(isAttached ){
+        if (isAttached) {
             if (isVisibleToUser) {
 
                 System.out.println("PlayByHint");
                 soundPlayFunc();
             } else {
-                if (musicController != null) {
-                    musicController.getMp().release();
-                }
+                CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
             }
         }
     }
@@ -118,25 +119,29 @@ public class Tale12 extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            musicController.getMp().release();
-            musicController = null;
+            CheckMP checkMP = new CheckMP(musicController);
+          checkMP.execute();
         }
     }
 
     public void bindViews() {
         super.bindViews();
-        sea1 = (ImageView)layout.findViewById(R.id.sea1);
-        sea2 = (ImageView)layout.findViewById(R.id.sea2);
-        dokdo = (ImageView)layout.findViewById(R.id.dokdo);
-        byul = (ImageView)layout.findViewById(R.id.byul);
-        byulHand = (ImageView)layout.findViewById(R.id.byulHand);
-        seagull = (ImageView)layout.findViewById(R.id.seagull);
-        smallsqeed = (ImageView)layout.findViewById(R.id.smallSqeed);
-        sqeedLeftHand = (ImageView)layout.findViewById(R.id.sqeedLeftHand);
-        sqeedRightHand = (ImageView)layout.findViewById(R.id.sqeedRightHand);
-        sqeedBody = (ImageView)layout.findViewById(R.id.sqeedBody);
-        sqeedHead = (ImageView)layout.findViewById(R.id.sqeedHead);
-        hairpin = (ImageView)layout.findViewById(R.id.hairpin);
+        sea1 = (ImageView) layout.findViewById(R.id.sea1);
+        sea2 = (ImageView) layout.findViewById(R.id.sea2);
+        dokdo = (ImageView) layout.findViewById(R.id.dokdo);
+        byul = (ImageView) layout.findViewById(R.id.byul);
+        byulHand = (ImageView) layout.findViewById(R.id.byulHand);
+        seagull = (ImageView) layout.findViewById(R.id.seagull);
+        smallsqeed = (ImageView) layout.findViewById(R.id.smallSqeed);
+        sqeedLeftHand = (ImageView) layout.findViewById(R.id.sqeedLeftHand);
+        sqeedRightHand = (ImageView) layout.findViewById(R.id.sqeedRightHand);
+        sqeedBody = (ImageView) layout.findViewById(R.id.sqeedBody);
+        sqeedHead = (ImageView) layout.findViewById(R.id.sqeedHead);
+        hairpin = (ImageView) layout.findViewById(R.id.hairpin);
+        whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        whackSound = whackSoundPool.load(getContext(), R.raw.effect_12_whack, 1);
+        handSound = handSoundPool.load(getContext(), R.raw.effect_12_hand, 1);
     }
 
     @Override
@@ -145,31 +150,31 @@ public class Tale12 extends BaseFragment {
         sea1.post(new Runnable() {
             @Override
             public void run() {
-                seaAppear = new TranslateAnimation(0,0, sea1.getHeight(), 0);
+                seaAppear = new TranslateAnimation(0, 0, sea1.getHeight(), 0);
                 seaAppear.setDuration(1000);
                 seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                dokdoAppear = new TranslateAnimation(-dokdo.getWidth(),0, 0, 0);
+                dokdoAppear = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
                 dokdoAppear.setStartOffset(800);
                 dokdoAppear.setDuration(1500);
                 dokdoAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                seagullAppear = new TranslateAnimation(-(seagull.getWidth()*2),0, -seagull.getHeight(), 0);
+                seagullAppear = new TranslateAnimation(-(seagull.getWidth() * 2), 0, -seagull.getHeight(), 0);
                 seagullAppear.setStartOffset(800);
                 seagullAppear.setDuration(1000);
                 seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                smallSqeedAppear = new TranslateAnimation(0,0, sea1.getHeight()*0.5f, 0);
+                smallSqeedAppear = new TranslateAnimation(0, 0, sea1.getHeight() * 0.5f, 0);
                 smallSqeedAppear.setStartOffset(500);
                 smallSqeedAppear.setDuration(2400);
                 smallSqeedAppear.setInterpolator(new OvershootInterpolator());
 
-                sqeedAppear = new TranslateAnimation(0,0, sqeedHead.getHeight()*1.5f, 0);
+                sqeedAppear = new TranslateAnimation(0, 0, sqeedHead.getHeight() * 1.5f, 0);
                 sqeedAppear.setStartOffset(1000);
                 sqeedAppear.setDuration(2000);
                 sqeedAppear.setInterpolator(new DecelerateInterpolator());
                 sqeedAppear.setFillAfter(true);
-                sqeedAppear.setAnimationListener(new MyAnimationListener(){
+                sqeedAppear.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         animationFlag = 0;
@@ -189,11 +194,11 @@ public class Tale12 extends BaseFragment {
                     }
                 });
 
-                sqeedClinkAni = new TranslateAnimation(0, 0, 0, -(sqeedHead.getHeight()*0.48f));
+                sqeedClinkAni = new TranslateAnimation(0, 0, 0, -(sqeedHead.getHeight() * 0.48f));
                 sqeedClinkAni.setDuration(2000);
                 sqeedClinkAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedClinkAni.setFillAfter(true);
-                sqeedClinkAni.setAnimationListener(new MyAnimationListener(){
+                sqeedClinkAni.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         sqeedRightHand.setVisibility(View.VISIBLE);
@@ -218,7 +223,7 @@ public class Tale12 extends BaseFragment {
                 });
 
 
-                if(animationFlag == 0){
+                if (animationFlag == 0) {
                     animationFlag = 1;
                     sea1.startAnimation(seaAppear);
                     sea2.startAnimation(seaAppear);
@@ -259,24 +264,33 @@ public class Tale12 extends BaseFragment {
                 sqeedBody.startAnimation(sqeedClinkAni);
                 sqeedHead.startAnimation(sqeedClinkAni);
                 hairpin.startAnimation(sqeedClinkAni);
+
+                whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handSoundPool.play(handSound, 1, 1, 0, 0, 1);
+                    }
+                }, 2000);
             }
         });
     }
-    public void soundPlayFunc(){
+
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_12);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
-                new String[]{"찰랑찰랑~ ","1500"},
+                new String[]{"찰랑찰랑~ ", "1500"},
                 new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
-                new String[]{"별아 나랑 혹돔굴에 가보자!","12000"},
-                new String[]{"우와~ 혹돔 삼촌도 만나요?","16500"},
-                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ","23700"},
-                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ","28600"}
+                new String[]{"별아 나랑 혹돔굴에 가보자!", "12000"},
+                new String[]{"우와~ 혹돔 삼촌도 만나요?", "16500"},
+                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ", "23700"},
+                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ", "28600"}
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        if(seaAppear != null){
+        if (seaAppear != null) {
             animationFlag = 1;
             sea1.startAnimation(seaAppear);
             sea2.startAnimation(seaAppear);
