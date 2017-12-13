@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
@@ -50,11 +51,15 @@ public class Tale14 extends BaseFragment {
     AlphaAnimation blink;
     AlphaAnimation sqeedHandFadein;
     ScaleAnimation sqeedHandScaleAni;
+    ScaleAnimation sqeedHandAfterClinkAni;
+    ScaleAnimation sqeedHandAfterClinkAni2;
     RotateAnimation sqeedHandRotateAni;
 
     AnimationSet bellAnimSet = new AnimationSet(false);
     AnimationSet sqeedHandScaleAnimSet = new AnimationSet(false);
+    AnimationSet sqeedHandAfterClinkAnimSet = new AnimationSet(false);
 
+    int bellClickFlag = 0;
     int animationFlag = 0;
 
 
@@ -170,21 +175,32 @@ public class Tale14 extends BaseFragment {
 
 //                Log.d("123123", "msg"+sqeedHand.getWidth());
                 sqeedHandScaleAni = new ScaleAnimation(0.95f, 1, 1, 1, 0, sqeedHand.getHeight());
-                sqeedHandScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedHandScaleAni.setInterpolator(new AnticipateOvershootInterpolator());
                 sqeedHandScaleAni.setStartOffset(700);
-                sqeedHandScaleAni.setDuration(700);
+                sqeedHandScaleAni.setDuration(600);
 
                 sqeedHandRotateAni = new RotateAnimation(10, 0, 0, sqeedHand.getHeight());
                 sqeedHandRotateAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedHandRotateAni.setDuration(700);
 
+                sqeedHandAfterClinkAni2 = new ScaleAnimation(0.95f, 1, 1, 1, 0, sqeedHand.getHeight());
+                sqeedHandAfterClinkAni2.setInterpolator(new AnticipateOvershootInterpolator());
+                sqeedHandScaleAni.setStartOffset(700);
+                sqeedHandAfterClinkAni2.setDuration(700);
+
+                sqeedHandAfterClinkAni = new ScaleAnimation(1, 0.95f, 1, 1, 0, sqeedHand.getHeight());
+                sqeedHandAfterClinkAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                sqeedHandAfterClinkAni.setStartOffset(1400);
+                sqeedHandAfterClinkAni.setDuration(1000);
+
+                sqeedHandScaleAnimSet.addAnimation(sqeedHandAfterClinkAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandScaleAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandRotateAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandFadein);
                 sqeedHandScaleAnimSet.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
                         light.setVisibility(View.VISIBLE);
                         light.startAnimation(lightFadein);
                     }
@@ -195,12 +211,36 @@ public class Tale14 extends BaseFragment {
 
                     @Override
                     public void onAnimationStart(Animation animation) {
+                        animationFlag = 1;
                         light.setVisibility(View.INVISIBLE);
+                        bell.clearAnimation();
+                    }
+                });
+                sqeedHandScaleAnimSet.setFillAfter(true);
+
+                sqeedHandAfterClinkAnimSet.addAnimation(sqeedHandAfterClinkAni2);
+                sqeedHandAfterClinkAnimSet.addAnimation(sqeedHandAfterClinkAni);
+                sqeedHandAfterClinkAnimSet.setFillAfter(true);
+                sqeedHandAfterClinkAnimSet.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        bell.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        animationFlag = 1;
                         bell.clearAnimation();
                     }
                 });
 
                 if (animationFlag == 0) {
+                    animationClear();
                     animationFlag = 1;
                     cave.startAnimation(caveAppearAni);
                     land.startAnimation(landAppearAni);
@@ -219,12 +259,12 @@ public class Tale14 extends BaseFragment {
         fadein.setDuration(1500);
 
         lightFadein = new AlphaAnimation(0, 1);
-        lightFadein.setStartOffset(1000);
+        lightFadein.setStartOffset(700);
         lightFadein.setDuration(1500);
         lightFadein.setAnimationListener(new MyAnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                //bell.startAnimation(blink);
+                bell.startAnimation(blink);
             }
 
             @Override
@@ -240,7 +280,7 @@ public class Tale14 extends BaseFragment {
         sqeedHandFadein.setDuration(300);
 
         blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(1000);
+        blink.setDuration(500);
         blink.setInterpolator(new LinearInterpolator());
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
@@ -253,22 +293,31 @@ public class Tale14 extends BaseFragment {
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqeedHand.setVisibility(View.VISIBLE);
-                sqeedHand.startAnimation(sqeedHandScaleAnimSet);
-
-                bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
-                        new Handler().postDelayed(new Runnable() {
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    if(bellClickFlag == 0) {
+                        bellClickFlag = 1;
+                        sqeedHand.setVisibility(View.VISIBLE);
+                        sqeedHand.startAnimation(sqeedHandScaleAnimSet);
+                    }
+                    else {
+                        sqeedHand.clearAnimation();
+                        sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
+                    }
+                    bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
-                            }
-                        }, 1100);
-                    }
-                }, 1200);
+                    bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                                }
+                            }, 1100);
+                        }
+                    }, 1200);
+                }
             }
         });
 
@@ -296,6 +345,19 @@ public class Tale14 extends BaseFragment {
 
     }
 
+    private void animationClear() {
+        animationFlag = 0;
+        bellClickFlag = 0;
+        cave.clearAnimation();
+        land.clearAnimation();
+        sqeedBody.clearAnimation();
+        sqeedHand.clearAnimation();
+        byul.clearAnimation();
+        bubble.clearAnimation();
+        bell.clearAnimation();
+        light.clearAnimation();
+    }
+
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_14);
         subtitleList = new ArrayList<>();
@@ -313,7 +375,8 @@ public class Tale14 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        if (animationFlag == 0 && caveAppearAni != null) {
+        if (caveAppearAni != null) {
+            animationClear();
             animationFlag = 1;
             cave.startAnimation(caveAppearAni);
             land.startAnimation(landAppearAni);

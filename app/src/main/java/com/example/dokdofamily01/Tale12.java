@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -50,9 +52,13 @@ public class Tale12 extends BaseFragment {
     TranslateAnimation seagullAppear;
     TranslateAnimation sqeedAppear;
     TranslateAnimation sqeedClinkAni;
+    ScaleAnimation sqeedLeftHandScale;
+    ScaleAnimation sqeedRightHandScale;
     AlphaAnimation blink;
     AlphaAnimation sqeedHandFadein;
     AlphaAnimation sqeedHandFadeout;
+    AnimationSet sqeedLeftHandAniSet = new AnimationSet(false);
+    AnimationSet sqeedRightHandAniSet = new AnimationSet(false);
     int animationFlag = 0;
     int clickedFlag = 0;
 
@@ -165,9 +171,9 @@ public class Tale12 extends BaseFragment {
                 seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 smallSqeedAppear = new TranslateAnimation(0, 0, sea1.getHeight() * 0.5f, 0);
-                smallSqeedAppear.setStartOffset(500);
-                smallSqeedAppear.setDuration(2400);
-                smallSqeedAppear.setInterpolator(new OvershootInterpolator());
+                smallSqeedAppear.setStartOffset(1500);
+                smallSqeedAppear.setDuration(2000);
+                smallSqeedAppear.setInterpolator(new DecelerateInterpolator());
 
                 sqeedAppear = new TranslateAnimation(0, 0, sqeedHead.getHeight() * 1.5f, 0);
                 sqeedAppear.setStartOffset(1000);
@@ -189,10 +195,26 @@ public class Tale12 extends BaseFragment {
                     public void onAnimationStart(Animation animation) {
                         sqeedRightHand.setVisibility(View.INVISIBLE);
                         sqeedLeftHand.setVisibility(View.INVISIBLE);
-                        byulHand.setVisibility(View.INVISIBLE);
+//                        byulHand.setVisibility(View.INVISIBLE);
                         sea2.bringToFront();
                     }
                 });
+
+                sqeedLeftHandScale = new ScaleAnimation(1, 0.8f,1,1,sqeedLeftHand.getWidth(),0);
+                sqeedLeftHandScale.setDuration(50);
+//                sqeedLeftHandScale.setFillAfter(true);
+
+                sqeedRightHandScale = new ScaleAnimation(1, 0.8f,1,1,sqeedRightHand.getWidth(),0);
+                sqeedRightHandScale.setDuration(50);
+//                sqeedRightHandScale.setFillAfter(true);
+
+                sqeedLeftHandAniSet.addAnimation(sqeedLeftHandScale);
+                sqeedLeftHandAniSet.addAnimation(sqeedHandFadein);
+                sqeedLeftHandAniSet.setFillAfter(true);
+
+                sqeedRightHandAniSet.addAnimation(sqeedRightHandScale);
+                sqeedRightHandAniSet.addAnimation(sqeedHandFadein);
+                sqeedRightHandAniSet.setFillAfter(true);
 
                 sqeedClinkAni = new TranslateAnimation(0, 0, 0, -(sqeedHead.getHeight() * 0.48f));
                 sqeedClinkAni.setDuration(2000);
@@ -203,14 +225,16 @@ public class Tale12 extends BaseFragment {
                     public void onAnimationEnd(Animation animation) {
                         sqeedRightHand.setVisibility(View.VISIBLE);
                         sqeedLeftHand.setVisibility(View.VISIBLE);
-                        byulHand.setVisibility(View.VISIBLE);
+//                        byulHand.setVisibility(View.VISIBLE);
                         sqeedLeftHand.bringToFront();
                         sqeedHead.bringToFront();
                         hairpin.bringToFront();
-                        byulHand.bringToFront();
-                        sqeedRightHand.startAnimation(sqeedHandFadein);
-                        sqeedLeftHand.startAnimation(sqeedHandFadein);
-                        byulHand.startAnimation(sqeedHandFadein);
+//                        byulHand.bringToFront();
+                        sqeedRightHand.startAnimation(sqeedRightHandAniSet);
+                        sqeedLeftHand.startAnimation(sqeedLeftHandAniSet);
+//                        sqeedRightHand.startAnimation(sqeedHandFadein);
+//                        sqeedLeftHand.startAnimation(sqeedHandFadein);
+//                        byulHand.startAnimation(sqeedHandFadein);
                     }
 
                     @Override
@@ -219,11 +243,16 @@ public class Tale12 extends BaseFragment {
 
                     @Override
                     public void onAnimationStart(Animation animation) {
+//                        sqeedRightHand.setVisibility(View.INVISIBLE);
+//                        sqeedLeftHand.setVisibility(View.INVISIBLE);
+//                        sqeedRightHand.startAnimation(sqeedRightHandScale);
+//                        sqeedLeftHand.startAnimation(sqeedLeftHandScale);
                     }
                 });
 
 
                 if (animationFlag == 0) {
+                    animationClear();
                     animationFlag = 1;
                     sea1.startAnimation(seaAppear);
                     sea2.startAnimation(seaAppear);
@@ -261,19 +290,40 @@ public class Tale12 extends BaseFragment {
         hairpin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqeedBody.startAnimation(sqeedClinkAni);
-                sqeedHead.startAnimation(sqeedClinkAni);
-                hairpin.startAnimation(sqeedClinkAni);
+                if(animationFlag == 0) {
+                    animationClear();
+                    animationFlag = 1;
+                    sqeedBody.startAnimation(sqeedClinkAni);
+                    sqeedHead.startAnimation(sqeedClinkAni);
+                    hairpin.startAnimation(sqeedClinkAni);
 
-                whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handSoundPool.play(handSound, 1, 1, 0, 0, 1);
-                    }
-                }, 2000);
+                    whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            handSoundPool.play(handSound, 1, 1, 0, 0, 1);
+                        }
+                    }, 2000);
+                }
             }
         });
+    }
+
+    public void animationClear() {
+        animationFlag = 0;
+        sea1.clearAnimation();
+        sea2.clearAnimation();
+        dokdo.clearAnimation();
+        byul.clearAnimation();
+        byulHand.clearAnimation();
+        seagull.clearAnimation();
+        smallsqeed.clearAnimation();
+        sqeedLeftHand.clearAnimation();
+        sqeedRightHand.clearAnimation();
+        sqeedBody.clearAnimation();
+        sqeedHead.clearAnimation();
+        hairpin.clearAnimation();
+
     }
 
     public void soundPlayFunc() {
@@ -291,6 +341,7 @@ public class Tale12 extends BaseFragment {
         mp = musicController.getMp();
 
         if (seaAppear != null) {
+            animationClear();
             animationFlag = 1;
             sea1.startAnimation(seaAppear);
             sea2.startAnimation(seaAppear);

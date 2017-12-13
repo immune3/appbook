@@ -111,6 +111,7 @@
                 app:scale_top="110"/>
 
             <ImageView
+
                 android:id="@+id/ivBottom13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,6 +123,8 @@
 
 
             <ImageView
+                android:id="@+id/wave0"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wave_01"
@@ -131,6 +134,8 @@
                 app:scale_top="490"/>
 
             <ImageView
+                android:id="@+id/wave1"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wave_02"
@@ -140,6 +145,8 @@
                 app:scale_top="475"/>
 
             <ImageView
+                android:id="@+id/wave2"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wave_03"
@@ -149,6 +156,8 @@
                 app:scale_top="480"/>
 
             <ImageView
+                android:id="@+id/wave3"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_13_wave_04"

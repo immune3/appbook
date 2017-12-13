@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
@@ -49,11 +51,13 @@ public class Tale11 extends BaseFragment {
     RotateAnimation beeRotate;
     RotateAnimation butterflyRotate;
     AlphaAnimation beeButterflyFadeIn;
+    AlphaAnimation beeButterflyFadeOut;
     AlphaAnimation blink;
     Animation flowerAnimation;
     AnimationSet hideBeeAniSet = new AnimationSet(false);
     AnimationSet hideButterflyAniSet = new AnimationSet(false);
     int animationFlag = 0;
+    int byulAppearFlag = 0;
 
     boolean isAttached = false;
 
@@ -154,11 +158,41 @@ public class Tale11 extends BaseFragment {
                 dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
                 dokdoAnimation.setDuration(2000);
                 dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                dokdoAnimation.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        flowers.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 byulAnimation = new TranslateAnimation(byul.getWidth(), 0, byul.getHeight(), 0);
                 byulAnimation.setDuration(1000);
-                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                byulAnimation.setInterpolator(new BounceInterpolator());
+                byulAnimation.setInterpolator(new AccelerateInterpolator());
+                byulAnimation.setAnimationListener(new MyAnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bee1.startAnimation(hideBeeAniSet);
+                        butterfly.startAnimation(hideButterflyAniSet);
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
 
                 beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight() * 2), 0);
                 beeAnimation.setDuration(1500);
@@ -184,14 +218,14 @@ public class Tale11 extends BaseFragment {
                 beeRotate.setStartOffset(500);
                 beeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
 //                beeRotate.setInterpolator(new AnticipateOvershootInterpolator());
-                beeRotate.setRepeatCount(Animation.INFINITE);
+                beeRotate.setRepeatCount(3);
                 beeRotate.setRepeatMode(Animation.REVERSE);
 
                 beeTranslate = new TranslateAnimation(0, 0, bee1.getHeight() / 3, -(bee1.getHeight() / 2));
                 beeTranslate.setDuration(2000);
                 beeTranslate.setStartOffset(600);
                 beeTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
-                beeTranslate.setRepeatCount(Animation.INFINITE);
+                beeTranslate.setRepeatCount(2);
                 beeTranslate.setRepeatMode(Animation.REVERSE);
 
 
@@ -200,28 +234,31 @@ public class Tale11 extends BaseFragment {
                 butterflyRotate.setStartOffset(500);
                 butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
 //                butterflyRotate.setInterpolator(new AnticipateOvershootInterpolator());
-                butterflyRotate.setRepeatCount(Animation.INFINITE);
+                butterflyRotate.setRepeatCount(4);
                 butterflyRotate.setRepeatMode(Animation.REVERSE);
 
                 butterflyTranslate = new TranslateAnimation(0, 0, butterfly.getHeight() / 6, 0);
                 butterflyTranslate.setDuration(3000);
                 butterflyTranslate.setStartOffset(600);
                 butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
-                butterflyTranslate.setRepeatCount(Animation.INFINITE);
+                butterflyTranslate.setRepeatCount(2);
                 butterflyTranslate.setRepeatMode(Animation.REVERSE);
 
                 hideBeeAniSet.addAnimation(beeButterflyFadeIn);
                 hideBeeAniSet.addAnimation(beeRotate);
                 hideBeeAniSet.addAnimation(beeTranslate);
+                hideBeeAniSet.addAnimation(beeButterflyFadeOut);
 
                 hideButterflyAniSet.addAnimation(beeButterflyFadeIn);
                 hideButterflyAniSet.addAnimation(butterflyRotate);
                 hideButterflyAniSet.addAnimation(butterflyTranslate);
+                hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
 
 
                 if (animationFlag == 0) {
+                    animationClear();
                     animationFlag = 1;
-
+                    byulAppearFlag = 0;
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
                     bee2.startAnimation(beeAnimation);
@@ -237,11 +274,16 @@ public class Tale11 extends BaseFragment {
         beeButterflyFadeIn = new AlphaAnimation(0, 1);
         beeButterflyFadeIn.setDuration(600);
         beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
-        beeButterflyFadeIn.setAnimationListener(new MyAnimationListener() {
+
+        beeButterflyFadeOut = new AlphaAnimation(1, 0);
+        beeButterflyFadeOut.setStartOffset(5000);
+        beeButterflyFadeOut.setDuration(1000);
+        beeButterflyFadeOut.setInterpolator(new DecelerateInterpolator());
+        beeButterflyFadeOut.setAnimationListener(new MyAnimationListener(){
             @Override
             public void onAnimationEnd(Animation animation) {
-                byul.setVisibility(View.VISIBLE);
-                byul.startAnimation(byulAnimation);
+                animationFlag = 0;
+                bee2.startAnimation(blink);
             }
 
             @Override
@@ -253,6 +295,7 @@ public class Tale11 extends BaseFragment {
                 bee2.clearAnimation();
             }
         });
+
 
         flowerAnimation = new AlphaAnimation(0, 1);
         flowerAnimation.setStartOffset(200);
@@ -271,12 +314,22 @@ public class Tale11 extends BaseFragment {
         bee2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                byul.setVisibility(View.INVISIBLE);
-                bee1.setVisibility(View.VISIBLE);
-                butterfly.setVisibility(View.VISIBLE);
-                bee1.startAnimation(hideBeeAniSet);
-                butterfly.startAnimation(hideButterflyAniSet);
-                beeSoundPool.play(beeSound, 1, 1, 0, 1, 1);
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    if(byulAppearFlag == 0) {
+                        byulAppearFlag = 1;
+                        byul.startAnimation(byulAnimation);
+                    }
+                    else{
+                        bee1.startAnimation(hideBeeAniSet);
+                        butterfly.startAnimation(hideButterflyAniSet);
+                    }
+                    bee2.clearAnimation();
+                    byul.setVisibility(View.VISIBLE);
+                    beeSoundPool.play(beeSound, 1, 1, 0, 3, 1);
+
+
+                }
             }
         });
     }
@@ -299,15 +352,25 @@ public class Tale11 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             bee1.clearAnimation();
             butterfly.clearAnimation();
+            flowers.clearAnimation();
             cutFlower.setVisibility(View.INVISIBLE);
-            flowers.setVisibility(View.INVISIBLE);
             byul.setVisibility(View.INVISIBLE);
-            bee1.setVisibility(View.INVISIBLE);
-            butterfly.setVisibility(View.INVISIBLE);
         }
 
     }
 
+    public void animationClear() {
+        animationFlag = 0;
+        flowers.clearAnimation();
+        bee1.clearAnimation();
+        bee2.clearAnimation();
+        butterfly.clearAnimation();
+        originalFlower.clearAnimation();
+        cutFlower.clearAnimation();
+        dokdo.clearAnimation();
+        byul.clearAnimation();
+
+    }
 
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_11);
@@ -324,8 +387,10 @@ public class Tale11 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        if (animationFlag == 0 && originalFlowerAnimation != null) {
+        if (originalFlowerAnimation != null) {
+            animationClear();
             animationFlag = 1;
+            byulAppearFlag = 0;
             dokdo.startAnimation(dokdoAnimation);
             originalFlower.startAnimation(originalFlowerAnimation);
             bee2.startAnimation(beeAnimation);

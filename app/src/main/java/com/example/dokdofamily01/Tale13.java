@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -45,6 +46,7 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivBottom13;
     private android.widget.ImageView ivFishes13;
     ImageView bubble;
+    ImageView[] wave = new ImageView[4];
 
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
@@ -52,6 +54,10 @@ public class Tale13 extends BaseFragment {
     private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation, fishAnimation;
     AlphaAnimation bubbleAlpha;
     TranslateAnimation bubbleTranslate;
+    TranslateAnimation[] wavingTransAni = new TranslateAnimation[4];
+    AlphaAnimation[] wavingFadeinAni = new AlphaAnimation[4];
+    AlphaAnimation[] wavingFadeoutAni = new AlphaAnimation[4];
+    AnimationSet[] wavingAniSet = new AnimationSet[4];
     AnimationSet bubbleAppear;
     AlphaAnimation blink;
     int animationFlag = 0;
@@ -132,6 +138,10 @@ public class Tale13 extends BaseFragment {
         bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_13_bubble, 1);
         tickSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
         tickSound = tickSoundPool.load(getContext(), R.raw.effect_13_tick, 1);
+        wave[0] = (ImageView) layout.findViewById(R.id.wave0);
+        wave[1] = (ImageView) layout.findViewById(R.id.wave1);
+        wave[2] = (ImageView) layout.findViewById(R.id.wave2);
+        wave[3] = (ImageView) layout.findViewById(R.id.wave3);
     }
 
     @Override
@@ -178,7 +188,64 @@ public class Tale13 extends BaseFragment {
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
 
-                if (bottomAnimation != null) {
+                wavingTransAni[0] = new TranslateAnimation(0, 0, 0, wave[0].getHeight() * 0.1f);
+                wavingTransAni[0].setDuration(2000);
+                wavingTransAni[0].setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingTransAni[0].setRepeatCount(Animation.INFINITE);
+                wavingTransAni[0].setRepeatMode(Animation.REVERSE);
+
+                wavingFadeinAni[0] = new AlphaAnimation(0, 1);
+                wavingFadeinAni[0].setDuration(5000);
+                wavingFadeinAni[0].setInterpolator(new DecelerateInterpolator());
+                wavingFadeinAni[0].setRepeatCount(Animation.INFINITE);
+                wavingFadeinAni[0].setRepeatMode(Animation.REVERSE);
+
+                wavingTransAni[1] = new TranslateAnimation(0, 0, 0, wave[1].getHeight() * 0.1f);
+                wavingTransAni[1].setDuration(3000);
+                wavingTransAni[1].setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingTransAni[1].setRepeatCount(Animation.INFINITE);
+                wavingTransAni[1].setRepeatMode(Animation.REVERSE);
+
+                wavingFadeinAni[1] = new AlphaAnimation(0, 1);
+                wavingFadeinAni[1].setStartOffset(400);
+                wavingFadeinAni[1].setDuration(3700);
+                wavingFadeinAni[1].setInterpolator(new DecelerateInterpolator());
+                wavingFadeinAni[1].setRepeatCount(Animation.INFINITE);
+                wavingFadeinAni[1].setRepeatMode(Animation.REVERSE);
+
+                wavingTransAni[2] = new TranslateAnimation(0, 0, 0, wave[2].getHeight() * 0.15f);
+                wavingTransAni[2].setDuration(3500);
+                wavingTransAni[2].setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingTransAni[2].setRepeatCount(Animation.INFINITE);
+                wavingTransAni[2].setRepeatMode(Animation.REVERSE);
+
+                wavingFadeinAni[2] = new AlphaAnimation(0, 1);
+                wavingFadeinAni[2].setStartOffset(500);
+                wavingFadeinAni[2].setDuration(2500);
+                wavingFadeinAni[2].setInterpolator(new DecelerateInterpolator());
+                wavingFadeinAni[2].setRepeatCount(Animation.INFINITE);
+                wavingFadeinAni[2].setRepeatMode(Animation.REVERSE);
+
+                wavingTransAni[3] = new TranslateAnimation(0, 0, 0, wave[2].getHeight() * 0.1f);
+                wavingTransAni[3].setDuration(5000);
+                wavingTransAni[3].setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingTransAni[3].setRepeatCount(Animation.INFINITE);
+                wavingTransAni[3].setRepeatMode(Animation.REVERSE);
+
+                wavingFadeinAni[3] = new AlphaAnimation(0, 1);
+                wavingFadeinAni[3].setDuration(5500);
+                wavingFadeinAni[3].setInterpolator(new DecelerateInterpolator());
+                wavingFadeinAni[3].setRepeatCount(Animation.INFINITE);
+                wavingFadeinAni[3].setRepeatMode(Animation.REVERSE);
+
+                for(int iter=0; iter < 4; iter++) {
+                    wavingAniSet[iter] = new AnimationSet(false);
+                    wavingAniSet[iter].addAnimation(wavingTransAni[iter]);
+                    wavingAniSet[iter].addAnimation(wavingFadeinAni[iter]);
+                }
+
+
+                if (animationFlag == 0 && bottomAnimation != null) {
                     animationClear();
                     animationFlag = 1;
                     ivBottom13.startAnimation(bottomAnimation);
@@ -219,9 +286,14 @@ public class Tale13 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             super.onAnimationEnd(animation);
             if (animationFlag == 1) {
-                animationFlag = 0;
                 animationClear();
+                animationFlag = 0;
                 ivBuyl13.startAnimation(blink);
+
+                wave[0].startAnimation(wavingAniSet[0]);
+                wave[1].startAnimation(wavingAniSet[1]);
+                wave[2].startAnimation(wavingAniSet[2]);
+                wave[3].startAnimation(wavingAniSet[3]);
             }
         }
 
@@ -237,6 +309,10 @@ public class Tale13 extends BaseFragment {
         ivWall13.clearAnimation();
         ivBottom13.clearAnimation();
         ivBuyl13.clearAnimation();
+        wave[0].clearAnimation();
+        wave[1].clearAnimation();
+        wave[2].clearAnimation();
+        wave[3].clearAnimation();
     }
 
     public void soundPlayFunc() {

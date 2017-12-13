@@ -39,16 +39,6 @@
                 app:scale_left="2040"
                 app:scale_top="75"/>
 
-            <ImageView
-                android:id="@+id/butterfly"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_11_butterfly"
-                app:scale_width="476"
-                app:scale_height="392"
-                app:scale_left="1370"
-                app:scale_top="-11"/>
 
             <ImageView
                 android:id="@+id/originalFlower"
@@ -101,6 +91,17 @@
                 app:scale_height="964"
                 app:scale_left="0"
                 app:scale_top="310"/>
+
+            <ImageView
+                android:id="@+id/butterfly"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_11_butterfly"
+                app:scale_width="476"
+                app:scale_height="392"
+                app:scale_left="1370"
+                app:scale_top="-11"/>
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
