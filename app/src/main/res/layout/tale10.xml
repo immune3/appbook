@@ -216,18 +216,6 @@
                 app:scale_height="298"
                 app:scale_left="198"
                 app:scale_top="1064"/>
-
-            <ImageView
-                android:id="@+id/byulHand"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_10_byul_hand"
-                app:scale_width="76"
-                app:scale_height="176"
-                app:scale_left="248"
-                app:scale_top="1070"/>
-
             <ImageView
                 android:id="@+id/byulHead"
                 android:visibility="invisible"
@@ -238,7 +226,16 @@
                 app:scale_height="244"
                 app:scale_left="150"
                 app:scale_top="923"/>
-
+            <ImageView
+                android:id="@+id/byulHand"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_10_byul_hand"
+                app:scale_width="76"
+                app:scale_height="176"
+                app:scale_left="248"
+                app:scale_top="1070"/>
             <ImageView
                 android:id="@+id/seagull"
                 android:visibility="invisible"

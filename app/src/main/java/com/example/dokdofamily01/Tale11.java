@@ -293,10 +293,12 @@ public class Tale11 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-            cutFlower.setVisibility(View.VISIBLE);
-            flowers.setVisibility(View.VISIBLE);
-            flowers.startAnimation(flowerAnimation);
+            if(animationFlag==1) {
+                animationFlag = 0;
+                cutFlower.setVisibility(View.VISIBLE);
+                flowers.setVisibility(View.VISIBLE);
+                flowers.startAnimation(flowerAnimation);
+            }
         }
 
         @Override
@@ -315,13 +317,14 @@ public class Tale11 extends BaseFragment {
     }
 
     public void animationClear() {
+        cutFlower.setVisibility(View.INVISIBLE);
+        flowers.setVisibility(View.INVISIBLE);
         animationFlag = 0;
         flowers.clearAnimation();
         bee1.clearAnimation();
         bee2.clearAnimation();
         butterfly.clearAnimation();
         originalFlower.clearAnimation();
-        cutFlower.clearAnimation();
         dokdo.clearAnimation();
         byul.clearAnimation();
 
@@ -343,6 +346,7 @@ public class Tale11 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
+//        setValues();
         if (originalFlowerAnimation != null) {
             animationClear();
             animationFlag = 1;

@@ -303,6 +303,7 @@ public class Tale14 extends BaseFragment {
     }
 
     private void animationClear() {
+        cave.setVisibility(View.INVISIBLE);
         animationFlag = 0;
         bellClickFlag = 0;
         cave.clearAnimation();

@@ -292,6 +292,7 @@ public class Tale03 extends BaseFragment {
 
         if (cloudAnimation[0] != null) {
             animationFlag = 1;
+            wing[1].clearAnimation();
             sp.play(soundID, 1, 1, 0, 0, 1);
             cloud[0].startAnimation(cloudAnimation[0]);
             cloud[1].startAnimation(cloudAnimation[1]);

@@ -62,6 +62,7 @@ public class Tale09 extends BaseFragment {
     TranslateAnimation fatherAppear;
     TranslateAnimation momAppear;
     TranslateAnimation seaAppear;
+    TranslateAnimation wavingAnimation;
     AlphaAnimation blink;
     int appearFlag = 0;
     int animationFlag = 0;
@@ -134,7 +135,7 @@ public class Tale09 extends BaseFragment {
                 int birdsHeight = (int) (birds2.getHeight() * 1.3);
                 seagullAppear = new ScaleAnimation(0, 1, 0, 1, birdsWidth, birdsHeight);
                 seagullAppear.setDuration(1000);
-                seagullAppear.setFillAfter(true);
+//                seagullAppear.setFillAfter(true);
 
                 birdsAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_09_birds_appear);
                 birdsAppear.setFillAfter(true);
@@ -149,7 +150,22 @@ public class Tale09 extends BaseFragment {
                 seaAppear.setDuration(1000);
                 seaAppear.setFillAfter(true);
                 seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-//                seaAppear.setAnimationListener(new AppearAnimationListener());
+                seaAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        sea.startAnimation(wavingAnimation);
+                        effect.startAnimation(wavingAnimation);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 fatherAppear = new TranslateAnimation(-fatherDokdo.getWidth(), 0, 0, 0);
                 fatherAppear.setStartOffset(200);
@@ -164,6 +180,12 @@ public class Tale09 extends BaseFragment {
                 momAppear.setFillAfter(true);
                 momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 momAppear.setAnimationListener(new AppearAnimationListener());
+
+                wavingAnimation = new TranslateAnimation(0, 0, 0, sea.getHeight() * 0.02f);
+                wavingAnimation.setDuration(2500);
+                wavingAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingAnimation.setRepeatCount(Animation.INFINITE);
+                wavingAnimation.setRepeatMode(Animation.REVERSE);
 
                 appear = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
                 appear.setAnimationListener(new AppearAnimationListener());
@@ -184,6 +206,7 @@ public class Tale09 extends BaseFragment {
                 if (appearFlag == 0 && animationFlag == 0) {
                     appearFlag = 1;
                     sea.startAnimation(seaAppear);
+                    effect.startAnimation(seaAppear);
                     birds.startAnimation(birdsAppear);
                     deco.startAnimation(decoAppear);
                     fatherDokdo.startAnimation(fatherAppear);
@@ -197,12 +220,30 @@ public class Tale09 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
         fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        fadeIn.setDuration(1000);
+        fadeIn.setDuration(800);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
+
         fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
-        fadeOut.setDuration(1000);
+        fadeOut.setStartOffset(-50);
+        fadeOut.setDuration(800);
         fadeOut.setFillAfter(true);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                sp.play(moveByul, 1, 1, 0, 0, 1);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         blink = new AlphaAnimation(1, 0.3f);
         blink.setDuration(500);
@@ -276,13 +317,19 @@ public class Tale09 extends BaseFragment {
                     appearFlag = 2;
                     bird.startAnimation(appear);
                     fatherDokdoHand.startAnimation(appear);
-                    birds1.startAnimation(appear);
-                    birds2.startAnimation(appear);
-                    birds3.startAnimation(appear);
-                    birds4.startAnimation(appear);
-                    birds5.startAnimation(appear);
-                    birds6.startAnimation(appear);
+//                    birds1.startAnimation(appear);
+//                    birds2.startAnimation(appear);
+//                    birds3.startAnimation(appear);
+//                    birds4.startAnimation(appear);
+//                    birds5.startAnimation(appear);
+//                    birds6.startAnimation(appear);
                     effect.startAnimation(appear);
+                    birds1.startAnimation(seagullAppear);
+                    birds2.startAnimation(seagullAppear);
+                    birds3.startAnimation(seagullAppear);
+                    birds4.startAnimation(seagullAppear);
+                    birds5.startAnimation(seagullAppear);
+                    birds6.startAnimation(seagullAppear);
                     break;
                 case 2:
                     appearFlag = 0;
@@ -309,7 +356,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 2:
                     animationFlag = 3;
-                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody1.startAnimation(fadeOut);
                     byulHead1.startAnimation(fadeOut);
                     byulBody2.startAnimation(fadeIn);
@@ -326,7 +373,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 4:
                     animationFlag = 5;
-                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody2.startAnimation(fadeOut);
                     byulHead2.startAnimation(fadeOut);
                     byulBody3.startAnimation(fadeIn);
@@ -343,7 +390,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 6:
                     animationFlag = 7;
-                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody3.startAnimation(fadeOut);
                     byulHead3.startAnimation(fadeOut);
                     byulBody4.startAnimation(fadeIn);
@@ -360,7 +407,7 @@ public class Tale09 extends BaseFragment {
                     break;
                 case 8:
                     animationFlag = 9;
-                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody4.startAnimation(fadeOut);
                     byulHead4.startAnimation(fadeOut);
                     byulBody5.startAnimation(fadeIn);
@@ -457,6 +504,7 @@ public class Tale09 extends BaseFragment {
             fatherDokdo.startAnimation(fatherAppear);
             momDokdo.startAnimation(momAppear);
             sea.startAnimation(seaAppear);
+            effect.startAnimation(seaAppear);
         }
     }
 

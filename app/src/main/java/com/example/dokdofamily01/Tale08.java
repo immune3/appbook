@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class Tale08 extends BaseFragment {
     TranslateAnimation seagullAnimation;
     TranslateAnimation byulAnimation;
     TranslateAnimation treeAnimation;
+    TranslateAnimation treeAnimation2;
     TranslateAnimation leafTranslateAni;
     TranslateAnimation treeEyeToByul;
     RotateAnimation treeEyeRotate;
@@ -119,18 +121,18 @@ public class Tale08 extends BaseFragment {
             @Override
             public void run() {
                 plantAnimation = new TranslateAnimation(-plant.getWidth(), 0, 0, 0);
-                plantAnimation.setDuration(2500);
+                plantAnimation.setDuration(1200);
                 plantAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
-                dokdoAnimation.setDuration(2000);
+                dokdoAnimation.setDuration(1000);
                 dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 landAnimation = new TranslateAnimation(0, 0, land.getHeight(), 0);
-                landAnimation.setStartOffset(500);
-                landAnimation.setDuration(2000);
+                landAnimation.setStartOffset(200);
+                landAnimation.setDuration(1000);
                 landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                landAnimation.setAnimationListener(new MyAnimationListener(){
+                landAnimation.setAnimationListener(new Animation.AnimationListener(){
                     @Override
                     public void onAnimationStart(Animation animation) {
 //                        byul.clearAnimation();
@@ -164,62 +166,74 @@ public class Tale08 extends BaseFragment {
 
                 seagullAnimation = new TranslateAnimation(seagull.getWidth(), 0, -seagull.getHeight(), 0);
                 seagullAnimation.setStartOffset(500);
-                seagullAnimation.setDuration(1500);
+                seagullAnimation.setDuration(800);
                 seagullAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                byulAnimation = new TranslateAnimation(byul.getWidth()*1.5f, 0, -byul.getHeight(), 0);
-                byulAnimation.setStartOffset(2500);
-                byulAnimation.setDuration(1000);
-                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                byulAnimation.setInterpolator(new BounceInterpolator());
-                byulAnimation.setAnimationListener(new MyAnimationListener() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        animationFlag = 0;
-                        byul.startAnimation(blink);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-                });
-
-                treeAnimation = new TranslateAnimation((int) (treeBody.getWidth() * 0.3), 0, treeBody.getHeight()*1.5f, 0);
-                treeAnimation.setStartOffset(2000);
-                treeAnimation.setDuration(500);
-                treeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                treeAnimation.setAnimationListener(new MyAnimationListener(){
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        eyeBlack.setVisibility(View.INVISIBLE);
-                        eyeBlack.startAnimation(treeEyeRotate);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        eyeBlack.setVisibility(View.INVISIBLE);
-                    }
-                });
-
 
                 treeEyeRotate = new RotateAnimation(-2, 1.7f, -(eyeBlack.getWidth()), -(treeBody.getHeight()));
                 treeEyeRotate.setDuration(2000);
                 treeEyeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
                 treeEyeRotate.setRepeatCount(Animation.INFINITE);
                 treeEyeRotate.setRepeatMode(Animation.REVERSE);
-                treeEyeRotate.setAnimationListener(new MyAnimationListener(){
+
+                byulAnimation = new TranslateAnimation(byul.getWidth()*1.5f, 0, -byul.getHeight(), 0);
+                byulAnimation.setStartOffset(1000);
+                byulAnimation.setDuration(700);
+                byulAnimation.setInterpolator(new BounceInterpolator());
+                byulAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        if(animationFlag == 1) {
+//                            Log.d("ababab", "aaaa");
+                            byul.startAnimation(blink);
+                            eyeBlack.startAnimation(treeEyeRotate);
+                            animationFlag = 0;
+                        }
+                        else{
+//                            Log.d("ababab", "bbbb");
+//                            treeEyeRotate.reset();
+                        }
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
+
+                treeAnimation = new TranslateAnimation((int) (treeBody.getWidth() * 0.3), 0, treeBody.getHeight()*1.5f, 0);
+                treeAnimation.setStartOffset(800);
+                treeAnimation.setDuration(800);
+                treeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+//                treeAnimation2 = new TranslateAnimation((int) (treeBody.getWidth() * 0.3), 0, treeBody.getHeight()*1.5f, 0);
+//                treeAnimation2.setStartOffset(800);
+//                treeAnimation2.setDuration(800);
+//                treeAnimation2.setInterpolator(new AccelerateDecelerateInterpolator());
+//                treeAnimation2.setAnimationListener(new Animation.AnimationListener(){
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+////                        eyeBlack.setVisibility(View.INVISIBLE);
+////                        eyeBlack.startAnimation(treeEyeRotate);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//                    }
+//
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//                        eyeBlack.clearAnimation();
+////                        eyeBlack.setVisibility(View.INVISIBLE);
+//                    }
+//                });
+
+                eyeBlackAniSet.addAnimation(treeAnimation);
+                eyeBlackAniSet.addAnimation(treeEyeRotate);
+                eyeBlackAniSet.setAnimationListener(new AnimationSet.AnimationListener(){
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         eyeBlack.setVisibility(View.INVISIBLE);
-                        eyeBlack.clearAnimation();
                     }
 
                     @Override
@@ -228,12 +242,10 @@ public class Tale08 extends BaseFragment {
 
                     @Override
                     public void onAnimationStart(Animation animation) {
-//                        if(animationFlag == 0){
-//                            eyeBlack.setVisibility(View.INVISIBLE);
-//                            eyeBlack.clearAnimation();
-//                        }
+                        eyeBlack.setVisibility(View.VISIBLE);
                     }
                 });
+
 
                 treeEyeToByul = new TranslateAnimation(0, eyeBlack.getWidth() / 15, 0, 0);
                 treeEyeToByul.setDuration(1000);
@@ -243,14 +255,14 @@ public class Tale08 extends BaseFragment {
                 treeHandRotate = new RotateAnimation(-100, 0, 0, treeHand.getHeight());
                 treeHandRotate.setStartOffset(1000);
                 treeHandRotate.setDuration(1000);
-                treeHandRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-                treeHandRotate.setInterpolator(new AnticipateOvershootInterpolator());
+//                treeHandRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+//                treeHandRotate.setInterpolator(new AnticipateOvershootInterpolator());
                 treeHandRotate.setInterpolator(new BounceInterpolator());
 
                 leafTranslateAni = new TranslateAnimation(0, 0, 0, leaves.getHeight() * 0.2f);
                 leafTranslateAni.setStartOffset(1200);
                 leafTranslateAni.setDuration(3000);
-                leafTranslateAni.setInterpolator(new AccelerateDecelerateInterpolator());
+//                leafTranslateAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 leafTranslateAni.setInterpolator(new AnticipateInterpolator());
 
                 leafAniSet.addAnimation(leafTranslateAni);
@@ -268,6 +280,10 @@ public class Tale08 extends BaseFragment {
 
                 animationClear();
                 if (animationFlag == 0) {
+//                    treeEyeRotate.cancel();
+                    byul.clearAnimation();
+                    eyeBlack.clearAnimation();
+                    eyeBlack.setVisibility(View.INVISIBLE);
                     animationFlag = 1;
                     plant.startAnimation(plantAnimation);
                     dokdo.startAnimation(dokdoAnimation);
@@ -289,7 +305,7 @@ public class Tale08 extends BaseFragment {
         leafFadeout.setStartOffset(3000);
         leafFadeout.setDuration(1500);
         leafFadeout.setInterpolator(new AccelerateDecelerateInterpolator());
-        leafFadeout.setAnimationListener(new MyAnimationListener() {
+        leafFadeout.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 leaves.setVisibility(View.INVISIBLE);
@@ -308,13 +324,13 @@ public class Tale08 extends BaseFragment {
         afterLeafFadeout = new AlphaAnimation(1, 0);
         afterLeafFadeout.setStartOffset(1500);
         afterLeafFadeout.setDuration(500);
-        afterLeafFadeout.setAnimationListener(new MyAnimationListener() {
+        afterLeafFadeout.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 animationFlag = 0;
 //                treeHand.startAnimation(fadeout);
-                eyeBlack.startAnimation(treeEyeRotate);
                 byul.startAnimation(blink);
+                eyeBlack.startAnimation(treeEyeRotate);
             }
 
             @Override
@@ -349,7 +365,7 @@ public class Tale08 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag == 0) {
                     animationFlag = 1;
-//                eyeBlack.clearAnimation();
+//                    eyeBlack.clearAnimation();
                     byul.clearAnimation();
                     treeHand.setVisibility(View.VISIBLE);
                     leaves.setVisibility(View.VISIBLE);
@@ -377,7 +393,7 @@ public class Tale08 extends BaseFragment {
         treeHand.clearAnimation();
         leaves.clearAnimation();
         smile.clearAnimation();
-        eyeBlack.clearAnimation();
+//        eyeBlack.clearAnimation();
         eyeWhite.clearAnimation();
         plant.clearAnimation();
         dokdo.clearAnimation();
@@ -405,7 +421,10 @@ public class Tale08 extends BaseFragment {
 
         animationClear();
         if (plantAnimation != null) {
-
+//            treeEyeRotate.cancel();
+            byul.clearAnimation();
+            eyeBlack.clearAnimation();
+            eyeBlack.setVisibility(View.INVISIBLE);
             animationFlag = 1;
             plant.startAnimation(plantAnimation);
             dokdo.startAnimation(dokdoAnimation);
@@ -415,7 +434,11 @@ public class Tale08 extends BaseFragment {
             treeBody.startAnimation(treeAnimation);
             eyeBlack.startAnimation(treeAnimation);
             eyeWhite.startAnimation(treeAnimation);
-
+        }
+        else{
+            setValues();
+//            treeEyeRotate.cancel();
+//            byulAnimation.cancel();
         }
     }
 

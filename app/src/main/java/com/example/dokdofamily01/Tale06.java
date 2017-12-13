@@ -44,6 +44,7 @@ public class Tale06 extends BaseFragment {
     TranslateAnimation momAppear;
     TranslateAnimation[] wavingTranslateAni = new TranslateAnimation[7];
     TranslateAnimation[] wavingUpperAndLower = new TranslateAnimation[3];
+    AlphaAnimation seagullFadein;
     AlphaAnimation blink;
     Animation fadeIn;
     AnimationSet[] wavingAniSet = new AnimationSet[3];
@@ -105,16 +106,55 @@ public class Tale06 extends BaseFragment {
             @Override
             public void run() {
                 waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
-                waveAppear.setDuration(1000);
-                waveAppear.setFillAfter(true);
+                waveAppear.setDuration(800);
+//                waveAppear.setFillAfter(true);
                 waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                waveAppear.setAnimationListener(new MyAnimationListener());
+                waveAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        smallwave[0].startAnimation(fadeIn);
+                        smallwave[1].startAnimation(fadeIn);
+                        smallwave[2].startAnimation(fadeIn);
+                        smallwave[3].startAnimation(fadeIn);
+                        waveshadow.startAnimation(fadeIn);
+                        seagull[0].startAnimation(seagullFadein);
+                        seagull[1].startAnimation(fadeIn);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
 
                 momAppear = new TranslateAnimation(-momDokdo.getWidth(), 0, 0, 0);
-                momAppear.setStartOffset(500);
+                momAppear.setStartOffset(1000);
                 momAppear.setDuration(1000);
                 momAppear.setFillAfter(true);
                 momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                momAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        sea.startAnimation(backgroundWaving);
+                        waveshadow.startAnimation(backgroundWaving);
+                        seagull[0].startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+//                        sea.clearAnimation();
+                        waveshadow.clearAnimation();
+                    }
+                });
 
                 backgroundWaving = new TranslateAnimation(0, 0, 0, waveshadow.getHeight() * 0.05f);
                 backgroundWaving.setDuration(2000);
@@ -158,7 +198,7 @@ public class Tale06 extends BaseFragment {
                 wavingTranslateAni[5].setInterpolator(new CycleInterpolator(0.5f));
                 wavingTranslateAni[5].setRepeatCount(4);
                 wavingTranslateAni[5].setRepeatMode(Animation.REVERSE);
-                wavingTranslateAni[5].setAnimationListener(new MyAnimationListener(){
+                wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener(){
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         animationFlag = 0;
@@ -171,6 +211,11 @@ public class Tale06 extends BaseFragment {
 
                     @Override
                     public void onAnimationStart(Animation animation) {
+                        smallwave[0].setVisibility(View.VISIBLE);
+                        smallwave[1].setVisibility(View.VISIBLE);
+                        smallwave[2].setVisibility(View.VISIBLE);
+                        smallwave[3].setVisibility(View.VISIBLE);
+                        seagull[0].setVisibility(View.VISIBLE);
                         seagull[0].clearAnimation();
                     }
                 });
@@ -181,10 +226,9 @@ public class Tale06 extends BaseFragment {
                 wavingTranslateAni[6].setRepeatCount(3);
                 wavingTranslateAni[6].setRepeatMode(Animation.REVERSE);
 
+                animationClear();
                 if (animationFlag == 0) {
-                    animationClear();
                     animationFlag = 1;
-
                     sea.startAnimation(waveAppear);
                     bigwave[0].startAnimation(waveAppear);
                     bigwave[1].startAnimation(waveAppear);
@@ -200,7 +244,26 @@ public class Tale06 extends BaseFragment {
         super.setAnimation();
         fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         fadeIn.setFillAfter(true);
-        fadeIn.setAnimationListener(new MyAnimationListener());
+
+        seagullFadein = new AlphaAnimation(0, 1);
+        seagullFadein.setDuration(1000);
+        seagullFadein.setFillAfter(true);
+        seagullFadein.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animationFlag = 0;
+                seagull[0].startAnimation(blink);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         blink = new AlphaAnimation(1, 0.3f);
         blink.setDuration(500);
@@ -233,73 +296,7 @@ public class Tale06 extends BaseFragment {
     }
 
 
-    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            super.onAnimationStart(animation);
-            switch (animationFlag) {
-                case 1:
-                    momDokdo.setVisibility(View.VISIBLE);
-                    break;
-                case 2:
-                    smallwave[0].setVisibility(View.VISIBLE);
-                    smallwave[1].setVisibility(View.VISIBLE);
-                    smallwave[2].setVisibility(View.VISIBLE);
-                    smallwave[3].setVisibility(View.VISIBLE);
-                    waveshadow.setVisibility(View.VISIBLE);
-                    seagull[0].setVisibility(View.VISIBLE);
-                    seagull[1].setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            switch (animationFlag) {
-                case 1:
-                    animationFlag = 2;
-                    Log.i("animationFlag", "" + animationFlag);
-                    sea.clearAnimation();
-                    bigwave[0].clearAnimation();
-                    bigwave[1].clearAnimation();
-                    bigwave[2].clearAnimation();
-                    smallwave[0].startAnimation(fadeIn);
-                    smallwave[1].startAnimation(fadeIn);
-                    smallwave[2].startAnimation(fadeIn);
-                    smallwave[3].startAnimation(fadeIn);
-                    waveshadow.startAnimation(fadeIn);
-                    seagull[0].startAnimation(fadeIn);
-                    seagull[1].startAnimation(fadeIn);
-                    break;
-                case 2:
-                    animationFlag = 3;
-                    Log.i("animationFlag", "" + animationFlag);
-                    smallwave[0].clearAnimation();
-                    smallwave[1].clearAnimation();
-                    smallwave[2].clearAnimation();
-                    smallwave[3].clearAnimation();
-                    waveshadow.clearAnimation();
-                    seagull[0].clearAnimation();
-                    seagull[1].clearAnimation();
-                    break;
-                case 3:
-                    animationFlag = 0;
-                    sea.startAnimation(backgroundWaving);
-                    waveshadow.startAnimation(backgroundWaving);
-                    seagull[0].startAnimation(blink);
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            super.onAnimationRepeat(animation);
-        }
-    }
-
     private void animationClear() {
-
-
         momDokdo.setVisibility(View.INVISIBLE);
         smallwave[0].setVisibility(View.INVISIBLE);
         smallwave[1].setVisibility(View.INVISIBLE);
@@ -321,6 +318,7 @@ public class Tale06 extends BaseFragment {
         bigwave[2].clearAnimation();
         seagull[0].clearAnimation();
         seagull[1].clearAnimation();
+
     }
 
     @Override
@@ -342,8 +340,8 @@ public class Tale06 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        if (momAppear != null) {
-            animationClear();
+        animationClear();
+        if(waveAppear != null){
             animationFlag = 1;
             sea.startAnimation(waveAppear);
             bigwave[0].startAnimation(waveAppear);
@@ -351,6 +349,7 @@ public class Tale06 extends BaseFragment {
             bigwave[2].startAnimation(waveAppear);
             momDokdo.startAnimation(momAppear);
         }
+
     }
 
     @Override
