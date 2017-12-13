@@ -3,7 +3,6 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -36,37 +33,14 @@ public class Tale04 extends BaseFragment {
 
     int[] sunLightLocation = new int[2];
 
-    boolean isAttached = false;
 
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int soundID;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,23 +57,7 @@ public class Tale04 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
 
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
 
     @Override
@@ -109,7 +67,7 @@ public class Tale04 extends BaseFragment {
         sun = (ImageView) layout.findViewById(R.id.sun);
         sunLight = (ImageView) layout.findViewById(R.id.sunLight);
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundID = sp.load(getContext(), R.raw.effect_04_sunrise, 1);
+        soundID = sp.load(getContext(), R.raw.effect_04_sun, 1);
     }
 
     @Override
@@ -129,7 +87,10 @@ public class Tale04 extends BaseFragment {
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
 
-
+                animationFlag=0;
+                sun.clearAnimation();
+                sunLight.clearAnimation();
+                sunLight.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -146,8 +107,10 @@ public class Tale04 extends BaseFragment {
         dokdo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundID, 1, 1, 0, 0, 1);
-                sun.startAnimation(sunRiseAni);
+                if(animationFlag==0){
+                    sp.play(soundID, 1, 1, 0, 0, 1);
+                    sun.startAnimation(sunRiseAni);
+                }
             }
         });
     }
@@ -156,7 +119,6 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
         }
 
         @Override
@@ -174,7 +136,7 @@ public class Tale04 extends BaseFragment {
 
     }
 
-
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_4);
         subtitleList = new ArrayList<>();
@@ -188,9 +150,31 @@ public class Tale04 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
+        animationFlag=0;
+        sun.clearAnimation();
+        sunLight.clearAnimation();
+        sunLight.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
 
 

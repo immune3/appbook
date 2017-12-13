@@ -36,7 +36,7 @@
                 android:src="@drawable/img_03_cloud_01"
                 app:scale_width="368"
                 app:scale_height="368"
-                app:scale_left="10"
+                app:scale_left="0"
                 app:scale_top="350"/>
             <ImageView
                 android:id="@+id/cloud1"
@@ -72,7 +72,7 @@
                 android:src="@drawable/img_03_cloud_05"
                 app:scale_width="690"
                 app:scale_height="562"
-                app:scale_left="1865"
+                app:scale_left="1870"
                 app:scale_top="925"/>
             <ImageView
                 android:id="@+id/cloud5"
@@ -81,7 +81,7 @@
                 android:src="@drawable/img_03_cloud_06"
                 app:scale_width="688"
                 app:scale_height="448"
-                app:scale_left="1865"
+                app:scale_left="1870"
                 app:scale_top="0"/>
             <ImageView
                 android:visibility="invisible"
@@ -123,6 +123,7 @@
                 app:scale_top="130"/>
 
             <ImageView
+                android:id="@+id/body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_seagull_body"
@@ -141,6 +142,7 @@
                 app:scale_left="30"
                 app:scale_top="255"/>
             <ImageView
+                android:id="@+id/head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_03_byul"

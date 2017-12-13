@@ -3,7 +3,6 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -31,10 +28,7 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale15 extends BaseFragment {
 
-    boolean isAttached = false;
-    boolean isHint;
     MediaPlayer mp = null;
-    MusicController musicController;
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -61,27 +55,8 @@ public class Tale15 extends BaseFragment {
     SoundPool sp;
     int clickFish;
     int moveMan;
+    int appearMan;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isAttached = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-            }
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,22 +73,6 @@ public class Tale15 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        if (isHint && !homeKeyFlag && screenFlag) {
-            soundPlayFunc();
-        }
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-          checkMP.execute();
-        }
-    }
 
     @Override
     public void setValues() {
@@ -138,11 +97,11 @@ public class Tale15 extends BaseFragment {
                 byulAnimation.setAnimationListener(new MyAnimationListener());
 
                 fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
-                fadeIn.setFillAfter(true);
+//                fadeIn.setFillAfter(true);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
                 fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
-                fadeOut.setFillAfter(true);
+//                fadeOut.setFillAfter(true);
 
                 blink = new AlphaAnimation(0.3f, 1);
                 blink.setDuration(500);
@@ -150,8 +109,8 @@ public class Tale15 extends BaseFragment {
                 blink.setRepeatMode(Animation.REVERSE);
 
                 if (landAnimation != null) {
-                    appearFlag = 1;
                     animationClear();
+                    appearFlag = 1;
                     ivLand15.startAnimation(landAnimation);
                     seaweadImage.startAnimation(landAnimation);
                     ivCave15.startAnimation(caveAnimation);
@@ -177,7 +136,7 @@ public class Tale15 extends BaseFragment {
                     fish.clearAnimation();
                     fish.setVisibility(View.VISIBLE);
                     //man1 사라지고 man2나온다.
-                    sp.play(clickFish, 1, 1, 0, 0, 1);
+                    sp.play(clickFish, 1, 1, 0, 0, 2);
                     manImage4.setVisibility(View.INVISIBLE);
                     manImage1.startAnimation(fadeIn);
                 }
@@ -191,12 +150,15 @@ public class Tale15 extends BaseFragment {
             switch (animationFlag) {
                 case 1:
                     manImage1.setVisibility(View.VISIBLE);
+                    sp.play(moveMan, 1, 1, 0, 0, 1);
                     break;
                 case 3:
                     manImage2.setVisibility(View.VISIBLE);
+                    sp.play(moveMan, 1, 1, 0, 0, 1);
                     break;
                 case 5:
                     manImage3.setVisibility(View.VISIBLE);
+                    sp.play(moveMan, 1, 1, 0, 0, 1);
                     break;
                 case 7:
                     manImage4.setVisibility(View.VISIBLE);
@@ -237,12 +199,11 @@ public class Tale15 extends BaseFragment {
                     break;
                 case 6:
                     animationFlag = 7;
-                    sp.play(moveMan, 1, 1, 0, 0, 1);
+                    sp.play(appearMan, 1, 1, 0, 0, 1);
                     manImage3.startAnimation(fadeOut);
                     manImage4.startAnimation(fadeIn);
                     break;
                 case 7:
-                    animationFlag = 0;
                     manImage3.setVisibility(View.INVISIBLE);
                     manImage3.clearAnimation();
                     manImage4.clearAnimation();
@@ -279,13 +240,16 @@ public class Tale15 extends BaseFragment {
         this.manImage1 = (ImageView) layout.findViewById(R.id.manImage1);
         this.ivCave15 = (ImageView) layout.findViewById(R.id.ivCave15);
         this.ivByul15 = (ImageView) layout.findViewById(R.id.ivByul15);
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        sp = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
         clickFish = sp.load(getContext(), R.raw.effect_15_fish, 1);
-        moveMan = sp.load(getContext(), R.raw.effect_15_man, 2);
+        moveMan = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
+        appearMan = sp.load(getContext(), R.raw.effect_15_man, 3);
 
     }
 
     public void animationClear() {
+        appearFlag=0;
+        animationFlag=0;
         fish.setVisibility(View.INVISIBLE);
         manImage1.setVisibility(View.INVISIBLE);
         manImage2.setVisibility(View.INVISIBLE);
@@ -304,6 +268,7 @@ public class Tale15 extends BaseFragment {
         seaweadImage.clearAnimation();
     }
 
+    @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_15);
         subtitleList = new ArrayList<>();
@@ -323,6 +288,7 @@ public class Tale15 extends BaseFragment {
         mp = musicController.getMp();
         if (landAnimation != null) {
             animationClear();
+            appearFlag=1;
             ivLand15.startAnimation(landAnimation);
             ivCave15.startAnimation(caveAnimation);
             ivByul15.startAnimation(byulAnimation);
@@ -330,4 +296,23 @@ public class Tale15 extends BaseFragment {
         }
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
