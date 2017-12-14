@@ -328,6 +328,7 @@ public class Tale08 extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 animationFlag = 0;
 //                treeHand.startAnimation(fadeout);
+                checkedAnimation = true;
                 byul.startAnimation(blink);
                 eyeBlack.startAnimation(treeEyeRotate);
             }
@@ -365,6 +366,7 @@ public class Tale08 extends BaseFragment {
                 if(animationFlag == 0) {
                     animationFlag = 1;
 //                    eyeBlack.clearAnimation();
+                    checkedAnimation = false;
                     byul.clearAnimation();
                     treeHand.setVisibility(View.VISIBLE);
                     leaves.setVisibility(View.VISIBLE);
@@ -421,6 +423,7 @@ public class Tale08 extends BaseFragment {
         animationClear();
         if (plantAnimation != null) {
 //            treeEyeRotate.cancel();
+            checkedAnimation = false;
             byul.clearAnimation();
             eyeBlack.clearAnimation();
             eyeBlack.setVisibility(View.INVISIBLE);
