@@ -21,6 +21,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -182,6 +183,7 @@ public class Tale02 extends BaseFragment {
                 seagullHand.setVisibility(View.INVISIBLE);
                 if(animationFlag==0) {
                     animationFlag=1;
+                    checkedAnimation = false;
                     byulhead.startAnimation(headUp);
                     seagullBody.setAnimation(seagullAppear);
                 }
@@ -205,6 +207,7 @@ public class Tale02 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if(animationFlag==0) {
+                    checkedAnimation = false;
                     animationFlag = 2;
                     sp.play(soundID,1,1,0,0,1);
                     star.clearAnimation();
@@ -222,6 +225,7 @@ public class Tale02 extends BaseFragment {
             switch (animationFlag){
                 case 1:
                     animationFlag=0;
+                    checkedAnimation = true;
                     star.startAnimation(blink);
                     break;
                 case 2:
@@ -230,6 +234,7 @@ public class Tale02 extends BaseFragment {
                     break;
                 case 3:
                     animationFlag=0;
+                    checkedAnimation = true;
                     star.startAnimation(blink);
                     break;
             }
@@ -264,6 +269,7 @@ public class Tale02 extends BaseFragment {
         mp = musicController.getMp();
         if (headUp != null) {
             animationFlag=1;
+            checkedAnimation = false;
             star.clearAnimation();
             byulhead.startAnimation(headUp);
             seagullBody.setAnimation(seagullAppear);

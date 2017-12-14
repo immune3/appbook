@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import static com.example.dokdofamily01.TaleActivity.MIN_DISTANCE;
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 
 
 /**
@@ -13,6 +14,8 @@ import static com.example.dokdofamily01.TaleActivity.MIN_DISTANCE;
 
 public class CustomTouchListener implements View.OnTouchListener {
     private float x1,x2;
+
+
 
      CustomViewPager customViewPager;
 
@@ -48,11 +51,11 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void decreaseFunc(){
-        customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, false);
+        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, false);
 
     }
 
     public void increaseFunc(){
-        customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,false);
+        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,false);
     }
 }

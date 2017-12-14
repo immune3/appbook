@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -27,8 +25,8 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+
 
 /**
  * Created by heronation on 2017-11-06.
@@ -187,6 +185,7 @@ public class Tale08 extends BaseFragment {
                             byul.startAnimation(blink);
                             eyeBlack.startAnimation(treeEyeRotate);
                             animationFlag = 0;
+                            checkedAnimation = true;
                         }
                         else{
 //                            Log.d("ababab", "bbbb");
@@ -382,7 +381,7 @@ public class Tale08 extends BaseFragment {
 
 
     private void animationClear() {
-
+        checkedAnimation = false;
         eyeBlack.setVisibility(View.INVISIBLE);
         byul.setVisibility(View.INVISIBLE);
         treeHand.setVisibility(View.INVISIBLE);

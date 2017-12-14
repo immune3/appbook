@@ -21,7 +21,7 @@ import dalvik.system.InMemoryDexClassLoader;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
-
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 /**
  * Created by heronation on 2017-11-06.
  */
@@ -109,6 +109,7 @@ public class Tale01 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (animationFlag == 0) {
+                    checkedAnimation = false;
                     animationFlag = 1;
                     sp.play(soundID, 4, 4, 0, 0, 1);
                     lampLight.startAnimation(fadeIn);
@@ -176,6 +177,7 @@ public class Tale01 extends BaseFragment {
                     break;
                 case 7:
                     animationFlag = 8;
+                    checkedAnimation = true;
                     curtain.setVisibility(View.INVISIBLE);
                     hand.clearAnimation();
                     curtain.clearAnimation();

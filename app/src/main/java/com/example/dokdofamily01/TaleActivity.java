@@ -40,6 +40,8 @@ public class TaleActivity extends AppCompatActivity{
     private float x1,x2;
     static final int MIN_DISTANCE = 300;
 
+    static boolean checkedAnimation = true;
+
     static public TextView subtitleTextView;
 
     static int height;
@@ -158,14 +160,14 @@ public class TaleActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 int position = vp.getCurrentItem()-1;
-                vp.setCurrentItem(position, false);
+                if(checkedAnimation) vp.setCurrentItem(position, false);
             }
         });
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = vp.getCurrentItem()+1;
-                vp.setCurrentItem(position,false);
+                if(checkedAnimation) vp.setCurrentItem(position,false);
             }
         });
         goHome.setOnClickListener(new View.OnClickListener() {
