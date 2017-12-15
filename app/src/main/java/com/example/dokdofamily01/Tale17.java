@@ -17,6 +17,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -114,6 +115,7 @@ public class Tale17 extends BaseFragment {
             public void onClick(View view) {
                 if (animationFlag == 0) {
                     animationFlag = 1;
+                    checkedAnimation = false;
                     star.clearAnimation();
                     sp.play(clickStar, 1, 1, 0, 0, 1);
                     dokdo_under_sea.startAnimation(fadeIn);
@@ -134,8 +136,7 @@ public class Tale17 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             sp.play(appearDokdo, 1, 1, 0, 0, 1);
-//            dokdo_under_sea.startAnimation(fadeIn);
-//            dokdo_under_sea.clearAnimation();
+            checkedAnimation = true;
         }
 
         @Override

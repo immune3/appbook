@@ -11,15 +11,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
 import com.example.dokdofamily01.Data.SubTitleData;
-
 import java.util.ArrayList;
-
-import dalvik.system.InMemoryDexClassLoader;
-
-import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
-import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 /**
@@ -263,23 +256,6 @@ public class Tale01 extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        lampLight.clearAnimation();
-        byul.clearAnimation();
-        bedLight.clearAnimation();
-        curtain.clearAnimation();
-        light.clearAnimation();
-        hand.clearAnimation();
-        blanket.clearAnimation();
-        head.clearAnimation();
-        head.setVisibility(View.VISIBLE);
-        blanket.setVisibility(View.VISIBLE);
-        curtain.setVisibility(View.VISIBLE);
-        light.setVisibility(View.INVISIBLE);
-        lampLight.setVisibility(View.INVISIBLE);
-        hand.setVisibility(View.INVISIBLE);
-        bedLight.setVisibility(View.INVISIBLE);
-        byul.setVisibility(View.INVISIBLE);
-        animationFlag=0;
     }
 
     @Override

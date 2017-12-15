@@ -17,6 +17,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -72,12 +73,6 @@ public class Tale05 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        letter[5].post(new Runnable() {
-            @Override
-            public void run() {
-//                letterAnimation.setAnimationListener(new MyAnimationListener());
-            }
-        });
     }
 
     @Override
@@ -98,6 +93,7 @@ public class Tale05 extends BaseFragment {
             public void onClick(View view) {
                 if (animationFlag == 0) {
                     animationFlag = 1;
+                    checkedAnimation = false;
                     sp.play(clickLetter, 1, 1, 0, 0, 1);
                     // letter[0] 사라지고 letter[1]나온다.
                     letter[5].setVisibility(View.INVISIBLE);
@@ -204,6 +200,7 @@ public class Tale05 extends BaseFragment {
 //                    letter[4].clearAnimation();
                     letter[5].setVisibility(View.VISIBLE);
                     letter[5].clearAnimation();
+                    checkedAnimation = true;
                     break;
             }
         }

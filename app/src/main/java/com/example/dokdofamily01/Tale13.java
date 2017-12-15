@@ -22,6 +22,7 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -54,6 +55,7 @@ public class Tale13 extends BaseFragment {
     AnimationSet bubbleAppear;
     AlphaAnimation blink;
     int animationFlag = 0;
+    int clickFlag=0;
 
     private SoundPool bubbleSoundPool, tickSoundPool;
     private int bubbleSound, tickSound;
@@ -105,6 +107,86 @@ public class Tale13 extends BaseFragment {
     public void setValues() {
         super.setValues();
 
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        ivBuyl13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag==0) {
+                    clickFlag=1;
+                    checkedAnimation = false;
+                    ivBuyl13.clearAnimation();
+                    bubble.startAnimation(bubbleAppear);
+                    tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
+                    bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                }
+            }
+        });
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            if (animationFlag == 1) {
+                animationClear();
+                animationFlag = 0;
+                ivBuyl13.startAnimation(blink);
+                checkedAnimation = true;
+                wave[0].startAnimation(wavingAniSet[0]);
+                wave[1].startAnimation(wavingAniSet[1]);
+                wave[2].startAnimation(wavingAniSet[2]);
+                wave[3].startAnimation(wavingAniSet[3]);
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
+    }
+
+    private void animationClear() {
+        animationFlag = 0;
+        ivFishes13.clearAnimation();
+        ivWall13.clearAnimation();
+        ivBottom13.clearAnimation();
+        ivBuyl13.clearAnimation();
+        wave[0].clearAnimation();
+        wave[1].clearAnimation();
+        wave[2].clearAnimation();
+        wave[3].clearAnimation();
+    }
+    @Override
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_13);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"첨벙첨벙~ 별이가 바다 안으로 들어가요. ", "5000"},
+                new String[]{"별이랑 놀고 싶은 해님도 풍덩~ 따라 들어가요. ", "10000"},
+                new String[]{"맑은 바다 안이 더 환해졌어요.", "14000"},
+                new String[]{"오징어 이모랑 놀고 싶은 바닷속 친구들이 몰려와서 \n" +
+                        "헤엄치다 서고, 헤엄치다 멈추면서 가요.", "23000"},
+                new String[]{"보들보들 감태 숲을 지나니 간질간질 모자반 숲이에요. ", "29500"},
+                new String[]{"축구하던 성게 꼬마들이 축구공과 함께 데구루루 굴러 가요. ", "36500"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         ivBuyl13.post(new Runnable() {
             @Override
             public void run() {
@@ -139,6 +221,24 @@ public class Tale13 extends BaseFragment {
                 bubbleAppear = new AnimationSet(false);
                 bubbleAppear.addAnimation(bubbleAlpha);
                 bubbleAppear.addAnimation(bubbleTranslate);
+                bubbleAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        checkedAnimation = true;
+                        ivBuyl13.startAnimation(blink);
+                        clickFlag=0;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 blink = new AlphaAnimation(1, 0.3f);
                 blink.setDuration(500);
@@ -204,6 +304,7 @@ public class Tale13 extends BaseFragment {
 
                 if (animationFlag == 0 && bottomAnimation != null) {
                     animationClear();
+                    checkedAnimation = false;
                     animationFlag = 1;
                     ivBottom13.startAnimation(bottomAnimation);
                     ivWall13.startAnimation(wallAnimation);
@@ -212,88 +313,6 @@ public class Tale13 extends BaseFragment {
                 }
             }
         });
-    }
-
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        ivBuyl13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ivBuyl13.clearAnimation();
-                bubble.startAnimation(bubbleAppear);
-                tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
-                bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
-            }
-        });
-    }
-
-    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            super.onAnimationStart(animation);
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            if (animationFlag == 1) {
-                animationClear();
-                animationFlag = 0;
-                ivBuyl13.startAnimation(blink);
-
-                wave[0].startAnimation(wavingAniSet[0]);
-                wave[1].startAnimation(wavingAniSet[1]);
-                wave[2].startAnimation(wavingAniSet[2]);
-                wave[3].startAnimation(wavingAniSet[3]);
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            super.onAnimationRepeat(animation);
-        }
-    }
-
-    private void animationClear() {
-        animationFlag = 0;
-        ivFishes13.clearAnimation();
-        ivWall13.clearAnimation();
-        ivBottom13.clearAnimation();
-        ivBuyl13.clearAnimation();
-        wave[0].clearAnimation();
-        wave[1].clearAnimation();
-        wave[2].clearAnimation();
-        wave[3].clearAnimation();
-    }
-    @Override
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_13);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"첨벙첨벙~ 별이가 바다 안으로 들어가요. ", "5000"},
-                new String[]{"별이랑 놀고 싶은 해님도 풍덩~ 따라 들어가요. ", "10000"},
-                new String[]{"맑은 바다 안이 더 환해졌어요.", "14000"},
-                new String[]{"오징어 이모랑 놀고 싶은 바닷속 친구들이 몰려와서 \n" +
-                        "헤엄치다 서고, 헤엄치다 멈추면서 가요.", "23000"},
-                new String[]{"보들보들 감태 숲을 지나니 간질간질 모자반 숲이에요. ", "29500"},
-                new String[]{"축구하던 성게 꼬마들이 축구공과 함께 데구루루 굴러 가요. ", "36500"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-        if (bottomAnimation != null) {
-            animationClear();
-            animationFlag = 1;
-            ivBottom13.startAnimation(bottomAnimation);
-            ivWall13.startAnimation(wallAnimation);
-            ivBuyl13.startAnimation(characterAnimation);
-            ivFishes13.startAnimation(fishAnimation);
-        }
     }
 
     @Override

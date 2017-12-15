@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -37,7 +38,7 @@ public class Tale10 extends BaseFragment {
     ImageView byulBody;
     ImageView byulHand;
     ImageView blinkBird;
-    ImageView bird[][] = new ImageView[3][5];
+    ImageView bird[] = new ImageView[3];
 
     TranslateAnimation mountainAppear;
     TranslateAnimation rockAppear;
@@ -89,62 +90,20 @@ public class Tale10 extends BaseFragment {
         byulBody = (ImageView) layout.findViewById(R.id.byulBody);
         byulHand = (ImageView) layout.findViewById(R.id.byulHand);
         blinkBird = (ImageView) layout.findViewById(R.id.blinkBird);
-        bird[0][0] = (ImageView) layout.findViewById(R.id.bird00);
-        bird[0][1] = (ImageView) layout.findViewById(R.id.bird01);
-        bird[0][2] = (ImageView) layout.findViewById(R.id.bird02);
-        bird[0][3] = (ImageView) layout.findViewById(R.id.bird03);
-        bird[0][4] = (ImageView) layout.findViewById(R.id.bird04);
-        bird[1][0] = (ImageView) layout.findViewById(R.id.bird10);
-        bird[1][1] = (ImageView) layout.findViewById(R.id.bird11);
-        bird[1][2] = (ImageView) layout.findViewById(R.id.bird12);
-        bird[1][3] = (ImageView) layout.findViewById(R.id.bird13);
-        bird[1][4] = (ImageView) layout.findViewById(R.id.bird14);
-        bird[2][0] = (ImageView) layout.findViewById(R.id.bird20);
-        bird[2][1] = (ImageView) layout.findViewById(R.id.bird21);
-        bird[2][2] = (ImageView) layout.findViewById(R.id.bird22);
-        bird[2][3] = (ImageView) layout.findViewById(R.id.bird23);
-        bird[2][4] = (ImageView) layout.findViewById(R.id.bird24);
+        bird[0] = (ImageView) layout.findViewById(R.id.bird00);
+        bird[1] = (ImageView) layout.findViewById(R.id.bird10);
+        bird[2] = (ImageView) layout.findViewById(R.id.bird20);
         tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
         tweetTouchSoundPool = new SoundPool(2, AudioManager.STREAM_RING, 0);
         tweetSoundLoop = tweetTouchSoundPool.load(getContext(), R.raw.effect_10_tweet_touch, 0);
 
-//        for(int i=0; i<3; i++){
-//            for (int j=0; j<5; j++){
-//                int aa = "R.id.bird"+i+""+j;
-//                bird[i][j] = (ImageView)layout.findViewById(aa);
-//            }
-//        }
     }
 
     @Override
     public void setValues() {
         super.setValues();
-        mountain.post(new Runnable() {
-            @Override
-            public void run() {
-                mountainAppear = new TranslateAnimation(0, 0, mountain.getHeight(), 0);
-                mountainAppear.setDuration(2000);
-                mountainAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                mountainAppear.setAnimationListener(new MyAnimationListener());
 
-                birdsAppear = new TranslateAnimation(0, 0, birds.getHeight(), 0);
-                birdsAppear.setDuration(1000);
-                birdsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                birdsAppear.setAnimationListener(new MyAnimationListener());
-
-                rockAppear = new TranslateAnimation(-rock.getWidth(), 0, 0, 0);
-                rockAppear.setStartOffset(500);
-                rockAppear.setDuration(1500);
-                rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                if (animationFlag == 0) {
-                    animationFlag = 1;
-                    mountain.startAnimation(mountainAppear);
-                    rock.startAnimation(rockAppear);
-                }
-            }
-        });
     }
 
     @Override
@@ -173,6 +132,7 @@ public class Tale10 extends BaseFragment {
         blinkBird.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                checkedAnimation = false;
                 blinkBird.clearAnimation();
                 blinkBird.startAnimation(repeat);
                 tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
@@ -201,9 +161,9 @@ public class Tale10 extends BaseFragment {
                     byulBody.setVisibility(View.INVISIBLE);
                     seagull.setVisibility(View.INVISIBLE);
                     birds.setVisibility(View.INVISIBLE);
-                    bird[0][0].setVisibility(View.INVISIBLE);
-                    bird[1][0].setVisibility(View.INVISIBLE);
-                    bird[2][0].setVisibility(View.INVISIBLE);
+                    bird[0].setVisibility(View.INVISIBLE);
+                    bird[1].setVisibility(View.INVISIBLE);
+                    bird[2].setVisibility(View.INVISIBLE);
                     mountain.setVisibility(View.VISIBLE);
                     rock.setVisibility(View.VISIBLE);
                     break;
@@ -213,9 +173,9 @@ public class Tale10 extends BaseFragment {
                     byulBody.setVisibility(View.VISIBLE);
                     seagull.setVisibility(View.VISIBLE);
                     birds.setVisibility(View.VISIBLE);
-                    bird[0][0].setVisibility(View.VISIBLE);
-                    bird[1][0].setVisibility(View.VISIBLE);
-                    bird[2][0].setVisibility(View.VISIBLE);
+                    bird[0].setVisibility(View.VISIBLE);
+                    bird[1].setVisibility(View.VISIBLE);
+                    bird[2].setVisibility(View.VISIBLE);
                     break;
                 case 3:
                     animationFlag = 4;
@@ -233,9 +193,9 @@ public class Tale10 extends BaseFragment {
                     mountain.clearAnimation();
                     rock.clearAnimation();
                     birds.startAnimation(birdsAppear);
-                    bird[0][0].startAnimation(birdsAppear);
-                    bird[1][0].startAnimation(birdsAppear);
-                    bird[2][0].startAnimation(birdsAppear);
+                    bird[0].startAnimation(birdsAppear);
+                    bird[1].startAnimation(birdsAppear);
+                    bird[2].startAnimation(birdsAppear);
                     byulBody.startAnimation(fadeIn);
                     byulHand.startAnimation(fadeIn);
                     byulHead.startAnimation(fadeIn);
@@ -249,6 +209,7 @@ public class Tale10 extends BaseFragment {
                     byulHead.clearAnimation();
                     seagull.clearAnimation();
                     blinkBird.startAnimation(blink);
+                    checkedAnimation = true;
                     break;
             }
         }
@@ -259,58 +220,33 @@ public class Tale10 extends BaseFragment {
             switch (repeatFlag) {
                 case 0:
                     repeatFlag = 1;
-//                    bird[0][0].setVisibility(View.INVISIBLE);
-//                    bird[0][1].setVisibility(View.VISIBLE);
-//                    bird[0][2].setVisibility(View.INVISIBLE);
-//                    bird[0][3].setVisibility(View.INVISIBLE);
-//                    bird[0][4].setVisibility(View.INVISIBLE);
-                    bird[0][0].setImageResource(R.drawable.img_10_bird_04);
-                    bird[1][0].setImageResource(R.drawable.img_10_bird_03);
-                    bird[2][0].setImageResource(R.drawable.img_10_bird_02);
+                    bird[0].setImageResource(R.drawable.img_10_bird_04);
+                    bird[1].setImageResource(R.drawable.img_10_bird_03);
+                    bird[2].setImageResource(R.drawable.img_10_bird_02);
                     break;
                 case 1:
                     repeatFlag = 2;
-//                    bird[0][0].setVisibility(View.INVISIBLE);
-//                    bird[0][1].setVisibility(View.INVISIBLE);
-//                    bird[0][2].setVisibility(View.VISIBLE);
-//                    bird[0][3].setVisibility(View.INVISIBLE);
-//                    bird[0][4].setVisibility(View.INVISIBLE);
-                    bird[0][0].setImageResource(R.drawable.img_10_bird_03);
-                    bird[1][0].setImageResource(R.drawable.img_10_bird_02);
-                    bird[2][0].setImageResource(R.drawable.img_10_bird_01);
+                    bird[0].setImageResource(R.drawable.img_10_bird_03);
+                    bird[1].setImageResource(R.drawable.img_10_bird_02);
+                    bird[2].setImageResource(R.drawable.img_10_bird_01);
                     break;
                 case 2:
                     repeatFlag = 3;
-//                    bird[0][0].setVisibility(View.INVISIBLE);
-//                    bird[0][1].setVisibility(View.INVISIBLE);
-//                    bird[0][2].setVisibility(View.INVISIBLE);
-//                    bird[0][3].setVisibility(View.VISIBLE);
-//                    bird[0][4].setVisibility(View.INVISIBLE);
-                    bird[0][0].setImageResource(R.drawable.img_10_bird_02);
-                    bird[1][0].setImageResource(R.drawable.img_10_bird_01);
-                    bird[2][0].setImageResource(R.drawable.img_10_bird_05);
+                    bird[0].setImageResource(R.drawable.img_10_bird_02);
+                    bird[1].setImageResource(R.drawable.img_10_bird_01);
+                    bird[2].setImageResource(R.drawable.img_10_bird_05);
                     break;
                 case 3:
                     repeatFlag = 4;
-//                    bird[0][0].setVisibility(View.INVISIBLE);
-//                    bird[0][1].setVisibility(View.INVISIBLE);
-//                    bird[0][2].setVisibility(View.INVISIBLE);
-//                    bird[0][3].setVisibility(View.INVISIBLE);
-//                    bird[0][4].setVisibility(View.VISIBLE);
-                    bird[0][0].setImageResource(R.drawable.img_10_bird_01);
-                    bird[1][0].setImageResource(R.drawable.img_10_bird_05);
-                    bird[2][0].setImageResource(R.drawable.img_10_bird_04);
+                    bird[0].setImageResource(R.drawable.img_10_bird_01);
+                    bird[1].setImageResource(R.drawable.img_10_bird_05);
+                    bird[2].setImageResource(R.drawable.img_10_bird_04);
                     break;
                 case 4:
                     repeatFlag = 0;
-//                    bird[0][0].setVisibility(View.VISIBLE);
-//                    bird[0][1].setVisibility(View.INVISIBLE);
-//                    bird[0][2].setVisibility(View.INVISIBLE);
-//                    bird[0][3].setVisibility(View.INVISIBLE);
-//                    bird[0][4].setVisibility(View.INVISIBLE);
-                    bird[0][0].setImageResource(R.drawable.img_10_bird_05);
-                    bird[1][0].setImageResource(R.drawable.img_10_bird_04);
-                    bird[2][0].setImageResource(R.drawable.img_10_bird_03);
+                    bird[0].setImageResource(R.drawable.img_10_bird_05);
+                    bird[1].setImageResource(R.drawable.img_10_bird_04);
+                    bird[2].setImageResource(R.drawable.img_10_bird_03);
                     break;
             }
         }
@@ -337,11 +273,35 @@ public class Tale10 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
-        if (mountainAppear != null) {
-            animationFlag = 1;
-            mountain.startAnimation(mountainAppear);
-            rock.startAnimation(rockAppear);
-        }
+
+        mountain.post(new Runnable() {
+            @Override
+            public void run() {
+                mountainAppear = new TranslateAnimation(0, 0, mountain.getHeight(), 0);
+                mountainAppear.setDuration(2000);
+                mountainAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                mountainAppear.setAnimationListener(new MyAnimationListener());
+
+                birdsAppear = new TranslateAnimation(0, 0, birds.getHeight(), 0);
+                birdsAppear.setDuration(1000);
+                birdsAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                birdsAppear.setAnimationListener(new MyAnimationListener());
+
+                rockAppear = new TranslateAnimation(-rock.getWidth(), 0, 0, 0);
+                rockAppear.setStartOffset(500);
+                rockAppear.setDuration(1500);
+                rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+//                if (animationFlag == 0) {
+                    checkedAnimation = false;
+                    blinkBird.setVisibility(View.INVISIBLE);
+                    blinkBird.clearAnimation();
+                    animationFlag = 1;
+                    mountain.startAnimation(mountainAppear);
+                    rock.startAnimation(rockAppear);
+//                }
+            }
+        });
     }
 
     @Override

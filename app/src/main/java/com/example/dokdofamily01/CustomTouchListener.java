@@ -51,11 +51,11 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void decreaseFunc(){
-        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, false);
+        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, true);
 
     }
 
     public void increaseFunc(){
-        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,false);
+        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
     }
 }

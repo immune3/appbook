@@ -25,6 +25,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -102,141 +103,7 @@ public class Tale06 extends BaseFragment {
     public void setValues() {
         super.setValues();
 
-        sea.post(new Runnable() {
-            @Override
-            public void run() {
-                waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
-                waveAppear.setDuration(800);
-//                waveAppear.setFillAfter(true);
-                waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                waveAppear.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
 
-                    }
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        smallwave[0].startAnimation(fadeIn);
-                        smallwave[1].startAnimation(fadeIn);
-                        smallwave[2].startAnimation(fadeIn);
-                        smallwave[3].startAnimation(fadeIn);
-                        waveshadow.startAnimation(fadeIn);
-                        seagull[0].startAnimation(seagullFadein);
-                        seagull[1].startAnimation(fadeIn);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-
-                momAppear = new TranslateAnimation(-momDokdo.getWidth(), 0, 0, 0);
-                momAppear.setStartOffset(1000);
-                momAppear.setDuration(1000);
-                momAppear.setFillAfter(true);
-                momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                momAppear.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        sea.startAnimation(backgroundWaving);
-                        waveshadow.startAnimation(backgroundWaving);
-                        seagull[0].startAnimation(blink);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-//                        sea.clearAnimation();
-                        waveshadow.clearAnimation();
-                    }
-                });
-
-                backgroundWaving = new TranslateAnimation(0, 0, 0, waveshadow.getHeight() * 0.05f);
-                backgroundWaving.setDuration(2000);
-                backgroundWaving.setInterpolator(new AccelerateDecelerateInterpolator());
-                backgroundWaving.setRepeatCount(Animation.INFINITE);
-                backgroundWaving.setRepeatMode(Animation.REVERSE);
-
-                int baseDuration = 2000;
-                for(int iter = 0; iter < 3; iter++){
-                    wavingTranslateAni[iter] = new TranslateAnimation(0, bigwave[iter].getWidth() * 0.1f, 0, 0);
-                    wavingTranslateAni[iter].setDuration(baseDuration);
-                    wavingTranslateAni[iter].setInterpolator(new AccelerateDecelerateInterpolator());
-                    wavingTranslateAni[iter].setRepeatCount(3);
-                    wavingTranslateAni[iter].setRepeatMode(Animation.REVERSE);
-
-                    wavingUpperAndLower[iter] = new TranslateAnimation(0,0,0 , bigwave[iter].getHeight() * 0.2f);
-                    wavingUpperAndLower[iter].setDuration(baseDuration);
-                    wavingUpperAndLower[iter].setInterpolator(new AccelerateDecelerateInterpolator());
-                    wavingUpperAndLower[iter].setRepeatCount(3);
-                    wavingUpperAndLower[iter].setRepeatMode(Animation.REVERSE);
-
-                    wavingAniSet[iter] = new AnimationSet(false);
-                    wavingAniSet[iter].addAnimation(wavingTranslateAni[iter]);
-                    wavingAniSet[iter].addAnimation(wavingUpperAndLower[iter]);
-                }
-
-                wavingTranslateAni[3] = new TranslateAnimation(0, 0, 0, smallwave[0].getHeight() * 0.1f);
-                wavingTranslateAni[3].setDuration(2600);
-                wavingTranslateAni[3].setInterpolator(new CycleInterpolator(0.5f));
-                wavingTranslateAni[3].setRepeatCount(3);
-                wavingTranslateAni[3].setRepeatMode(Animation.REVERSE);
-
-                wavingTranslateAni[4] = new TranslateAnimation(0, 0, 0, smallwave[1].getHeight() * 0.1f);
-                wavingTranslateAni[4].setDuration(3500);
-                wavingTranslateAni[4].setInterpolator(new CycleInterpolator(1));
-                wavingTranslateAni[4].setRepeatCount(2);
-                wavingTranslateAni[4].setRepeatMode(Animation.REVERSE);
-
-                wavingTranslateAni[5] = new TranslateAnimation(0, 0, 0, smallwave[2].getHeight() * 0.1f);
-                wavingTranslateAni[5].setDuration(2000);
-                wavingTranslateAni[5].setInterpolator(new CycleInterpolator(0.5f));
-                wavingTranslateAni[5].setRepeatCount(4);
-                wavingTranslateAni[5].setRepeatMode(Animation.REVERSE);
-                wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener(){
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        animationFlag = 0;
-                        seagull[0].startAnimation(blink);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        smallwave[0].setVisibility(View.VISIBLE);
-                        smallwave[1].setVisibility(View.VISIBLE);
-                        smallwave[2].setVisibility(View.VISIBLE);
-                        smallwave[3].setVisibility(View.VISIBLE);
-                        seagull[0].setVisibility(View.VISIBLE);
-                        seagull[0].clearAnimation();
-                    }
-                });
-
-                wavingTranslateAni[6] = new TranslateAnimation(0, 0, 0, smallwave[3].getHeight() * 0.1f);
-                wavingTranslateAni[6].setDuration(2600);
-                wavingTranslateAni[6].setInterpolator(new CycleInterpolator(1));
-                wavingTranslateAni[6].setRepeatCount(3);
-                wavingTranslateAni[6].setRepeatMode(Animation.REVERSE);
-
-                animationClear();
-                if (animationFlag == 0) {
-                    animationFlag = 1;
-                    sea.startAnimation(waveAppear);
-                    bigwave[0].startAnimation(waveAppear);
-                    bigwave[1].startAnimation(waveAppear);
-                    bigwave[2].startAnimation(waveAppear);
-                    momDokdo.startAnimation(momAppear);
-                }
-            }
-        });
     }
 
     @Override
@@ -279,6 +146,7 @@ public class Tale06 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if(animationFlag == 0) {
+                    checkedAnimation = false;
                     animationFlag = 1;
                     bigwave[0].startAnimation(wavingAniSet[0]);
                     bigwave[1].startAnimation(wavingAniSet[1]);
@@ -340,16 +208,153 @@ public class Tale06 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        animationClear();
-        if(waveAppear != null){
-            animationFlag = 1;
-            sea.startAnimation(waveAppear);
-            bigwave[0].startAnimation(waveAppear);
-            bigwave[1].startAnimation(waveAppear);
-            bigwave[2].startAnimation(waveAppear);
-            momDokdo.startAnimation(momAppear);
-        }
+        sea.post(new Runnable() {
+            @Override
+            public void run() {
+                waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
+                waveAppear.setDuration(800);
+//                waveAppear.setFillAfter(true);
+                waveAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                waveAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
+                    }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        smallwave[0].startAnimation(fadeIn);
+                        smallwave[1].startAnimation(fadeIn);
+                        smallwave[2].startAnimation(fadeIn);
+                        smallwave[3].startAnimation(fadeIn);
+                        waveshadow.startAnimation(fadeIn);
+                        seagull[0].startAnimation(seagullFadein);
+                        seagull[1].startAnimation(fadeIn);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                momAppear = new TranslateAnimation(-momDokdo.getWidth(), 0, 0, 0);
+                momAppear.setStartOffset(1000);
+                momAppear.setDuration(1000);
+                momAppear.setFillAfter(true);
+                momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                momAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        sea.startAnimation(backgroundWaving);
+                        waveshadow.startAnimation(backgroundWaving);
+                        seagull[0].startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+//                        sea.clearAnimation();
+                        waveshadow.clearAnimation();
+                    }
+                });
+
+                backgroundWaving = new TranslateAnimation(0, 0, 0, waveshadow.getHeight() * 0.05f);
+                backgroundWaving.setDuration(2000);
+                backgroundWaving.setInterpolator(new AccelerateDecelerateInterpolator());
+                backgroundWaving.setRepeatCount(Animation.INFINITE);
+                backgroundWaving.setRepeatMode(Animation.REVERSE);
+
+                int baseDuration = 2000;
+                for(int iter = 0; iter < 3; iter++){
+                    wavingTranslateAni[iter] = new TranslateAnimation(0, bigwave[iter].getWidth() * 0.1f, 0, 0);
+                    wavingTranslateAni[iter].setDuration(baseDuration);
+                    wavingTranslateAni[iter].setInterpolator(new AccelerateDecelerateInterpolator());
+                    wavingTranslateAni[iter].setRepeatCount(3);
+                    wavingTranslateAni[iter].setRepeatMode(Animation.REVERSE);
+
+                    wavingUpperAndLower[iter] = new TranslateAnimation(0,0,0 , bigwave[iter].getHeight() * 0.2f);
+                    wavingUpperAndLower[iter].setDuration(baseDuration);
+                    wavingUpperAndLower[iter].setInterpolator(new AccelerateDecelerateInterpolator());
+                    wavingUpperAndLower[iter].setRepeatCount(3);
+                    wavingUpperAndLower[iter].setRepeatMode(Animation.REVERSE);
+
+                    wavingAniSet[iter] = new AnimationSet(false);
+                    wavingAniSet[iter].addAnimation(wavingTranslateAni[iter]);
+                    wavingAniSet[iter].addAnimation(wavingUpperAndLower[iter]);
+                }
+
+                wavingTranslateAni[3] = new TranslateAnimation(0, 0, 0, smallwave[0].getHeight() * 0.1f);
+                wavingTranslateAni[3].setDuration(2600);
+                wavingTranslateAni[3].setInterpolator(new CycleInterpolator(0.5f));
+                wavingTranslateAni[3].setRepeatCount(3);
+                wavingTranslateAni[3].setRepeatMode(Animation.REVERSE);
+
+                wavingTranslateAni[4] = new TranslateAnimation(0, 0, 0, smallwave[1].getHeight() * 0.1f);
+                wavingTranslateAni[4].setDuration(3500);
+                wavingTranslateAni[4].setInterpolator(new CycleInterpolator(1));
+                wavingTranslateAni[4].setRepeatCount(2);
+                wavingTranslateAni[4].setRepeatMode(Animation.REVERSE);
+
+                wavingTranslateAni[5] = new TranslateAnimation(0, 0, 0, smallwave[2].getHeight() * 0.1f);
+                wavingTranslateAni[5].setDuration(2000);
+                wavingTranslateAni[5].setInterpolator(new CycleInterpolator(0.5f));
+                wavingTranslateAni[5].setRepeatCount(4);
+                wavingTranslateAni[5].setRepeatMode(Animation.REVERSE);
+                wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        seagull[0].startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        smallwave[0].setVisibility(View.VISIBLE);
+                        smallwave[1].setVisibility(View.VISIBLE);
+                        smallwave[2].setVisibility(View.VISIBLE);
+                        smallwave[3].setVisibility(View.VISIBLE);
+                        seagull[0].setVisibility(View.VISIBLE);
+                        seagull[0].clearAnimation();
+                    }
+                });
+
+                wavingTranslateAni[6] = new TranslateAnimation(0, 0, 0, smallwave[3].getHeight() * 0.1f);
+                wavingTranslateAni[6].setDuration(2600);
+                wavingTranslateAni[6].setInterpolator(new CycleInterpolator(1));
+                wavingTranslateAni[6].setRepeatCount(3);
+                wavingTranslateAni[6].setRepeatMode(Animation.REVERSE);
+
+                animationClear();
+                if (animationFlag == 0) {
+                    animationFlag = 1;
+                    checkedAnimation = false;
+                    sea.startAnimation(waveAppear);
+                    bigwave[0].startAnimation(waveAppear);
+                    bigwave[1].startAnimation(waveAppear);
+                    bigwave[2].startAnimation(waveAppear);
+                    momDokdo.startAnimation(momAppear);
+                }
+            }
+        });
+//        animationClear();
+//        if(waveAppear != null){
+//            animationFlag = 1;
+//            sea.startAnimation(waveAppear);
+//            bigwave[0].startAnimation(waveAppear);
+//            bigwave[1].startAnimation(waveAppear);
+//            bigwave[2].startAnimation(waveAppear);
+//            momDokdo.startAnimation(momAppear);
+//        }
     }
 
     @Override

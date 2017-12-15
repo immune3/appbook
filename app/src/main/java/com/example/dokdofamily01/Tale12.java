@@ -24,6 +24,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -111,6 +112,85 @@ public class Tale12 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+        sqeedHandFadein = new AlphaAnimation(0, 1);
+        sqeedHandFadein.setDuration(800);
+
+        sqeedHandFadeout = new AlphaAnimation(1, 0);
+        sqeedHandFadeout.setDuration(800);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(600);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        hairpin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag == 0) {
+                    animationClear();
+                    animationFlag = 1;
+                    checkedAnimation = false;
+                    sqeedBody.startAnimation(sqeedClinkAni);
+                    sqeedHead.startAnimation(sqeedClinkAni);
+                    hairpin.startAnimation(sqeedClinkAni);
+
+                    whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            handSoundPool.play(handSound, 2, 2, 0, 0, 1);
+                        }
+                    }, 100);
+                }
+            }
+        });
+    }
+
+    public void animationClear() {
+        animationFlag = 0;
+        sqeedLeftHand.setVisibility(View.INVISIBLE);
+        sqeedRightHand.setVisibility(View.INVISIBLE);
+        sea1.clearAnimation();
+        sea2.clearAnimation();
+        dokdo.clearAnimation();
+        byul.clearAnimation();
+        byulHand.clearAnimation();
+        seagull.clearAnimation();
+        smallsqeed.clearAnimation();
+        sqeedLeftHand.clearAnimation();
+        sqeedRightHand.clearAnimation();
+        sqeedBody.clearAnimation();
+        sqeedHead.clearAnimation();
+        hairpin.clearAnimation();
+
+    }
+
+    @Override
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_12);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"찰랑찰랑~ ", "1500"},
+                new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
+                new String[]{"별아 나랑 혹돔굴에 가보자!", "12000"},
+                new String[]{"우와~ 혹돔 삼촌도 만나요?", "16500"},
+                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ", "23700"},
+                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ", "28600"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         sea1.post(new Runnable() {
             @Override
             public void run() {
@@ -143,6 +223,7 @@ public class Tale12 extends BaseFragment {
                     public void onAnimationEnd(Animation animation) {
                         animationFlag = 0;
                         hairpin.startAnimation(blink);
+                        checkedAnimation = true;
                     }
 
                     @Override
@@ -173,6 +254,22 @@ public class Tale12 extends BaseFragment {
                 sqeedRightHandAniSet.addAnimation(sqeedRightHandScale);
                 sqeedRightHandAniSet.addAnimation(sqeedHandFadein);
                 sqeedRightHandAniSet.setFillAfter(true);
+                sqeedRightHandAniSet.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 sqeedClinkAni = new TranslateAnimation(0, 0, 0, -(sqeedHead.getHeight() * 0.48f));
                 sqeedClinkAni.setDuration(2000);
@@ -209,8 +306,9 @@ public class Tale12 extends BaseFragment {
                 });
 
 
-                if (animationFlag == 0) {
+//                if (animationFlag == 0) {
                     animationClear();
+                    checkedAnimation = false;
                     animationFlag = 1;
                     sea1.startAnimation(seaAppear);
                     sea2.startAnimation(seaAppear);
@@ -221,98 +319,9 @@ public class Tale12 extends BaseFragment {
                     sqeedBody.startAnimation(sqeedAppear);
                     sqeedHead.startAnimation(sqeedAppear);
                     hairpin.startAnimation(sqeedAppear);
-                }
+//                }
             }
         });
-    }
-
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-        sqeedHandFadein = new AlphaAnimation(0, 1);
-        sqeedHandFadein.setDuration(800);
-
-        sqeedHandFadeout = new AlphaAnimation(1, 0);
-        sqeedHandFadeout.setDuration(800);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(600);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        hairpin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(animationFlag == 0) {
-                    animationClear();
-                    animationFlag = 1;
-                    sqeedBody.startAnimation(sqeedClinkAni);
-                    sqeedHead.startAnimation(sqeedClinkAni);
-                    hairpin.startAnimation(sqeedClinkAni);
-
-                    whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            handSoundPool.play(handSound, 1, 1, 0, 0, 1);
-                        }
-                    }, 2000);
-                }
-            }
-        });
-    }
-
-    public void animationClear() {
-        animationFlag = 0;
-        sea1.clearAnimation();
-        sea2.clearAnimation();
-        dokdo.clearAnimation();
-        byul.clearAnimation();
-        byulHand.clearAnimation();
-        seagull.clearAnimation();
-        smallsqeed.clearAnimation();
-        sqeedLeftHand.clearAnimation();
-        sqeedRightHand.clearAnimation();
-        sqeedBody.clearAnimation();
-        sqeedHead.clearAnimation();
-        hairpin.clearAnimation();
-
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_12);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"찰랑찰랑~ ", "1500"},
-                new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
-                new String[]{"별아 나랑 혹돔굴에 가보자!", "12000"},
-                new String[]{"우와~ 혹돔 삼촌도 만나요?", "16500"},
-                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ", "23700"},
-                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ", "28600"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-
-        if (seaAppear != null) {
-            animationClear();
-            animationFlag = 1;
-            sea1.startAnimation(seaAppear);
-            sea2.startAnimation(seaAppear);
-            dokdo.startAnimation(dokdoAppear);
-            byul.startAnimation(dokdoAppear);
-            smallsqeed.startAnimation(smallSqeedAppear);
-            seagull.startAnimation(seagullAppear);
-            sqeedBody.startAnimation(sqeedAppear);
-            sqeedHead.startAnimation(sqeedAppear);
-            hairpin.startAnimation(sqeedAppear);
-        }
-
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -105,6 +106,143 @@ public class Tale14 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(1500);
+
+        lightFadein = new AlphaAnimation(0, 1);
+        lightFadein.setStartOffset(700);
+        lightFadein.setDuration(1500);
+        lightFadein.setAnimationListener(new MyAnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                bell.startAnimation(blink);
+                checkedAnimation = true;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+        });
+
+        sqeedHandFadein = new AlphaAnimation(0, 1);
+        sqeedHandFadein.setDuration(300);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(500);
+        blink.setInterpolator(new LinearInterpolator());
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag == 0) {
+                    checkedAnimation=false;
+                    animationFlag = 1;
+                    if(bellClickFlag == 0) {
+                        bellClickFlag = 1;
+                        sqeedHand.setVisibility(View.VISIBLE);
+                        sqeedHand.startAnimation(sqeedHandScaleAnimSet);
+                    }
+                    else {
+                        sqeedHand.clearAnimation();
+                        sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
+                    }
+                    bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(bellClickFlag==1) {
+                                            bellClickFlag=2;
+                                            lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                                        }
+                                    }
+                                }, 1100);
+                            }
+                    }, 1200);
+                }
+            }
+        });
+
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if(animationFlag==1){
+                animationFlag = 0;
+                bubble.setVisibility(View.VISIBLE);
+                bubble.startAnimation(fadein);
+                bell.startAnimation(blink);
+                checkedAnimation = true;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            light.setVisibility(View.INVISIBLE);
+            sqeedHand.setVisibility(View.INVISIBLE);
+            bubble.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private void animationClear() {
+        cave.setVisibility(View.INVISIBLE);
+        animationFlag = 0;
+        bellClickFlag = 0;
+        cave.clearAnimation();
+        land.clearAnimation();
+        sqeedBody.clearAnimation();
+        sqeedHand.clearAnimation();
+        byul.clearAnimation();
+        bubble.clearAnimation();
+        bell.clearAnimation();
+        light.clearAnimation();
+    }
+
+    @Override
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_14);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"혹돔굴에 가까워질수록 어둡고 깜깜해져요. ", "5000"},
+                new String[]{"졸졸 따라오던 해님도 안보여요. ", "8500"},
+                new String[]{"왠지 으스스한 느낌이 들어서 ", "11500"},
+                new String[]{"별이는 오징어 이모한테 찰싹~ 붙어요. ", "16000"},
+                new String[]{"드디어 혹돔굴이에요. ", "19000"},
+                new String[]{"오징어 이모가 다시 긴 다리를 쭈욱 늘여 \n" +
+                        "초인종을 꾸욱 눌러요. ", "25500"},
+                new String[]{"딩동딩동~", "28500"}
+
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         land.post(new Runnable() {
             @Override
             public void run() {
@@ -128,7 +266,7 @@ public class Tale14 extends BaseFragment {
 //                landAppearAni.setAnimationListener(new MyAnimationListener());
 
                 bellAnimSet.addAnimation(caveAppearAni);
-                bellAnimSet.addAnimation(blink);
+//                bellAnimSet.addAnimation(blink);
 
 //                Log.d("123123", "msg"+sqeedHand.getWidth());
                 sqeedHandScaleAni = new ScaleAnimation(0.95f, 1, 1, 1, 0, sqeedHand.getHeight());
@@ -183,6 +321,7 @@ public class Tale14 extends BaseFragment {
                     public void onAnimationEnd(Animation animation) {
                         animationFlag = 0;
                         bell.startAnimation(blink);
+                        checkedAnimation = true;
                     }
 
                     @Override
@@ -196,153 +335,27 @@ public class Tale14 extends BaseFragment {
                     }
                 });
 
-                if (animationFlag == 0) {
-                    animationClear();
-                    animationFlag = 1;
-                    cave.startAnimation(caveAppearAni);
-                    land.startAnimation(landAppearAni);
-                    byul.startAnimation(byulAppearAni);
-                    sqeedBody.startAnimation(byulAppearAni);
-                    bell.startAnimation(bellAnimSet);
-                }
+//                if (animationFlag == 0) {
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                cave.startAnimation(caveAppearAni);
+                land.startAnimation(landAppearAni);
+                byul.startAnimation(byulAppearAni);
+                sqeedBody.startAnimation(byulAppearAni);
+                bell.startAnimation(bellAnimSet);
+//                }
             }
         });
-    }
-
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(1500);
-
-        lightFadein = new AlphaAnimation(0, 1);
-        lightFadein.setStartOffset(700);
-        lightFadein.setDuration(1500);
-        lightFadein.setAnimationListener(new MyAnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bell.startAnimation(blink);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-        });
-
-        sqeedHandFadein = new AlphaAnimation(0, 1);
-        sqeedHandFadein.setDuration(300);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        bell.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(animationFlag == 0) {
-                    animationFlag = 1;
-                    if(bellClickFlag == 0) {
-                        bellClickFlag = 1;
-                        sqeedHand.setVisibility(View.VISIBLE);
-                        sqeedHand.startAnimation(sqeedHandScaleAnimSet);
-                    }
-                    else {
-                        sqeedHand.clearAnimation();
-                        sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
-                    }
-                    bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
-                    new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                    bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
-                    new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
-                                }
-                            }, 1100);
-                        }
-                    }, 1200);
-                }
-            }
-        });
-
-    }
-
-    private class MyAnimationListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-            bubble.setVisibility(View.VISIBLE);
-            bubble.startAnimation(fadein);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-            light.setVisibility(View.INVISIBLE);
-            sqeedHand.setVisibility(View.INVISIBLE);
-            bubble.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
-    private void animationClear() {
-        cave.setVisibility(View.INVISIBLE);
-        animationFlag = 0;
-        bellClickFlag = 0;
-        cave.clearAnimation();
-        land.clearAnimation();
-        sqeedBody.clearAnimation();
-        sqeedHand.clearAnimation();
-        byul.clearAnimation();
-        bubble.clearAnimation();
-        bell.clearAnimation();
-        light.clearAnimation();
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_14);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"혹돔굴에 가까워질수록 어둡고 깜깜해져요. ", "5000"},
-                new String[]{"졸졸 따라오던 해님도 안보여요. ", "8500"},
-                new String[]{"왠지 으스스한 느낌이 들어서 ", "11500"},
-                new String[]{"별이는 오징어 이모한테 찰싹~ 붙어요. ", "16000"},
-                new String[]{"드디어 혹돔굴이에요. ", "19000"},
-                new String[]{"오징어 이모가 다시 긴 다리를 쭈욱 늘여 \n" +
-                        "초인종을 꾸욱 눌러요. ", "25500"},
-                new String[]{"딩동딩동~", "28500"}
-
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-
-        if (caveAppearAni != null) {
-            animationClear();
-            animationFlag = 1;
-            cave.startAnimation(caveAppearAni);
-            land.startAnimation(landAppearAni);
-            byul.startAnimation(byulAppearAni);
-            sqeedBody.startAnimation(byulAppearAni);
-            bell.startAnimation(bellAnimSet);
-        }
+//        if (caveAppearAni != null) {
+//            animationClear();
+//            animationFlag = 1;
+//            cave.startAnimation(caveAppearAni);
+//            land.startAnimation(landAppearAni);
+//            byul.startAnimation(byulAppearAni);
+//            sqeedBody.startAnimation(byulAppearAni);
+//            bell.startAnimation(bellAnimSet);
+//        }
 
     }
 

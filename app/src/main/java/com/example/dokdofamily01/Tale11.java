@@ -24,6 +24,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -102,125 +103,7 @@ public class Tale11 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        originalFlower.post(new Runnable() {
-            @Override
-            public void run() {
-                originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
-                originalFlowerAnimation.setDuration(2000);
-                originalFlowerAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                originalFlowerAnimation.setAnimationListener(new MyAnimationListener());
 
-                dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
-                dokdoAnimation.setDuration(2000);
-                dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                dokdoAnimation.setAnimationListener(new MyAnimationListener(){
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        flowers.setVisibility(View.INVISIBLE);
-                    }
-                });
-
-                byulAnimation = new TranslateAnimation(byul.getWidth(), 0, byul.getHeight(), 0);
-                byulAnimation.setDuration(1000);
-                byulAnimation.setInterpolator(new AccelerateInterpolator());
-                byulAnimation.setAnimationListener(new MyAnimationListener() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        bee1.startAnimation(hideBeeAniSet);
-                        butterfly.startAnimation(hideButterflyAniSet);
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-                });
-
-                beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight() * 2), 0);
-                beeAnimation.setDuration(1500);
-                beeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                beeAnimation.setStartOffset(500);
-                beeAnimation.setAnimationListener(new MyAnimationListener() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        bee2.startAnimation(blink);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-                });
-
-                beeRotate = new RotateAnimation(-20, 20, bee1.getWidth() / 2, bee1.getHeight() / 2);
-                beeRotate.setDuration(1500);
-                beeRotate.setStartOffset(500);
-                beeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-//                beeRotate.setInterpolator(new AnticipateOvershootInterpolator());
-                beeRotate.setRepeatCount(3);
-                beeRotate.setRepeatMode(Animation.REVERSE);
-
-                beeTranslate = new TranslateAnimation(0, 0, bee1.getHeight() / 3, -(bee1.getHeight() / 2));
-                beeTranslate.setDuration(2000);
-                beeTranslate.setStartOffset(600);
-                beeTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
-                beeTranslate.setRepeatCount(2);
-                beeTranslate.setRepeatMode(Animation.REVERSE);
-
-
-                butterflyRotate = new RotateAnimation(50, 10, butterfly.getWidth() / 1.5f, butterfly.getHeight() * 0.5f);
-                butterflyRotate.setDuration(1000);
-                butterflyRotate.setStartOffset(500);
-                butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-//                butterflyRotate.setInterpolator(new AnticipateOvershootInterpolator());
-                butterflyRotate.setRepeatCount(4);
-                butterflyRotate.setRepeatMode(Animation.REVERSE);
-
-                butterflyTranslate = new TranslateAnimation(0, 0, butterfly.getHeight() / 6, 0);
-                butterflyTranslate.setDuration(3000);
-                butterflyTranslate.setStartOffset(600);
-                butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
-                butterflyTranslate.setRepeatCount(2);
-                butterflyTranslate.setRepeatMode(Animation.REVERSE);
-
-                hideBeeAniSet.addAnimation(beeButterflyFadeIn);
-                hideBeeAniSet.addAnimation(beeRotate);
-                hideBeeAniSet.addAnimation(beeTranslate);
-                hideBeeAniSet.addAnimation(beeButterflyFadeOut);
-
-                hideButterflyAniSet.addAnimation(beeButterflyFadeIn);
-                hideButterflyAniSet.addAnimation(butterflyRotate);
-                hideButterflyAniSet.addAnimation(butterflyTranslate);
-                hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
-
-
-                if (animationFlag == 0) {
-                    animationClear();
-                    animationFlag = 1;
-                    byulAppearFlag = 0;
-                    dokdo.startAnimation(dokdoAnimation);
-                    originalFlower.startAnimation(originalFlowerAnimation);
-                    bee2.startAnimation(beeAnimation);
-                }
-
-            }
-        });
     }
 
     @Override
@@ -239,6 +122,7 @@ public class Tale11 extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 animationFlag = 0;
                 bee2.startAnimation(blink);
+                checkedAnimation = true;
             }
 
             @Override
@@ -271,6 +155,7 @@ public class Tale11 extends BaseFragment {
             public void onClick(View view) {
                 if(animationFlag == 0) {
                     animationFlag = 1;
+                    checkedAnimation = false;
                     if(byulAppearFlag == 0) {
                         byulAppearFlag = 1;
                         byul.startAnimation(byulAnimation);
@@ -346,15 +231,136 @@ public class Tale11 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-//        setValues();
-        if (originalFlowerAnimation != null) {
-            animationClear();
-            animationFlag = 1;
-            byulAppearFlag = 0;
-            dokdo.startAnimation(dokdoAnimation);
-            originalFlower.startAnimation(originalFlowerAnimation);
-            bee2.startAnimation(beeAnimation);
-        }
+        originalFlower.post(new Runnable() {
+            @Override
+            public void run() {
+                originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
+                originalFlowerAnimation.setDuration(2000);
+                originalFlowerAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                originalFlowerAnimation.setAnimationListener(new MyAnimationListener());
+
+                dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
+                dokdoAnimation.setDuration(2000);
+                dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                dokdoAnimation.setAnimationListener(new MyAnimationListener(){
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        flowers.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+                byulAnimation = new TranslateAnimation(byul.getWidth(), 0, byul.getHeight(), 0);
+                byulAnimation.setDuration(1000);
+                byulAnimation.setInterpolator(new AccelerateInterpolator());
+                byulAnimation.setAnimationListener(new MyAnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bee1.startAnimation(hideBeeAniSet);
+                        butterfly.startAnimation(hideButterflyAniSet);
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
+
+                beeAnimation = new TranslateAnimation(bee2.getWidth(), 0, -(bee2.getHeight() * 2), 0);
+                beeAnimation.setDuration(1500);
+                beeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                beeAnimation.setStartOffset(500);
+                beeAnimation.setAnimationListener(new MyAnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bee2.startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
+
+                beeRotate = new RotateAnimation(-20, 20, bee1.getWidth() / 2, bee1.getHeight() / 2);
+                beeRotate.setDuration(1500);
+                beeRotate.setStartOffset(500);
+                beeRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+//                beeRotate.setInterpolator(new AnticipateOvershootInterpolator());
+                beeRotate.setRepeatCount(3);
+                beeRotate.setRepeatMode(Animation.REVERSE);
+
+                beeTranslate = new TranslateAnimation(0, 0, bee1.getHeight() / 3, -(bee1.getHeight() / 2));
+                beeTranslate.setDuration(2000);
+                beeTranslate.setStartOffset(600);
+                beeTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
+                beeTranslate.setRepeatCount(2);
+                beeTranslate.setRepeatMode(Animation.REVERSE);
+
+
+                butterflyRotate = new RotateAnimation(50, 10, butterfly.getWidth() / 1.5f, butterfly.getHeight() * 0.5f);
+                butterflyRotate.setDuration(1000);
+                butterflyRotate.setStartOffset(500);
+                butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+//                butterflyRotate.setInterpolator(new AnticipateOvershootInterpolator());
+                butterflyRotate.setRepeatCount(4);
+                butterflyRotate.setRepeatMode(Animation.REVERSE);
+
+                butterflyTranslate = new TranslateAnimation(0, 0, butterfly.getHeight() / 6, 0);
+                butterflyTranslate.setDuration(3000);
+                butterflyTranslate.setStartOffset(600);
+                butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
+                butterflyTranslate.setRepeatCount(2);
+                butterflyTranslate.setRepeatMode(Animation.REVERSE);
+
+                hideBeeAniSet.addAnimation(beeButterflyFadeIn);
+                hideBeeAniSet.addAnimation(beeRotate);
+                hideBeeAniSet.addAnimation(beeTranslate);
+                hideBeeAniSet.addAnimation(beeButterflyFadeOut);
+
+                hideButterflyAniSet.addAnimation(beeButterflyFadeIn);
+                hideButterflyAniSet.addAnimation(butterflyRotate);
+                hideButterflyAniSet.addAnimation(butterflyTranslate);
+                hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
+
+
+                if (animationFlag == 0) {
+                    animationClear();
+                    checkedAnimation = false;
+                    animationFlag = 1;
+                    byulAppearFlag = 0;
+                    dokdo.startAnimation(dokdoAnimation);
+                    originalFlower.startAnimation(originalFlowerAnimation);
+                    bee2.startAnimation(beeAnimation);
+                }
+
+            }
+        });
+////        setValues();
+//        if (originalFlowerAnimation != null) {
+//            animationClear();
+//            animationFlag = 1;
+//            byulAppearFlag = 0;
+//            dokdo.startAnimation(dokdoAnimation);
+//            originalFlower.startAnimation(originalFlowerAnimation);
+//            bee2.startAnimation(beeAnimation);
+//        }
     }
 
     @Override

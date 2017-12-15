@@ -30,7 +30,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale02 extends BaseFragment {
 
-    private CustomViewPager vp;
     ImageView byulhead;
     ImageView seagullHand;
     ImageView seagullBody;
@@ -90,6 +89,86 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+        blink = new AlphaAnimation(1,0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(animationFlag==0) {
+                    checkedAnimation = false;
+                    animationFlag = 2;
+                    sp.play(soundID,1,1,0,0,1);
+                    star.clearAnimation();
+                    byulhead.startAnimation(headDown);
+                    seagullHand.startAnimation(handAppear);
+                }
+            }
+        });
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            switch (animationFlag){
+                case 1:
+                    animationFlag=0;
+                    checkedAnimation = true;
+                    star.startAnimation(blink);
+                    break;
+                case 2:
+                    animationFlag=3;
+                    byulhead.startAnimation(headUp);
+                    break;
+                case 3:
+                    animationFlag=0;
+                    checkedAnimation = true;
+                    star.startAnimation(blink);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+    }
+
+    public void soundPlayFunc(){
+        musicController = new MusicController(getActivity(), R.raw.scene_2);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"갈매기에요", "1600"},
+                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
+                        "생긋~ 웃더니 말을 해요.", "8500"},
+                new String[]{"별아 창문을 열어! ", "12500"},
+                new String[]{"꿈이야...", "16000"},
+                new String[]{"별이가 창문을 열어요.", "19000"},
+                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
+                new String[]{"갈매기가 또 말을 해요.", "27000"},
+                new String[]{"별아 내 등에 앉아!", "31500"},
+                new String[]{"진짜 꿈이야...", "35000"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         seagullHand.post(new Runnable() {
             @Override
             public void run() {
@@ -99,7 +178,6 @@ public class Tale02 extends BaseFragment {
 
                 seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
                 seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-//                seagullAppear.setAnimationListener(new MyAnimationListener());
 
                 seagullClick = new RotateAnimation(10,-10,width,height);
                 seagullClick.setDuration(500);
@@ -180,100 +258,15 @@ public class Tale02 extends BaseFragment {
                 handDisappear.addAnimation(handDown);
                 handDisappear.addAnimation(fadeOut);
 
+                animationFlag=1;
                 seagullHand.setVisibility(View.INVISIBLE);
-                if(animationFlag==0) {
-                    animationFlag=1;
-                    checkedAnimation = false;
-                    byulhead.startAnimation(headUp);
-                    seagullBody.setAnimation(seagullAppear);
-                }
+                checkedAnimation = false;
+                star.clearAnimation();
+                byulhead.startAnimation(headUp);
+                seagullBody.setAnimation(seagullAppear);
             }
         });
-    }
 
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-        blink = new AlphaAnimation(1,0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(animationFlag==0) {
-                    checkedAnimation = false;
-                    animationFlag = 2;
-                    sp.play(soundID,1,1,0,0,1);
-                    star.clearAnimation();
-                    byulhead.startAnimation(headDown);
-                    seagullHand.startAnimation(handAppear);
-                }
-            }
-        });
-    }
-
-    private class MyAnimationListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            switch (animationFlag){
-                case 1:
-                    animationFlag=0;
-                    checkedAnimation = true;
-                    star.startAnimation(blink);
-                    break;
-                case 2:
-                    animationFlag=3;
-                    byulhead.startAnimation(headUp);
-                    break;
-                case 3:
-                    animationFlag=0;
-                    checkedAnimation = true;
-                    star.startAnimation(blink);
-                    break;
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-        }
-
-    }
-
-    public void soundPlayFunc(){
-        musicController = new MusicController(getActivity(), R.raw.scene_2);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"갈매기에요", "1600"},
-                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
-                        "생긋~ 웃더니 말을 해요.", "8500"},
-                new String[]{"별아 창문을 열어! ", "12500"},
-                new String[]{"꿈이야...", "16000"},
-                new String[]{"별이가 창문을 열어요.", "19000"},
-                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
-                new String[]{"갈매기가 또 말을 해요.", "27000"},
-                new String[]{"별아 내 등에 앉아!", "31500"},
-                new String[]{"진짜 꿈이야...", "35000"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-        if (headUp != null) {
-            animationFlag=1;
-            checkedAnimation = false;
-            star.clearAnimation();
-            byulhead.startAnimation(headUp);
-            seagullBody.setAnimation(seagullAppear);
-        }
     }
 
     @Override

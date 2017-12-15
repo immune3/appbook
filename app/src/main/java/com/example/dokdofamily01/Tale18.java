@@ -19,6 +19,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -115,6 +116,197 @@ public class Tale18 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        flower18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sp.play(starEffect,1,1,1,0,1);
+                if (animationFlag == 0) {
+                    checkedAnimation = false;
+                    animationFlag = 2;
+                    animationClear();
+                    flower18.clearAnimation();
+
+                    rotateFlag[0] = 1;
+                    rotateFlag[1] = 1;
+                    rotateFlag[2] = 1;
+                    rotateFlag[3] = 1;
+                    post18.setVisibility(View.VISIBLE);
+                    tree18.setVisibility(View.VISIBLE);
+                    sqeed18.setVisibility(View.VISIBLE);
+                    man18.setVisibility(View.VISIBLE);
+                    post18.startAnimation(postAppear);
+                    tree18.startAnimation(treeAppear);
+                    sqeed18.startAnimation(sqeedAppear);
+                    man18.startAnimation(manAppear);
+                }
+            }
+        });
+        sqeed18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[0],1,1,1,0,1);
+            }
+        });
+        man18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[1],1,1,1,0,1);
+            }
+        });
+        post18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[2],1,1,1,0,1);
+            }
+        });
+        tree18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[3],1,1,1,0,1);
+            }
+        });
+        father18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[4],1,1,1,0,1);
+            }
+        });
+        mom18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickFlag) sp.play(scale[5],1,1,1,0,1);
+            }
+        });
+    }
+
+    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (animationFlag) {
+                case 1:
+                    animationFlag = 0;
+                    flower18.startAnimation(blink);
+                    checkedAnimation = true;
+                    break;
+                case 2:
+                    animationFlag = 3;
+                    post18.startAnimation(postRotate[0]);
+                    break;
+                case 3:
+                    animationFlag = 4;
+                    post18.startAnimation(postRotate[1]);
+                    break;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            super.onAnimationRepeat(animation);
+        }
+    }
+
+    private class MyAnimationListener1 extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            super.onAnimationStart(animation);
+            if(rotateFlag[1]==1){
+                sp.play(appear,1,1,1,0,1);
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[1]) {
+                case 1:
+                    rotateFlag[1] = 2;
+                    tree18.startAnimation(treeRotate[0]);
+                    break;
+                case 2:
+                    rotateFlag[1] = 0;
+                    tree18.startAnimation(treeRotate[1]);
+                    break;
+            }
+        }
+    }
+
+    private class MyAnimationListener2 extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[2]) {
+                case 1:
+                    rotateFlag[2] = 2;
+                    sqeed18.startAnimation(sqeedRotate[0]);
+                    break;
+                case 2:
+                    rotateFlag[2] = 0;
+                    sqeed18.startAnimation(sqeedRotate[1]);
+                    break;
+            }
+        }
+    }
+
+    private class MyAnimationListener3 extends com.example.dokdofamily01.MyAnimationListener {
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            super.onAnimationEnd(animation);
+            switch (rotateFlag[3]) {
+                case 1:
+                    rotateFlag[3] = 2;
+                    man18.startAnimation(manRotate[0]);
+                    checkedAnimation = true;
+                    clickFlag=true;
+                    break;
+                case 2:
+                    rotateFlag[3] = 0;
+                    man18.startAnimation(manRotate[1]);
+                    break;
+            }
+        }
+    }
+
+    private void animationClear() {
+        post18.setVisibility(View.INVISIBLE);
+        tree18.setVisibility(View.INVISIBLE);
+        sqeed18.setVisibility(View.INVISIBLE);
+        man18.setVisibility(View.INVISIBLE);
+        post18.clearAnimation();
+        tree18.clearAnimation();
+        sqeed18.clearAnimation();
+        man18.clearAnimation();
+    }
+
+
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_18);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+
+                new String[]{"별이도 자꾸 하품이 나요.", "3000"},
+                new String[]{"오징어 이모가 보드라운 감태침대에 \n" +
+                        "별이를 눕히고 토닥토닥~ 해주어요.", "11000"},
+                new String[]{"하늘에 금가루를 뿌린 것처럼 별님들이 많아요.", "17000"},
+                new String[]{"별님들은 아~주아~주 먼 옛날부터 \n" +
+                        "보물섬 독도를 밝혀주고 지켜주었지.", "26500"},
+                new String[]{"저 많은 별님들이 다 독도를 지켜주는 거예요? ", "32500"},
+                new String[]{"그럼~ 그래서 독도 가족들한테는 \n" +
+                        "자기를 지켜주는 별님이 모두 하나씩 있단다.", "41500"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         father18.post(new Runnable() {
             @Override
             public void run() {
@@ -205,218 +397,16 @@ public class Tale18 extends BaseFragment {
                 manRotate[1].setRepeatMode(Animation.REVERSE);
 
 
-                if (animationFlag == 0) {
-                    animationClear();
-                    animationFlag = 1;
-                    father18.startAnimation(fatherAppear);
-                    mom18.startAnimation(momAppear);
-                    stars18.startAnimation(starsAppear);
-                    flower18.startAnimation(flowerAppear);
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                father18.startAnimation(fatherAppear);
+                mom18.startAnimation(momAppear);
+                stars18.startAnimation(starsAppear);
+                flower18.startAnimation(flowerAppear);
 
-                }
             }
         });
-
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        flower18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!clickFlag){
-                    sp.play(starEffect,1,1,1,0,1);
-                }else{
-                    sp.play(starEffect,1,1,1,0,1);
-                }
-                if (animationFlag == 0) {
-                    animationFlag = 2;
-                    animationClear();
-                    flower18.clearAnimation();
-
-                    rotateFlag[0] = 1;
-                    rotateFlag[1] = 1;
-                    rotateFlag[2] = 1;
-                    rotateFlag[3] = 1;
-                    post18.setVisibility(View.VISIBLE);
-                    tree18.setVisibility(View.VISIBLE);
-                    sqeed18.setVisibility(View.VISIBLE);
-                    man18.setVisibility(View.VISIBLE);
-                    post18.startAnimation(postAppear);
-                    tree18.startAnimation(treeAppear);
-                    sqeed18.startAnimation(sqeedAppear);
-                    man18.startAnimation(manAppear);
-                }
-            }
-        });
-        sqeed18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[0],1,1,1,0,1);
-            }
-        });
-        man18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[1],1,1,1,0,1);
-            }
-        });
-        post18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[2],1,1,1,0,1);
-            }
-        });
-        tree18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[3],1,1,1,0,1);
-            }
-        });
-        father18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[4],1,1,1,0,1);
-            }
-        });
-        mom18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(clickFlag) sp.play(scale[5],1,1,1,0,1);
-            }
-        });
-    }
-
-    private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            super.onAnimationStart(animation);
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            switch (animationFlag) {
-                case 1:
-                    animationFlag = 0;
-                    flower18.startAnimation(blink);
-                    break;
-                case 2:
-                    animationFlag = 3;
-                    post18.startAnimation(postRotate[0]);
-                    break;
-                case 3:
-                    animationFlag = 4;
-                    post18.startAnimation(postRotate[1]);
-                    break;
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            super.onAnimationRepeat(animation);
-        }
-    }
-
-    private class MyAnimationListener1 extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            super.onAnimationStart(animation);
-            if(rotateFlag[1]==1){
-                sp.play(appear,1,1,1,0,1);
-            }
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            switch (rotateFlag[1]) {
-                case 1:
-                    rotateFlag[1] = 2;
-                    tree18.startAnimation(treeRotate[0]);
-                    break;
-                case 2:
-                    rotateFlag[1] = 0;
-                    tree18.startAnimation(treeRotate[1]);
-                    break;
-            }
-        }
-    }
-
-    private class MyAnimationListener2 extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            switch (rotateFlag[2]) {
-                case 1:
-                    rotateFlag[2] = 2;
-                    sqeed18.startAnimation(sqeedRotate[0]);
-                    break;
-                case 2:
-                    rotateFlag[2] = 0;
-                    sqeed18.startAnimation(sqeedRotate[1]);
-                    break;
-            }
-        }
-    }
-
-    private class MyAnimationListener3 extends com.example.dokdofamily01.MyAnimationListener {
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            super.onAnimationEnd(animation);
-            switch (rotateFlag[3]) {
-                case 1:
-                    rotateFlag[3] = 2;
-                    man18.startAnimation(manRotate[0]);
-                    clickFlag=true;
-                    break;
-                case 2:
-                    rotateFlag[3] = 0;
-                    man18.startAnimation(manRotate[1]);
-                    break;
-            }
-        }
-    }
-
-    private void animationClear() {
-        post18.setVisibility(View.INVISIBLE);
-        tree18.setVisibility(View.INVISIBLE);
-        sqeed18.setVisibility(View.INVISIBLE);
-        man18.setVisibility(View.INVISIBLE);
-        post18.clearAnimation();
-        tree18.clearAnimation();
-        sqeed18.clearAnimation();
-        man18.clearAnimation();
-    }
-
-
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_18);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-
-                new String[]{"별이도 자꾸 하품이 나요.", "3000"},
-                new String[]{"오징어 이모가 보드라운 감태침대에 \n" +
-                        "별이를 눕히고 토닥토닥~ 해주어요.", "11000"},
-                new String[]{"하늘에 금가루를 뿌린 것처럼 별님들이 많아요.", "17000"},
-                new String[]{"별님들은 아~주아~주 먼 옛날부터 \n" +
-                        "보물섬 독도를 밝혀주고 지켜주었지.", "26500"},
-                new String[]{"저 많은 별님들이 다 독도를 지켜주는 거예요? ", "32500"},
-                new String[]{"그럼~ 그래서 독도 가족들한테는 \n" +
-                        "자기를 지켜주는 별님이 모두 하나씩 있단다.", "41500"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-        if (fatherAppear != null) {
-            animationClear();
-            animationFlag = 1;
-            father18.startAnimation(fatherAppear);
-            mom18.startAnimation(momAppear);
-            stars18.startAnimation(starsAppear);
-            flower18.startAnimation(flowerAppear);
-        }
-
     }
 
     @Override

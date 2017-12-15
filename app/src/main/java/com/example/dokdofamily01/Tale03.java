@@ -19,6 +19,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 
 /**
  * Created by heronation on 2017-11-06.
@@ -26,7 +27,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale03 extends BaseFragment {
 
-    private CustomViewPager vp;
     ImageView[] cloud = new ImageView[6];
     ImageView byulHand;
     ImageView[] wing = new ImageView[4];
@@ -98,6 +98,89 @@ public class Tale03 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(1000);
+
+        blink = new AlphaAnimation(0.3f, 1);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        blinkStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (animationFlag == 0) {
+                    checkedAnimation = false;
+                    animationFlag = 1;
+                    blinkStar.clearAnimation();
+                    wing[1].clearAnimation();
+                    blinkStar.startAnimation(wingAppear2);
+                    sp.play(wings,1,1,1,1,1);
+                }
+
+            }
+        });
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if (animationFlag == 1) {
+                animationFlag = 0;
+                byulHand.setVisibility(View.VISIBLE);
+                byulHand.startAnimation(fadein);
+                blinkStar.startAnimation(blink);
+                checkedAnimation = true;
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            byulHand.setVisibility(View.INVISIBLE);
+            if(animationFlag==1){
+                cloud[0].setVisibility(View.VISIBLE);
+                cloud[1].setVisibility(View.VISIBLE);
+                cloud[2].setVisibility(View.VISIBLE);
+                cloud[3].setVisibility(View.VISIBLE);
+                cloud[4].setVisibility(View.VISIBLE);
+                cloud[5].setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    @Override
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_3);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ", "4000"},
+                new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
+                        "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
+                new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
+                        "보물섬 독도에 가는 거야~ ", "20000"},
+                new String[]{"정말? 이렇게 날아서?", "23500"},
+                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~", "31000"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         byulHand.post(new Runnable() {
             @Override
             public void run() {
@@ -173,6 +256,7 @@ public class Tale03 extends BaseFragment {
                         byulHand.setVisibility(View.VISIBLE);
                         byulHand.startAnimation(fadein);
                         blinkStar.startAnimation(blink);
+                        checkedAnimation = true;
                     }
 
                     @Override
@@ -197,110 +281,39 @@ public class Tale03 extends BaseFragment {
                     }
                 });
 
-                byulHand.setVisibility(View.INVISIBLE);
-                if (animationFlag == 0) {
-                    animationFlag = 1;
-                    sp.play(soundID, 1, 1, 0, 0, 1);
-                    cloud[0].startAnimation(cloudAnimation[0]);
-                    cloud[1].startAnimation(cloudAnimation[1]);
-                    cloud[2].startAnimation(cloudAnimation[1]);
-                    cloud[3].startAnimation(cloudAnimation[2]);
-                    cloud[4].startAnimation(cloudAnimation[3]);
-                    cloud[5].startAnimation(cloudAnimation[4]);
-                }
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                sp.play(soundID, 1, 1, 0, 0, 1);
+                cloud[0].startAnimation(cloudAnimation[0]);
+                cloud[1].startAnimation(cloudAnimation[1]);
+                cloud[2].startAnimation(cloudAnimation[1]);
+                cloud[3].startAnimation(cloudAnimation[2]);
+                cloud[4].startAnimation(cloudAnimation[3]);
+                cloud[5].startAnimation(cloudAnimation[4]);
             }
         });
     }
 
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(1000);
-
-        blink = new AlphaAnimation(0.3f, 1);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        blinkStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (animationFlag == 0) {
-                    animationFlag = 1;
-                    blinkStar.clearAnimation();
-//                    wing[0].clearAnimation();
-                    wing[1].clearAnimation();
-//                    wing[2].clearAnimation();
-//                    wing[3].clearAnimation();
-//                    wing[0].startAnimation(wingAppear1);
-                    blinkStar.startAnimation(wingAppear2);
-//                    wing[2].startAnimation(wingAppear1);
-//                    wing[3].startAnimation(wingAppear2);
-                    sp.play(wings,1,1,1,1,1);
-                }
-
-            }
-        });
-    }
-
-    private class MyAnimationListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            if (animationFlag == 1) {
-                animationFlag = 0;
-                byulHand.setVisibility(View.VISIBLE);
-                byulHand.startAnimation(fadein);
-                blinkStar.startAnimation(blink);
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-            byulHand.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_3);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ", "4000"},
-                new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
-                        "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
-                new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
-                        "보물섬 독도에 가는 거야~ ", "20000"},
-                new String[]{"정말? 이렇게 날아서?", "23500"},
-                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~", "31000"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-
+    private void animationClear() {
+        animationFlag=0;
         byulHand.setVisibility(View.INVISIBLE);
+        blinkStar.setVisibility(View.INVISIBLE);
+        blinkStar.clearAnimation();
+        wing[1].clearAnimation();
+        cloud[0].clearAnimation();
+        cloud[1].clearAnimation();
+        cloud[2].clearAnimation();
+        cloud[3].clearAnimation();
+        cloud[4].clearAnimation();
+        cloud[5].clearAnimation();
 
-        if (cloudAnimation[0] != null) {
-            animationFlag = 1;
-            wing[1].clearAnimation();
-            sp.play(soundID, 1, 1, 0, 0, 1);
-            cloud[0].startAnimation(cloudAnimation[0]);
-            cloud[1].startAnimation(cloudAnimation[1]);
-            cloud[2].startAnimation(cloudAnimation[1]);
-            cloud[3].startAnimation(cloudAnimation[2]);
-            cloud[4].startAnimation(cloudAnimation[3]);
-            cloud[5].startAnimation(cloudAnimation[4]);
-        }
+        cloud[0].setVisibility(View.INVISIBLE);
+        cloud[1].setVisibility(View.INVISIBLE);
+        cloud[2].setVisibility(View.INVISIBLE);
+        cloud[3].setVisibility(View.INVISIBLE);
+        cloud[4].setVisibility(View.INVISIBLE);
+        cloud[5].setVisibility(View.INVISIBLE);
     }
 
     @Override

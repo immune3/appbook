@@ -22,21 +22,31 @@
     </com.example.dokdofamily01.CustomViewPager>
 
 
-    <com.example.dokdofamily01.CustomTextView
-        android:id="@+id/CustomTextView"
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0px"
-        android:text="테스트테스트테스트테스트테스트테스트"
-        android:textColor="#ffffffff"
-        example:textStroke="true"
-        example:textStrokeWidth="7.0"
-        example:textStrokeColor="#000000"
-        android:textSize="40dp"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
+        app:scale_base_width="2560"
+        app:scale_base_height="500">
 
-        />
+        <com.example.dokdofamily01.CustomTextView
+            android:id="@+id/CustomTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_width = "2560"
+            app:scale_height= "400"
+            app:scale_textsize = "110"
+            app:scale_top = "100"
+            android:text="테스트테스트테스트테스트테스트테스트"
+            android:textColor="#ffffffff"
+            example:textStroke="true"
+            example:textStrokeWidth="7.0"
+            example:textStrokeColor="#000000"
+            android:gravity="center"
+            />
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
+
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

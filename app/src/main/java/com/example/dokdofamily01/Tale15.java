@@ -20,6 +20,7 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -77,47 +78,7 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        sl.post(new Runnable() {
-            @Override
-            public void run() {
 
-                landAnimation = new TranslateAnimation(0, 0, ivLand15.getHeight(), 0);
-                landAnimation.setDuration(2000);
-                landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                caveAnimation = new TranslateAnimation(ivCave15.getWidth(), 0, 0, 0);
-                caveAnimation.setStartOffset(500);
-                caveAnimation.setDuration(2500);
-                caveAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                byulAnimation = new TranslateAnimation(-ivByul15.getWidth() * 1.5f, 0, 0, 0);
-                byulAnimation.setStartOffset(1000);
-                byulAnimation.setDuration(2500);
-                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                byulAnimation.setAnimationListener(new MyAnimationListener());
-
-                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
-//                fadeIn.setFillAfter(true);
-                fadeIn.setAnimationListener(new MyAnimationListener());
-
-                fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
-//                fadeOut.setFillAfter(true);
-
-                blink = new AlphaAnimation(0.3f, 1);
-                blink.setDuration(500);
-                blink.setRepeatCount(Animation.INFINITE);
-                blink.setRepeatMode(Animation.REVERSE);
-
-                if (landAnimation != null) {
-                    animationClear();
-                    appearFlag = 1;
-                    ivLand15.startAnimation(landAnimation);
-                    seaweadImage.startAnimation(landAnimation);
-                    ivCave15.startAnimation(caveAnimation);
-                    ivByul15.startAnimation(byulAnimation);
-                }
-            }
-        });
     }
 
     @Override
@@ -132,6 +93,7 @@ public class Tale15 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (animationFlag == 0 && appearFlag == 0) {
+                    checkedAnimation = false;
                     animationFlag = 1;
                     fish.clearAnimation();
                     fish.setVisibility(View.VISIBLE);
@@ -207,12 +169,14 @@ public class Tale15 extends BaseFragment {
                     manImage3.setVisibility(View.INVISIBLE);
                     manImage3.clearAnimation();
                     manImage4.clearAnimation();
+                    checkedAnimation = true;
                     break;
             }
             if (appearFlag == 1) {
                 appearFlag = 0;
                 fish.setVisibility(View.VISIBLE);
                 fish.startAnimation(blink);
+                checkedAnimation = true;
             }
 
         }
@@ -286,14 +250,49 @@ public class Tale15 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
-        if (landAnimation != null) {
-            animationClear();
-            appearFlag=1;
-            ivLand15.startAnimation(landAnimation);
-            ivCave15.startAnimation(caveAnimation);
-            ivByul15.startAnimation(byulAnimation);
-            seaweadImage.startAnimation(landAnimation);
-        }
+
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+
+                landAnimation = new TranslateAnimation(0, 0, ivLand15.getHeight(), 0);
+                landAnimation.setDuration(2000);
+                landAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                caveAnimation = new TranslateAnimation(ivCave15.getWidth(), 0, 0, 0);
+                caveAnimation.setStartOffset(500);
+                caveAnimation.setDuration(2500);
+                caveAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulAnimation = new TranslateAnimation(-ivByul15.getWidth() * 1.5f, 0, 0, 0);
+                byulAnimation.setStartOffset(1000);
+                byulAnimation.setDuration(2500);
+                byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulAnimation.setAnimationListener(new MyAnimationListener());
+
+                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
+//                fadeIn.setFillAfter(true);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
+//                fadeOut.setFillAfter(true);
+
+                blink = new AlphaAnimation(0.3f, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
+                if (landAnimation != null) {
+                    animationClear();
+                    checkedAnimation = false;
+                    appearFlag = 1;
+                    ivLand15.startAnimation(landAnimation);
+                    seaweadImage.startAnimation(landAnimation);
+                    ivCave15.startAnimation(caveAnimation);
+                    ivByul15.startAnimation(byulAnimation);
+                }
+            }
+        });
     }
 
     @Override

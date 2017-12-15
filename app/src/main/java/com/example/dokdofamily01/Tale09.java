@@ -21,6 +21,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -128,92 +129,7 @@ public class Tale09 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        birds2.post(new Runnable() {
-            @Override
-            public void run() {
-                int birdsWidth = birds2.getWidth();
-                int birdsHeight = (int) (birds2.getHeight() * 1.3);
-                seagullAppear = new ScaleAnimation(0, 1, 0, 1, birdsWidth, birdsHeight);
-                seagullAppear.setDuration(1000);
-//                seagullAppear.setFillAfter(true);
 
-                birdsAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_09_birds_appear);
-                birdsAppear.setFillAfter(true);
-
-                decoAppear = new TranslateAnimation(0, 0, (int) (deco.getHeight() * 0.7), 0);
-                decoAppear.setDuration(1000);
-                decoAppear.setFillAfter(true);
-                decoAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                decoAppear.setAnimationListener(new AppearAnimationListener());
-
-                seaAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.7), 0);
-                seaAppear.setDuration(1000);
-                seaAppear.setFillAfter(true);
-                seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                seaAppear.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        sea.startAnimation(wavingAnimation);
-                        effect.startAnimation(wavingAnimation);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                fatherAppear = new TranslateAnimation(-fatherDokdo.getWidth(), 0, 0, 0);
-                fatherAppear.setStartOffset(200);
-                fatherAppear.setDuration(1000);
-                fatherAppear.setFillAfter(true);
-                fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                fatherAppear.setAnimationListener(new AppearAnimationListener());
-
-                momAppear = new TranslateAnimation(momDokdo.getWidth(), 0, 0, 0);
-                momAppear.setStartOffset(300);
-                momAppear.setDuration(1000);
-                momAppear.setFillAfter(true);
-                momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                momAppear.setAnimationListener(new AppearAnimationListener());
-
-                wavingAnimation = new TranslateAnimation(0, 0, 0, sea.getHeight() * 0.02f);
-                wavingAnimation.setDuration(2500);
-                wavingAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                wavingAnimation.setRepeatCount(Animation.INFINITE);
-                wavingAnimation.setRepeatMode(Animation.REVERSE);
-
-                appear = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-                appear.setAnimationListener(new AppearAnimationListener());
-
-                effect.setVisibility(View.INVISIBLE);
-                bird.setVisibility(View.INVISIBLE);
-                fatherDokdo.setVisibility(View.INVISIBLE);
-                fatherDokdoHand.setVisibility(View.INVISIBLE);
-                momDokdo.setVisibility(View.INVISIBLE);
-                birds.setVisibility(View.INVISIBLE);
-                birds1.setVisibility(View.INVISIBLE);
-                birds2.setVisibility(View.INVISIBLE);
-                birds3.setVisibility(View.INVISIBLE);
-                birds4.setVisibility(View.INVISIBLE);
-                birds5.setVisibility(View.INVISIBLE);
-                birds6.setVisibility(View.INVISIBLE);
-
-                if (appearFlag == 0 && animationFlag == 0) {
-                    appearFlag = 1;
-                    sea.startAnimation(seaAppear);
-                    effect.startAnimation(seaAppear);
-                    birds.startAnimation(birdsAppear);
-                    deco.startAnimation(decoAppear);
-                    fatherDokdo.startAnimation(fatherAppear);
-                    momDokdo.startAnimation(momAppear);
-                }
-            }
-        });
     }
 
     @Override
@@ -261,6 +177,7 @@ public class Tale09 extends BaseFragment {
             public void onClick(View view) {
                 if (animationFlag == 0) {
                     animationFlag = 1;
+                    checkedAnimation = false;
                     bird.clearAnimation();
                     byulHead1.clearAnimation();
                     byulHead2.clearAnimation();
@@ -334,6 +251,7 @@ public class Tale09 extends BaseFragment {
                 case 2:
                     appearFlag = 0;
                     bird.startAnimation(blink);
+                    checkedAnimation = true;
                     break;
             }
         }
@@ -427,7 +345,7 @@ public class Tale09 extends BaseFragment {
                     byulBody5.startAnimation(fadeOut);
                     byulHead5.startAnimation(fadeOut);
                     bird.startAnimation(blink);
-                    Log.i("animationFlag", "" + animationFlag);
+                    checkedAnimation = true;
                     break;
             }
         }
@@ -463,6 +381,21 @@ public class Tale09 extends BaseFragment {
         }
 
     }
+    private void animationClear(){
+        effect.setVisibility(View.INVISIBLE);
+        bird.setVisibility(View.INVISIBLE);
+        fatherDokdo.setVisibility(View.INVISIBLE);
+        fatherDokdoHand.setVisibility(View.INVISIBLE);
+        momDokdo.setVisibility(View.INVISIBLE);
+        birds.setVisibility(View.INVISIBLE);
+        birds1.setVisibility(View.INVISIBLE);
+        birds2.setVisibility(View.INVISIBLE);
+        birds3.setVisibility(View.INVISIBLE);
+        birds4.setVisibility(View.INVISIBLE);
+        birds5.setVisibility(View.INVISIBLE);
+        birds6.setVisibility(View.INVISIBLE);
+        bird.clearAnimation();
+    }
 
     @Override
     public void soundPlayFunc() {
@@ -484,28 +417,105 @@ public class Tale09 extends BaseFragment {
         musicController.excuteAsync();
         mp = musicController.getMp();
 
-        effect.setVisibility(View.INVISIBLE);
-        bird.setVisibility(View.INVISIBLE);
-        fatherDokdo.setVisibility(View.INVISIBLE);
-        fatherDokdoHand.setVisibility(View.INVISIBLE);
-        momDokdo.setVisibility(View.INVISIBLE);
-        birds.setVisibility(View.INVISIBLE);
-        birds1.setVisibility(View.INVISIBLE);
-        birds2.setVisibility(View.INVISIBLE);
-        birds3.setVisibility(View.INVISIBLE);
-        birds4.setVisibility(View.INVISIBLE);
-        birds5.setVisibility(View.INVISIBLE);
-        birds6.setVisibility(View.INVISIBLE);
-        bird.clearAnimation();
-        if (birdsAppear != null) {
-            appearFlag = 1;
-            birds.startAnimation(birdsAppear);
-            deco.startAnimation(decoAppear);
-            fatherDokdo.startAnimation(fatherAppear);
-            momDokdo.startAnimation(momAppear);
-            sea.startAnimation(seaAppear);
-            effect.startAnimation(seaAppear);
-        }
+        birds2.post(new Runnable() {
+            @Override
+            public void run() {
+                int birdsWidth = birds2.getWidth();
+                int birdsHeight = (int) (birds2.getHeight() * 1.3);
+                seagullAppear = new ScaleAnimation(0, 1, 0, 1, birdsWidth, birdsHeight);
+                seagullAppear.setDuration(1000);
+//                seagullAppear.setFillAfter(true);
+
+                birdsAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_09_birds_appear);
+                birdsAppear.setFillAfter(true);
+
+                decoAppear = new TranslateAnimation(0, 0, (int) (deco.getHeight() * 0.7), 0);
+                decoAppear.setDuration(1000);
+                decoAppear.setFillAfter(true);
+                decoAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                decoAppear.setAnimationListener(new AppearAnimationListener());
+
+                seaAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.7), 0);
+                seaAppear.setDuration(1000);
+                seaAppear.setFillAfter(true);
+                seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                seaAppear.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        sea.startAnimation(wavingAnimation);
+                        effect.startAnimation(wavingAnimation);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                fatherAppear = new TranslateAnimation(-fatherDokdo.getWidth(), 0, 0, 0);
+                fatherAppear.setStartOffset(200);
+                fatherAppear.setDuration(1000);
+                fatherAppear.setFillAfter(true);
+                fatherAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                fatherAppear.setAnimationListener(new AppearAnimationListener());
+
+                momAppear = new TranslateAnimation(momDokdo.getWidth(), 0, 0, 0);
+                momAppear.setStartOffset(300);
+                momAppear.setDuration(1000);
+                momAppear.setFillAfter(true);
+                momAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                momAppear.setAnimationListener(new AppearAnimationListener());
+
+                wavingAnimation = new TranslateAnimation(0, 0, 0, sea.getHeight() * 0.02f);
+                wavingAnimation.setDuration(2500);
+                wavingAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                wavingAnimation.setRepeatCount(Animation.INFINITE);
+                wavingAnimation.setRepeatMode(Animation.REVERSE);
+
+                appear = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                appear.setAnimationListener(new AppearAnimationListener());
+
+                effect.setVisibility(View.INVISIBLE);
+                bird.setVisibility(View.INVISIBLE);
+                fatherDokdo.setVisibility(View.INVISIBLE);
+                fatherDokdoHand.setVisibility(View.INVISIBLE);
+                momDokdo.setVisibility(View.INVISIBLE);
+                birds.setVisibility(View.INVISIBLE);
+                birds1.setVisibility(View.INVISIBLE);
+                birds2.setVisibility(View.INVISIBLE);
+                birds3.setVisibility(View.INVISIBLE);
+                birds4.setVisibility(View.INVISIBLE);
+                birds5.setVisibility(View.INVISIBLE);
+                birds6.setVisibility(View.INVISIBLE);
+
+                if (appearFlag == 0 && animationFlag == 0) {
+                    animationClear();
+                    checkedAnimation = false;
+                    appearFlag = 1;
+                    sea.startAnimation(seaAppear);
+                    effect.startAnimation(seaAppear);
+                    birds.startAnimation(birdsAppear);
+                    deco.startAnimation(decoAppear);
+                    fatherDokdo.startAnimation(fatherAppear);
+                    momDokdo.startAnimation(momAppear);
+                }
+            }
+        });
+
+//
+//        if (birdsAppear != null) {
+//            appearFlag = 1;
+//            birds.startAnimation(birdsAppear);
+//            deco.startAnimation(decoAppear);
+//            fatherDokdo.startAnimation(fatherAppear);
+//            momDokdo.startAnimation(momAppear);
+//            sea.startAnimation(seaAppear);
+//            effect.startAnimation(seaAppear);
+//        }
     }
 
     @Override

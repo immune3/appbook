@@ -18,6 +18,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -80,6 +81,64 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+
+    }
+
+    @Override
+    public void setAnimation() {
+        super.setAnimation();
+    }
+
+    @Override
+    public void setupEvents() {
+        super.setupEvents();
+        cutain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cutain.startAnimation(cutainDownAniSet);
+            }
+        });
+    }
+
+    private class MyAnimationListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            animationFlag = 0;
+            checkedAnimation = true;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+    }
+    @Override
+    public void soundPlayFunc() {
+        musicController = new MusicController(getActivity(), R.raw.scene_20);
+        subtitleList = new ArrayList<>();
+        subtitleList = musicController.makeSubTitleList(
+                new String[]{"별이를 태운 언제나 용감한 갈매기가 ", "3000"},
+                new String[]{"달님이 꾸벅꾸벅 조는 \n" +
+                        "새벽하늘을 씩씩하게 날아요. ", "8500"},
+                new String[]{"갈매기야 나는 지금 보물섬 독도의 \n" +
+                        "보물들을 만나러 가는 거야!", "15000"},
+                new String[]{"별아 보물들을 찾은 거야?", "18000"},
+                new String[]{"응! 찾은 것 같아!", "21000"},
+                new String[]{"상상해보세요!", "24000"},
+                new String[]{"별이는 보물섬 독도에서 \n" +
+                        "어떤 보물들을 찾아냈을까요?", "29500"},
+                new String[]{"반짝반짝~ 보물섬 독도에서 펼쳐지는 \n" +
+                        "별이의 신나는 보물찾기가 ", "36500"},
+                new String[]{"지금부터 신나게 시작됩니다...!", "40500"}
+        );
+        musicController.excuteAsync();
+        mp = musicController.getMp();
+
         wave.post(new Runnable() {
             @Override
             public void run() {
@@ -130,8 +189,14 @@ public class Tale20 extends BaseFragment {
                 cutainDownAniSet.setFillAfter(true);
 
                 if (animationFlag == 0) {
+                    checkedAnimation = false;
                     animationFlag = 1;
                     cutain.clearAnimation();
+                    man.clearAnimation();
+                    dokdo_father.clearAnimation();
+                    dokdo_mom.clearAnimation();
+                    sqeed.clearAnimation();
+                    wave.clearAnimation();
                     man.startAnimation(manAppearAnimation);
                     dokdo_father.startAnimation(dokdoFatherAppearAnimation);
                     sqeed.startAnimation(sqeedAppearAnimation);
@@ -140,75 +205,6 @@ public class Tale20 extends BaseFragment {
                 }
             }
         });
-    }
-
-    @Override
-    public void setAnimation() {
-        super.setAnimation();
-    }
-
-    @Override
-    public void setupEvents() {
-        super.setupEvents();
-        cutain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cutain.startAnimation(cutainDownAniSet);
-            }
-        });
-    }
-
-    private class MyAnimationListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-        }
-
-    }
-    @Override
-    public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_20);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이를 태운 언제나 용감한 갈매기가 ", "3000"},
-                new String[]{"달님이 꾸벅꾸벅 조는 \n" +
-                        "새벽하늘을 씩씩하게 날아요. ", "8500"},
-                new String[]{"갈매기야 나는 지금 보물섬 독도의 \n" +
-                        "보물들을 만나러 가는 거야!", "15000"},
-                new String[]{"별아 보물들을 찾은 거야?", "18000"},
-                new String[]{"응! 찾은 것 같아!", "21000"},
-                new String[]{"상상해보세요!", "24000"},
-                new String[]{"별이는 보물섬 독도에서 \n" +
-                        "어떤 보물들을 찾아냈을까요?", "29500"},
-                new String[]{"반짝반짝~ 보물섬 독도에서 펼쳐지는 \n" +
-                        "별이의 신나는 보물찾기가 ", "36500"},
-                new String[]{"지금부터 신나게 시작됩니다...!", "40500"}
-        );
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-        if (manAppearAnimation != null) {
-            animationFlag = 1;
-            cutain.clearAnimation();
-            man.clearAnimation();
-            dokdo_father.clearAnimation();
-            dokdo_mom.clearAnimation();
-            sqeed.clearAnimation();
-            wave.clearAnimation();
-            man.startAnimation(manAppearAnimation);
-            dokdo_father.startAnimation(dokdoFatherAppearAnimation);
-            sqeed.startAnimation(sqeedAppearAnimation);
-            dokdo_mom.startAnimation(dokdoMomAppearAnimation);
-            wave.startAnimation(waveAppearAnimation);
-        }
     }
 
     @Override

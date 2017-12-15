@@ -17,6 +17,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -108,6 +109,7 @@ public class Tale04 extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if(animationFlag==0){
+                    checkedAnimation = false;
                     sp.play(soundID, 1, 1, 0, 0, 1);
                     sun.startAnimation(sunRiseAni);
                 }
@@ -119,6 +121,7 @@ public class Tale04 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            checkedAnimation = true;
         }
 
         @Override
