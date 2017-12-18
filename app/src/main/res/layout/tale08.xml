@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center">
+
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_08_background"
+            app:scale_base_width="2560"
+            app:scale_base_height="1544">
+
+            <ImageView
+                android:id="@+id/dokdo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_dokdo"
+                app:scale_width="550"
+                app:scale_height="586"
+                app:scale_left="0"
+                app:scale_top="210"/>
+
+            <ImageView
+                android:id="@+id/land"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_land"
+                app:scale_width="2208"
+                app:scale_height="1038"
+                app:scale_left="357"
+                app:scale_top="500"/>
+
+            <ImageView
+                android:id="@+id/treeHand"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_tree_hand"
+                app:scale_width="193"
+                app:scale_height="200"
+                app:scale_left="1243"
+                app:scale_top="439"/>
+            <ImageView
+                android:id="@+id/eyeWhite"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_eye_white"
+                app:scale_width="350"
+                app:scale_height="161"
+                app:scale_left="702"
+                app:scale_top="550"/>
+            <ImageView
+                android:id="@+id/eyeBlack"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_eye_black"
+                app:scale_width="350"
+                app:scale_height="161"
+                app:scale_left="702"
+                app:scale_top="550"/>
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/treeBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_tree_body"
+                app:scale_width="980"
+                app:scale_height="1008"
+                app:scale_left="360"
+                app:scale_top="258"/>
+            <ImageView
+                android:id="@+id/smile"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_smile"
+                app:scale_width="474"
+                app:scale_height="213"
+                app:scale_left="670"
+                app:scale_top="580"/>
+            <ImageView
+                android:id="@+id/leaves"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_leaves"
+                app:scale_width="1259"
+                app:scale_height="948"
+                app:scale_left="227"
+                app:scale_top="158"/>
+
+
+
+
+
+
+
+
+            <ImageView
+                android:id="@+id/plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_plant"
+                app:scale_width="1798"
+                app:scale_height="540"
+                app:scale_left="0"
+                app:scale_top="1000"/>
+
+
+            <ImageView
+                android:id="@+id/seagull"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_seagull"
+                app:scale_width="540"
+                app:scale_height="394"
+                app:scale_left="1990"
+                app:scale_top="0"/>
+
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/byul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_byul"
+                app:scale_width="362"
+                app:scale_height="442"
+                app:scale_left="1940"
+                app:scale_top="290"/>
+
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>
