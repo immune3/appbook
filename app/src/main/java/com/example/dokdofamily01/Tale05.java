@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -115,6 +116,7 @@ public class Tale05 extends BaseFragment {
                 }
 
                 return false;
+
             }
         });
     }

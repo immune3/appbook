@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\heronation2\Desktop\AB\appbook\DokdoFamily01.iml" filepath="C:\Users\heronation2\Desktop\AB\appbook\DokdoFamily01.iml" />
-      <module fileurl="file://C:\Users\hero\Desktop\AB\171208AB\appbook-master\DokdoFamily01.iml" filepath="C:\Users\hero\Desktop\AB\171208AB\appbook-master\DokdoFamily01.iml" />
-      <module fileurl="file://C:\Users\heronation2\Desktop\AB\appbook\appbook\DokdoFamily01.iml" filepath="C:\Users\heronation2\Desktop\AB\appbook\appbook\DokdoFamily01.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\heronation2\Desktop\AB\appbook\app\app.iml" filepath="C:\Users\heronation2\Desktop\AB\appbook\app\app.iml" />
-      <module fileurl="file://D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook.iml" filepath="D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook.iml" />
-      <module fileurl="file://D:\Project\Android Studio\appbook-058afee4e25e0dadc9df4a39eb4b6287bc59279c\appbook.iml" filepath="D:\Project\Android Studio\appbook-058afee4e25e0dadc9df4a39eb4b6287bc59279c\appbook.iml" />
       <module fileurl="file://$PROJECT_DIR$/appbook-058afee4e25e0dadc9df4a39eb4b6287bc59279c.iml" filepath="$PROJECT_DIR$/appbook-058afee4e25e0dadc9df4a39eb4b6287bc59279c.iml" />
-      <module fileurl="file://D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook-master.iml" filepath="D:\heronation\programdata\AndroidStudioProjects\DokdoFamily01\appbook-master.iml" />
     </modules>
   </component>
 </project>

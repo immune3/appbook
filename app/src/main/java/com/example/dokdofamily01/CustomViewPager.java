@@ -1,10 +1,12 @@
 package com.example.dokdofamily01;
 
 import android.content.Context;
+
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
+
 import android.view.MotionEvent;
 
 /**
@@ -12,8 +14,10 @@ import android.view.MotionEvent;
  */
 
 public class CustomViewPager extends ViewPager {
+
     public static boolean isPageScrollEnabled = true;
     GestureDetector gd = new GestureDetector(new GestureDetector.SimpleOnGestureListener());
+
 
     public CustomViewPager(Context context) {
         super(context);
@@ -33,10 +37,12 @@ public class CustomViewPager extends ViewPager {
         }
 
         return true;
+
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+
         if (MotionEventCompat.getActionMasked(ev) == MotionEvent.ACTION_MOVE) {
 // ignore move action
         } else {
@@ -45,7 +51,9 @@ public class CustomViewPager extends ViewPager {
             }
         }
         return false;
+
     }
+
     public void setPageScrollEnabled(boolean isPageScrollEnabled) {
         this.isPageScrollEnabled = isPageScrollEnabled;
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
+
 
 /**
  * Created by heronation on 2017-11-06.
@@ -183,7 +185,7 @@ public class Tale03 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-//        CustomViewPager.isPageScrollEnabled = true;
+
         musicController = new MusicController(getActivity(), R.raw.scene_3);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(

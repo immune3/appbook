@@ -45,8 +45,7 @@ public class CustomTouchListener implements View.OnTouchListener {
                 {
                     Log.i("position", "short");
                 }
-                CustomViewPager.isPageScrollEnabled = true;
-                Log.d("isPageScroll", CustomViewPager.isPageScrollEnabled + "");
+
                 break;
         }
         return true;

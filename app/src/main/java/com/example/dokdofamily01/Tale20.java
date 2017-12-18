@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -95,7 +96,6 @@ public class Tale20 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-
         cutain.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -114,6 +114,7 @@ public class Tale20 extends BaseFragment {
                 }
 
                 return false;
+
             }
         });
     }

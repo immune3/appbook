@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -253,7 +255,7 @@ public class Tale16 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        CustomViewPager.isPageScrollEnabled = true;
+
         musicController = new MusicController(getActivity(), R.raw.scene_16);
         subtitleList = new ArrayList<>();
         subtitleList = musicController.makeSubTitleList(
