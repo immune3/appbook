@@ -95,12 +95,12 @@ public class Tale14 extends BaseFragment {
         bubble = (ImageView) layout.findViewById(R.id.bubble);
         bell = (ImageView) layout.findViewById(R.id.bell);
         light = (ImageView) layout.findViewById(R.id.light);
-        bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        bellSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        lightSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        bubbleSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 1);
+//        bellSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+//        lightSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
         bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bubble, 1);
-        bellSound = bellSoundPool.load(getContext(), R.raw.effect_14_bell, 1);
-        lightSound = lightSoundPool.load(getContext(), R.raw.effect_14_light, 1);
+        bellSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bell, 1);
+        lightSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_light, 1);
     }
 
     @Override
@@ -167,13 +167,13 @@ public class Tale14 extends BaseFragment {
                     new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                bellSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                                bubbleSoundPool.play(bellSound, 1, 1, 0, 0, 1);
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         if(bellClickFlag==1) {
                                             bellClickFlag=2;
-                                            lightSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                                            bubbleSoundPool.play(lightSound, 1, 1, 0, 0, 1);
                                         }
                                     }
                                 }, 1100);

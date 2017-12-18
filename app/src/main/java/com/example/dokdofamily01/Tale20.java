@@ -34,12 +34,14 @@ public class Tale20 extends BaseFragment {
     ImageView dokdo_mom;
     ImageView wave;
     ImageView cutain;
+    ImageView byul;
 
     TranslateAnimation manAppearAnimation;
     TranslateAnimation dokdoFatherAppearAnimation;
     TranslateAnimation sqeedAppearAnimation;
     TranslateAnimation dokdoMomAppearAnimation;
     TranslateAnimation waveAppearAnimation;
+    TranslateAnimation cutainAppearAni;
     TranslateAnimation cutainDownAnimation1;
     TranslateAnimation cutainDownAnimation2;
 
@@ -76,6 +78,7 @@ public class Tale20 extends BaseFragment {
         dokdo_mom = (ImageView) layout.findViewById(R.id.dokdo_mom);
         wave = (ImageView) layout.findViewById(R.id.wave);
         cutain = (ImageView) layout.findViewById(R.id.cutain);
+        byul = (ImageView) layout.findViewById(R.id.byul);
     }
 
     @Override
@@ -95,7 +98,12 @@ public class Tale20 extends BaseFragment {
         cutain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cutain.startAnimation(cutainDownAniSet);
+//                checkedAnimation = false;
+                if(animationFlag == 0 && checkedAnimation == true) {
+                    checkedAnimation = false;
+                    animationFlag = 1;
+                    cutain.startAnimation(cutainDownAnimation1);
+                }
             }
         });
     }
@@ -172,21 +180,62 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
-                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, cutain.getHeight() * 0.02f);
+                cutainAppearAni = new TranslateAnimation(0, 0, -cutain.getHeight()*0.1f, 0);
+                cutainAppearAni.setDuration(1000);
+                cutainAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                cutainDownAnimation2 = new TranslateAnimation(0, 0, -cutain.getHeight()*0.01f, cutain.getHeight()*0.45f);
+//                cutainDownAnimation2.setStartOffset(1000);
+                cutainDownAnimation2.setDuration(20000);
+                cutainDownAnimation2.setFillAfter(true);
+//                cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
+
+                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, -cutain.getHeight()*0.01f);
                 cutainDownAnimation1.setDuration(1000);
-                cutainDownAnimation1.setInterpolator(new AnticipateInterpolator());
+//                cutainDownAnimation1.setInterpolator(new DecelerateInterpolator());
+                cutainDownAnimation1.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        cutain.startAnimation(cutainDownAnimation2);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 //                cutainDownAnimation1.setFillAfter(true);
 
-                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight() * 0.4f);
-                cutainDownAnimation2.setStartOffset(1000);
-                cutainDownAnimation2.setDuration(20000);
-                cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
+
 
 //                cutainDownAnimation2.setFillAfter(true);
+//                ainDownAniSet.addAnimation(cutainDownAnimation1);
+//                cutainDownAniSet.addAnimation(cutainDownAnimation2);
+//                cutainDownAniSet.setFillAfter(true);
 
-                cutainDownAniSet.addAnimation(cutainDownAnimation1);
-                cutainDownAniSet.addAnimation(cutainDownAnimation2);
-                cutainDownAniSet.setFillAfter(true);
+                cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        checkedAnimation = true;
+                        animationFlag = 0;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
 
                 if (animationFlag == 0) {
                     checkedAnimation = false;
@@ -202,6 +251,7 @@ public class Tale20 extends BaseFragment {
                     sqeed.startAnimation(sqeedAppearAnimation);
                     dokdo_mom.startAnimation(dokdoMomAppearAnimation);
                     wave.startAnimation(waveAppearAnimation);
+                    cutain.startAnimation(cutainAppearAni);
                 }
             }
         });

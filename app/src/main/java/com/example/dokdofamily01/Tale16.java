@@ -49,6 +49,8 @@ public class Tale16 extends BaseFragment {
     AlphaAnimation blink;
     AlphaAnimation fadein;
     AlphaAnimation fadeout;
+    AlphaAnimation bubbleFadein;
+    AlphaAnimation bombFadeout;
 //    AnimationSet bubbleAniSet = new AnimationSet(false);
     AnimationSet bubbleBombAniSet = new AnimationSet(false);
 
@@ -117,11 +119,10 @@ public class Tale16 extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        bomb.setVisibility(View.INVISIBLE);
-                        bubble.setVisibility(View.VISIBLE);
-                        bubble.startAnimation(bubbleScaleAni);
+                        bomb.startAnimation(bombFadeout);
+                        bubble.startAnimation(bubbleFadein);
                     }
-                }, 2000);
+                }, 1000);
             }
 
             @Override
@@ -141,6 +142,30 @@ public class Tale16 extends BaseFragment {
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
 
+        bubbleFadein = new AlphaAnimation(0, 1);
+        bubbleFadein.setDuration(800);
+        bubbleFadein.setFillAfter(true);
+        bubbleFadein.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                bomb.setVisibility(View.INVISIBLE);
+                bubble.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animationFlag = 0;
+                bubble.startAnimation(bubbleScaleAni);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        bombFadeout = new AlphaAnimation(1, 0);
+        bombFadeout.setFillAfter(true);
+        bombFadeout.setDuration(800);
     }
 
     @Override
@@ -149,28 +174,34 @@ public class Tale16 extends BaseFragment {
         moon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bomb.setVisibility(View.VISIBLE);
-                bubble.setVisibility(View.INVISIBLE);
-                bubbleScaleAni.reset();
-                bubbleScaleAni2.reset();
-                bubble.startAnimation(fadeout);
-                bomb.startAnimation(fadein);
-                sp.stop(bubbleSP);
-                sp.play(bumbEffect,1,1,1,0,1);
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    bomb.setVisibility(View.VISIBLE);
+                    bubble.setVisibility(View.INVISIBLE);
+                    bubbleScaleAni.reset();
+                    bubbleScaleAni2.reset();
+                    bubble.startAnimation(fadeout);
+                    bomb.startAnimation(fadein);
+                    sp.stop(bubbleSP);
+                    sp.play(bumbEffect, 1, 1, 1, 0, 1);
+                }
             }
         });
 
         bubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bomb.setVisibility(View.VISIBLE);
-                bubble.setVisibility(View.INVISIBLE);
-                bubbleScaleAni.reset();
-                bubbleScaleAni2.reset();
-                bubble.startAnimation(fadeout);
-                bomb.startAnimation(fadein);
-                sp.stop(bubbleSP);
-                sp.play(bumbEffect,1,1,1,0,1);
+                if(animationFlag == 0) {
+                    animationFlag = 1;
+                    bomb.setVisibility(View.VISIBLE);
+                    bubble.setVisibility(View.INVISIBLE);
+                    bubbleScaleAni.reset();
+                    bubbleScaleAni2.reset();
+                    bubble.startAnimation(fadeout);
+                    bomb.startAnimation(fadein);
+                    sp.stop(bubbleSP);
+                    sp.play(bumbEffect, 1, 1, 1, 0, 1);
+                }
             }
         });
     }

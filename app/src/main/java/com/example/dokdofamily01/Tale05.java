@@ -222,6 +222,7 @@ public class Tale05 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
+        checkedAnimation = true;
 
         animationFlag = 0;
         letter[1].setVisibility(View.INVISIBLE);

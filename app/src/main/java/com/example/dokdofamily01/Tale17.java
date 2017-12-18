@@ -161,6 +161,8 @@ public class Tale17 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
+        checkedAnimation = true;
+
         if (blink != null) {
             animationFlag = 0;
             dokdo_under_sea.clearAnimation();

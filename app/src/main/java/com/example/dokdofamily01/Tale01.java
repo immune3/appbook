@@ -222,6 +222,7 @@ public class Tale01 extends BaseFragment {
             );
             musicController.excuteAsync();
             mp = musicController.getMp();
+            checkedAnimation = true;
 
             lampLight.clearAnimation();
             byul.clearAnimation();

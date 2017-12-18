@@ -136,30 +136,31 @@ public class Tale09 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
         fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        fadeIn.setDuration(800);
+        fadeIn.setStartOffset(250);
+        fadeIn.setDuration(500);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
         fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
-        fadeOut.setStartOffset(-50);
+        fadeOut.setStartOffset(-200);
         fadeOut.setDuration(800);
         fadeOut.setFillAfter(true);
-        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                sp.play(moveByul, 1, 1, 0, 0, 1);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+//        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                sp.play(moveByul, 1, 1, 0, 0, 1);
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
 
         blink = new AlphaAnimation(1, 0.3f);
         blink.setDuration(500);
@@ -266,6 +267,7 @@ public class Tale09 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            sp.play(moveByul, 1, 1, 0, 0, 1);
             switch (animationFlag) {
                 case 1:
                     animationFlag = 2;
@@ -279,6 +281,7 @@ public class Tale09 extends BaseFragment {
                     byulHead1.startAnimation(fadeOut);
                     byulBody2.startAnimation(fadeIn);
                     byulHead2.startAnimation(fadeIn);
+
                     break;
                 case 3:
                     animationFlag = 4;
@@ -356,6 +359,7 @@ public class Tale09 extends BaseFragment {
 
         @Override
         public void onAnimationStart(Animation animation) {
+
             switch (animationFlag) {
                 case 1:
                     byulBody1.setVisibility(View.VISIBLE);
@@ -439,22 +443,22 @@ public class Tale09 extends BaseFragment {
                 seaAppear.setDuration(1000);
                 seaAppear.setFillAfter(true);
                 seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
-                seaAppear.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        sea.startAnimation(wavingAnimation);
-                        effect.startAnimation(wavingAnimation);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
+//                seaAppear.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        sea.startAnimation(wavingAnimation);
+//                        effect.startAnimation(wavingAnimation);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
 
                 fatherAppear = new TranslateAnimation(-fatherDokdo.getWidth(), 0, 0, 0);
                 fatherAppear.setStartOffset(200);
@@ -497,7 +501,7 @@ public class Tale09 extends BaseFragment {
                     checkedAnimation = false;
                     appearFlag = 1;
                     sea.startAnimation(seaAppear);
-                    effect.startAnimation(seaAppear);
+//                    effect.startAnimation(seaAppear);
                     birds.startAnimation(birdsAppear);
                     deco.startAnimation(decoAppear);
                     fatherDokdo.startAnimation(fatherAppear);

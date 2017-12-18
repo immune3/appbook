@@ -152,6 +152,7 @@ public class Tale04 extends BaseFragment {
         );
         musicController.excuteAsync();
         mp = musicController.getMp();
+        checkedAnimation = true;
 
         animationFlag=0;
         sun.clearAnimation();

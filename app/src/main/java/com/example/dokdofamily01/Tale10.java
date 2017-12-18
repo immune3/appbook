@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -43,6 +44,8 @@ public class Tale10 extends BaseFragment {
     TranslateAnimation mountainAppear;
     TranslateAnimation rockAppear;
     TranslateAnimation birdsAppear;
+    RotateAnimation byulHeadRotate;
+    RotateAnimation byulHandRotate;
     Animation fadeIn;
     AlphaAnimation blink;
     AlphaAnimation repeat;
@@ -121,7 +124,8 @@ public class Tale10 extends BaseFragment {
 
         repeat = new AlphaAnimation(1, 1);
         repeat.setDuration(500);
-        repeat.setRepeatCount(Animation.INFINITE);
+        repeat.setRepeatCount(20);
+//        repeat.setRepeatCount(Animation.INFINITE);
         repeat.setRepeatMode(Animation.REVERSE);
         repeat.setAnimationListener(new MyAnimationListener());
     }
@@ -132,19 +136,24 @@ public class Tale10 extends BaseFragment {
         blinkBird.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                checkedAnimation = false;
+                checkedAnimation = false;
                 blinkBird.clearAnimation();
                 blinkBird.startAnimation(repeat);
-                tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+                byulHead.startAnimation(byulHeadRotate);
+                byulHand.startAnimation(byulHandRotate);
 
-                tweetTimer = new Timer();
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
-                    }
-                };
-                tweetTimer.schedule(task, 0, 3700);
+//                tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+
+//                tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+//
+//                tweetTimer = new Timer();
+//                task = new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
+//                    }
+//                };
+//                tweetTimer.schedule(task, 0, 3700);
 
             }
         });
@@ -291,6 +300,35 @@ public class Tale10 extends BaseFragment {
                 rockAppear.setStartOffset(500);
                 rockAppear.setDuration(1500);
                 rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                byulHeadRotate = new RotateAnimation(0, -20, byulHead.getWidth()/2, byulHead.getHeight()/2);
+                byulHeadRotate.setDuration(2000);
+                byulHeadRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulHeadRotate.setRepeatCount(5);
+                byulHeadRotate.setRepeatMode(Animation.REVERSE);
+                byulHeadRotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        blinkBird.startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+                    }
+                });
+
+                byulHandRotate = new RotateAnimation(0, 8, 0, byulHand.getHeight());
+                byulHandRotate.setDuration(2000);
+                byulHandRotate.setInterpolator(new AccelerateDecelerateInterpolator());
+                byulHandRotate.setRepeatCount(5);
+                byulHandRotate.setRepeatMode(Animation.REVERSE);
 
 //                if (animationFlag == 0) {
                     checkedAnimation = false;

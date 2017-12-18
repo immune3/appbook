@@ -19,6 +19,7 @@
             app:scale_base_height="1544">
 
             <ImageView
+                android:id="@+id/byul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_20_byul"
