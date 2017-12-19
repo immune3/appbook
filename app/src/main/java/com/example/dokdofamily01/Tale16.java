@@ -54,18 +54,17 @@ public class Tale16 extends BaseFragment {
     AlphaAnimation fadeout;
     AlphaAnimation bubbleFadein;
     AlphaAnimation bombFadeout;
-//    AnimationSet bubbleAniSet = new AnimationSet(false);
+    //    AnimationSet bubbleAniSet = new AnimationSet(false);
     AnimationSet bubbleBombAniSet = new AnimationSet(false);
 
     int animationFlag = 0;
-    int bubbleSP=0;
+    int bubbleSP = 0;
     MediaPlayer mp = null;
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int bubbleEffect;
     int bumbEffect;
-
 
 
     @Override
@@ -83,7 +82,6 @@ public class Tale16 extends BaseFragment {
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
 
 
     @Override
@@ -175,56 +173,57 @@ public class Tale16 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        moon.setOnTouchListener(new View.OnTouchListener() {
+        moon.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            animationFlag = 1;
-                            bomb.setVisibility(View.VISIBLE);
-                            bubble.setVisibility(View.INVISIBLE);
-                            bubbleScaleAni.reset();
-                            bubbleScaleAni2.reset();
-                            bubble.startAnimation(fadeout);
-                            bomb.startAnimation(fadein);
-                            sp.stop(bubbleSP);
-                            sp.play(bumbEffect, 1, 1, 1, 0, 1);
-                        }
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 0;
+                return super.onTouch(view, motionEvent);
             }
         });
 
-        bubble.setOnTouchListener(new View.OnTouchListener() {
+        bubble.setOnTouchListener(new BlockObjListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            animationFlag = 1;
-                            bomb.setVisibility(View.VISIBLE);
-                            bubble.setVisibility(View.INVISIBLE);
-                            bubbleScaleAni.reset();
-                            bubbleScaleAni2.reset();
-                            bubble.startAnimation(fadeout);
-                            bomb.startAnimation(fadein);
-                            sp.stop(bubbleSP);
-                            sp.play(bumbEffect, 1, 1, 1, 0, 1);
-                        }
-                        break;
-                }
-
-                return false;
+                animationCaseFlag = 1;
+                return super.onTouch(view, motionEvent);
             }
         });
+    }
+
+    int animationCaseFlag = 0;
+
+    @Override
+    public void blockAnimFunc() {
+        switch (animationCaseFlag) {
+            case 0:
+                if (animationFlag == 0) {
+                    animationFlag = 1;
+                    bomb.setVisibility(View.VISIBLE);
+                    bubble.setVisibility(View.INVISIBLE);
+                    bubbleScaleAni.reset();
+                    bubbleScaleAni2.reset();
+                    bubble.startAnimation(fadeout);
+                    bomb.startAnimation(fadein);
+                    sp.stop(bubbleSP);
+                    sp.play(bumbEffect, 1, 1, 1, 0, 1);
+                }
+                break;
+            case 1:
+                if (animationFlag == 0) {
+                    animationFlag = 1;
+                    bomb.setVisibility(View.VISIBLE);
+                    bubble.setVisibility(View.INVISIBLE);
+                    bubbleScaleAni.reset();
+                    bubbleScaleAni2.reset();
+                    bubble.startAnimation(fadeout);
+                    bomb.startAnimation(fadein);
+                    sp.stop(bubbleSP);
+                    sp.play(bumbEffect, 1, 1, 1, 0, 1);
+                }
+
+                break;
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
@@ -332,14 +331,16 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni = new ScaleAnimation(1, 0.7f, 1, 0.7f, 0, 0);
                 bubbleScaleAni.setDuration(800);
                 bubbleScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
-                bubbleScaleAni.setAnimationListener(new MyAnimationListener(){
+                bubbleScaleAni.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
 
                     }
+
                     @Override
                     public void onAnimationRepeat(Animation animation) {
                     }
+
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         bubble.startAnimation(bubbleScaleAni2);
@@ -350,14 +351,16 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni2 = new ScaleAnimation(0.7f, 1, 0.7f, 1, 0, 0);
                 bubbleScaleAni2.setDuration(800);
                 bubbleScaleAni2.setInterpolator(new AccelerateDecelerateInterpolator());
-                bubbleScaleAni2.setAnimationListener(new MyAnimationListener(){
+                bubbleScaleAni2.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        bubbleSP = sp.play(bubbleEffect,0.05f,0.05f,1,0, 1);
+                        bubbleSP = sp.play(bubbleEffect, 0.05f, 0.05f, 1, 0, 1);
                     }
+
                     @Override
                     public void onAnimationRepeat(Animation animation) {
                     }
+
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         bubble.startAnimation(bubbleScaleAni);
@@ -414,11 +417,11 @@ public class Tale16 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(!isVisibleToUser) {
-            if(bubbleSP!=0) {
+        if (!isVisibleToUser) {
+            if (bubbleSP != 0) {
                 sp.stop(bubbleSP);
                 sp.release();
-                Log.e("asd", "setUserVisibleHint: "+bubbleSP);
+                Log.e("asd", "setUserVisibleHint: " + bubbleSP);
             }
         }
     }

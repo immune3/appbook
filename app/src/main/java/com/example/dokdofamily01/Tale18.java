@@ -57,7 +57,7 @@ public class Tale18 extends BaseFragment {
 
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
-    boolean clickFlag=false;
+    boolean clickFlag = false;
 
 
     MediaPlayer mp = null;
@@ -68,7 +68,6 @@ public class Tale18 extends BaseFragment {
     int appear;
     int starEffect;
     int scale[] = new int[6];
-
 
 
     @Override
@@ -125,137 +124,112 @@ public class Tale18 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        flower18.setOnTouchListener(new View.OnTouchListener() {
+        flower18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        sp.play(starEffect,1,1,1,0,1);
-                        if (animationFlag == 0) {
-                            checkedAnimation = false;
-                            animationFlag = 2;
-                            animationClear();
-                            flower18.clearAnimation();
-
-                            rotateFlag[0] = 1;
-                            rotateFlag[1] = 1;
-                            rotateFlag[2] = 1;
-                            rotateFlag[3] = 1;
-                            post18.setVisibility(View.VISIBLE);
-                            tree18.setVisibility(View.VISIBLE);
-                            sqeed18.setVisibility(View.VISIBLE);
-                            man18.setVisibility(View.VISIBLE);
-                            post18.startAnimation(postAppear);
-                            tree18.startAnimation(treeAppear);
-                            sqeed18.startAnimation(sqeedAppear);
-                            man18.startAnimation(manAppear);
-                        }
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 0;
+                return super.onTouch(view, motionEvent);
             }
         });
 
-        sqeed18.setOnTouchListener(new View.OnTouchListener() {
+        sqeed18.setOnTouchListener(new BlockObjListener() {
+           @Override
+           public boolean onTouch(View view, MotionEvent motionEvent) {
+               animationCaseFlag = 1;
+               return super.onTouch(view, motionEvent);
+           }
+        });
+
+        man18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[0],1,1,1,0,1);
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 2;
+                return super.onTouch(view , motionEvent);
             }
         });
 
-        man18.setOnTouchListener(new View.OnTouchListener() {
+        post18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[1],1,1,1,0,1);
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 3;
+                return super.onTouch(view , motionEvent);
             }
         });
 
-        post18.setOnTouchListener(new View.OnTouchListener() {
+        tree18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[2],1,1,1,0,1);
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 4;
+                return super.onTouch(view , motionEvent);
             }
         });
 
-        tree18.setOnTouchListener(new View.OnTouchListener() {
+        father18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[3],1,1,1,0,1);
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 5;
+                return super.onTouch(view , motionEvent);
             }
         });
 
-        father18.setOnTouchListener(new View.OnTouchListener() {
+        mom18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[4],1,1,1,0,1);
-                        break;
-
-                }
-
-                return false;
+                animationCaseFlag = 6;
+                return super.onTouch(view , motionEvent);
             }
         });
+    }
 
-        mom18.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    int animationCaseFlag = 0;
 
-                switch(motionEvent.getAction()) {
+    @Override
+    public void blockAnimFunc() {
 
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag) sp.play(scale[5],1,1,1,0,1);
-                        break;
+        switch (animationCaseFlag) {
+            case 0:
+                sp.play(starEffect, 1, 1, 1, 0, 1);
+                if (animationFlag == 0) {
+                    checkedAnimation = false;
+                    animationFlag = 2;
+                    animationClear();
+                    flower18.clearAnimation();
 
+                    rotateFlag[0] = 1;
+                    rotateFlag[1] = 1;
+                    rotateFlag[2] = 1;
+                    rotateFlag[3] = 1;
+                    post18.setVisibility(View.VISIBLE);
+                    tree18.setVisibility(View.VISIBLE);
+                    sqeed18.setVisibility(View.VISIBLE);
+                    man18.setVisibility(View.VISIBLE);
+                    post18.startAnimation(postAppear);
+                    tree18.startAnimation(treeAppear);
+                    sqeed18.startAnimation(sqeedAppear);
+                    man18.startAnimation(manAppear);
                 }
+                break;
+            case 1:
+                if (clickFlag) sp.play(scale[0], 1, 1, 1, 0, 1);
+                break;
+            case 2:
+                if (clickFlag) sp.play(scale[1], 1, 1, 1, 0, 1);
+                break;
+            case 3 :
+                if (clickFlag) sp.play(scale[2], 1, 1, 1, 0, 1);
+                break;
+            case 4 :
+                if (clickFlag) sp.play(scale[3], 1, 1, 1, 0, 1);
+                break;
+            case 5 :
+                if (clickFlag) sp.play(scale[4], 1, 1, 1, 0, 1);
+                break;
+            case 6 :
+                if (clickFlag) sp.play(scale[5], 1, 1, 1, 0, 1);
+                break;
+        }
 
-                return false;
-
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
@@ -294,8 +268,8 @@ public class Tale18 extends BaseFragment {
         @Override
         public void onAnimationStart(Animation animation) {
             super.onAnimationStart(animation);
-            if(rotateFlag[1]==1){
-                sp.play(appear,1,1,1,0,1);
+            if (rotateFlag[1] == 1) {
+                sp.play(appear, 1, 1, 1, 0, 1);
             }
         }
 
@@ -341,7 +315,7 @@ public class Tale18 extends BaseFragment {
                     rotateFlag[3] = 2;
                     man18.startAnimation(manRotate[0]);
                     checkedAnimation = true;
-                    clickFlag=true;
+                    clickFlag = true;
                     break;
                 case 2:
                     rotateFlag[3] = 0;

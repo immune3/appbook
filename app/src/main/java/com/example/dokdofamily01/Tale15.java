@@ -91,31 +91,23 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        fish.setOnTouchListener(new BlockObjListener());
+    }
 
-        fish.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0 && appearFlag == 0) {
+            checkedAnimation = false;
+            animationFlag = 1;
+            fish.clearAnimation();
+            fish.setVisibility(View.VISIBLE);
+            //man1 사라지고 man2나온다.
+            sp.play(clickFish, 1, 1, 0, 0, 2);
+            manImage4.setVisibility(View.INVISIBLE);
+            manImage1.startAnimation(fadeIn);
+        }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0 && appearFlag == 0) {
-                            checkedAnimation = false;
-                            animationFlag = 1;
-                            fish.clearAnimation();
-                            fish.setVisibility(View.VISIBLE);
-                            //man1 사라지고 man2나온다.
-                            sp.play(clickFish, 1, 1, 0, 0, 2);
-                            manImage4.setVisibility(View.INVISIBLE);
-                            manImage1.startAnimation(fadeIn);
-                        }
-                        break;
-
-                }
-
-                return false;
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

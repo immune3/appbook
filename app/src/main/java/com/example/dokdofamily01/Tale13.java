@@ -120,29 +120,21 @@ public class Tale13 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        ivBuyl13.setOnTouchListener(new BlockObjListener());
+    }
 
-        ivBuyl13.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    @Override
+    public void blockAnimFunc() {
+        if(clickFlag==0) {
+            clickFlag=1;
+            checkedAnimation = false;
+            ivBuyl13.clearAnimation();
+            bubble.startAnimation(bubbleAppear);
+            tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
+            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+        }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(clickFlag==0) {
-                            clickFlag=1;
-                            checkedAnimation = false;
-                            ivBuyl13.clearAnimation();
-                            bubble.startAnimation(bubbleAppear);
-                            tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
-                            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
-                        }
-                        break;
-
-                }
-
-                return false;
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {

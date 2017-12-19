@@ -107,28 +107,21 @@ public class Tale02 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        star.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                CustomViewPager.isPageScrollEnabled = true;
-                switch(motionEvent.getAction()) {
+        star.setOnTouchListener(new BlockObjListener());
+    }
 
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag==0) {
-                            checkedAnimation = false;
-                            animationFlag = 2;
-                            sp.play(soundID,1,1,0,0,1);
-                            star.clearAnimation();
-                            byulhead.startAnimation(headDown);
-                            seagullHand.startAnimation(handAppear);
-                        }
-                        break;
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag==0) {
+            checkedAnimation = false;
+            animationFlag = 2;
+            sp.play(soundID,1,1,0,0,1);
+            star.clearAnimation();
+            byulhead.startAnimation(headDown);
+            seagullHand.startAnimation(handAppear);
+        }
 
-                }
-
-                return false;
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

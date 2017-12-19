@@ -103,53 +103,49 @@ public class Tale07 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        seagull[0].setOnTouchListener(new View.OnTouchListener() {
+        seagull[0].setOnTouchListener(new BlockObjListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            checkedAnimation = false;
-                            clickFlag=true;
-                            animationFlag = 2;
-                            sp.play(seagullEffect, 1, 1, 0, 0, 1);
-                            seagull[0].startAnimation(seagullDisappear1);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
+                animationCaseFlag = 0;
+                return super.onTouch(view, motionEvent);
             }
         });
 
-        seagull[2].setOnTouchListener(new View.OnTouchListener() {
+        seagull[2].setOnTouchListener(new BlockObjListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationCaseFlag = 1;
+                return super.onTouch(view, motionEvent);
+            }
+        });
+    }
 
-                switch(motionEvent.getAction()) {
+    int animationCaseFlag = 0;
+    @Override
+    public void blockAnimFunc() {
+        switch (animationCaseFlag){
+            case 0 :
+                if (animationFlag == 0) {
+                    checkedAnimation = false;
+                    clickFlag=true;
+                    animationFlag = 2;
+                    sp.play(seagullEffect, 1, 1, 0, 0, 1);
+                    seagull[0].startAnimation(seagullDisappear1);
+                }
 
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 5) {
-                            checkedAnimation = false;
-                            animationFlag = 6;
-                            seagull[2].startAnimation(seagullDisappear3);
+                break;
+            case 1 :
+                if (animationFlag == 5) {
+                    checkedAnimation = false;
+                    animationFlag = 6;
+                    seagull[2].startAnimation(seagullDisappear3);
 //                    dokdo.clearAnimation();
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        CustomViewPager.isPageScrollEnabled = false;
-                        break;
                 }
 
-                return false;
-            }
-        });
+                break;
+
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {

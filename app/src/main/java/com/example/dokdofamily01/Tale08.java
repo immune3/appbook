@@ -184,40 +184,30 @@ public class Tale08 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        byul.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                CustomViewPager.isPageScrollEnabled = true;
+        byul.setOnTouchListener(new BlockObjListener());
 
-                switch (motionEvent.getAction()) {
 
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            animationFlag = 1;
-//                    eyeBlack.clearAnimation();
-                            checkedAnimation = false;
-                            byul.clearAnimation();
-                            treeHand.setVisibility(View.VISIBLE);
-                            leaves.setVisibility(View.VISIBLE);
-                            treeHand.startAnimation(treeHandRotate);
-                            leaves.startAnimation(leafAniSet);
-                            eyeBlack.startAnimation(treeEyeToByul);
-                            smile.startAnimation(fadeIn);
-                            laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
-                            eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
     }
 
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0) {
+            animationFlag = 1;
+//                    eyeBlack.clearAnimation();
+            checkedAnimation = false;
+            byul.clearAnimation();
+            treeHand.setVisibility(View.VISIBLE);
+            leaves.setVisibility(View.VISIBLE);
+            treeHand.startAnimation(treeHandRotate);
+            leaves.startAnimation(leafAniSet);
+            eyeBlack.startAnimation(treeEyeToByul);
+            smile.startAnimation(fadeIn);
+            laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
+            eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
+        }
+
+        super.blockAnimFunc();
+    }
 
     private void animationClear() {
         checkedAnimation = false;

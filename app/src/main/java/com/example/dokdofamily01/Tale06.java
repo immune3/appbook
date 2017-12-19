@@ -144,39 +144,28 @@ public class Tale06 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        seagull[0].setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            checkedAnimation = false;
-                            animationFlag = 1;
-                            bigwave[0].startAnimation(wavingAniSet[0]);
-                            bigwave[1].startAnimation(wavingAniSet[1]);
-                            bigwave[2].startAnimation(wavingAniSet[2]);
-                            smallwave[0].startAnimation(wavingTranslateAni[3]);
-                            smallwave[1].startAnimation(wavingTranslateAni[4]);
-                            smallwave[2].startAnimation(wavingTranslateAni[5]);
-                            smallwave[3].startAnimation(wavingTranslateAni[6]);
-
-                            gullSoundPool.play(gullSound, 1, 1, 0, 0, 1);
-                            waveSoundPool.play(waveSound, 1, 1, 0, 0, 1);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
+        seagull[0].setOnTouchListener(new BlockObjListener());
     }
 
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag == 0) {
+            checkedAnimation = false;
+            animationFlag = 1;
+            bigwave[0].startAnimation(wavingAniSet[0]);
+            bigwave[1].startAnimation(wavingAniSet[1]);
+            bigwave[2].startAnimation(wavingAniSet[2]);
+            smallwave[0].startAnimation(wavingTranslateAni[3]);
+            smallwave[1].startAnimation(wavingTranslateAni[4]);
+            smallwave[2].startAnimation(wavingTranslateAni[5]);
+            smallwave[3].startAnimation(wavingTranslateAni[6]);
+
+            gullSoundPool.play(gullSound, 1, 1, 0, 0, 1);
+            waveSoundPool.play(waveSound, 1, 1, 0, 0, 1);
+        }
+
+        super.blockAnimFunc();
+    }
 
     private void animationClear() {
         momDokdo.setVisibility(View.INVISIBLE);

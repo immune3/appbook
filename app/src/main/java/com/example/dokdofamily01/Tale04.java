@@ -108,27 +108,17 @@ public class Tale04 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        dokdo.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        dokdo.setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag==0){
-                            checkedAnimation = false;
-                            sp.play(soundID, 1, 1, 0, 0, 1);
-                            sun.startAnimation(sunRiseAni);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
-            }
-        });
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag==0){
+            checkedAnimation = false;
+            sp.play(soundID, 1, 1, 0, 0, 1);
+            sun.startAnimation(sunRiseAni);
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

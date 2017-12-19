@@ -96,27 +96,17 @@ public class Tale20 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        cutain.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        cutain.setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-//                checkedAnimation = false;
-                        if(animationFlag == 0 && checkedAnimation == true) {
-                            checkedAnimation = false;
-                            animationFlag = 1;
-                            cutain.startAnimation(cutainDownAnimation1);
-                        }
-                        break;
-
-                }
-
-                return false;
-
-            }
-        });
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag == 0 && checkedAnimation == true) {
+            checkedAnimation = false;
+            animationFlag = 1;
+            cutain.startAnimation(cutainDownAnimation1);
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

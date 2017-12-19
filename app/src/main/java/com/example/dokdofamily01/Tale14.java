@@ -150,53 +150,41 @@ public class Tale14 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        bell.setOnTouchListener(new BlockObjListener());
+    }
 
-        bell.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            checkedAnimation=false;
-                            animationFlag = 1;
-                            if(bellClickFlag == 0) {
-                                bellClickFlag = 1;
-                                sqeedHand.setVisibility(View.VISIBLE);
-                                sqeedHand.startAnimation(sqeedHandScaleAnimSet);
-                            }
-                            else {
-                                sqeedHand.clearAnimation();
-                                sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
-                            }
-                            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    bubbleSoundPool.play(bellSound, 1, 1, 0, 0, 1);
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(bellClickFlag==1) {
-                                                bellClickFlag=2;
-                                                bubbleSoundPool.play(lightSound, 1, 1, 0, 0, 1);
-                                            }
-                                        }
-                                    }, 1100);
-                                }
-                            }, 1200);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag == 0) {
+            checkedAnimation=false;
+            animationFlag = 1;
+            if(bellClickFlag == 0) {
+                bellClickFlag = 1;
+                sqeedHand.setVisibility(View.VISIBLE);
+                sqeedHand.startAnimation(sqeedHandScaleAnimSet);
             }
-        });
-
+            else {
+                sqeedHand.clearAnimation();
+                sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
+            }
+            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    bubbleSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(bellClickFlag==1) {
+                                bellClickFlag=2;
+                                bubbleSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                            }
+                        }
+                    }, 1100);
+                }
+            }, 1200);
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

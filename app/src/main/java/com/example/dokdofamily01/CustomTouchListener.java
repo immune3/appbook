@@ -17,7 +17,7 @@ public class CustomTouchListener implements View.OnTouchListener {
 
 
 
-     CustomViewPager customViewPager;
+    CustomViewPager customViewPager;
 
 
     @Override
@@ -44,8 +44,8 @@ public class CustomTouchListener implements View.OnTouchListener {
                 else
                 {
                     Log.i("position", "short");
+                    animationFunc();
                 }
-
                 break;
         }
         return true;
@@ -58,5 +58,9 @@ public class CustomTouchListener implements View.OnTouchListener {
 
     public void increaseFunc(){
         if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
+    }
+
+    public void animationFunc(){
+
     }
 }

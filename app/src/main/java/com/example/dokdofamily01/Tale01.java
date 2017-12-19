@@ -104,49 +104,35 @@ public class Tale01 extends BaseFragment {
         super.setupEvents();
 
 //        CustomViewPager.isPageScrollEnabled = true;
-        lamp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        lamp.setOnTouchListener(new BlockObjListener());
 
-                switch (motionEvent.getAction()) {
+    }
 
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            checkedAnimation = false;
-                            animationFlag = 1;
-                            sp.play(soundID, 4, 4, 0, 0, 1);
-                            lampLight.startAnimation(fadeIn);
-                            bedLight.startAnimation(fadeIn);
-                            head.setVisibility(View.VISIBLE);
-                            blanket.setVisibility(View.VISIBLE);
-                            curtain.setVisibility(View.VISIBLE);
-                            light.setVisibility(View.INVISIBLE);
-                            byul.setVisibility(View.INVISIBLE);
-                            hand.setVisibility(View.INVISIBLE);
-                        } else if (animationFlag == 8) {
-                            fadeIn.setStartOffset(0);
-                            fadeOut.setStartOffset(0);
-                            sp.play(soundID, 4, 4, 0, 0, 1);
-                            lampLight.startAnimation(fadeOut);
-                        } else if (animationFlag == 10) {
-                            sp.play(soundID, 4, 4, 0, 0, 1);
-                            lampLight.startAnimation(fadeIn);
-                        }
-                        break;
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0) {
+            checkedAnimation = false;
+            animationFlag = 1;
+            sp.play(soundID, 4, 4, 0, 0, 1);
+            lampLight.startAnimation(fadeIn);
+            bedLight.startAnimation(fadeIn);
+            head.setVisibility(View.VISIBLE);
+            blanket.setVisibility(View.VISIBLE);
+            curtain.setVisibility(View.VISIBLE);
+            light.setVisibility(View.INVISIBLE);
+            byul.setVisibility(View.INVISIBLE);
+            hand.setVisibility(View.INVISIBLE);
+        } else if (animationFlag == 8) {
 
-                    case MotionEvent.ACTION_UP:
-
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-//                        CustomViewPager.isPageScrollEnabled = false;
-                        break;
-                }
-
-                return false;
-
-            }
-        });
+            fadeIn.setStartOffset(0);
+            fadeOut.setStartOffset(0);
+            sp.play(soundID, 4, 4, 0, 0, 1);
+            lampLight.startAnimation(fadeOut);
+        } else if (animationFlag == 10) {
+            sp.play(soundID, 4, 4, 0, 0, 1);
+            lampLight.startAnimation(fadeIn);
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

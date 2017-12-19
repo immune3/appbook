@@ -123,34 +123,27 @@ public class Tale19 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        star1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        star1.setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        checkedAnimation = false;
-                        starFallCount = 0;
-                        animationFlag = 0;
-                        star1.clearAnimation();
+    @Override
+    public void blockAnimFunc() {
+        checkedAnimation = false;
+        starFallCount = 0;
+        animationFlag = 0;
+        star1.clearAnimation();
 //                starLight.setVisibility(View.VISIBLE);
 //                light.setVisibility(View.VISIBLE);
-                        starLight.startAnimation(fadein);
-                        light.startAnimation(fadein);
+        starLight.startAnimation(fadein);
+        light.startAnimation(fadein);
 
-                        star2.startAnimation(starFallAniSet[0]);
-                        star3.startAnimation(starFallAniSet[1]);
-                        star4.startAnimation(starFallAniSet[2]);
-                        star5.startAnimation(starFallAniSet[3]);
-                        star6.startAnimation(starFallAniSet[4]);
-                        break;
+        star2.startAnimation(starFallAniSet[0]);
+        star3.startAnimation(starFallAniSet[1]);
+        star4.startAnimation(starFallAniSet[2]);
+        star5.startAnimation(starFallAniSet[3]);
+        star6.startAnimation(starFallAniSet[4]);
 
-                }
-
-                return false;
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

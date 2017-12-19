@@ -112,29 +112,21 @@ public class Tale17 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        star.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            animationFlag = 1;
-                            checkedAnimation = false;
-                            star.clearAnimation();
-                            sp.play(clickStar, 1, 1, 0, 0, 1);
-                            dokdo_under_sea.startAnimation(fadeIn);
-                        }
-                        break;
-                }
-
-                return false;
-            }
-        });
+        star.setOnTouchListener(new BlockObjListener());
 
     }
 
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0) {
+            animationFlag = 1;
+            checkedAnimation = false;
+            star.clearAnimation();
+            sp.play(clickStar, 1, 1, 0, 0, 1);
+            dokdo_under_sea.startAnimation(fadeIn);
+        }
+        super.blockAnimFunc();
+    }
 
     private class MyAnimationListener implements Animation.AnimationListener {
 

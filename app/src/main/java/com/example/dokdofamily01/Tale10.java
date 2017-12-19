@@ -136,39 +136,18 @@ public class Tale10 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        blinkBird.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        blinkBird.setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
+    @Override
+    public void blockAnimFunc() {
+        checkedAnimation = false;
+        blinkBird.clearAnimation();
+        blinkBird.startAnimation(repeat);
+        byulHead.startAnimation(byulHeadRotate);
+        byulHand.startAnimation(byulHandRotate);
 
-                    case MotionEvent.ACTION_DOWN:
-                        checkedAnimation = false;
-                        blinkBird.clearAnimation();
-                        blinkBird.startAnimation(repeat);
-                        byulHead.startAnimation(byulHeadRotate);
-                        byulHand.startAnimation(byulHandRotate);
-
-//                tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
-
-//                tweetTouchSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
-//
-//                tweetTimer = new Timer();
-//                task = new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        tweetLoopStreamID =  tweetSoundPool.play(tweetSoundLoop, 1, 1, 0, 0, 1);
-//                    }
-//                };
-//                tweetTimer.schedule(task, 0, 3700);
-                        break;
-
-                }
-
-                return false;
-
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener extends com.example.dokdofamily01.MyAnimationListener {
@@ -370,6 +349,7 @@ public class Tale10 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if(!isVisibleToUser && tweetTimer != null) {
             tweetSoundPool.stop(tweetLoopStreamID);
+            tweetSoundPool.release();
             tweetTimer.cancel();
             tweetTimer.purge();
             tweetTimer = null;
@@ -381,6 +361,7 @@ public class Tale10 extends BaseFragment {
         super.onDestroyView();
         if(tweetTimer != null) {
             tweetSoundPool.stop(tweetLoopStreamID);
+            tweetSoundPool.release();
 
             tweetTimer.cancel();
             tweetTimer.purge();

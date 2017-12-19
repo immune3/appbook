@@ -91,34 +91,24 @@ public class Tale05 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        letter[0].setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        letter[0].setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            animationFlag = 1;
-                            checkedAnimation = false;
-                            sp.play(clickLetter, 1, 1, 0, 0, 1);
-                            // letter[0] 사라지고 letter[1]나온다.
-                            letter[5].setVisibility(View.INVISIBLE);
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0) {
+            animationFlag = 1;
+            checkedAnimation = false;
+            sp.play(clickLetter, 1, 1, 0, 0, 1);
+            // letter[0] 사라지고 letter[1]나온다.
+            letter[5].setVisibility(View.INVISIBLE);
 //                    letter[0].startAnimation(letterDisappear);
-                            letter[1].startAnimation(letterAppear);
-                        } else {
-                            sp.play(clickLetter, 1, 1, 0, 0, 1);
-                        }
-                        break;
+            letter[1].startAnimation(letterAppear);
+        } else {
+            sp.play(clickLetter, 1, 1, 0, 0, 1);
+        }
 
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

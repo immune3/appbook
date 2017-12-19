@@ -154,38 +154,29 @@ public class Tale11 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        bee2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+        bee2.setOnTouchListener(new BlockObjListener());
+    }
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            animationFlag = 1;
-                            checkedAnimation = false;
-                            if(byulAppearFlag == 0) {
-                                byulAppearFlag = 1;
-                                byul.startAnimation(byulAnimation);
-                            }
-                            else{
-                                bee1.startAnimation(hideBeeAniSet);
-                                butterfly.startAnimation(hideButterflyAniSet);
-                            }
-                            bee2.clearAnimation();
-                            byul.setVisibility(View.VISIBLE);
-                            beeSoundPool.play(beeSound, 1, 1, 0, 3, 1);
-
-
-                        }
-                        break;
-
-                }
-
-                return false;
-
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag == 0) {
+            animationFlag = 1;
+            checkedAnimation = false;
+            if(byulAppearFlag == 0) {
+                byulAppearFlag = 1;
+                byul.startAnimation(byulAnimation);
             }
-        });
+            else{
+                bee1.startAnimation(hideBeeAniSet);
+                butterfly.startAnimation(hideButterflyAniSet);
+            }
+            bee2.clearAnimation();
+            byul.setVisibility(View.VISIBLE);
+            beeSoundPool.play(beeSound, 1, 1, 0, 3, 1);
+
+
+        }
+        super.blockAnimFunc();
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {

@@ -174,48 +174,36 @@ public class Tale09 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        bird.setOnTouchListener(new BlockObjListener());
+    }
 
-        bird.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    @Override
+    public void blockAnimFunc() {
+        if (animationFlag == 0) {
+            animationFlag = 1;
+            checkedAnimation = false;
+            bird.clearAnimation();
+            byulHead1.clearAnimation();
+            byulHead2.clearAnimation();
+            byulHead3.clearAnimation();
+            byulHead4.clearAnimation();
+            byulHead5.clearAnimation();
+            byulBody1.clearAnimation();
+            byulBody2.clearAnimation();
+            byulBody3.clearAnimation();
+            byulBody4.clearAnimation();
+            byulBody5.clearAnimation();
 
-                switch(motionEvent.getAction()) {
+            byulBody5.setVisibility(View.INVISIBLE);
+            byulHead5.setVisibility(View.INVISIBLE);
 
-                    case MotionEvent.ACTION_DOWN:
-                        if (animationFlag == 0) {
-                            animationFlag = 1;
-                            checkedAnimation = false;
-                            bird.clearAnimation();
-                            byulHead1.clearAnimation();
-                            byulHead2.clearAnimation();
-                            byulHead3.clearAnimation();
-                            byulHead4.clearAnimation();
-                            byulHead5.clearAnimation();
-                            byulBody1.clearAnimation();
-                            byulBody2.clearAnimation();
-                            byulBody3.clearAnimation();
-                            byulBody4.clearAnimation();
-                            byulBody5.clearAnimation();
-
-                            byulBody5.setVisibility(View.INVISIBLE);
-                            byulHead5.setVisibility(View.INVISIBLE);
-
-                            sp.play(clickBird, 1, 1, 0, 0, 1);
-                            byulBody1.startAnimation(fadeIn);
-                            byulHead1.startAnimation(fadeIn);
-                        } else {
-                            sp.play(clickBird, 1, 1, 0, 0, 1);
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                }
-
-                return false;
-
-            }
-        });
+            sp.play(clickBird, 1, 1, 0, 0, 1);
+            byulBody1.startAnimation(fadeIn);
+            byulHead1.startAnimation(fadeIn);
+        } else {
+            sp.play(clickBird, 1, 1, 0, 0, 1);
+        }
+        super.blockAnimFunc();
     }
 
     private class AppearAnimationListener extends com.example.dokdofamily01.MyAnimationListener {

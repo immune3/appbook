@@ -137,38 +137,29 @@ public class Tale12 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
+        hairpin.setOnTouchListener(new BlockObjListener());
+    }
 
-        hairpin.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    @Override
+    public void blockAnimFunc() {
+        if(animationFlag == 0) {
+            animationClear();
+            animationFlag = 1;
+            checkedAnimation = false;
+            sqeedBody.startAnimation(sqeedClinkAni);
+            sqeedHead.startAnimation(sqeedClinkAni);
+            hairpin.startAnimation(sqeedClinkAni);
 
-                switch(motionEvent.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        if(animationFlag == 0) {
-                            animationClear();
-                            animationFlag = 1;
-                            checkedAnimation = false;
-                            sqeedBody.startAnimation(sqeedClinkAni);
-                            sqeedHead.startAnimation(sqeedClinkAni);
-                            hairpin.startAnimation(sqeedClinkAni);
-
-                            whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    handSoundPool.play(handSound, 2, 2, 0, 0, 1);
-                                }
-                            }, 100);
-                        }
-                        break;
-
+            whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handSoundPool.play(handSound, 2, 2, 0, 0, 1);
                 }
+            }, 100);
+        }
 
-                return false;
-
-            }
-        });
+        super.blockAnimFunc();
     }
 
     public void animationClear() {

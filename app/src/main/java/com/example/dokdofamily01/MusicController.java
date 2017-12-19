@@ -185,7 +185,7 @@ public class MusicController {
         }
 
         public boolean increaseSubtitleMusic() {
-            if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+            if (subtitleIndex < subtitleList.size() ) {
                 subtitleIndex++;
                 mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                 return true;
@@ -196,7 +196,7 @@ public class MusicController {
 
         public boolean decreaseSubtitleMusic() {
             Log.d("subtitleIndex ", subtitleIndex + "");
-            if (mp.isPlaying()) {
+//            if (mp.isPlaying()) {
                 if (subtitleIndex > 1) {
                     subtitleIndex -= 2;
                     mp.seekTo(subtitleList.get(subtitleIndex).getFinishTime());
@@ -208,11 +208,12 @@ public class MusicController {
                 } else {
                     return false;
                 }
-            } else {
-                return false;
             }
+//            else {
+//                return false;
+//            }
 
-        }
+//        }
     }
 
     Handler mHandler = new Handler() {

@@ -28,7 +28,7 @@ public class BaseFragment extends Fragment{
     public MusicController musicController;
     boolean isHint;
     boolean isAttached = false;
-    private CustomViewPager vp;
+    public CustomViewPager vp;
     MyChangeListener change ;
 
     @Override
@@ -114,6 +114,52 @@ public class BaseFragment extends Fragment{
     }
 
     public void soundPlayFunc() {
+
+    }
+
+    class BlockObjListener extends CustomTouchListener{
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            customViewPager = vp;
+            return super.onTouch(view, motionEvent);
+        }
+
+
+        @Override
+        public void decreaseFunc() {
+            Log.d("Start","DESC");
+            if(musicController != null){
+                Log.d("Start","DESC");
+
+                if(musicController.previousPart()){
+
+                }else{
+                    super.decreaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void increaseFunc() {
+            Log.d("Start","ASC");
+            if(musicController!=null){
+                Log.d("Start","ASC2");
+                if(musicController.nextPart()){
+
+                }else{
+                    super.increaseFunc();
+                }
+            }
+        }
+
+        @Override
+        public void animationFunc() {
+            super.animationFunc();
+            blockAnimFunc();
+        }
+    }
+
+    public void blockAnimFunc(){
 
     }
 
