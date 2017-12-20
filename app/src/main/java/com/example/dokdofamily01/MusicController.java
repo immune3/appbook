@@ -41,27 +41,26 @@ public class MusicController {
     }
 
     public boolean nextPart() {
-        if(subtitleThread != null) {
+        if (subtitleThread != null) {
             if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
                 return true;
             } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
 
     }
 
     public boolean previousPart() {
-        if(subtitleThread != null){
+        if (subtitleThread != null) {
             if (subtitleThread.decreaseSubtitleMusic()) {
                 return true;
             } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
 
@@ -185,35 +184,45 @@ public class MusicController {
         }
 
         public boolean increaseSubtitleMusic() {
-            if (subtitleIndex < subtitleList.size() ) {
-                subtitleIndex++;
-                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
-                return true;
-            } else {
+            try {
+                if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                    subtitleIndex++;
+                    mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                    return true;
+                } else {
+                    return false;
+                }
+            }catch (IllegalStateException e){
+                e.printStackTrace();
                 return false;
             }
         }
 
         public boolean decreaseSubtitleMusic() {
             Log.d("subtitleIndex ", subtitleIndex + "");
-//            if (mp.isPlaying()) {
-                if (subtitleIndex > 1) {
-                    subtitleIndex -= 2;
-                    mp.seekTo(subtitleList.get(subtitleIndex).getFinishTime());
-                    return true;
-                } else if (subtitleIndex == 1) {
-                    subtitleIndex = 0;
-                    mp.seekTo(0);
-                    return true;
+            try {
+                if (mp.isPlaying()) {
+                    if (subtitleIndex > 1) {
+                        subtitleIndex -= 2;
+                        mp.seekTo(subtitleList.get(subtitleIndex).getFinishTime());
+                        return true;
+                    } else if (subtitleIndex == 1) {
+                        subtitleIndex = 0;
+                        mp.seekTo(0);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
-            }
-//            else {
-//                return false;
-//            }
 
-//        }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
     }
 
     Handler mHandler = new Handler() {
