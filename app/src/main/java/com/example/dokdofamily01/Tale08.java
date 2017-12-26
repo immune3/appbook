@@ -64,8 +64,8 @@ public class Tale08 extends BaseFragment {
     AlphaAnimation afterLeafFadeout;
     AlphaAnimation fadeout;
     Animation fadeIn;
-    AnimationSet leafAniSet = new AnimationSet(false);
-    AnimationSet eyeBlackAniSet = new AnimationSet(false);
+    AnimationSet leafAniSet;
+    AnimationSet eyeBlackAniSet;
     int animationFlag = 0;
 
     MediaPlayer mp = null;
@@ -366,6 +366,7 @@ public class Tale08 extends BaseFragment {
 //                    }
 //                });
 
+                eyeBlackAniSet = new AnimationSet(false);
                 eyeBlackAniSet.addAnimation(treeAnimation);
                 eyeBlackAniSet.addAnimation(treeEyeRotate);
 
@@ -404,6 +405,7 @@ public class Tale08 extends BaseFragment {
 //                leafTranslateAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 leafTranslateAni.setInterpolator(new AnticipateInterpolator());
 
+                leafAniSet = new AnimationSet(false);
                 leafAniSet.addAnimation(leafTranslateAni);
                 leafAniSet.addAnimation(leafFadein);
                 leafAniSet.addAnimation(leafFadeout);

@@ -45,7 +45,7 @@ public class Tale20 extends BaseFragment {
     TranslateAnimation cutainDownAnimation1;
     TranslateAnimation cutainDownAnimation2;
 
-    AnimationSet cutainDownAniSet = new AnimationSet(false);
+//    AnimationSet cutainDownAniSet = new AnimationSet(false);
     int animationFlag = 0;
 
     MediaPlayer mp = null;
