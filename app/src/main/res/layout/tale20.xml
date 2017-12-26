@@ -99,6 +99,20 @@
                 app:scale_left="0"
                 app:scale_top="-1240" />
 
+            <com.example.dokdofamily01.CustomTextView
+                android:id="@+id/cutain_text"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_width = "2560"
+                app:scale_height= "400"
+                app:scale_textsize = "110"
+                app:scale_top = "500"
+                android:text="지금부터 신나게 시작됩니다...!"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                />
+
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>

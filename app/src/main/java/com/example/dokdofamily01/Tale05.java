@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -28,7 +29,7 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale05 extends BaseFragment {
     ImageView[] letter = new ImageView[6];
-    Animation letterAppear;
+    AlphaAnimation letterAppear;
 //    Animation letterDisappear;
     int animationFlag = 0;
 
@@ -80,7 +81,9 @@ public class Tale05 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        letterAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_appear);
+//        letterAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_appear);
+        letterAppear = new AlphaAnimation(0, 1);
+        letterAppear.setDuration(700);
         letterAppear.setFillAfter(true);
         letterAppear.setAnimationListener(new MyAnimationListener());
 //        letterDisappear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_disappear);
@@ -123,13 +126,13 @@ public class Tale05 extends BaseFragment {
                 case 2:
                     letter[2].setVisibility(View.VISIBLE);
                     break;
-                case 4:
+                case 3:
                     letter[3].setVisibility(View.VISIBLE);
                     break;
-                case 6:
+                case 4:
                     letter[4].setVisibility(View.VISIBLE);
                     break;
-                case 8:
+                case 5:
                     letter[5].setVisibility(View.VISIBLE);
                     break;
             }
@@ -139,77 +142,44 @@ public class Tale05 extends BaseFragment {
         public void onAnimationRepeat(Animation animation) {
         }
 
+
         @Override
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 0:
                     break;
                 case 1:
-                    animationFlag = 2;
-//                    letter[0].setVisibility(View.INVISIBLE);
-//                    letter[0].clearAnimation();
                     letter[1].clearAnimation();
-                    break;
-                case 2:
-                    // letter[1] 사라지고 letter[2]나온다.
-                    animationFlag = 3;
-//                    letter[1].startAnimation(letterDisappear);
+                    animationFlag = 2;
                     sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[2].startAnimation(letterAppear);
                     break;
-                case 3:
-                    animationFlag = 4;
-//                    letter[1].setVisibility(View.INVISIBLE);
-//                    letter[1].clearAnimation();
+                case 2:
                     letter[2].clearAnimation();
-                    letter[2].setVisibility(View.VISIBLE);
-                    break;
-                case 4:
-                    // letter[2] 사라지고 letter[3]나온다.
-                    animationFlag = 5;
-//                    letter[2].startAnimation(letterDisappear);
+                    animationFlag = 3;
                     sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[3].startAnimation(letterAppear);
                     break;
-                case 5:
-                    animationFlag = 6;
-//                    letter[2].setVisibility(View.INVISIBLE);
-//                    letter[2].clearAnimation();
+                case 3:
                     letter[3].clearAnimation();
-                    letter[3].setVisibility(View.VISIBLE);
-                    break;
-                case 6:
-                    // letter[3] 사라지고 letter[4]나온다.
-                    animationFlag = 7;
-//                    letter[3].startAnimation(letterDisappear);
+                    animationFlag = 4;
                     sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[4].startAnimation(letterAppear);
                     break;
-                case 7:
-                    animationFlag = 8;
-//                    letter[3].setVisibility(View.INVISIBLE);
-//                    letter[3].clearAnimation();
+                case 4:
                     letter[4].clearAnimation();
-                    letter[4].setVisibility(View.VISIBLE);
-                    break;
-                case 8:
-                    // letter[4] 사라지고 letter[5]나온다.
-                    animationFlag = 9;
-//                    letter[4].startAnimation(letterDisappear);
+                    animationFlag = 5;
                     sp.play(moveLetters, 1, 1, 0, 0, 1);
                     letter[5].startAnimation(letterAppear);
                     break;
-                case 9:
-                    animationFlag = 10;
-//                    letter[4].setVisibility(View.INVISIBLE);
-//                    letter[4].clearAnimation();
-                    letter[5].setVisibility(View.VISIBLE);
+                case 5:
                     letter[5].clearAnimation();
+                    animationFlag = 10;
                     checkedAnimation = true;
                     break;
+
             }
         }
-
 
     }
 

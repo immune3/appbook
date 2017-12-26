@@ -38,7 +38,7 @@ public class Tale17 extends BaseFragment {
     ImageView wave_shadow2;
     ImageView star;
 
-    Animation fadeIn;
+    AlphaAnimation fadeIn;
     AlphaAnimation blink;
     int animationFlag = 0;
 
@@ -97,7 +97,7 @@ public class Tale17 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(3000);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());

@@ -38,11 +38,13 @@ public class Tale02 extends BaseFragment {
     ImageView star;
 
     AlphaAnimation blink;
+    AlphaAnimation seagullAlpha;
     TranslateAnimation headUp;
     TranslateAnimation headDown;
-    Animation seagullAppear;
+    TranslateAnimation seagullTrans;
     AnimationSet handAppear;
     AnimationSet handDisappear;
+    AnimationSet seagullAniSet;
     RotateAnimation seagullClick;
     RotateAnimation handUp;
     RotateAnimation handDown;
@@ -181,8 +183,20 @@ public class Tale02 extends BaseFragment {
                 width = (int)(seagullHand.getWidth()*0.85);
                 height = (int)(seagullHand.getHeight()*0.8);
 
-                seagullAppear = AnimationUtils.loadAnimation(getContext(),R.anim.anim_02_seagull_appear);
-                seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullAlpha = new AlphaAnimation(0, 1);
+                seagullAlpha.setDuration(500);
+
+                seagullTrans = new TranslateAnimation(0, 0, 0, -100);
+                seagullTrans.setDuration(250);
+                seagullTrans.setRepeatCount(1);
+                seagullTrans.setInterpolator(new AccelerateDecelerateInterpolator());
+                seagullTrans.setRepeatMode(Animation.REVERSE);
+
+                seagullAniSet = new AnimationSet(false);
+                seagullAniSet.addAnimation(seagullAlpha);
+                seagullAniSet.addAnimation(seagullTrans);
+                seagullAniSet.setFillAfter(true);
+
 
                 seagullClick = new RotateAnimation(10,-10,width,height);
                 seagullClick.setDuration(500);
@@ -268,7 +282,7 @@ public class Tale02 extends BaseFragment {
                 checkedAnimation = false;
                 star.clearAnimation();
                 byulhead.startAnimation(headUp);
-                seagullBody.setAnimation(seagullAppear);
+                seagullBody.setAnimation(seagullAniSet);
             }
         });
 

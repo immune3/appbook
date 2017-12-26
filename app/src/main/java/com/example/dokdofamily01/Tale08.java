@@ -63,7 +63,7 @@ public class Tale08 extends BaseFragment {
     AlphaAnimation leafFadeout;
     AlphaAnimation afterLeafFadeout;
     AlphaAnimation fadeout;
-    Animation fadeIn;
+    AlphaAnimation fadeIn;
     AnimationSet leafAniSet;
     AnimationSet eyeBlackAniSet;
     int animationFlag = 0;
@@ -411,7 +411,8 @@ public class Tale08 extends BaseFragment {
                 leafAniSet.addAnimation(leafFadeout);
 //                leafAniSet.addAnimation(afterLeafFadeout);
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                fadeIn = new AlphaAnimation(0,1);
+                fadeIn.setDuration(1000);
                 fadeIn.setFillAfter(true);
 
                 fadeout = new AlphaAnimation(1, 0);

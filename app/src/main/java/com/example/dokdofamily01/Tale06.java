@@ -48,7 +48,7 @@ public class Tale06 extends BaseFragment {
     TranslateAnimation[] wavingUpperAndLower = new TranslateAnimation[3];
     AlphaAnimation seagullFadein;
     AlphaAnimation blink;
-    Animation fadeIn;
+    AlphaAnimation fadeIn;
     AnimationSet[] wavingAniSet = new AnimationSet[3];
     int animationFlag = 0;
 
@@ -110,7 +110,8 @@ public class Tale06 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(1000);
         fadeIn.setFillAfter(true);
 
         seagullFadein = new AlphaAnimation(0, 1);

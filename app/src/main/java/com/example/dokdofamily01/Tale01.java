@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -37,8 +38,8 @@ public class Tale01 extends BaseFragment {
     ImageView hand;
     ImageView curtain;
     ImageView light;
-    Animation fadeIn;
-    Animation fadeOut;
+    AlphaAnimation fadeIn;
+    AlphaAnimation fadeOut;
 
     ArrayList<SubTitleData> subtitleList;
 
@@ -89,11 +90,15 @@ public class Tale01 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_01_fadein);
+
+        fadeIn = new AlphaAnimation(0, 1);
+
+        fadeIn.setDuration(1000);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
-        fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_01_fadeout);
+        fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setDuration(1000);
         fadeOut.setFillAfter(true);
         fadeOut.setAnimationListener(new MyAnimationListener());
 
@@ -122,13 +127,12 @@ public class Tale01 extends BaseFragment {
             light.setVisibility(View.INVISIBLE);
             byul.setVisibility(View.INVISIBLE);
             hand.setVisibility(View.INVISIBLE);
-        } else if (animationFlag == 8) {
-
+        } else if (animationFlag == 5) {
             fadeIn.setStartOffset(0);
             fadeOut.setStartOffset(0);
             sp.play(soundID, 4, 4, 0, 0, 1);
             lampLight.startAnimation(fadeOut);
-        } else if (animationFlag == 10) {
+        } else if (animationFlag == 7) {
             sp.play(soundID, 4, 4, 0, 0, 1);
             lampLight.startAnimation(fadeIn);
         }
@@ -144,53 +148,45 @@ public class Tale01 extends BaseFragment {
                     animationFlag = 2;
                     lampLight.clearAnimation();
                     bedLight.clearAnimation();
-                    break;
-                case 2:
-                    animationFlag = 3;
                     fadeOut.setStartOffset(1000);
                     head.startAnimation(fadeOut);
                     bedLight.startAnimation(fadeOut);
                     blanket.startAnimation(fadeOut);
                     break;
-                case 3:
-                    animationFlag = 4;
+                case 2:
+                    animationFlag = 3;
+                    head.clearAnimation();
+                    bedLight.clearAnimation();
+                    blanket.clearAnimation();
                     bedLight.setVisibility(View.INVISIBLE);
                     head.setVisibility(View.INVISIBLE);
                     blanket.setVisibility(View.INVISIBLE);
-                    bedLight.clearAnimation();
-                    head.clearAnimation();
-                    blanket.clearAnimation();
-                    break;
-                case 4:
-                    animationFlag = 5;
                     byul.startAnimation(fadeIn);
                     break;
-                case 5:
-                    animationFlag = 6;
-                    byul.clearAnimation();
-                    break;
-                case 6:
-                    animationFlag = 7;
+                case 3:
+                    animationFlag = 4;
                     fadeIn.setStartOffset(1000);
                     fadeOut.setStartOffset(1000);
+                    byul.clearAnimation();
                     hand.startAnimation(fadeIn);
                     curtain.startAnimation(fadeOut);
                     light.startAnimation(fadeIn);
                     break;
-                case 7:
-                    animationFlag = 8;
+                case 4:
+                    animationFlag = 5;
                     checkedAnimation = true;
                     curtain.setVisibility(View.INVISIBLE);
                     hand.clearAnimation();
                     curtain.clearAnimation();
                     light.clearAnimation();
                     break;
-                case 9:
-                    animationFlag = 10;
+                case 6:
+                    animationFlag = 7;
                     break;
-                case 11:
-                    animationFlag = 8;
+                case 8:
+                    animationFlag = 5;
                     break;
+
             }
         }
 
@@ -203,15 +199,15 @@ public class Tale01 extends BaseFragment {
             if (animationFlag == 1) {
                 lampLight.setVisibility(View.VISIBLE);
                 bedLight.setVisibility(View.VISIBLE);
-            } else if (animationFlag == 5) {
+            } else if (animationFlag == 3) {
                 byul.setVisibility(View.VISIBLE);
-            } else if (animationFlag == 7) {
+            } else if (animationFlag == 4) {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
-            } else if (animationFlag == 8) {
-                animationFlag = 9;
-            } else if (animationFlag == 10) {
-                animationFlag = 11;
+            } else if (animationFlag == 5) {
+                animationFlag = 6;
+            } else if (animationFlag == 7) {
+                animationFlag = 8;
             }
         }
     }

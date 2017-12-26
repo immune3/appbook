@@ -48,7 +48,7 @@ public class Tale10 extends BaseFragment {
     TranslateAnimation birdsAppear;
     RotateAnimation byulHeadRotate;
     RotateAnimation byulHandRotate;
-    Animation fadeIn;
+    AlphaAnimation fadeIn;
     AlphaAnimation blink;
     AlphaAnimation repeat;
     int animationFlag = 0;
@@ -114,7 +114,8 @@ public class Tale10 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+//        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
         fadeIn.setAnimationListener(new MyAnimationListener());
 

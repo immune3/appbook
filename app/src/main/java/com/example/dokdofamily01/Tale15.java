@@ -50,8 +50,8 @@ public class Tale15 extends BaseFragment {
     int animationFlag = 0;
     int appearFlag = 0;
 
-    Animation fadeIn;
-    Animation fadeOut;
+    AlphaAnimation fadeIn;
+    AlphaAnimation fadeOut;
     AlphaAnimation blink;
     TranslateAnimation landAnimation, byulAnimation, caveAnimation;
 
@@ -115,18 +115,16 @@ public class Tale15 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
                 case 1:
-                    manImage1.setVisibility(View.VISIBLE);
+                    sp.play(moveMan, 1, 1, 0, 0, 1);
+                    break;
+                case 2:
                     sp.play(moveMan, 1, 1, 0, 0, 1);
                     break;
                 case 3:
-                    manImage2.setVisibility(View.VISIBLE);
                     sp.play(moveMan, 1, 1, 0, 0, 1);
                     break;
-                case 5:
-                    manImage3.setVisibility(View.VISIBLE);
-                    sp.play(moveMan, 1, 1, 0, 0, 1);
-                    break;
-                case 7:
+                case 4:
+                    sp.play(appearMan, 1, 1, 0, 0, 1);
                     manImage4.setVisibility(View.VISIBLE);
                     break;
             }
@@ -135,42 +133,30 @@ public class Tale15 extends BaseFragment {
         @Override
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
+                case 0:
+                    break;
                 case 1:
-                    // man2 사라지고 man3나온다.
                     animationFlag = 2;
                     manImage1.clearAnimation();
-                    break;
-                case 2:
-                    animationFlag = 3;
+                    manImage2.clearAnimation();
                     manImage1.startAnimation(fadeOut);
                     manImage2.startAnimation(fadeIn);
                     break;
-                case 3:
-                    // man3 사라지고 man4 나온다.
-                    animationFlag = 4;
-                    manImage1.setVisibility(View.INVISIBLE);
+                case 2:
+                    animationFlag = 3;
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
-                    break;
-                case 4:
-                    animationFlag = 5;
                     manImage2.startAnimation(fadeOut);
                     manImage3.startAnimation(fadeIn);
                     break;
-                case 5:
-                    animationFlag = 6;
-                    manImage2.setVisibility(View.INVISIBLE);
+                case 3:
+                    animationFlag = 4;
                     manImage2.clearAnimation();
                     manImage3.clearAnimation();
-                    break;
-                case 6:
-                    animationFlag = 7;
-                    sp.play(appearMan, 1, 1, 0, 0, 1);
                     manImage3.startAnimation(fadeOut);
                     manImage4.startAnimation(fadeIn);
                     break;
-                case 7:
-                    manImage3.setVisibility(View.INVISIBLE);
+                case 4:
                     manImage3.clearAnimation();
                     manImage4.clearAnimation();
                     checkedAnimation = true;
@@ -189,8 +175,6 @@ public class Tale15 extends BaseFragment {
         public void onAnimationRepeat(Animation animation) {
 
         }
-
-
     }
 
     @Override
@@ -274,12 +258,18 @@ public class Tale15 extends BaseFragment {
                 byulAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulAnimation.setAnimationListener(new MyAnimationListener());
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
-//                fadeIn.setFillAfter(true);
-                fadeIn.setAnimationListener(new MyAnimationListener());
+//                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadein);
 
-                fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
-//                fadeOut.setFillAfter(true);
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+                fadeIn.setDuration(1000);
+//                fadeIn.setFillAfter(true);
+
+                fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setDuration(1000);
+//                fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.anim_15_fadeout);
+                fadeOut.setFillAfter(true);
+
 
                 blink = new AlphaAnimation(0.3f, 1);
                 blink.setDuration(500);

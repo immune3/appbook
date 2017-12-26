@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
@@ -35,6 +36,7 @@ public class Tale20 extends BaseFragment {
     ImageView wave;
     ImageView cutain;
     ImageView byul;
+    CustomTextView cutainText;
 
     TranslateAnimation manAppearAnimation;
     TranslateAnimation dokdoFatherAppearAnimation;
@@ -44,9 +46,12 @@ public class Tale20 extends BaseFragment {
     TranslateAnimation cutainAppearAni;
     TranslateAnimation cutainDownAnimation1;
     TranslateAnimation cutainDownAnimation2;
+    AlphaAnimation fadein;
+    AlphaAnimation fadeout;
 
 //    AnimationSet cutainDownAniSet = new AnimationSet(false);
     int animationFlag = 0;
+    int cutainFlag = 0;
 
     MediaPlayer mp = null;
 
@@ -79,6 +84,7 @@ public class Tale20 extends BaseFragment {
         wave = (ImageView) layout.findViewById(R.id.wave);
         cutain = (ImageView) layout.findViewById(R.id.cutain);
         byul = (ImageView) layout.findViewById(R.id.byul);
+        cutainText = (CustomTextView) layout.findViewById(R.id.cutain_text);
     }
 
     @Override
@@ -90,6 +96,27 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+        fadein = new AlphaAnimation(0, 1);
+        fadein.setDuration(1000);
+        fadein.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                cutainText.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        fadeout = new AlphaAnimation(1, 0);
+        fadeout.setDuration(10);
     }
 
     @Override
@@ -101,10 +128,10 @@ public class Tale20 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(animationFlag == 0 && checkedAnimation == true) {
+        if(animationFlag == 0 && checkedAnimation == true && cutainFlag == 0) {
             checkedAnimation = false;
             animationFlag = 1;
-            cutain.startAnimation(cutainDownAnimation1);
+//            cutain.startAnimation(cutainDownAnimation1);
         }
         super.blockAnimFunc();
     }
@@ -151,6 +178,8 @@ public class Tale20 extends BaseFragment {
         wave.post(new Runnable() {
             @Override
             public void run() {
+                cutainText.setVisibility(View.INVISIBLE);
+
                 manAppearAnimation = new TranslateAnimation(0, 0, man.getHeight(), 0);
                 manAppearAnimation.setDuration(1000);
                 manAppearAnimation.setStartOffset(400);
@@ -181,23 +210,43 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
 
-                cutainAppearAni = new TranslateAnimation(0, 0, -cutain.getHeight()*0.1f, 0);
+                cutainAppearAni = new TranslateAnimation(0, 0, -cutain.getHeight()*0.2f, 0);
                 cutainAppearAni.setDuration(1000);
                 cutainAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                cutainAppearAni.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        cutainText.clearAnimation();
+                        cutainText.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        cutain.startAnimation(cutainDownAnimation1);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 cutainDownAnimation2 = new TranslateAnimation(0, 0, -cutain.getHeight()*0.01f, cutain.getHeight()*0.45f);
 //                cutainDownAnimation2.setStartOffset(1000);
-                cutainDownAnimation2.setDuration(20000);
+                cutainDownAnimation2.setDuration(36500);
                 cutainDownAnimation2.setFillAfter(true);
 //                cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
 
                 cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, -cutain.getHeight()*0.01f);
+//                cutainDownAnimation1.setStartOffset(10000);
                 cutainDownAnimation1.setDuration(1000);
 //                cutainDownAnimation1.setInterpolator(new DecelerateInterpolator());
                 cutainDownAnimation1.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
+                        cutainFlag = 1;
+                        animationFlag = 0;
+                        checkedAnimation = true;
                     }
 
                     @Override
@@ -210,25 +259,20 @@ public class Tale20 extends BaseFragment {
 
                     }
                 });
-//                cutainDownAnimation1.setFillAfter(true);
 
-
-
-//                cutainDownAnimation2.setFillAfter(true);
-//                ainDownAniSet.addAnimation(cutainDownAnimation1);
-//                cutainDownAniSet.addAnimation(cutainDownAnimation2);
-//                cutainDownAniSet.setFillAfter(true);
 
                 cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
+//                        animationFlag = 0;
+//                        checkedAnimation = true;
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        checkedAnimation = true;
-                        animationFlag = 0;
+//                        checkedAnimation = true;
+//                        animationFlag = 0;
+                        cutainText.startAnimation(fadein);
                     }
 
                     @Override
@@ -239,8 +283,10 @@ public class Tale20 extends BaseFragment {
 
 
                 if (animationFlag == 0) {
+                    cutainFlag = 0;
                     checkedAnimation = false;
                     animationFlag = 1;
+                    cutainText.clearAnimation();
                     cutain.clearAnimation();
                     man.clearAnimation();
                     dokdo_father.clearAnimation();
