@@ -25,6 +25,9 @@
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".SplashActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".IntroductionActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

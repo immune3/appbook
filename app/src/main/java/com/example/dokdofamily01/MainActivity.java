@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button taleBtn;
+    Button introBtn;
     static Context context;
     boolean splashFlag=true;
     @Override
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
         taleBtn = (Button)findViewById(R.id.taleBtn);
+        introBtn = (Button)findViewById(R.id.introBtn);
 
         taleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, TaleActivity.class);
                 startActivity(intent);
 //                finish();
+            }
+        });
+
+        introBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, IntroductionActivity.class);
+                startActivity(intent);
             }
         });
 
