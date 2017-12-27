@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    >
+
+    <com.example.dokdofamily01.CustomScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/introduce_back"
+            app:scale_base_width="2560"
+            app:scale_base_height="1600">
+
+            <Button
+                android:id="@+id/waveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                app:scale_width="312"
+                app:scale_height="228"
+                app:scale_left="1309"
+                app:scale_top="690"/>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/mask"
+                android:alpha="0.4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                app:scale_width="2560"
+                app:scale_height="1600"
+                app:scale_left="0"
+                app:scale_top="0"
+                />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/wave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_wave"
+                app:scale_width="312"
+                app:scale_height="228"
+                app:scale_left="1309"
+                app:scale_top="690"/>
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/waveText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_wave_text"
+                app:scale_width="1408"
+                app:scale_height="936"
+                app:scale_left="30"
+                app:scale_top="160"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </com.example.dokdofamily01.CustomScrollView>
+
+</RelativeLayout>
