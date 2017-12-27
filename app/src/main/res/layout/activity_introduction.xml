@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
     <com.example.dokdofamily01.CustomScrollView
         android:id="@+id/sv"
@@ -16,52 +15,386 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/introduce_back"
-            app:scale_base_width="2560"
-            app:scale_base_height="1600">
+            app:scale_base_height="1600"
+            app:scale_base_width="2560">
+
+
 
             <Button
                 android:id="@+id/waveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00000000"
-                app:scale_width="312"
+                android:background="@null"
                 app:scale_height="228"
                 app:scale_left="1309"
-                app:scale_top="690"/>
+                app:scale_top="690"
+                app:scale_width="312" />
 
-            <View
-                android:visibility="gone"
-                android:id="@+id/mask"
-                android:alpha="0.4"
+            <Button
+                android:id="@+id/fatherBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="660"
+                app:scale_left="45"
+                app:scale_top="290"
+                app:scale_width="1080" />
+
+            <Button
+                android:id="@+id/flowerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="322"
+                app:scale_left="721"
+                app:scale_top="527"
+                app:scale_width="344" />
+
+            <Button
+                android:id="@+id/birdBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="228"
+                app:scale_left="95"
+                app:scale_top="465"
+                app:scale_width="312" />
+
+            <Button
+                android:id="@+id/manBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="592"
+                app:scale_left="326"
+                app:scale_top="883"
+                app:scale_width="336" />
+
+            <Button
+                android:id="@+id/momBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="480"
+                app:scale_left="1530"
+                app:scale_top="471"
+                app:scale_width="886" />
+
+            <Button
+                android:id="@+id/postBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="296"
+                app:scale_left="2165"
+                app:scale_top="535"
+                app:scale_width="258" />
+
+            <Button
+                android:id="@+id/seagullBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="518"
+                app:scale_left="1720"
+                app:scale_top="0"
+                app:scale_width="830" />
+
+            <Button
+                android:id="@+id/byulBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="280"
+                app:scale_left="2000"
+                app:scale_top="10"
+                app:scale_width="196" />
+
+            <Button
+                android:id="@+id/squidBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="510"
+                app:scale_left="1634"
+                app:scale_top="1090"
+                app:scale_width="756" />
+
+            <Button
+                android:id="@+id/treeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:scale_height="286"
+                app:scale_left="1485"
+                app:scale_top="457"
+                app:scale_width="388" />
+
+            <View
+                android:id="@+id/mask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.4"
                 android:background="#000000"
-                app:scale_width="2560"
+                android:visibility="gone"
                 app:scale_height="1600"
                 app:scale_left="0"
                 app:scale_top="0"
-                />
+                app:scale_width="2560" />
+
 
             <ImageView
-                android:visibility="invisible"
                 android:id="@+id/wave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_wave"
-                app:scale_width="312"
+                android:visibility="invisible"
                 app:scale_height="228"
                 app:scale_left="1309"
-                app:scale_top="690"/>
+                app:scale_top="690"
+                app:scale_width="312" />
+
             <ImageView
-                android:visibility="invisible"
                 android:id="@+id/waveText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_wave_text"
-                app:scale_width="1408"
+                android:visibility="invisible"
                 app:scale_height="936"
                 app:scale_left="30"
-                app:scale_top="160"/>
+                app:scale_top="160"
+                app:scale_width="1408" />
+
+            <!--add-->
+
+
+            <ImageView
+                android:id="@+id/introByul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_byul"
+                android:visibility="invisible"
+                app:scale_height="408"
+                app:scale_left="1953"
+                app:scale_top="5"
+                app:scale_width="296" />
+
+
+
+            <ImageView
+                android:id="@+id/introByulText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_byul_text"
+                android:visibility="invisible"
+                app:scale_height="1172"
+                app:scale_left="680"
+                app:scale_top="5"
+                app:scale_width="1286" />
+
+
+            <ImageView
+                android:id="@+id/introFather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_father"
+                android:visibility="invisible"
+                app:scale_height="660"
+                app:scale_left="45"
+                app:scale_top="290"
+                app:scale_width="1080" />
+
+
+            <ImageView
+                android:id="@+id/introFatherText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_father_text"
+                android:visibility="invisible"
+                app:scale_height="936"
+                app:scale_left="30"
+                app:scale_top="160"
+                app:scale_width="3100" />
+
+            <ImageView
+                android:id="@+id/introBird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_bird"
+                android:visibility="invisible"
+                app:scale_height="228"
+                app:scale_left="95"
+                app:scale_top="465"
+                app:scale_width="312" />
+
+
+
+            <ImageView
+                android:id="@+id/introBirdText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_bird_text"
+                android:visibility="invisible"
+                app:scale_height="854"
+                app:scale_left="400"
+                app:scale_top="160"
+                app:scale_width="1586" />
+
+            <ImageView
+                android:id="@+id/introFlower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_flower"
+                android:visibility="invisible"
+                app:scale_height="322"
+                app:scale_left="721"
+                app:scale_top="527"
+                app:scale_width="344" />
+
+
+
+            <ImageView
+                android:id="@+id/introFlowerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_flower_text"
+                android:visibility="invisible"
+                app:scale_height="874"
+                app:scale_left="890"
+                app:scale_top="660"
+                app:scale_width="1670" />
+
+            <ImageView
+                android:id="@+id/introMan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_man"
+                android:visibility="invisible"
+                app:scale_height="592"
+                app:scale_left="326"
+                app:scale_top="883"
+                app:scale_width="336" />
+
+            <ImageView
+                android:id="@+id/introManText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_man_text"
+                android:visibility="invisible"
+                app:scale_height="1214"
+                app:scale_left="540"
+                app:scale_top="320"
+                app:scale_width="1270" />
+
+            <ImageView
+                android:id="@+id/introMom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_mom"
+                android:visibility="invisible"
+                app:scale_height="480"
+                app:scale_left="1530"
+                app:scale_top="471"
+                app:scale_width="886" />
+
+            <ImageView
+                android:id="@+id/introMomText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_mom_text"
+                android:visibility="invisible"
+                app:scale_height="936"
+                app:scale_left="500"
+                app:scale_top="330"
+                app:scale_width="1408" />
+
+            <ImageView
+                android:id="@+id/introPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_post"
+                android:visibility="invisible"
+                app:scale_height="296"
+                app:scale_left="2165"
+                app:scale_top="535"
+                app:scale_width="258" />
+
+            <ImageView
+                android:id="@+id/introPostText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_post_text"
+                android:visibility="invisible"
+                app:scale_height="892"
+                app:scale_left="600"
+                app:scale_top="280"
+                app:scale_width="1606" />
+
+            <ImageView
+                android:id="@+id/introSeagull"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_seagull"
+                android:visibility="invisible"
+                app:scale_height="518"
+                app:scale_left="1720"
+                app:scale_top="0"
+                app:scale_width="830" />
+
+            <ImageView
+                android:id="@+id/introSeagullText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_seagull_text"
+                android:visibility="invisible"
+                app:scale_height="976"
+                app:scale_left="450"
+                app:scale_top="160"
+                app:scale_width="1392" />
+
+            <ImageView
+                android:id="@+id/introSquid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_squid"
+                android:visibility="invisible"
+                app:scale_height="510"
+                app:scale_left="1634"
+                app:scale_top="1090"
+                app:scale_width="756" />
+
+            <ImageView
+                android:id="@+id/introSquidText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_squid_text"
+                android:visibility="invisible"
+                app:scale_height="1116"
+                app:scale_left="600"
+                app:scale_top="450"
+                app:scale_width="1350" />
+
+            <ImageView
+                android:id="@+id/introTree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_tree"
+                android:visibility="invisible"
+                app:scale_height="286"
+                app:scale_left="1485"
+                app:scale_top="457"
+                app:scale_width="388" />
+
+            <ImageView
+                android:id="@+id/introTreeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/intro_tree_text"
+                android:visibility="invisible"
+                app:scale_height="978"
+                app:scale_left="110"
+                app:scale_top="430"
+                app:scale_width="1488" />
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
