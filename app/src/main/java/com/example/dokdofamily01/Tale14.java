@@ -56,9 +56,9 @@ public class Tale14 extends BaseFragment {
     ScaleAnimation sqeedHandAfterClinkAni2;
     RotateAnimation sqeedHandRotateAni;
 
-    AnimationSet bellAnimSet = new AnimationSet(false);
-    AnimationSet sqeedHandScaleAnimSet = new AnimationSet(false);
-    AnimationSet sqeedHandAfterClinkAnimSet = new AnimationSet(false);
+    AnimationSet bellAnimSet;
+    AnimationSet sqeedHandScaleAnimSet;
+    AnimationSet sqeedHandAfterClinkAnimSet;
 
     int bellClickFlag = 0;
     int animationFlag = 0;
@@ -248,6 +248,11 @@ public class Tale14 extends BaseFragment {
         land.post(new Runnable() {
             @Override
             public void run() {
+
+                bellAnimSet = new AnimationSet(false);
+                sqeedHandScaleAnimSet = new AnimationSet(false);
+                sqeedHandAfterClinkAnimSet = new AnimationSet(false);
+
                 caveAppearAni = new TranslateAnimation(cave.getWidth(), 0, 0, 0);
                 caveAppearAni.setDuration(1500);
                 caveAppearAni.setStartOffset(1000);

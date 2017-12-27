@@ -57,10 +57,10 @@ public class Tale09 extends BaseFragment {
     ImageView effect;
 
     ScaleAnimation seagullAppear;
-    Animation appear;
-    Animation fadeIn;
-    Animation fadeOut;
-    Animation birdsAppear;
+    AlphaAnimation appear;
+    AlphaAnimation fadeIn;
+    AlphaAnimation fadeOut;
+    ScaleAnimation birdsAppear;
     TranslateAnimation decoAppear;
     TranslateAnimation fatherAppear;
     TranslateAnimation momAppear;
@@ -137,32 +137,16 @@ public class Tale09 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        fadeIn.setStartOffset(250);
+        fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setStartOffset(280);
         fadeIn.setDuration(500);
-        fadeIn.setFillAfter(true);
+//        fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
-        fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+        fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setStartOffset(-200);
         fadeOut.setDuration(800);
         fadeOut.setFillAfter(true);
-//        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//                sp.play(moveByul, 1, 1, 0, 0, 1);
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
 
         blink = new AlphaAnimation(1, 0.3f);
         blink.setDuration(500);
@@ -266,7 +250,37 @@ public class Tale09 extends BaseFragment {
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
+        @Override
+        public void onAnimationStart(Animation animation) {
 
+            switch (animationFlag) {
+                case 1:
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody1.setVisibility(View.VISIBLE);
+//                    byulHead1.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody2.setVisibility(View.VISIBLE);
+//                    byulHead2.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody3.setVisibility(View.VISIBLE);
+//                    byulHead3.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody4.setVisibility(View.VISIBLE);
+//                    byulHead4.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+                    byulBody5.setVisibility(View.VISIBLE);
+                    byulHead5.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
         @Override
         public void onAnimationEnd(Animation animation) {
             sp.play(moveByul, 1, 1, 0, 0, 1);
@@ -275,78 +289,51 @@ public class Tale09 extends BaseFragment {
                     animationFlag = 2;
                     byulBody1.clearAnimation();
                     byulHead1.clearAnimation();
-                    break;
-                case 2:
-                    animationFlag = 3;
-//                    sp.play(moveByul, 1, 1, 0, 0, 1);
+                    byulBody2.clearAnimation();
+                    byulHead2.clearAnimation();
                     byulBody1.startAnimation(fadeOut);
                     byulHead1.startAnimation(fadeOut);
                     byulBody2.startAnimation(fadeIn);
                     byulHead2.startAnimation(fadeIn);
-
                     break;
-                case 3:
-                    animationFlag = 4;
-                    byulBody1.setVisibility(View.INVISIBLE);
-                    byulHead1.setVisibility(View.INVISIBLE);
+                case 2:
+                    animationFlag = 3;
                     byulBody1.clearAnimation();
                     byulHead1.clearAnimation();
                     byulBody2.clearAnimation();
                     byulHead2.clearAnimation();
-                    break;
-                case 4:
-                    animationFlag = 5;
-//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody2.startAnimation(fadeOut);
                     byulHead2.startAnimation(fadeOut);
                     byulBody3.startAnimation(fadeIn);
                     byulHead3.startAnimation(fadeIn);
                     break;
-                case 5:
-                    animationFlag = 6;
-                    byulBody2.setVisibility(View.INVISIBLE);
-                    byulHead2.setVisibility(View.INVISIBLE);
+                case 3:
+                    animationFlag = 4;
                     byulBody2.clearAnimation();
                     byulHead2.clearAnimation();
                     byulBody3.clearAnimation();
                     byulHead3.clearAnimation();
-                    break;
-                case 6:
-                    animationFlag = 7;
-//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody3.startAnimation(fadeOut);
                     byulHead3.startAnimation(fadeOut);
                     byulBody4.startAnimation(fadeIn);
                     byulHead4.startAnimation(fadeIn);
+
                     break;
-                case 7:
-                    animationFlag = 8;
-                    byulBody3.setVisibility(View.INVISIBLE);
-                    byulHead3.setVisibility(View.INVISIBLE);
+                case 4:
+                    animationFlag = 5;
                     byulBody3.clearAnimation();
                     byulHead3.clearAnimation();
                     byulBody4.clearAnimation();
                     byulHead4.clearAnimation();
-                    break;
-                case 8:
-                    animationFlag = 9;
-//                    sp.play(moveByul, 1, 1, 0, 0, 1);
                     byulBody4.startAnimation(fadeOut);
                     byulHead4.startAnimation(fadeOut);
                     byulBody5.startAnimation(fadeIn);
                     byulHead5.startAnimation(fadeIn);
                     break;
-                case 9:
-                    animationFlag = 10;
-                    byulBody4.setVisibility(View.INVISIBLE);
-                    byulHead4.setVisibility(View.INVISIBLE);
+                case 5:
+                    animationFlag = 0;
                     byulBody4.clearAnimation();
                     byulHead4.clearAnimation();
-                    byulBody5.clearAnimation();
-                    byulHead5.clearAnimation();
-                    break;
-                case 10:
-                    animationFlag = 0;
                     byulBody5.startAnimation(fadeOut);
                     byulHead5.startAnimation(fadeOut);
                     bird.startAnimation(blink);
@@ -354,40 +341,101 @@ public class Tale09 extends BaseFragment {
                     break;
             }
         }
+//        @Override
+//        public void onAnimationEnd(Animation animation) {
+//            sp.play(moveByul, 1, 1, 0, 0, 1);
+//            switch (animationFlag) {
+//                case 1:
+//                    animationFlag = 2;
+//                    byulBody1.clearAnimation();
+//                    byulHead1.clearAnimation();
+//                    break;
+//                case 2:
+//                    animationFlag = 3;
+////                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody1.startAnimation(fadeOut);
+//                    byulHead1.startAnimation(fadeOut);
+//                    byulBody2.startAnimation(fadeIn);
+//                    byulHead2.startAnimation(fadeIn);
+//
+//                    break;
+//                case 3:
+//                    animationFlag = 4;
+//                    byulBody1.setVisibility(View.INVISIBLE);
+//                    byulHead1.setVisibility(View.INVISIBLE);
+//                    byulBody1.clearAnimation();
+//                    byulHead1.clearAnimation();
+//                    byulBody2.clearAnimation();
+//                    byulHead2.clearAnimation();
+//                    break;
+//                case 4:
+//                    animationFlag = 5;
+////                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody2.startAnimation(fadeOut);
+//                    byulHead2.startAnimation(fadeOut);
+//                    byulBody3.startAnimation(fadeIn);
+//                    byulHead3.startAnimation(fadeIn);
+//                    break;
+//                case 5:
+//                    animationFlag = 6;
+//                    byulBody2.setVisibility(View.INVISIBLE);
+//                    byulHead2.setVisibility(View.INVISIBLE);
+//                    byulBody2.clearAnimation();
+//                    byulHead2.clearAnimation();
+//                    byulBody3.clearAnimation();
+//                    byulHead3.clearAnimation();
+//                    break;
+//                case 6:
+//                    animationFlag = 7;
+////                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody3.startAnimation(fadeOut);
+//                    byulHead3.startAnimation(fadeOut);
+//                    byulBody4.startAnimation(fadeIn);
+//                    byulHead4.startAnimation(fadeIn);
+//                    break;
+//                case 7:
+//                    animationFlag = 8;
+//                    byulBody3.setVisibility(View.INVISIBLE);
+//                    byulHead3.setVisibility(View.INVISIBLE);
+//                    byulBody3.clearAnimation();
+//                    byulHead3.clearAnimation();
+//                    byulBody4.clearAnimation();
+//                    byulHead4.clearAnimation();
+//                    break;
+//                case 8:
+//                    animationFlag = 9;
+////                    sp.play(moveByul, 1, 1, 0, 0, 1);
+//                    byulBody4.startAnimation(fadeOut);
+//                    byulHead4.startAnimation(fadeOut);
+//                    byulBody5.startAnimation(fadeIn);
+//                    byulHead5.startAnimation(fadeIn);
+//                    break;
+//                case 9:
+//                    animationFlag = 10;
+//                    byulBody4.setVisibility(View.INVISIBLE);
+//                    byulHead4.setVisibility(View.INVISIBLE);
+//                    byulBody4.clearAnimation();
+//                    byulHead4.clearAnimation();
+//                    byulBody5.clearAnimation();
+//                    byulHead5.clearAnimation();
+//                    break;
+//                case 10:
+//                    animationFlag = 0;
+//                    byulBody5.startAnimation(fadeOut);
+//                    byulHead5.startAnimation(fadeOut);
+//                    bird.startAnimation(blink);
+//                    checkedAnimation = true;
+//                    break;
+//            }
+//        }
 
         @Override
         public void onAnimationRepeat(Animation animation) {
         }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-
-            switch (animationFlag) {
-                case 1:
-                    byulBody1.setVisibility(View.VISIBLE);
-                    byulHead1.setVisibility(View.VISIBLE);
-                    break;
-                case 3:
-                    byulBody2.setVisibility(View.VISIBLE);
-                    byulHead2.setVisibility(View.VISIBLE);
-                    break;
-                case 5:
-                    byulBody3.setVisibility(View.VISIBLE);
-                    byulHead3.setVisibility(View.VISIBLE);
-                    break;
-                case 7:
-                    byulBody4.setVisibility(View.VISIBLE);
-                    byulHead4.setVisibility(View.VISIBLE);
-                    break;
-                case 9:
-                    byulBody5.setVisibility(View.VISIBLE);
-                    byulHead5.setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
-
     }
     private void animationClear(){
+        byulBody5.setVisibility(View.INVISIBLE);
+        byulHead5.setVisibility(View.INVISIBLE);
         effect.setVisibility(View.INVISIBLE);
         bird.setVisibility(View.INVISIBLE);
         fatherDokdo.setVisibility(View.INVISIBLE);
@@ -432,7 +480,9 @@ public class Tale09 extends BaseFragment {
                 seagullAppear.setDuration(1000);
 //                seagullAppear.setFillAfter(true);
 
-                birdsAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_09_birds_appear);
+//                birdsAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_09_birds_appear);
+                birdsAppear = new ScaleAnimation(3,1,3,1, birds.getWidth()*0.5f, birds.getHeight()*0.5f);
+                birdsAppear.setDuration(2000);
                 birdsAppear.setFillAfter(true);
 
                 decoAppear = new TranslateAnimation(0, 0, (int) (deco.getHeight() * 0.7), 0);
@@ -482,7 +532,9 @@ public class Tale09 extends BaseFragment {
                 wavingAnimation.setRepeatCount(Animation.INFINITE);
                 wavingAnimation.setRepeatMode(Animation.REVERSE);
 
-                appear = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+//                appear = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                appear = new AlphaAnimation(0, 1);
+                appear.setDuration(1000);
                 appear.setAnimationListener(new AppearAnimationListener());
 
                 effect.setVisibility(View.INVISIBLE);

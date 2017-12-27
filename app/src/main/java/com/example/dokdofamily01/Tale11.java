@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.MotionEvent;
@@ -56,8 +57,8 @@ public class Tale11 extends BaseFragment {
     AlphaAnimation beeButterflyFadeOut;
     AlphaAnimation blink;
     Animation flowerAnimation;
-    AnimationSet hideBeeAniSet = new AnimationSet(false);
-    AnimationSet hideButterflyAniSet = new AnimationSet(false);
+    AnimationSet hideBeeAniSet;
+    AnimationSet hideButterflyAniSet;
     int animationFlag = 0;
     int byulAppearFlag = 0;
 
@@ -319,12 +320,13 @@ public class Tale11 extends BaseFragment {
                 beeTranslate.setRepeatMode(Animation.REVERSE);
 
 
+                Log.d("butterWidth", "butter"+butterfly.getWidth());
+                Log.d("butterHeight", "butter"+butterfly.getHeight());
                 butterflyRotate = new RotateAnimation(50, 10, butterfly.getWidth() / 1.5f, butterfly.getHeight() * 0.5f);
                 butterflyRotate.setDuration(1000);
                 butterflyRotate.setStartOffset(500);
                 butterflyRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-//                butterflyRotate.setInterpolator(new AnticipateOvershootInterpolator());
-                butterflyRotate.setRepeatCount(4);
+                butterflyRotate.setRepeatCount(3);
                 butterflyRotate.setRepeatMode(Animation.REVERSE);
 
                 butterflyTranslate = new TranslateAnimation(0, 0, butterfly.getHeight() / 6, 0);
@@ -333,6 +335,9 @@ public class Tale11 extends BaseFragment {
                 butterflyTranslate.setInterpolator(new AccelerateDecelerateInterpolator());
                 butterflyTranslate.setRepeatCount(2);
                 butterflyTranslate.setRepeatMode(Animation.REVERSE);
+
+                hideBeeAniSet = new AnimationSet(false);
+                hideButterflyAniSet = new AnimationSet(false);
 
                 hideBeeAniSet.addAnimation(beeButterflyFadeIn);
                 hideBeeAniSet.addAnimation(beeRotate);
@@ -344,7 +349,6 @@ public class Tale11 extends BaseFragment {
                 hideButterflyAniSet.addAnimation(butterflyTranslate);
                 hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
 
-
                 if (animationFlag == 0) {
                     animationClear();
                     checkedAnimation = false;
@@ -354,7 +358,6 @@ public class Tale11 extends BaseFragment {
                     originalFlower.startAnimation(originalFlowerAnimation);
                     bee2.startAnimation(beeAnimation);
                 }
-
             }
         });
 ////        setValues();

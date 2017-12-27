@@ -63,9 +63,9 @@ public class Tale08 extends BaseFragment {
     AlphaAnimation leafFadeout;
     AlphaAnimation afterLeafFadeout;
     AlphaAnimation fadeout;
-    Animation fadeIn;
-    AnimationSet leafAniSet = new AnimationSet(false);
-    AnimationSet eyeBlackAniSet = new AnimationSet(false);
+    AlphaAnimation fadeIn;
+    AnimationSet leafAniSet;
+    AnimationSet eyeBlackAniSet;
     int animationFlag = 0;
 
     MediaPlayer mp = null;
@@ -366,6 +366,7 @@ public class Tale08 extends BaseFragment {
 //                    }
 //                });
 
+                eyeBlackAniSet = new AnimationSet(false);
                 eyeBlackAniSet.addAnimation(treeAnimation);
                 eyeBlackAniSet.addAnimation(treeEyeRotate);
 
@@ -404,12 +405,14 @@ public class Tale08 extends BaseFragment {
 //                leafTranslateAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 leafTranslateAni.setInterpolator(new AnticipateInterpolator());
 
+                leafAniSet = new AnimationSet(false);
                 leafAniSet.addAnimation(leafTranslateAni);
                 leafAniSet.addAnimation(leafFadein);
                 leafAniSet.addAnimation(leafFadeout);
 //                leafAniSet.addAnimation(afterLeafFadeout);
 
-                fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                fadeIn = new AlphaAnimation(0,1);
+                fadeIn.setDuration(1000);
                 fadeIn.setFillAfter(true);
 
                 fadeout = new AlphaAnimation(1, 0);

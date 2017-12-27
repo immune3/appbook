@@ -55,7 +55,7 @@ public class Tale16 extends BaseFragment {
     AlphaAnimation bubbleFadein;
     AlphaAnimation bombFadeout;
     //    AnimationSet bubbleAniSet = new AnimationSet(false);
-    AnimationSet bubbleBombAniSet = new AnimationSet(false);
+//    AnimationSet bubbleBombAniSet = new AnimationSet(false);
 
     int animationFlag = 0;
     int bubbleSP = 0;

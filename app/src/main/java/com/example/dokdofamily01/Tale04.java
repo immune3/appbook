@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -31,7 +32,7 @@ public class Tale04 extends BaseFragment {
     ImageView sun;
     ImageView sunLight;
     TranslateAnimation sunRiseAni;
-    Animation sunLightAppear;
+    AlphaAnimation sunLightAppear;
     int animationFlag = 0;
 
     int[] sunLightLocation = new int[2];
@@ -101,7 +102,9 @@ public class Tale04 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        sunLightAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_04_sunlight_appear);
+        sunLightAppear = new AlphaAnimation(0, 1);
+        sunLightAppear.setDuration(3000);
+        sunLightAppear.setFillAfter(true);
     }
 
     @Override

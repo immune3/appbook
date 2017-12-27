@@ -50,8 +50,8 @@ public class Tale19 extends BaseFragment {
     AlphaAnimation[] starFadein = new AlphaAnimation[5];
     AlphaAnimation[] starFadeout = new AlphaAnimation[5];
     AlphaAnimation blink;
-    AnimationSet starAppearAniSet = new AnimationSet(false);
-    AnimationSet starLightAniSet = new AnimationSet(false);
+    AnimationSet starAppearAniSet;
+    //    AnimationSet starLightAniSet = new AnimationSet(false);
     AnimationSet[] starFallAniSet = new AnimationSet[5];
     int animationFlag = 0;
     int starFallCount = 0;
@@ -195,6 +195,8 @@ public class Tale19 extends BaseFragment {
                 starAppear.setInterpolator(new BounceInterpolator());
 
                 starAppear.setAnimationListener(new MyAnimationListener());
+
+                starAppearAniSet = new AnimationSet(false);
 
                 starAppearAniSet.addAnimation(starAppear);
                 starAppearAniSet.addAnimation(fadein);

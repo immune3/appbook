@@ -59,8 +59,8 @@ public class Tale12 extends BaseFragment {
     AlphaAnimation blink;
     AlphaAnimation sqeedHandFadein;
     AlphaAnimation sqeedHandFadeout;
-    AnimationSet sqeedLeftHandAniSet = new AnimationSet(false);
-    AnimationSet sqeedRightHandAniSet = new AnimationSet(false);
+    AnimationSet sqeedLeftHandAniSet;
+    AnimationSet sqeedRightHandAniSet;
     int animationFlag = 0;
     int clickedFlag = 0;
 
@@ -252,6 +252,9 @@ public class Tale12 extends BaseFragment {
                 sqeedRightHandScale.setDuration(50);
 //                sqeedRightHandScale.setFillAfter(true);
 
+                sqeedLeftHandAniSet = new AnimationSet(false);
+                sqeedRightHandAniSet = new AnimationSet(false);
+
                 sqeedLeftHandAniSet.addAnimation(sqeedLeftHandScale);
                 sqeedLeftHandAniSet.addAnimation(sqeedHandFadein);
                 sqeedLeftHandAniSet.setFillAfter(true);
@@ -312,18 +315,18 @@ public class Tale12 extends BaseFragment {
 
 
 //                if (animationFlag == 0) {
-                    animationClear();
-                    checkedAnimation = false;
-                    animationFlag = 1;
-                    sea1.startAnimation(seaAppear);
-                    sea2.startAnimation(seaAppear);
-                    dokdo.startAnimation(dokdoAppear);
-                    byul.startAnimation(dokdoAppear);
-                    smallsqeed.startAnimation(smallSqeedAppear);
-                    seagull.startAnimation(seagullAppear);
-                    sqeedBody.startAnimation(sqeedAppear);
-                    sqeedHead.startAnimation(sqeedAppear);
-                    hairpin.startAnimation(sqeedAppear);
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                sea1.startAnimation(seaAppear);
+                sea2.startAnimation(seaAppear);
+                dokdo.startAnimation(dokdoAppear);
+                byul.startAnimation(dokdoAppear);
+                smallsqeed.startAnimation(smallSqeedAppear);
+                seagull.startAnimation(seagullAppear);
+                sqeedBody.startAnimation(sqeedAppear);
+                sqeedHead.startAnimation(sqeedAppear);
+                hairpin.startAnimation(sqeedAppear);
 //                }
             }
         });
