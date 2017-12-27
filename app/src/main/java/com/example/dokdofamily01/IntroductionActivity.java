@@ -16,6 +16,7 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
  */
 
 public class IntroductionActivity extends AppCompatActivity {
+
     CustomScrollView sv;
     ScalableLayout sl;
     Button waveBtn;
