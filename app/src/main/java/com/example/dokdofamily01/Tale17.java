@@ -43,8 +43,9 @@ public class Tale17 extends BaseFragment {
     int animationFlag = 0;
 
     SoundPool sp;
-    int clickStar;
-    int appearDokdo;
+    int soundID;
+//    int clickStar;
+//    int appearDokdo;
 
 
 
@@ -72,11 +73,6 @@ public class Tale17 extends BaseFragment {
         wave_shadow1 = (ImageView) layout.findViewById(R.id.wave_shadow_01);
         wave_shadow2 = (ImageView) layout.findViewById(R.id.wave_shadow_02);
         star = (ImageView) layout.findViewById(R.id.star);
-
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        clickStar = sp.load(getContext(), R.raw.effect_17_click_star, 1);
-        appearDokdo = sp.load(getContext(), R.raw.effect_17_appear_dokdo, 2);
-
     }
 
     @Override
@@ -122,7 +118,7 @@ public class Tale17 extends BaseFragment {
             animationFlag = 1;
             checkedAnimation = false;
             star.clearAnimation();
-            sp.play(clickStar, 1, 1, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_17_click_star, 1);
             dokdo_under_sea.startAnimation(fadeIn);
         }
         super.blockAnimFunc();
@@ -137,7 +133,7 @@ public class Tale17 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            sp.play(appearDokdo, 1, 1, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_17_appear_dokdo, 2);
             checkedAnimation = true;
         }
 
@@ -165,6 +161,14 @@ public class Tale17 extends BaseFragment {
         mp = musicController.getMp();
         checkedAnimation = true;
 
+        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                sp.play(soundID, 1, 1, 0, 0, 1);
+            }
+        });
+
         if (blink != null) {
             animationFlag = 0;
             dokdo_under_sea.clearAnimation();
@@ -180,6 +184,11 @@ public class Tale17 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(sp != null) {
+                sp.release();
+            }
+        }
     }
 
     @Override

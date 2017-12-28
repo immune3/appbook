@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 
@@ -50,7 +51,6 @@ public class Tale01 extends BaseFragment {
     SoundPool sp;
     int soundID;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class Tale01 extends BaseFragment {
         curtain = (ImageView) layout.findViewById(R.id.curtain);
         light = (ImageView) layout.findViewById(R.id.light);
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundID = sp.load(getContext(), R.raw.effect_01, 1);
+
     }
 
     @Override
@@ -111,6 +111,13 @@ public class Tale01 extends BaseFragment {
 //        CustomViewPager.isPageScrollEnabled = true;
         lamp.setOnTouchListener(new BlockObjListener());
 
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                sp.play(soundID, 4, 4, 0, 0, 1);
+            }
+        });
+
     }
 
     @Override
@@ -118,7 +125,8 @@ public class Tale01 extends BaseFragment {
         if (animationFlag == 0) {
             checkedAnimation = false;
             animationFlag = 1;
-            sp.play(soundID, 4, 4, 0, 0, 1);
+
+            soundID = sp.load(getContext(), R.raw.effect_01, 1);
             lampLight.startAnimation(fadeIn);
             bedLight.startAnimation(fadeIn);
             head.setVisibility(View.VISIBLE);
@@ -127,13 +135,14 @@ public class Tale01 extends BaseFragment {
             light.setVisibility(View.INVISIBLE);
             byul.setVisibility(View.INVISIBLE);
             hand.setVisibility(View.INVISIBLE);
-        } else if (animationFlag == 5) {
+        }
+        else if (animationFlag == 5) {
             fadeIn.setStartOffset(0);
             fadeOut.setStartOffset(0);
-            sp.play(soundID, 4, 4, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_01, 1);
             lampLight.startAnimation(fadeOut);
         } else if (animationFlag == 7) {
-            sp.play(soundID, 4, 4, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_01, 1);
             lampLight.startAnimation(fadeIn);
         }
         super.blockAnimFunc();
@@ -186,7 +195,6 @@ public class Tale01 extends BaseFragment {
                 case 8:
                     animationFlag = 5;
                     break;
-
             }
         }
 
@@ -204,7 +212,8 @@ public class Tale01 extends BaseFragment {
             } else if (animationFlag == 4) {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
-            } else if (animationFlag == 5) {
+            }
+            else if (animationFlag == 5) {
                 animationFlag = 6;
             } else if (animationFlag == 7) {
                 animationFlag = 8;
@@ -245,7 +254,6 @@ public class Tale01 extends BaseFragment {
         bedLight.setVisibility(View.INVISIBLE);
         byul.setVisibility(View.INVISIBLE);
         animationFlag = 0;
-
 
     }
 
