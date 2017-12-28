@@ -136,7 +136,7 @@ public class BaseFragment extends Fragment{
                 }else{
                     super.decreaseFunc();
                 }
-            }
+            } else super.decreaseFunc();
         }
 
         @Override
@@ -145,11 +145,12 @@ public class BaseFragment extends Fragment{
             if(musicController!=null){
                 Log.d("Start","ASC2");
                 if(musicController.nextPart()){
-
+                    Log.d("nextPart","if");
                 }else{
+                    Log.d("nextPart","else");
                     super.increaseFunc();
                 }
-            }
+            } else super.increaseFunc();
         }
 
         @Override
@@ -179,11 +180,12 @@ public class BaseFragment extends Fragment{
                 Log.d("Start","DESC");
 
                 if(musicController.previousPart()){
-
+                    Log.d("DESC", "previous");
                 }else{
+                    Log.d("DESC", "else");
                     super.decreaseFunc();
                 }
-            }
+            } else super.decreaseFunc();
         }
 
         @Override
@@ -192,10 +194,13 @@ public class BaseFragment extends Fragment{
             if(musicController!=null){
                 Log.d("Start","ASC2");
                 if(musicController.nextPart()){
-
+                    Log.d("ASC", "next");
                 }else{
                     super.increaseFunc();
                 }
+            } else {
+                Log.d("ASC", "else");
+                super.increaseFunc();
             }
         }
     }

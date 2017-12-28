@@ -245,10 +245,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_flower"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:scale_height="322"
-                app:scale_left="721"
-                app:scale_top="527"
+                app:scale_left="726"
+                app:scale_top="535"
                 app:scale_width="344" />
 
 

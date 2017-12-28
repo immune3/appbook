@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -37,8 +39,6 @@ public class Prologue extends BaseFragment {
 
     MediaPlayer mp = null;
 
-    Handler prol1, prol2, prol3;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +58,6 @@ public class Prologue extends BaseFragment {
     public void bindViews() {
         super.bindViews();
 
-//        this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
-//        this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
         this.prologueTextImage = (ImageView) layout.findViewById(R.id.prologueTextImage);
 
     }
@@ -67,10 +65,6 @@ public class Prologue extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-
-        prol1 = new Handler();
-        prol2 = new Handler();
-        prol3 = new Handler();
 
     }
 
@@ -90,58 +84,24 @@ public class Prologue extends BaseFragment {
         fadeOut.setFillAfter(true);
         fadeOut.setAnimationListener(new MyAnimationListener());
 
-        prol1.post(new Runnable() {
-            @Override
-            public void run() {
-                prologueTextImage.setVisibility(View.INVISIBLE);
-                prologueTextImage.setImageResource(R.drawable.prologue_text_01);
-                animationFlag = 1;
-                prologueTextImage.startAnimation(fadeIn);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        prologueTextImage.startAnimation(fadeOut);
-
-                    }
-                }, 22500);
-            }
-        });
-
-        prol2.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                prologueTextImage.clearAnimation();
-                fadeIn.setStartOffset(1000);
-                prologueTextImage.setVisibility(View.INVISIBLE);
-                prologueTextImage.setImageResource(R.drawable.prologue_text_02);
-                prologueTextImage.startAnimation(fadeIn);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        prologueTextImage.startAnimation(fadeOut);
-                    }
-                }, 27000);
-            }
-        }, 24500);
-
-        prol3.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                prologueTextImage.clearAnimation();
-                prologueTextImage.setVisibility(View.INVISIBLE);
-                prologueTextImage.setImageResource(R.drawable.prologue_text_03);
-                prologueTextImage.startAnimation(fadeIn);
-
-            }
-        }, 53500);
-
     }
 
     @Override
     public void setupEvents() {
         super.setupEvents();
+
+//        vp = ((TaleActivity)getActivity()).vp;
+//
+//        vp.setOnTouchListener(new MyChangeListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//                customViewPager = vp;
+//
+//                return super.onTouch(view, motionEvent);
+//            }
+//        });
+
     }
 
     @Override
@@ -164,8 +124,17 @@ public class Prologue extends BaseFragment {
                 new String[]{"", "24000"},
                 new String[]{"", "53000"}
         );
+
+        Log.d("subLength", subtitleList.size() + "");
         musicController.excuteAsync();
         mp = musicController.getMp();
+        checkedAnimation = true;
+
+        prologueTextImage.setVisibility(View.INVISIBLE);
+        prologueTextImage.setImageResource(R.drawable.prologue_text_01);
+
+        fadeIn.setStartOffset(4000);
+        prologueTextImage.startAnimation(fadeIn);
     }
 
     @Override
@@ -189,15 +158,60 @@ public class Prologue extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 1:
-                    animationFlag = 2;
-                    prologueTextImage.setAnimation(fadeIn);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            animationFlag = 3;
+                            fadeOut.setStartOffset(0);
+                            prologueTextImage.startAnimation(fadeOut);
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    animationFlag = 2;
+                                    prologueTextImage.setVisibility(View.INVISIBLE);
+                                    prologueTextImage.setImageResource(R.drawable.prologue_text_02);
+
+                                    fadeIn.setStartOffset(0);
+                                    prologueTextImage.startAnimation(fadeIn);
+                                }
+                            }, 1000);
+
+                        }
+                    }, 19000);
 
                     break;
+
                 case 2:
-                    animationFlag = 1;
-                    prologueTextImage.setAnimation(fadeOut);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            animationFlag = 3;
+                            fadeOut.setStartOffset(0);
+                            prologueTextImage.startAnimation(fadeOut);
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fadeIn.setStartOffset(0);
+                                    prologueTextImage.setVisibility(View.INVISIBLE);
+                                    prologueTextImage.setImageResource(R.drawable.prologue_text_03);
+                                    prologueTextImage.startAnimation(fadeIn);
+                                }
+                            }, 1000);
+                        }
+                    }, 27200);
 
                     break;
+
+                case 3:
+//                    아무 애니메이션이 없는 상태(사용중)
+                    break;
+
 
             }
         }
