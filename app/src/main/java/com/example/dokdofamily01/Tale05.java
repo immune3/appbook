@@ -143,25 +143,25 @@ public class Tale05 extends BaseFragment {
                 case 1:
                     letter[1].clearAnimation();
                     animationFlag = 2;
-                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     letter[2].startAnimation(letterAppear);
                     break;
                 case 2:
                     letter[2].clearAnimation();
                     animationFlag = 3;
-                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     letter[3].startAnimation(letterAppear);
                     break;
                 case 3:
                     letter[3].clearAnimation();
                     animationFlag = 4;
-                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     letter[4].startAnimation(letterAppear);
                     break;
                 case 4:
                     letter[4].clearAnimation();
                     animationFlag = 5;
-                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     letter[5].startAnimation(letterAppear);
                     break;
                 case 5:
@@ -195,7 +195,7 @@ public class Tale05 extends BaseFragment {
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                sp.play(soundID, 1, 1, 0, 0, 1);
+                sp.play(soundID, 1, 1, 1, 0, 1);
             }
         });
         animationFlag = 0;

@@ -154,8 +154,6 @@ public class Tale06 extends BaseFragment {
             smallwave[1].startAnimation(wavingTranslateAni[4]);
             smallwave[2].startAnimation(wavingTranslateAni[5]);
             smallwave[3].startAnimation(wavingTranslateAni[6]);
-
-
             gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
             waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
         }
@@ -222,7 +220,7 @@ public class Tale06 extends BaseFragment {
                 waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        waveSoundPool.play(waveSound, 1, 1, 0, 0, 1);
+                        waveSoundPool.play(waveSound, 0.8f, 0.8f, 0, 3, 1);
                     }
                 });
 

@@ -138,7 +138,7 @@ public class Tale08 extends BaseFragment {
         });
 
         afterLeafFadeout = new AlphaAnimation(1, 0);
-        afterLeafFadeout.setStartOffset(1500);
+        afterLeafFadeout.setStartOffset(500);
         afterLeafFadeout.setDuration(500);
         afterLeafFadeout.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -425,8 +425,8 @@ public class Tale08 extends BaseFragment {
                 fadeIn.setFillAfter(true);
 
                 fadeout = new AlphaAnimation(1, 0);
-                fadeout.setStartOffset(1000);
-                fadeout.setDuration(1000);
+                fadeout.setStartOffset(100);
+                fadeout.setDuration(500);
                 fadeout.setFillAfter(true);
 
                 animationClear();

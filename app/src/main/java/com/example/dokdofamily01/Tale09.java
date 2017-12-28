@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import android.view.LayoutInflater;
@@ -141,7 +142,7 @@ public class Tale09 extends BaseFragment {
         fadeOut.setDuration(800);
         fadeOut.setFillAfter(true);
 
-        blink = new AlphaAnimation(1, 0.3f);
+        blink = new AlphaAnimation(0.3f, 1);
         blink.setDuration(500);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
@@ -176,8 +177,14 @@ public class Tale09 extends BaseFragment {
             byulHead5.setVisibility(View.INVISIBLE);
 
             soundID = sp.load(getContext(), R.raw.effect_09_click_bird, 1);
-            byulBody1.startAnimation(fadeIn);
-            byulHead1.startAnimation(fadeIn);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    byulBody1.startAnimation(fadeIn);
+                    byulHead1.startAnimation(fadeIn);
+                }
+            }, 200);
+
         } else {
             soundID = sp.load(getContext(), R.raw.effect_09_click_bird, 1);
         }
