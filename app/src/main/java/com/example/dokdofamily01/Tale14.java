@@ -345,7 +345,6 @@ public class Tale14 extends BaseFragment {
                     }
                 });
 
-//                if (animationFlag == 0) {
                 animationClear();
                 checkedAnimation = false;
                 animationFlag = 1;
@@ -354,7 +353,7 @@ public class Tale14 extends BaseFragment {
                 byul.startAnimation(byulAppearAni);
                 sqeedBody.startAnimation(byulAppearAni);
                 bell.startAnimation(bellAnimSet);
-//                }
+
             }
         });
 
