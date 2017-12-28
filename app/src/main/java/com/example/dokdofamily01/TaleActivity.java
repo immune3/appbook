@@ -250,44 +250,48 @@ public class TaleActivity extends AppCompatActivity{
             switch(position)
             {
                 case 0:
-                    return new Tale01();
+                    return new Prologue();
                 case 1:
-                    return new Tale02();
+                    return new Introduction();
                 case 2:
-                    return new Tale03();
+                    return new Tale01();
                 case 3:
-                    return new Tale04();
+                    return new Tale02();
                 case 4:
-                    return new Tale05();
+                    return new Tale03();
                 case 5:
-                    return new Tale06();
+                    return new Tale04();
                 case 6:
-                    return new Tale07();
+                    return new Tale05();
                 case 7:
-                    return new Tale08();
+                    return new Tale06();
                 case 8:
-                    return new Tale09();
+                    return new Tale07();
                 case 9:
-                    return new Tale10();
+                    return new Tale08();
                 case 10:
-                    return new Tale11();
+                    return new Tale09();
                 case 11:
-                    return new Tale12();
+                    return new Tale10();
                 case 12:
-                    return new Tale13();
+                    return new Tale11();
                 case 13:
-                    return new Tale14();
+                    return new Tale12();
                 case 14:
-                    return new Tale15();
+                    return new Tale13();
                 case 15:
-                    return new Tale16();
+                    return new Tale14();
                 case 16:
-                    return new Tale17();
+                    return new Tale15();
                 case 17:
-                    return new Tale18();
+                    return new Tale16();
                 case 18:
-                    return new Tale19();
+                    return new Tale17();
                 case 19:
+                    return new Tale18();
+                case 20:
+                    return new Tale19();
+                case 21:
                     return new Tale20();
                 default:
                     return null;
@@ -296,7 +300,7 @@ public class TaleActivity extends AppCompatActivity{
         @Override
         public int getCount()
         {
-            return 20;
+            return 22;
         }
 
         @Override

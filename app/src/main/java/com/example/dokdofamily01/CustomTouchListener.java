@@ -15,10 +15,7 @@ import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 public class CustomTouchListener implements View.OnTouchListener {
     private float x1,x2;
 
-
-
     CustomViewPager customViewPager;
-
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {

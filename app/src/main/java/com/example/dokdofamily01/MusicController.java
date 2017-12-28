@@ -129,7 +129,6 @@ public class MusicController {
         int subtitleIndex = 0;
         MediaPlayer mp;
 
-
         public void setMP(MediaPlayer mediaPlayer) {
             this.mp = mediaPlayer;
         }
