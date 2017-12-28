@@ -94,17 +94,11 @@ public class Tale06 extends BaseFragment {
         seagull[0] = (ImageView) layout.findViewById(R.id.seagull1);
         seagull[1] = (ImageView) layout.findViewById(R.id.seagull2);
         momDokdo = (ImageView) layout.findViewById(R.id.momDokdo);
-        gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
-        waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
     }
 
     @Override
     public void setValues() {
         super.setValues();
-
-
     }
 
     @Override
@@ -161,8 +155,9 @@ public class Tale06 extends BaseFragment {
             smallwave[2].startAnimation(wavingTranslateAni[5]);
             smallwave[3].startAnimation(wavingTranslateAni[6]);
 
-            gullSoundPool.play(gullSound, 1, 1, 0, 0, 1);
-            waveSoundPool.play(waveSound, 1, 1, 0, 0, 1);
+
+            gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
+            waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
         }
 
         super.blockAnimFunc();
@@ -215,6 +210,22 @@ public class Tale06 extends BaseFragment {
         sea.post(new Runnable() {
             @Override
             public void run() {
+                gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                gullSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        gullSoundPool.play(gullSound, 1, 1, 0, 0, 1);
+                    }
+                });
+
+                waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        waveSoundPool.play(waveSound, 1, 1, 0, 0, 1);
+                    }
+                });
+
                 waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
                 waveAppear.setDuration(800);
 //                waveAppear.setFillAfter(true);
@@ -262,7 +273,6 @@ public class Tale06 extends BaseFragment {
 
                     @Override
                     public void onAnimationStart(Animation animation) {
-//                        sea.clearAnimation();
                         waveshadow.clearAnimation();
                     }
                 });
@@ -295,19 +305,19 @@ public class Tale06 extends BaseFragment {
                 wavingTranslateAni[3] = new TranslateAnimation(0, 0, 0, smallwave[0].getHeight() * 0.1f);
                 wavingTranslateAni[3].setDuration(2600);
                 wavingTranslateAni[3].setInterpolator(new CycleInterpolator(0.5f));
-                wavingTranslateAni[3].setRepeatCount(3);
+                wavingTranslateAni[3].setRepeatCount(2);
                 wavingTranslateAni[3].setRepeatMode(Animation.REVERSE);
 
                 wavingTranslateAni[4] = new TranslateAnimation(0, 0, 0, smallwave[1].getHeight() * 0.1f);
-                wavingTranslateAni[4].setDuration(3500);
+                wavingTranslateAni[4].setDuration(5300);
                 wavingTranslateAni[4].setInterpolator(new CycleInterpolator(1));
-                wavingTranslateAni[4].setRepeatCount(2);
+                wavingTranslateAni[4].setRepeatCount(1);
                 wavingTranslateAni[4].setRepeatMode(Animation.REVERSE);
 
                 wavingTranslateAni[5] = new TranslateAnimation(0, 0, 0, smallwave[2].getHeight() * 0.1f);
                 wavingTranslateAni[5].setDuration(2000);
                 wavingTranslateAni[5].setInterpolator(new CycleInterpolator(0.5f));
-                wavingTranslateAni[5].setRepeatCount(4);
+                wavingTranslateAni[5].setRepeatCount(3);
                 wavingTranslateAni[5].setRepeatMode(Animation.REVERSE);
                 wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener(){
                     @Override
@@ -335,7 +345,7 @@ public class Tale06 extends BaseFragment {
                 wavingTranslateAni[6] = new TranslateAnimation(0, 0, 0, smallwave[3].getHeight() * 0.1f);
                 wavingTranslateAni[6].setDuration(2600);
                 wavingTranslateAni[6].setInterpolator(new CycleInterpolator(1));
-                wavingTranslateAni[6].setRepeatCount(3);
+                wavingTranslateAni[6].setRepeatCount(2);
                 wavingTranslateAni[6].setRepeatMode(Animation.REVERSE);
 
                 animationClear();
@@ -350,15 +360,7 @@ public class Tale06 extends BaseFragment {
                 }
             }
         });
-//        animationClear();
-//        if(waveAppear != null){
-//            animationFlag = 1;
-//            sea.startAnimation(waveAppear);
-//            bigwave[0].startAnimation(waveAppear);
-//            bigwave[1].startAnimation(waveAppear);
-//            bigwave[2].startAnimation(waveAppear);
-//            momDokdo.startAnimation(momAppear);
-//        }
+
     }
 
     @Override
@@ -369,6 +371,14 @@ public class Tale06 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(gullSoundPool != null) {
+                gullSoundPool.release();
+            }
+            if(waveSoundPool != null) {
+                waveSoundPool.release();
+            }
+        }
     }
 
     @Override

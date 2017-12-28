@@ -106,10 +106,6 @@ public class Tale12 extends BaseFragment {
         sqeedBody = (ImageView) layout.findViewById(R.id.sqeedBody);
         sqeedHead = (ImageView) layout.findViewById(R.id.sqeedHead);
         hairpin = (ImageView) layout.findViewById(R.id.hairpin);
-        whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        whackSound = whackSoundPool.load(getContext(), R.raw.effect_12_whack, 1);
-        handSound = handSoundPool.load(getContext(), R.raw.effect_12_hand, 1);
     }
 
     @Override
@@ -150,13 +146,13 @@ public class Tale12 extends BaseFragment {
             sqeedHead.startAnimation(sqeedClinkAni);
             hairpin.startAnimation(sqeedClinkAni);
 
-            whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+            whackSound = whackSoundPool.load(getContext(), R.raw.effect_12_whack, 1);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    handSoundPool.play(handSound, 2, 2, 0, 0, 1);
+                    handSound = handSoundPool.load(getContext(), R.raw.effect_12_hand, 1);
                 }
-            }, 100);
+            }, 200);
         }
 
         super.blockAnimFunc();
@@ -199,6 +195,22 @@ public class Tale12 extends BaseFragment {
         sea1.post(new Runnable() {
             @Override
             public void run() {
+                whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                whackSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        whackSoundPool.play(whackSound, 1, 1, 0, 0, 1);
+                    }
+                });
+
+                handSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        handSoundPool.play(handSound, 2, 2, 0, 0, 1);
+                    }
+                });
+
                 seaAppear = new TranslateAnimation(0, 0, sea1.getHeight(), 0);
                 seaAppear.setDuration(1000);
                 seaAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -340,6 +352,14 @@ public class Tale12 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(whackSoundPool != null) {
+                whackSoundPool.release();
+            }
+            if(handSoundPool != null) {
+                handSoundPool.release();
+            }
+        }
     }
 
     @Override

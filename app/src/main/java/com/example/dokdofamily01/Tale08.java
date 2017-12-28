@@ -107,12 +107,6 @@ public class Tale08 extends BaseFragment {
         smile = (ImageView) layout.findViewById(R.id.smile);
         eyeBlack = (ImageView) layout.findViewById(R.id.eyeBlack);
         eyeWhite = (ImageView) layout.findViewById(R.id.eyeWhite);
-
-        laughingSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        eyeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-
-        laughingSound = laughingSoundPool.load(getContext(), R.raw.effect_08_laughing, 0);
-        eyeSound = eyeSoundPool.load(getContext(), R.raw.effect_08_eyesound, 0);
     }
 
     @Override
@@ -186,7 +180,6 @@ public class Tale08 extends BaseFragment {
 
         byul.setOnTouchListener(new BlockObjListener());
 
-
     }
 
     @Override
@@ -202,8 +195,8 @@ public class Tale08 extends BaseFragment {
             leaves.startAnimation(leafAniSet);
             eyeBlack.startAnimation(treeEyeToByul);
             smile.startAnimation(fadeIn);
-            laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
-            eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
+            laughingSound = laughingSoundPool.load(getContext(), R.raw.effect_08_laughing, 0);
+            eyeSound = eyeSoundPool.load(getContext(), R.raw.effect_08_eyesound, 0);
         }
 
         super.blockAnimFunc();
@@ -250,6 +243,22 @@ public class Tale08 extends BaseFragment {
         land.post(new Runnable() {
             @Override
             public void run() {
+                laughingSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                eyeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                laughingSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
+                    }
+                });
+
+                eyeSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
+                    }
+                });
+
                 plantAnimation = new TranslateAnimation(-plant.getWidth(), 0, 0, 0);
                 plantAnimation.setDuration(1200);
                 plantAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -440,28 +449,6 @@ public class Tale08 extends BaseFragment {
                 }
             }
         });
-//        animationClear();
-//        if (plantAnimation != null) {
-////            treeEyeRotate.cancel();
-//            checkedAnimation = false;
-//            byul.clearAnimation();
-//            eyeBlack.clearAnimation();
-//            eyeBlack.setVisibility(View.INVISIBLE);
-//            animationFlag = 1;
-//            plant.startAnimation(plantAnimation);
-//            dokdo.startAnimation(dokdoAnimation);
-//            seagull.startAnimation(seagullAnimation);
-//            land.startAnimation(landAnimation);
-//            byul.startAnimation(byulAnimation);
-//            treeBody.startAnimation(treeAnimation);
-//            eyeBlack.startAnimation(treeAnimation);
-//            eyeWhite.startAnimation(treeAnimation);
-//        }
-//        else{
-//            setValues();
-////            treeEyeRotate.cancel();
-////            byulAnimation.cancel();
-//        }
     }
 
     @Override
@@ -472,6 +459,14 @@ public class Tale08 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(laughingSoundPool != null) {
+                laughingSoundPool.release();
+            }
+            if(eyeSoundPool != null) {
+                eyeSoundPool.release();
+            }
+        }
     }
 
     @Override

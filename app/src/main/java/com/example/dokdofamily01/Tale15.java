@@ -55,7 +55,7 @@ public class Tale15 extends BaseFragment {
     AlphaAnimation blink;
     TranslateAnimation landAnimation, byulAnimation, caveAnimation;
 
-    SoundPool sp;
+    SoundPool clickFishSp, moveManSp, appearManSp;
     int clickFish;
     int moveMan;
     int appearMan;
@@ -102,7 +102,7 @@ public class Tale15 extends BaseFragment {
             fish.clearAnimation();
             fish.setVisibility(View.VISIBLE);
             //man1 사라지고 man2나온다.
-            sp.play(clickFish, 1, 1, 0, 0, 2);
+            clickFish = clickFishSp.load(getContext(), R.raw.effect_15_fish, 1);
             manImage4.setVisibility(View.INVISIBLE);
             manImage1.startAnimation(fadeIn);
         }
@@ -115,16 +115,16 @@ public class Tale15 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
                 case 1:
-                    sp.play(moveMan, 1, 1, 0, 0, 1);
+                    moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     break;
                 case 2:
-                    sp.play(moveMan, 1, 1, 0, 0, 1);
+                    moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     break;
                 case 3:
-                    sp.play(moveMan, 1, 1, 0, 0, 1);
+                    moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     break;
                 case 4:
-                    sp.play(appearMan, 1, 1, 0, 0, 1);
+                    appearMan = appearManSp.load(getContext(), R.raw.effect_15_man, 3);
                     manImage4.setVisibility(View.VISIBLE);
                     break;
             }
@@ -192,10 +192,6 @@ public class Tale15 extends BaseFragment {
         this.manImage1 = (ImageView) layout.findViewById(R.id.manImage1);
         this.ivCave15 = (ImageView) layout.findViewById(R.id.ivCave15);
         this.ivByul15 = (ImageView) layout.findViewById(R.id.ivByul15);
-        sp = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-        clickFish = sp.load(getContext(), R.raw.effect_15_fish, 1);
-        moveMan = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
-        appearMan = sp.load(getContext(), R.raw.effect_15_man, 3);
 
     }
 
@@ -242,6 +238,29 @@ public class Tale15 extends BaseFragment {
         sl.post(new Runnable() {
             @Override
             public void run() {
+                clickFishSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                moveManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                appearManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                clickFishSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        clickFishSp.play(clickFish, 1, 1, 0, 0, 2);
+                    }
+                });
+
+                moveManSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        moveManSp.play(moveMan, 1, 1, 0, 0, 1);
+                    }
+                });
+
+                appearManSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        appearManSp.play(appearMan, 1, 1, 0, 0, 1);
+                    }
+                });
 
                 landAnimation = new TranslateAnimation(0, 0, ivLand15.getHeight(), 0);
                 landAnimation.setDuration(2000);
@@ -297,6 +316,17 @@ public class Tale15 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(clickFishSp != null) {
+                clickFishSp.release();
+            }
+            if(appearManSp != null) {
+                appearManSp.release();
+            }
+            if(moveManSp != null) {
+                moveManSp.release();
+            }
+        }
     }
 
     @Override

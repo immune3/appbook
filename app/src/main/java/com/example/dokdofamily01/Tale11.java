@@ -98,10 +98,6 @@ public class Tale11 extends BaseFragment {
         flowers = (ImageView) layout.findViewById(R.id.flowers);
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         byul = (ImageView) layout.findViewById(R.id.byul);
-
-        beeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        beeSound = beeSoundPool.load(getContext(), R.raw.effect_11_bee, 1);
-
     }
 
     @Override
@@ -116,6 +112,22 @@ public class Tale11 extends BaseFragment {
         beeButterflyFadeIn = new AlphaAnimation(0, 1);
         beeButterflyFadeIn.setDuration(600);
         beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
+        beeButterflyFadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                beeSound = beeSoundPool.load(getContext(), R.raw.effect_11_bee, 1);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         beeButterflyFadeOut = new AlphaAnimation(1, 0);
         beeButterflyFadeOut.setStartOffset(5000);
@@ -156,6 +168,7 @@ public class Tale11 extends BaseFragment {
         super.setupEvents();
 
         bee2.setOnTouchListener(new BlockObjListener());
+
     }
 
     @Override
@@ -173,7 +186,6 @@ public class Tale11 extends BaseFragment {
             }
             bee2.clearAnimation();
             byul.setVisibility(View.VISIBLE);
-            beeSoundPool.play(beeSound, 1, 1, 0, 3, 1);
 
 
         }
@@ -240,6 +252,13 @@ public class Tale11 extends BaseFragment {
         originalFlower.post(new Runnable() {
             @Override
             public void run() {
+                beeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                beeSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        beeSoundPool.play(beeSound, 1, 1, 0, 3, 1);
+                    }
+                });
                 originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
                 originalFlowerAnimation.setDuration(2000);
                 originalFlowerAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -360,15 +379,6 @@ public class Tale11 extends BaseFragment {
                 }
             }
         });
-////        setValues();
-//        if (originalFlowerAnimation != null) {
-//            animationClear();
-//            animationFlag = 1;
-//            byulAppearFlag = 0;
-//            dokdo.startAnimation(dokdoAnimation);
-//            originalFlower.startAnimation(originalFlowerAnimation);
-//            bee2.startAnimation(beeAnimation);
-//        }
     }
 
     @Override
@@ -379,6 +389,11 @@ public class Tale11 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(beeSoundPool != null) {
+                beeSoundPool.release();
+            }
+        }
     }
 
     @Override

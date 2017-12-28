@@ -52,6 +52,7 @@ public class Tale03 extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
+    SoundPool wingSp;
     int soundID;
     int wings;
 
@@ -93,8 +94,6 @@ public class Tale03 extends BaseFragment {
         body = (ImageView)layout.findViewById(R.id.body);
 
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
-        wings = sp.load(getContext(),R.raw.effect_03_wings,2);
 
     }
 
@@ -121,6 +120,14 @@ public class Tale03 extends BaseFragment {
         super.setupEvents();
 
         blinkStar.setOnTouchListener(new BlockObjListener());
+
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                sp.play(soundID, 1, 1, 1, 0, 1);
+            }
+        });
+
     }
 
     @Override
@@ -131,7 +138,8 @@ public class Tale03 extends BaseFragment {
             blinkStar.clearAnimation();
             wing[1].clearAnimation();
             blinkStar.startAnimation(wingAppear2);
-            sp.play(wings,1,1,1,1,1);
+            soundID = wingSp.load(getContext(),R.raw.effect_03_wings,1);
+//            sp.play(wings,1,1,1,1,1);
         }
         super.blockAnimFunc();
     }
@@ -189,6 +197,14 @@ public class Tale03 extends BaseFragment {
         byulHand.post(new Runnable() {
             @Override
             public void run() {
+                wingSp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                wingSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        wingSp.play(soundID, 1, 1, 1, 1, 1);
+                    }
+                });
+
                 // 왼쪽 위 구름(cloud[0])
                 headHeight = (int)(head.getHeight()*0.2);
 
@@ -289,7 +305,8 @@ public class Tale03 extends BaseFragment {
                 animationClear();
                 checkedAnimation = false;
                 animationFlag = 1;
-                sp.play(soundID, 1, 1, 0, 0, 1);
+//                sp.play(soundID, 1, 1, 0, 0, 1);
+                soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
                 cloud[0].startAnimation(cloudAnimation[0]);
                 cloud[1].startAnimation(cloudAnimation[1]);
                 cloud[2].startAnimation(cloudAnimation[1]);
@@ -329,6 +346,11 @@ public class Tale03 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if(!isVisibleToUser){
+            if(wingSp != null){
+                wingSp.release();
+            }
+        }
     }
 
     @Override

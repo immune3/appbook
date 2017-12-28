@@ -68,7 +68,7 @@ public class Tale14 extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     private SoundPool bubbleSoundPool, lightSoundPool, bellSoundPool;
-    private int bubbleSound, lightSound, bellSound;
+    private int soundID;
 
 
     @Override
@@ -97,12 +97,6 @@ public class Tale14 extends BaseFragment {
         bubble = (ImageView) layout.findViewById(R.id.bubble);
         bell = (ImageView) layout.findViewById(R.id.bell);
         light = (ImageView) layout.findViewById(R.id.light);
-        bubbleSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 1);
-//        bellSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-//        lightSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bubble, 1);
-        bellSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_bell, 1);
-        lightSound = bubbleSoundPool.load(getContext(), R.raw.effect_14_light, 1);
     }
 
     @Override
@@ -151,6 +145,8 @@ public class Tale14 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
         bell.setOnTouchListener(new BlockObjListener());
+
+
     }
 
     @Override
@@ -167,20 +163,20 @@ public class Tale14 extends BaseFragment {
                 sqeedHand.clearAnimation();
                 sqeedHand.startAnimation(sqeedHandAfterClinkAnimSet);
             }
-            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+            soundID = bubbleSoundPool.load(getContext(), R.raw.effect_14_bubble, 1);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    bubbleSoundPool.play(bellSound, 1, 1, 0, 0, 1);
+                    soundID = bubbleSoundPool.load(getContext(), R.raw.effect_14_bell, 2);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if(bellClickFlag==1) {
                                 bellClickFlag=2;
-                                bubbleSoundPool.play(lightSound, 1, 1, 0, 0, 1);
+                                soundID = bubbleSoundPool.load(getContext(), R.raw.effect_14_light, 3);
                             }
                         }
-                    }, 1100);
+                    }, 1500);
                 }
             }, 1200);
         }
@@ -248,6 +244,13 @@ public class Tale14 extends BaseFragment {
         land.post(new Runnable() {
             @Override
             public void run() {
+                bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                bubbleSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        bubbleSoundPool.play(soundID, 1, 1, 0, 0, 1);
+                    }
+                });
 
                 bellAnimSet = new AnimationSet(false);
                 sqeedHandScaleAnimSet = new AnimationSet(false);
@@ -354,15 +357,6 @@ public class Tale14 extends BaseFragment {
 //                }
             }
         });
-//        if (caveAppearAni != null) {
-//            animationClear();
-//            animationFlag = 1;
-//            cave.startAnimation(caveAppearAni);
-//            land.startAnimation(landAppearAni);
-//            byul.startAnimation(byulAppearAni);
-//            sqeedBody.startAnimation(byulAppearAni);
-//            bell.startAnimation(bellAnimSet);
-//        }
 
     }
 
@@ -374,6 +368,11 @@ public class Tale14 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(bubbleSoundPool != null) {
+                bubbleSoundPool.release();
+            }
+        }
     }
 
     @Override

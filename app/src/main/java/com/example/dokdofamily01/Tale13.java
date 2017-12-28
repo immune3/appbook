@@ -95,14 +95,11 @@ public class Tale13 extends BaseFragment {
         this.ivBuyl13 = (ImageView) layout.findViewById(R.id.ivBuyl13);
         ivFishes13 = (ImageView) layout.findViewById(R.id.ivFishes13);
         bubble = (ImageView) layout.findViewById(R.id.bubble);
-        bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_13_bubble, 1);
-        tickSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
-        tickSound = tickSoundPool.load(getContext(), R.raw.effect_13_tick, 1);
         wave[0] = (ImageView) layout.findViewById(R.id.wave0);
         wave[1] = (ImageView) layout.findViewById(R.id.wave1);
         wave[2] = (ImageView) layout.findViewById(R.id.wave2);
         wave[3] = (ImageView) layout.findViewById(R.id.wave3);
+
     }
 
     @Override
@@ -121,6 +118,7 @@ public class Tale13 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
         ivBuyl13.setOnTouchListener(new BlockObjListener());
+
     }
 
     @Override
@@ -130,8 +128,8 @@ public class Tale13 extends BaseFragment {
             checkedAnimation = false;
             ivBuyl13.clearAnimation();
             bubble.startAnimation(bubbleAppear);
-            tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
-            bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+            bubbleSound = bubbleSoundPool.load(getContext(), R.raw.effect_13_bubble, 1);
+            tickSound = tickSoundPool.load(getContext(), R.raw.effect_13_tick, 1);
         }
 
         super.blockAnimFunc();
@@ -194,6 +192,21 @@ public class Tale13 extends BaseFragment {
         ivBuyl13.post(new Runnable() {
             @Override
             public void run() {
+                bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                tickSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                bubbleSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        bubbleSoundPool.play(bubbleSound, 1, 1, 0, 0, 1);
+                    }
+                });
+
+                tickSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        tickSoundPool.play(tickSound, 1, 1, 0, 0, 1);
+                    }
+                });
                 bottomAnimation = new TranslateAnimation(0, 0, ivBottom13.getHeight(), 0);
                 bottomAnimation.setDuration(2000);
                 bottomAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -327,6 +340,14 @@ public class Tale13 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(bubbleSoundPool != null) {
+                bubbleSoundPool.release();
+            }
+            if(tickSoundPool != null) {
+                tickSoundPool.release();
+            }
+        }
     }
 
     @Override

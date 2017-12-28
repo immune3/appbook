@@ -70,8 +70,6 @@ public class Tale04 extends BaseFragment {
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         sun = (ImageView) layout.findViewById(R.id.sun);
         sunLight = (ImageView) layout.findViewById(R.id.sunLight);
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundID = sp.load(getContext(), R.raw.effect_04_sun, 1);
     }
 
     @Override
@@ -80,6 +78,7 @@ public class Tale04 extends BaseFragment {
         dokdo.post(new Runnable() {
             @Override
             public void run() {
+
                 sunLight.getLocationOnScreen(sunLightLocation);
 
                 sun.setY(sunLightLocation[1]);
@@ -118,7 +117,7 @@ public class Tale04 extends BaseFragment {
     public void blockAnimFunc() {
         if(animationFlag==0){
             checkedAnimation = false;
-            sp.play(soundID, 1, 1, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_04_sun, 1);
             sun.startAnimation(sunRiseAni);
         }
         super.blockAnimFunc();
@@ -161,6 +160,14 @@ public class Tale04 extends BaseFragment {
         mp = musicController.getMp();
         checkedAnimation = true;
 
+
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                sp.play(soundID, 1, 1, 1, 0, 1);
+            }
+        });
         animationFlag=0;
         sun.clearAnimation();
         sunLight.clearAnimation();
@@ -175,6 +182,11 @@ public class Tale04 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(sp != null) {
+                sp.release();
+            }
+        }
     }
 
     @Override

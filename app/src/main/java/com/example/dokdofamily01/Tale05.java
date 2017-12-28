@@ -38,8 +38,7 @@ public class Tale05 extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
-    int moveLetters;
-    int clickLetter;
+    int soundID;
 
 
 
@@ -67,10 +66,6 @@ public class Tale05 extends BaseFragment {
         letter[3] = (ImageView) layout.findViewById(R.id.letter3);
         letter[4] = (ImageView) layout.findViewById(R.id.letter4);
         letter[5] = (ImageView) layout.findViewById(R.id.letter5);
-
-        sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        moveLetters = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
-        clickLetter = sp.load(getContext(), R.raw.effect_05_click_letter, 1);
     }
 
     @Override
@@ -81,13 +76,10 @@ public class Tale05 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-//        letterAppear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_appear);
         letterAppear = new AlphaAnimation(0, 1);
         letterAppear.setDuration(700);
         letterAppear.setFillAfter(true);
         letterAppear.setAnimationListener(new MyAnimationListener());
-//        letterDisappear = AnimationUtils.loadAnimation(getContext(), R.anim.anim_05_letter_disappear);
-//        letterDisappear.setFillAfter(true);
     }
 
     @Override
@@ -102,13 +94,13 @@ public class Tale05 extends BaseFragment {
         if (animationFlag == 0) {
             animationFlag = 1;
             checkedAnimation = false;
-            sp.play(clickLetter, 1, 1, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_05_click_letter, 1);
             // letter[0] 사라지고 letter[1]나온다.
             letter[5].setVisibility(View.INVISIBLE);
 //                    letter[0].startAnimation(letterDisappear);
             letter[1].startAnimation(letterAppear);
         } else {
-            sp.play(clickLetter, 1, 1, 0, 0, 1);
+            soundID = sp.load(getContext(), R.raw.effect_05_click_letter, 1);
         }
 
         super.blockAnimFunc();
@@ -120,7 +112,7 @@ public class Tale05 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
                 case 1:
-                    sp.play(moveLetters, 1, 1, 0, 0, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[1].setVisibility(View.VISIBLE);
                     break;
                 case 2:
@@ -151,25 +143,25 @@ public class Tale05 extends BaseFragment {
                 case 1:
                     letter[1].clearAnimation();
                     animationFlag = 2;
-                    sp.play(moveLetters, 1, 1, 0, 0, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[2].startAnimation(letterAppear);
                     break;
                 case 2:
                     letter[2].clearAnimation();
                     animationFlag = 3;
-                    sp.play(moveLetters, 1, 1, 0, 0, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[3].startAnimation(letterAppear);
                     break;
                 case 3:
                     letter[3].clearAnimation();
                     animationFlag = 4;
-                    sp.play(moveLetters, 1, 1, 0, 0, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[4].startAnimation(letterAppear);
                     break;
                 case 4:
                     letter[4].clearAnimation();
                     animationFlag = 5;
-                    sp.play(moveLetters, 1, 1, 0, 0, 1);
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[5].startAnimation(letterAppear);
                     break;
                 case 5:
@@ -199,6 +191,13 @@ public class Tale05 extends BaseFragment {
         mp = musicController.getMp();
         checkedAnimation = true;
 
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                sp.play(soundID, 1, 1, 0, 0, 1);
+            }
+        });
         animationFlag = 0;
         letter[1].setVisibility(View.INVISIBLE);
         letter[2].setVisibility(View.INVISIBLE);
@@ -220,6 +219,11 @@ public class Tale05 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(sp != null) {
+                sp.release();
+            }
+        }
     }
 
     @Override

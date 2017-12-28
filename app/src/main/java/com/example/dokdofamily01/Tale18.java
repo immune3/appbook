@@ -65,9 +65,10 @@ public class Tale18 extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
-    int appear;
-    int starEffect;
-    int scale[] = new int[6];
+    int soundID;
+//    int appear;
+//    int starEffect;
+//    int scale[] = new int[6];
 
 
     @Override
@@ -99,15 +100,15 @@ public class Tale18 extends BaseFragment {
         sqeed18 = (ImageView) layout.findViewById(R.id.sqeed18);
         man18 = (ImageView) layout.findViewById(R.id.man18);
 
-        sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
-        appear = sp.load(getContext(), R.raw.effect_18_appear, 1);
-        starEffect = sp.load(getContext(), R.raw.effect_18_star, 2);
-        scale[0] = sp.load(getContext(), R.raw.effect_18_do, 3);
-        scale[1] = sp.load(getContext(), R.raw.effect_18_re, 4);
-        scale[2] = sp.load(getContext(), R.raw.effect_18_mi, 5);
-        scale[3] = sp.load(getContext(), R.raw.effect_18_fa, 6);
-        scale[4] = sp.load(getContext(), R.raw.effect_18_so, 7);
-        scale[5] = sp.load(getContext(), R.raw.effect_18_la, 8);
+//        sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+//        appear = sp.load(getContext(), R.raw.effect_18_appear, 1);
+//        starEffect = sp.load(getContext(), R.raw.effect_18_star, 2);
+//        scale[0] = sp.load(getContext(), R.raw.effect_18_do, 3);
+//        scale[1] = sp.load(getContext(), R.raw.effect_18_re, 4);
+//        scale[2] = sp.load(getContext(), R.raw.effect_18_mi, 5);
+//        scale[3] = sp.load(getContext(), R.raw.effect_18_fa, 6);
+//        scale[4] = sp.load(getContext(), R.raw.effect_18_so, 7);
+//        scale[5] = sp.load(getContext(), R.raw.effect_18_la, 8);
     }
 
     @Override
@@ -188,7 +189,8 @@ public class Tale18 extends BaseFragment {
 
         switch (animationCaseFlag) {
             case 0:
-                sp.play(starEffect, 1, 1, 1, 0, 1);
+                soundID = sp.load(getContext(), R.raw.effect_18_star, 2);
+//                sp.play(starEffect, 1, 1, 1, 0, 1);
                 if (animationFlag == 0) {
                     checkedAnimation = false;
                     animationFlag = 2;
@@ -210,22 +212,22 @@ public class Tale18 extends BaseFragment {
                 }
                 break;
             case 1:
-                if (clickFlag) sp.play(scale[0], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_do, 3);
                 break;
             case 2:
-                if (clickFlag) sp.play(scale[1], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_re, 4);
                 break;
             case 3 :
-                if (clickFlag) sp.play(scale[2], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_mi, 5);
                 break;
             case 4 :
-                if (clickFlag) sp.play(scale[3], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_fa, 6);
                 break;
             case 5 :
-                if (clickFlag) sp.play(scale[4], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_so, 7);
                 break;
             case 6 :
-                if (clickFlag) sp.play(scale[5], 1, 1, 1, 0, 1);
+                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_la, 8);
                 break;
         }
 
@@ -269,7 +271,8 @@ public class Tale18 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             super.onAnimationStart(animation);
             if (rotateFlag[1] == 1) {
-                sp.play(appear, 1, 1, 1, 0, 1);
+                soundID = sp.load(getContext(), R.raw.effect_18_appear, 1);
+//                sp.play(appear, 1, 1, 1, 0, 1);
             }
         }
 
@@ -358,6 +361,14 @@ public class Tale18 extends BaseFragment {
         father18.post(new Runnable() {
             @Override
             public void run() {
+                sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        sp.play(soundID, 1, 1, 1, 0, 1);
+                    }
+                });
+
                 blink = new AlphaAnimation(1, 0.3f);
                 blink.setDuration(500);
                 blink.setRepeatCount(Animation.INFINITE);
@@ -465,6 +476,11 @@ public class Tale18 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(sp != null) {
+                sp.release();
+            }
+        }
     }
 
     @Override
