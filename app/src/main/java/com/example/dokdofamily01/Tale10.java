@@ -56,15 +56,13 @@ public class Tale10 extends BaseFragment {
 
     MediaPlayer mp = null;
     private SoundPool tweetSoundPool, tweetTouchSoundPool;
-    private int tweetSound, tweetSoundLoop;
+    private int tweetSound, tweetTouchSound;
     private int tweetLoopStreamID;
 
     ArrayList<SubTitleData> subtitleList;
 
     Timer tweetTimer;
     TimerTask task;
-
-
 
 
     @Override
@@ -80,10 +78,6 @@ public class Tale10 extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
-
-
-
     @Override
     public void bindViews() {
         super.bindViews();
@@ -98,11 +92,6 @@ public class Tale10 extends BaseFragment {
         bird[0] = (ImageView) layout.findViewById(R.id.bird00);
         bird[1] = (ImageView) layout.findViewById(R.id.bird10);
         bird[2] = (ImageView) layout.findViewById(R.id.bird20);
-        tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
-        tweetTouchSoundPool = new SoundPool(2, AudioManager.STREAM_RING, 0);
-        tweetSoundLoop = tweetTouchSoundPool.load(getContext(), R.raw.effect_10_tweet_touch, 0);
-
     }
 
     @Override
@@ -138,10 +127,12 @@ public class Tale10 extends BaseFragment {
         super.setupEvents();
 
         blinkBird.setOnTouchListener(new BlockObjListener());
+
     }
 
     @Override
     public void blockAnimFunc() {
+//        tweetTouchSound= tweetTouchSoundPool.load(getContext(), R.raw.effect_10_tweet_touch, 1);
         checkedAnimation = false;
         blinkBird.clearAnimation();
         blinkBird.startAnimation(repeat);
@@ -278,6 +269,13 @@ public class Tale10 extends BaseFragment {
         mountain.post(new Runnable() {
             @Override
             public void run() {
+                tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                tweetSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        tweetSoundPool.play(tweetSound, 0.2f, 0.2f, 0, 0, 1);
+                    }
+                });
                 mountainAppear = new TranslateAnimation(0, 0, mountain.getHeight(), 0);
                 mountainAppear.setDuration(2000);
                 mountainAppear.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -293,7 +291,7 @@ public class Tale10 extends BaseFragment {
                 rockAppear.setDuration(1500);
                 rockAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                byulHeadRotate = new RotateAnimation(0, -20, byulHead.getWidth()/2, byulHead.getHeight()/2);
+                byulHeadRotate = new RotateAnimation(0, -20, byulHead.getWidth() / 2, byulHead.getHeight() / 2);
                 byulHeadRotate.setDuration(2000);
                 byulHeadRotate.setInterpolator(new AccelerateDecelerateInterpolator());
                 byulHeadRotate.setRepeatCount(5);
@@ -301,7 +299,7 @@ public class Tale10 extends BaseFragment {
                 byulHeadRotate.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+                        tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
                     }
 
                     @Override
@@ -312,7 +310,7 @@ public class Tale10 extends BaseFragment {
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-                        tweetSoundPool.play(tweetSound, 1, 1, 0, 0, 1);
+                        tweetSound = tweetSoundPool.load(getContext(), R.raw.effect_10_tweet, 0);
                     }
                 });
 
@@ -322,14 +320,13 @@ public class Tale10 extends BaseFragment {
                 byulHandRotate.setRepeatCount(5);
                 byulHandRotate.setRepeatMode(Animation.REVERSE);
 
-//                if (animationFlag == 0) {
-                    checkedAnimation = false;
-                    blinkBird.setVisibility(View.INVISIBLE);
-                    blinkBird.clearAnimation();
-                    animationFlag = 1;
-                    mountain.startAnimation(mountainAppear);
-                    rock.startAnimation(rockAppear);
-//                }
+                checkedAnimation = false;
+                blinkBird.setVisibility(View.INVISIBLE);
+                blinkBird.clearAnimation();
+                animationFlag = 1;
+                mountain.startAnimation(mountainAppear);
+                rock.startAnimation(rockAppear);
+
             }
         });
     }
@@ -348,26 +345,16 @@ public class Tale10 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(!isVisibleToUser && tweetTimer != null) {
-            tweetSoundPool.stop(tweetLoopStreamID);
-            tweetSoundPool.release();
-            tweetTimer.cancel();
-            tweetTimer.purge();
-            tweetTimer = null;
+        if (!isVisibleToUser) {
+            if(tweetSoundPool != null) {
+                tweetSoundPool.release();
+            }
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(tweetTimer != null) {
-            tweetSoundPool.stop(tweetLoopStreamID);
-            tweetSoundPool.release();
-
-            tweetTimer.cancel();
-            tweetTimer.purge();
-            tweetTimer = null;
-        }
 
     }
 }

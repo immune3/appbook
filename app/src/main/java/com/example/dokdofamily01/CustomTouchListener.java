@@ -13,12 +13,11 @@ import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
  */
 
 public class CustomTouchListener implements View.OnTouchListener {
-    private float x1,x2;
-
-
+    private float x1 = 0;
+    private float x2 = 0;
+    float deltaX = x2 - x1;
 
     CustomViewPager customViewPager;
-
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -52,12 +51,29 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void decreaseFunc(){
-        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, true);
+        if(checkedAnimation) {
+            customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, true);
+            Log.d("decreaseFunc", "if");
+        } else Log.d("decreaseFunc", "else");
 
     }
 
     public void increaseFunc(){
-        if(checkedAnimation) customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
+        if(checkedAnimation) {
+            customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
+            Log.d("increaseFunc", "if");
+        } else Log.d("increaseFunc", "else");
+    }
+
+    public boolean checkTouchDistance() {
+        if (Math.abs(deltaX) > MIN_DISTANCE) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkTouchDelta() {
+        if (x2 < x1) return true;
+        else return false;
     }
 
     public void animationFunc(){

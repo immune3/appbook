@@ -31,7 +31,9 @@ public class CheckMP extends AsyncTask<Void, Void, MediaPlayer> {
     @Override
     protected MediaPlayer doInBackground(Void... voids) {
         MediaPlayer mp_async;
-        mp_async = mc.getMp();
+        if (mc != null)
+            mp_async = mc.getMp();
+        else mp_async = null;
         return mp_async;
     }
 }

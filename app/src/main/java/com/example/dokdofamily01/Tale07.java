@@ -83,9 +83,6 @@ public class Tale07 extends BaseFragment {
         shadow[0] = (ImageView) layout.findViewById(R.id.shadow1);
         shadow[1] = (ImageView) layout.findViewById(R.id.shadow1);
         shadow[2] = (ImageView) layout.findViewById(R.id.shadow1);
-
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        seagullEffect = sp.load(getContext(), R.raw.effect_07_seagull, 1);
     }
 
     @Override
@@ -118,6 +115,7 @@ public class Tale07 extends BaseFragment {
                 return super.onTouch(view, motionEvent);
             }
         });
+
     }
 
     int animationCaseFlag = 0;
@@ -129,7 +127,7 @@ public class Tale07 extends BaseFragment {
                     checkedAnimation = false;
                     clickFlag=true;
                     animationFlag = 2;
-                    sp.play(seagullEffect, 1, 1, 0, 0, 1);
+                    seagullEffect = sp.load(getContext(), R.raw.effect_07_seagull, 1);
                     seagull[0].startAnimation(seagullDisappear1);
                 }
 
@@ -158,14 +156,14 @@ public class Tale07 extends BaseFragment {
                     break;
                 case 3:
                     seagull[1].setVisibility(View.VISIBLE);
-                    sp.play(seagullEffect, 1, 1, 0, 0, 1);
+                    seagullEffect = sp.load(getContext(), R.raw.effect_07_seagull, 1);
                     break;
                 case 4:
                     seagull[2].setVisibility(View.VISIBLE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            sp.play(seagullEffect, 1, 1, 0, 0, 1);
+                            seagullEffect = sp.load(getContext(), R.raw.effect_07_seagull, 1);
                         }
                     }, 500);
                     break;
@@ -240,6 +238,14 @@ public class Tale07 extends BaseFragment {
         sl.post(new Runnable() {
             @Override
             public void run() {
+                sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        sp.play(seagullEffect, 1, 1, 0, 0, 1);
+                    }
+                });
+
                 seagullAppear1 = new RotateAnimation(20, 0, -(int) (seagull[0].getWidth() * 4), -(int) (seagull[0].getHeight() * 1.5));
                 seagullAppear1.setDuration(1500);
                 seagullAppear1.setFillAfter(true);
@@ -321,6 +327,11 @@ public class Tale07 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if(sp != null) {
+                sp.release();
+            }
+        }
     }
 
     @Override

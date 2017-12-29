@@ -223,13 +223,13 @@ public class Tale19 extends BaseFragment {
                     starFadein[iter] = new AlphaAnimation(0, 1);
                     starFadein[iter].setStartOffset(iter * 300);
                     starFadein[iter].setDuration(500);
-                    starFadein[iter].setFillAfter(true);
+//                    starFadein[iter].setFillAfter(true);
 
                     starFall[iter] = new TranslateAnimation(0, 0, 0, star2.getHeight() * ratio);
                     starFall[iter].setDuration(800);
                     starFall[iter].setStartOffset(iter * 300 + 500);
                     starFall[iter].setInterpolator(new AnticipateInterpolator());
-                    starFall[iter].setFillAfter(true);
+//                    starFall[iter].setFillAfter(true);
 
                     starFadeout[iter] = new AlphaAnimation(1, 0);
                     starFadeout[iter].setStartOffset(iter * 300 + 1300);
@@ -246,14 +246,10 @@ public class Tale19 extends BaseFragment {
 //                    starFallAniSet[iter].setStartOffset(1000*iter);
                 }
 
-                starFadeout[4].setAnimationListener(new MyAnimationListener() {
+
+                starFadeout[4].setAnimationListener(new Animation.AnimationListener(){
                     @Override
                     public void onAnimationEnd(Animation animation) {
-//                        star6.clearAnimation();
-//                        star2.clearAnimation();
-//                        star3.clearAnimation();
-//                        star4.clearAnimation();
-//                        star5.clearAnimation();
                         if (starFallCount < 4) {
                             star6.setVisibility(View.INVISIBLE);
                             star2.startAnimation(starFallAniSet[0]);
