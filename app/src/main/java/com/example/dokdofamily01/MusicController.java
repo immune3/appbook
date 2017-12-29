@@ -229,12 +229,12 @@ public class MusicController {
         public void handleMessage(Message msg) {
 
             if (msg.what >= 0)
-                subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
+            subtitleTextView.setText(subtitleList.get(msg.what).getSubTitle());
             else
-                subtitleTextView.setText(null);
+                    subtitleTextView.setText(null);
 
 
-        }
+}
     };
 
 
