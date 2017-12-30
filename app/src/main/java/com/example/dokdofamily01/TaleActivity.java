@@ -475,5 +475,6 @@ public class TaleActivity extends AppCompatActivity{
         currentVpPos = vp.getCurrentItem();
         super.onUserLeaveHint();
     }
+
 }
 

@@ -97,6 +97,7 @@ public class BaseFragment extends Fragment{
     public void setUserVisibleHint(boolean isVisibleToUser) {
 
         isHint = isVisibleToUser;
+        Log.d("isHint", isHint + "");
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (isVisibleToUser) {
@@ -123,7 +124,6 @@ public class BaseFragment extends Fragment{
             customViewPager = vp;
             return super.onTouch(view, motionEvent);
         }
-
 
         @Override
         public void decreaseFunc() {
@@ -158,6 +158,7 @@ public class BaseFragment extends Fragment{
             super.animationFunc();
             blockAnimFunc();
         }
+
     }
 
     public void blockAnimFunc(){
@@ -165,6 +166,19 @@ public class BaseFragment extends Fragment{
     }
 
     class MyChangeListener extends CustomTouchListener{
+
+        public MyChangeListener(AsyncResponse asyncResponse) {
+            super.delegate = asyncResponse;
+        }
+
+        public MyChangeListener() {
+            super.delegate = new AsyncResponse() {
+                @Override
+                public void onAction(MotionEvent motionEvent, int checkDistance) {
+
+                }
+            };
+        }
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {

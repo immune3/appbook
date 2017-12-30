@@ -29,10 +29,13 @@ public class MusicController {
     private MyAsynTask createMP;
     private MyThread subtitleThread;
 
+    private int checkPage;
 
     public MusicController(Context context, int resID) {
         this.mContext = context;
         this.resID = resID;
+
+        checkPage = 0;
     }
 
     public MediaPlayer getMp() {
@@ -43,11 +46,14 @@ public class MusicController {
     public boolean nextPart() {
         if (subtitleThread != null) {
             if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
+                checkPage = 1;
                 return true;
             } else {
+                checkPage = 0;
                 return false;
             }
         } else {
+            checkPage = 0;
             return false;
         }
 
@@ -56,15 +62,22 @@ public class MusicController {
     public boolean previousPart() {
         if (subtitleThread != null) {
             if (subtitleThread.decreaseSubtitleMusic()) {
+                checkPage = -1;
                 return true;
             } else {
+                checkPage = 0;
                 return false;
             }
         } else {
+            checkPage = 0;
             return false;
         }
-
     }
+
+    public int checkPage() {
+        return checkPage;
+    }
+
 
     public void excuteAsync() {
         createMP = new MyAsynTask();
@@ -186,9 +199,11 @@ public class MusicController {
             try {
                 if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
                     subtitleIndex++;
+                    checkPage  = 1;
                     mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                     return true;
                 } else {
+                    checkPage = 0;
                     return false;
                 }
             }catch (IllegalStateException e){
@@ -198,23 +213,33 @@ public class MusicController {
         }
 
         public boolean decreaseSubtitleMusic() {
-            Log.d("subtitleIndex ", subtitleIndex + "");
+
             try {
                 if (mp.isPlaying()) {
                     if (subtitleIndex > 1) {
-                        subtitleIndex -= 2;
-                        mp.seekTo(subtitleList.get(subtitleIndex).getFinishTime());
+//                        원래 값 -= 2 일 경우 대사가 3파트일 때 subtitleIndex가 2 일 경우 0이 되버려서
+//                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음
+//                        인덱스는 -1 씩 이동하되 재생은 그보다 -1 한 인덱스로 재생함으로써 조건을 충족하도록 수정
+                        subtitleIndex -= 1;
+                        checkPage = -1;
+                        mp.seekTo(subtitleList.get(subtitleIndex-1).getFinishTime());
+                        Log.d("subtitleIndex1 ", subtitleIndex + "");
                         return true;
                     } else if (subtitleIndex == 1) {
                         subtitleIndex = 0;
+                        checkPage = -1;
                         mp.seekTo(0);
+                        Log.d("subtitleIndex2 ", subtitleIndex + "");
                         return true;
                     } else {
+                        checkPage = 0;
+                        Log.d("subtitleIndex3 ", subtitleIndex + "");
                         return false;
                     }
                 } else {
                     return false;
                 }
+
 
             } catch (IllegalStateException e) {
                 e.printStackTrace();

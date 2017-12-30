@@ -88,7 +88,6 @@ public class Introduction extends BaseFragment {
     }
 
 
-
     @Override
     public void setValues() {
         super.setValues();
@@ -431,6 +430,7 @@ public class Introduction extends BaseFragment {
 //        mp = musicController.getMp();
 //        checkedAnimation = true;
     }
+
 
     @Override
     public void blockAnimFunc() {

@@ -17,7 +17,28 @@ public class CustomTouchListener implements View.OnTouchListener {
     private float x2 = 0;
     float deltaX = x2 - x1;
 
+    private int checkDistance = 0;
+
     CustomViewPager customViewPager;
+
+    public interface AsyncResponse {
+        void onAction(MotionEvent motionEvent, int checkDistance);
+    }
+
+    public AsyncResponse delegate = null;
+
+    public CustomTouchListener(){
+        delegate = new AsyncResponse() {
+            @Override
+            public void onAction(MotionEvent motionEvent, int checkDistance) {
+
+            }
+        };
+    };
+
+    public CustomTouchListener(AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -32,22 +53,30 @@ public class CustomTouchListener implements View.OnTouchListener {
                 if (Math.abs(deltaX) > MIN_DISTANCE)
                 {
                     if(x2>x1) {
-
+                        checkDistance = -1;
                         decreaseFunc();
                     }
                     else if(x2<x1) {
-
+                        checkDistance = 1;
                         increaseFunc();
                     }
                 }
                 else
                 {
                     Log.i("position", "short");
+                    checkDistance = 0;
                     animationFunc();
                 }
                 break;
         }
+
+        delegate.onAction(motionEvent, checkDistance);
+
         return true;
+    }
+
+    public int checkDistance() {
+        return checkDistance;
     }
 
     public void decreaseFunc(){
@@ -63,17 +92,6 @@ public class CustomTouchListener implements View.OnTouchListener {
             customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
             Log.d("increaseFunc", "if");
         } else Log.d("increaseFunc", "else");
-    }
-
-    public boolean checkTouchDistance() {
-        if (Math.abs(deltaX) > MIN_DISTANCE) {
-            return true;
-        } else return false;
-    }
-
-    public boolean checkTouchDelta() {
-        if (x2 < x1) return true;
-        else return false;
     }
 
     public void animationFunc(){

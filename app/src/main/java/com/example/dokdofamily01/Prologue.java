@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -38,6 +39,10 @@ public class Prologue extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     MediaPlayer mp = null;
+
+    private int storyFlag = 0;
+    private Handler fadeInHandler, fadeOutHandler;
+    private Runnable fadeInRun, fadeOutRun;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +79,7 @@ public class Prologue extends BaseFragment {
 
         fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
-        fadeIn.setStartOffset(4000);
+        fadeIn.setStartOffset(3500);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
@@ -90,17 +95,115 @@ public class Prologue extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-//        vp = ((TaleActivity)getActivity()).vp;
-//
-//        vp.setOnTouchListener(new MyChangeListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//                customViewPager = vp;
-//
-//                return super.onTouch(view, motionEvent);
-//            }
-//        });
+        //델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
+        //이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
+        MyChangeListener mListener = new MyChangeListener(new CustomTouchListener.AsyncResponse() {
+            @Override
+            public void onAction(MotionEvent motionEvent, int checkDistance) {
+                // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
+
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < subtitleList.size() && checkDistance == 1) {
+
+                    Log.d("storyFlag", "plus");
+                    storyFlag++;
+
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag > 0 && checkDistance == -1) {
+
+                    Log.d("storyFlag", "minus");
+                    storyFlag--;
+                }
+
+                Log.d("StoryFlag", storyFlag + " " + checkDistance);
+
+                //postDelayed로 인한 callBack 을 취소함
+                destroyHandler();
+
+                switch (storyFlag) {
+
+                    case 0:
+
+                        prologueTextImage.clearAnimation();
+                        animationFlag = 3;
+                        fadeOut.setStartOffset(0);
+                        prologueTextImage.startAnimation(fadeOut);
+
+                        fadeInHandler = new Handler();
+                        fadeInRun = new Runnable() {
+                            @Override
+                            public void run() {
+                                animationFlag = 1;
+                                prologueTextImage.setVisibility(View.INVISIBLE);
+                                prologueTextImage.setImageResource(R.drawable.prologue_text_01);
+                                fadeIn.setStartOffset(3500);
+                                prologueTextImage.startAnimation(fadeIn);
+                            }
+                        };
+
+                        fadeInHandler.postDelayed(fadeInRun, 1000);
+
+                        break;
+
+                    case 1:
+
+                        prologueTextImage.clearAnimation();
+                        animationFlag = 3;
+                        fadeOut.setStartOffset(0);
+                        prologueTextImage.startAnimation(fadeOut);
+
+                        fadeInHandler = new Handler();
+
+                        fadeInRun = new Runnable() {
+                            @Override
+                            public void run() {
+                                animationFlag = 2;
+                                prologueTextImage.setVisibility(View.INVISIBLE);
+                                prologueTextImage.setImageResource(R.drawable.prologue_text_02);
+
+                                fadeIn.setStartOffset(0);
+                                prologueTextImage.startAnimation(fadeIn);
+                            }
+                        };
+
+                        fadeInHandler.postDelayed(fadeInRun, 1000);
+
+                        break;
+
+                    case 2:
+
+                        prologueTextImage.clearAnimation();
+                        animationFlag = 3;
+                        fadeOut.setStartOffset(0);
+                        prologueTextImage.startAnimation(fadeOut);
+
+                        fadeInHandler = new Handler();
+
+                        fadeInRun = new Runnable() {
+                            @Override
+                            public void run() {
+                                fadeIn.setStartOffset(0);
+                                prologueTextImage.setVisibility(View.INVISIBLE);
+                                prologueTextImage.setImageResource(R.drawable.prologue_text_03);
+                                prologueTextImage.startAnimation(fadeIn);
+                            }
+                        };
+
+                        fadeInHandler.postDelayed(fadeInRun, 1000);
+
+                        break;
+
+                }
+
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                return super.onTouch(view, motionEvent);
+            }
+        };
+
+        prologueTextImage.setOnTouchListener(mListener);
+        sl.setOnTouchListener(mListener);
 
     }
 
@@ -112,6 +215,7 @@ public class Prologue extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
     }
 
     @Override
@@ -133,8 +237,11 @@ public class Prologue extends BaseFragment {
         prologueTextImage.setVisibility(View.INVISIBLE);
         prologueTextImage.setImageResource(R.drawable.prologue_text_01);
 
-        fadeIn.setStartOffset(4000);
+        storyFlag = 0;
+        animationFlag = 1;
+        fadeIn.setStartOffset(3500);
         prologueTextImage.startAnimation(fadeIn);
+
     }
 
     @Override
@@ -152,24 +259,46 @@ public class Prologue extends BaseFragment {
         super.onDestroyView();
     }
 
+    private void destroyHandler() {
+
+        if (fadeInHandler != null && fadeInRun != null) {
+            fadeInHandler.removeCallbacks(fadeInRun);
+            fadeInHandler = null;
+        }
+
+        if (fadeOutHandler != null && fadeOutRun != null) {
+            fadeOutHandler.removeCallbacks(fadeOutRun);
+            fadeOutHandler = null;
+        }
+
+    }
+
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+
             switch (animationFlag) {
                 case 1:
 
-                    new Handler().postDelayed(new Runnable() {
+                    storyFlag = 0;
+
+                    fadeOutHandler = new Handler();
+                    fadeOutRun = new Runnable() {
                         @Override
                         public void run() {
+
+                            destroyHandler();
 
                             animationFlag = 3;
                             fadeOut.setStartOffset(0);
                             prologueTextImage.startAnimation(fadeOut);
 
-                            new Handler().postDelayed(new Runnable() {
+                            fadeInHandler = new Handler();
+                            fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    storyFlag = 1;
                                     animationFlag = 2;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
                                     prologueTextImage.setImageResource(R.drawable.prologue_text_02);
@@ -177,34 +306,48 @@ public class Prologue extends BaseFragment {
                                     fadeIn.setStartOffset(0);
                                     prologueTextImage.startAnimation(fadeIn);
                                 }
-                            }, 1000);
+                            };
 
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
                         }
-                    }, 19000);
+                    };
+
+                    fadeOutHandler.postDelayed(fadeOutRun, 19500);
 
                     break;
 
                 case 2:
 
-                    new Handler().postDelayed(new Runnable() {
+                    storyFlag = 1;
+
+                    fadeOutHandler = new Handler();
+                    fadeOutRun = new Runnable() {
                         @Override
                         public void run() {
+
+                            destroyHandler();
 
                             animationFlag = 3;
                             fadeOut.setStartOffset(0);
                             prologueTextImage.startAnimation(fadeOut);
 
-                            new Handler().postDelayed(new Runnable() {
+                            fadeInHandler = new Handler();
+                            fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    storyFlag = 2;
                                     fadeIn.setStartOffset(0);
                                     prologueTextImage.setVisibility(View.INVISIBLE);
                                     prologueTextImage.setImageResource(R.drawable.prologue_text_03);
                                     prologueTextImage.startAnimation(fadeIn);
                                 }
-                            }, 1000);
+                            };
+
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
                         }
-                    }, 27200);
+                    };
+
+                    fadeOutHandler.postDelayed(fadeOutRun, 27200);
 
                     break;
 
@@ -225,4 +368,5 @@ public class Prologue extends BaseFragment {
 
         }
     }
+
 }
