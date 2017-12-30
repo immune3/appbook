@@ -134,7 +134,7 @@ public class Prologue extends BaseFragment {
                                 animationFlag = 1;
                                 prologueTextImage.setVisibility(View.INVISIBLE);
                                 prologueTextImage.setImageResource(R.drawable.prologue_text_01);
-                                fadeIn.setStartOffset(3500);
+                                fadeIn.setStartOffset(2500);
                                 prologueTextImage.startAnimation(fadeIn);
                             }
                         };
