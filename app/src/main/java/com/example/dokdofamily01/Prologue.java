@@ -216,6 +216,11 @@ public class Prologue extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+        if(!isVisibleToUser){
+            CheckMP checkMP = new CheckMP(musicController);
+            checkMP.execute();
+        }
+
     }
 
     @Override
