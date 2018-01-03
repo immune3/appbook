@@ -47,10 +47,10 @@ public class MusicController {
         if (subtitleThread != null) {
             if (subtitleThread.increaseSubtitleMusic()) { // 자막 넘기는 상태
                 checkPage = 1;
-                return true;
+                return true;// 자막만 넘기는
             } else {
                 checkPage = 0;
-                return false;
+                return false; // 자막이 끝났으니까 다음 페이지로 넘겨라
             }
         } else {
             checkPage = 0;
