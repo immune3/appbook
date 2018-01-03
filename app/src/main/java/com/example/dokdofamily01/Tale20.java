@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -222,7 +223,13 @@ public class Tale20 extends BaseFragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        cutain.startAnimation(cutainDownAnimation1);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                cutain.startAnimation(cutainDownAnimation2);
+                            }
+                        }, 2000);
+
                     }
 
                     @Override
@@ -231,17 +238,37 @@ public class Tale20 extends BaseFragment {
                     }
                 });
 
-                cutainDownAnimation2 = new TranslateAnimation(0, 0, -cutain.getHeight()*0.01f, cutain.getHeight()*0.45f);
+                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.45f);
 //                cutainDownAnimation2.setStartOffset(1000);
-                cutainDownAnimation2.setDuration(36500);
+                cutainDownAnimation2.setDuration(34000);
                 cutainDownAnimation2.setFillAfter(true);
 //                cutainDownAnimation2.setInterpolator(new DecelerateInterpolator());
 
-                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, -cutain.getHeight()*0.01f);
-//                cutainDownAnimation1.setStartOffset(10000);
-                cutainDownAnimation1.setDuration(1000);
-//                cutainDownAnimation1.setInterpolator(new DecelerateInterpolator());
-                cutainDownAnimation1.setAnimationListener(new Animation.AnimationListener() {
+//                cutainDownAnimation1 = new TranslateAnimation(0, 0, 0, -cutain.getHeight()*0.01f);
+////                cutainDownAnimation1.setStartOffset(10000);
+//                cutainDownAnimation1.setDuration(1000);
+////                cutainDownAnimation1.setInterpolator(new DecelerateInterpolator());
+//                cutainDownAnimation1.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//                        cutainFlag = 1;
+//                        animationFlag = 0;
+//                        checkedAnimation = true;
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        cutain.startAnimation(cutainDownAnimation2);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+
+
+                cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         cutainFlag = 1;
@@ -251,27 +278,6 @@ public class Tale20 extends BaseFragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        cutain.startAnimation(cutainDownAnimation2);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-
-                cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-//                        animationFlag = 0;
-//                        checkedAnimation = true;
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-//                        checkedAnimation = true;
-//                        animationFlag = 0;
                         cutainText.startAnimation(fadein);
                     }
 

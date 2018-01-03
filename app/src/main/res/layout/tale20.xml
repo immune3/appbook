@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 app:scale_width = "2560"
                 app:scale_height= "400"
-                app:scale_textsize = "110"
+                app:scale_textsize = "200"
                 app:scale_top = "500"
                 android:text="지금부터 신나게 시작됩니다...!"
                 android:textColor="#FFFFFF"
