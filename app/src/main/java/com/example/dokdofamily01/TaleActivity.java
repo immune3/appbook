@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class TaleActivity extends AppCompatActivity{
     static boolean checkedAnimation = true;
 
     static public TextView subtitleTextView;
+    static public ImageView subtitleImageVIew;
 
     static int height;
     static int width;
@@ -78,6 +80,7 @@ public class TaleActivity extends AppCompatActivity{
         goPage = (Spinner) findViewById(R.id.goPage);
 
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
+        subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
         showFlag = true;
 
         showMenu.post(new Runnable() {
@@ -128,37 +131,6 @@ public class TaleActivity extends AppCompatActivity{
 
             }
         });
-//        vp.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                switch(motionEvent.getAction())
-//                {
-//                    case MotionEvent.ACTION_DOWN:
-//                        x1 = motionEvent.getX();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        x2 = motionEvent.getX();
-//                        float deltaX = x2 - x1;
-//                        if (Math.abs(deltaX) > MIN_DISTANCE)
-//                        {
-//                            if(x2>x1) {
-//                                vp.setCurrentItem(vp.getCurrentItem()-1);
-//                            }
-//                            else if(x2<x1) {
-//                                vp.setCurrentItem(vp.getCurrentItem()+1);
-//                            }
-//                        }
-//                        else
-//                        {
-//                            Log.i("position", "short");
-//                        }
-//                        break;
-//                }
-//                return true;
-//            }
-//
-//        });
-
 
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,8 +149,6 @@ public class TaleActivity extends AppCompatActivity{
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.context, MainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });
@@ -219,12 +189,6 @@ public class TaleActivity extends AppCompatActivity{
                 }
             }
         });
-//        showMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
         screenOffReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -247,7 +211,6 @@ public class TaleActivity extends AppCompatActivity{
 
     private class pagerAdapter extends FragmentStatePagerAdapter
     {
-//        Fragment[] fragments = new Fragment[20];
 
         public pagerAdapter(android.support.v4.app.FragmentManager fm)
         {

@@ -61,7 +61,7 @@ public class Tale02 extends BaseFragment {
     SoundPool sp;
     int soundID;
 
-
+    MusicController musicController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,19 +160,31 @@ public class Tale02 extends BaseFragment {
 
     public void soundPlayFunc(){
         musicController = new MusicController(getActivity(), R.raw.scene_2);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"갈매기에요", "1600"},
-                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
-                        "생긋~ 웃더니 말을 해요.", "8500"},
-                new String[]{"별아 창문을 열어! ", "12500"},
-                new String[]{"꿈이야...", "16000"},
-                new String[]{"별이가 창문을 열어요.", "19000"},
-                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
-                new String[]{"갈매기가 또 말을 해요.", "27000"},
-                new String[]{"별아 내 등에 앉아!", "31500"},
-                new String[]{"진짜 꿈이야...", "35000"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"갈매기에요", "1600"},
+//                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
+//                        "생긋~ 웃더니 말을 해요.", "8500"},
+//                new String[]{"별아 창문을 열어! ", "12500"},
+//                new String[]{"꿈이야...", "16000"},
+//                new String[]{"별이가 창문을 열어요.", "19000"},
+//                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
+//                new String[]{"갈매기가 또 말을 해요.", "27000"},
+//                new String[]{"별아 내 등에 앉아!", "31500"},
+//                new String[]{"진짜 꿈이야...", "35000"}
+//        );
+        musicController.makeSubTitleList(2,
+                new int[]{R.drawable.sub_02_01, 1600},
+                new int[]{R.drawable.sub_02_02, 8500},
+                new int[]{R.drawable.sub_02_03, 12500},
+                new int[]{R.drawable.sub_02_04, 16000},
+                new int[]{R.drawable.sub_02_05, 19000},
+                new int[]{R.drawable.sub_02_06, 23500},
+                new int[]{R.drawable.sub_02_07, 27000},
+                new int[]{R.drawable.sub_02_08, 31500},
+                new int[]{R.drawable.sub_02_09, 35000}
         );
+
         musicController.excuteAsync();
         mp = musicController.getMp();
 
@@ -290,7 +302,23 @@ public class Tale02 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+//        super.setUserVisibleHint(isVisibleToUser);
+        isHint = isVisibleToUser;
+
+        if (isAttached) {
+            if (isVisibleToUser) {
+                System.out.println("PlayByHint");
+                soundPlayFunc();
+
+                vp.setOnTouchListener(null);
+                vp.setOnTouchListener(new MyChangeListener());
+
+            } else {
+                CheckMP checkMP = new CheckMP(musicController);
+                checkMP.execute();
+            }
+        }
+
     }
 
     @Override
@@ -306,5 +334,10 @@ public class Tale02 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (musicController != null) {
+            CheckMP checkMP = new CheckMP(musicController);
+            checkMP.execute();
+        }
+
     }
 }
