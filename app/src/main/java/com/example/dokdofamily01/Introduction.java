@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleData;
+import com.example.dokdofamily01.Data.SubTitleDataTest;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class Introduction extends BaseFragment {
 
     int animationCaseFlag = 0;
 
-    ArrayList<SubTitleData> subtitleList;
+    ArrayList<SubTitleDataTest> subtitleList;
     MediaPlayer mp = null;
 
     int animationFlag = 1;

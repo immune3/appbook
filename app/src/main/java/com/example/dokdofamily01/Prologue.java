@@ -238,6 +238,7 @@ public class Prologue extends BaseFragment {
         isHint = isVisibleToUser;
         Log.d("isHint", isHint + "");
         super.setUserVisibleHint(isVisibleToUser);
+
         if (isAttached) {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
@@ -256,6 +257,7 @@ public class Prologue extends BaseFragment {
                 }
             }
         }
+
     }
 
     @Override
