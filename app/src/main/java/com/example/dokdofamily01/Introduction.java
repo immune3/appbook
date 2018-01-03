@@ -2,7 +2,9 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +18,9 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataTest;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import static android.content.ContentValues.TAG;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
@@ -64,6 +68,9 @@ public class Introduction extends BaseFragment {
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
+    AlphaAnimation blink;
+
+    Random random;
 
     MediaPlayer musicPlayer;
 
@@ -73,6 +80,8 @@ public class Introduction extends BaseFragment {
     MediaPlayer mp = null;
 
     int animationFlag = 1;
+    int randomN=0;
+    boolean isBlink=true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,6 +153,7 @@ public class Introduction extends BaseFragment {
         waveBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 1;
 
@@ -167,6 +177,7 @@ public class Introduction extends BaseFragment {
         birdBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 2;
 
@@ -189,6 +200,7 @@ public class Introduction extends BaseFragment {
         buylBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 3;
 
@@ -211,6 +223,7 @@ public class Introduction extends BaseFragment {
         fatherBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 4;
 
@@ -233,6 +246,7 @@ public class Introduction extends BaseFragment {
         flowerBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 5;
 
@@ -255,6 +269,7 @@ public class Introduction extends BaseFragment {
         manBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 6;
 
@@ -277,6 +292,7 @@ public class Introduction extends BaseFragment {
         momBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 7;
 
@@ -299,6 +315,7 @@ public class Introduction extends BaseFragment {
         postBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 8;
 
@@ -321,6 +338,7 @@ public class Introduction extends BaseFragment {
         seagullBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 9;
 
@@ -343,6 +361,7 @@ public class Introduction extends BaseFragment {
         squidBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 10;
 
@@ -365,6 +384,7 @@ public class Introduction extends BaseFragment {
         treeBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 11;
 
@@ -421,6 +441,20 @@ public class Introduction extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
+
+        introFather.post(new Runnable() {
+            @Override
+            public void run() {
+                blink = new AlphaAnimation(0,1);
+                blink.setDuration(500);
+                blink.setRepeatCount(5);
+                blink.setRepeatMode(Animation.REVERSE);
+                blink.setFillAfter(true);
+                blink.setAnimationListener(new MyBlinkListener());
+                wave.startAnimation(blink);
+                random = new Random();
+            }
+        });
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
@@ -626,6 +660,11 @@ public class Introduction extends BaseFragment {
 
             mask.setVisibility(View.GONE);
 
+            isBlink = true;
+            wave.setVisibility(View.VISIBLE);
+            wave.startAnimation(blink);
+            randomN=0;
+
             try {
                 if(musicPlayer.isPlaying()) {
                     musicPlayer.pause();
@@ -751,5 +790,257 @@ public class Introduction extends BaseFragment {
         public void onAnimationStart(Animation animation) {
 
         }
+    }
+    private class MyBlinkListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if(isBlink) {
+                setVisibleGone();
+                Log.e("ramdom", "" + randomN);
+                switch (randomN) {
+                    case 1:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introBuyl.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 2:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introSeagull.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 3:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 4:
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        wave.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 5:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introMan.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 6:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introMom.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 7:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introTree.clearAnimation();
+                        introSquid.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 8:
+                        wave.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introBird.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 9:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introFather.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 10:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introFlower.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 11:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introPost.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            switch (randomN){
+                case 1:
+                    introBuyl.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    introSeagull.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    introTree.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    wave.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    introMan.setVisibility(View.VISIBLE);
+                    break;
+                case 6:
+                    introMom.setVisibility(View.VISIBLE);
+                    break;
+                case 7:
+                    introSquid.setVisibility(View.VISIBLE);
+                    break;
+                case 8:
+                    introBird.setVisibility(View.VISIBLE);
+                    break;
+                case 9:
+                    introFather.setVisibility(View.VISIBLE);
+                    break;
+                case 10:
+                    introFlower.setVisibility(View.VISIBLE);
+                    break;
+                case 11:
+                    introPost.setVisibility(View.VISIBLE);
+                    break;
+
+            }
+        }
+    }
+
+    private void setVisibleGone(){
+        randomN = random.nextInt(11)+1;
+
+        introBuyl.setVisibility(View.GONE);
+        introSeagull.setVisibility(View.GONE);
+        introTree.setVisibility(View.GONE);
+        wave.setVisibility(View.GONE);
+        introMan.setVisibility(View.GONE);
+        introMom.setVisibility(View.GONE);
+        introSquid.setVisibility(View.GONE);
+        introBird.setVisibility(View.GONE);
+        introFather.setVisibility(View.GONE);
+        introFlower.setVisibility(View.GONE);
+        introPost.setVisibility(View.GONE);
+    }
+    private void animationClear(){
+        isBlink = false;
+        wave.clearAnimation();
+        introBird.clearAnimation();
+        introBuyl.clearAnimation();
+        introFather.clearAnimation();
+        introFlower.clearAnimation();
+        introMan.clearAnimation();
+        introMom.clearAnimation();
+        introSeagull.clearAnimation();
+        introSquid.clearAnimation();
+        introTree.clearAnimation();
+        introPost.clearAnimation();
+
+        introBuyl.setVisibility(View.GONE);
+        introSeagull.setVisibility(View.GONE);
+        introTree.setVisibility(View.GONE);
+        wave.setVisibility(View.GONE);
+        introMan.setVisibility(View.GONE);
+        introMom.setVisibility(View.GONE);
+        introSquid.setVisibility(View.GONE);
+        introBird.setVisibility(View.GONE);
+        introFather.setVisibility(View.GONE);
+        introFlower.setVisibility(View.GONE);
+        introPost.setVisibility(View.GONE);
     }
 }
