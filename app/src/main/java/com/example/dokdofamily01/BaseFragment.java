@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 
@@ -200,7 +201,7 @@ public class BaseFragment extends Fragment{
                     Log.d("DESC", "else");
                     super.decreaseFunc();
                 }
-            } else super.decreaseFunc();
+            } else if(checkedAnimation) super.decreaseFunc();
         }
 
 //        @Override
@@ -229,6 +230,7 @@ public class BaseFragment extends Fragment{
                     Log.d("ASC", "nextPart");
                     super.increaseFunc();
                 }
+
             } else {
                 Log.d("ASC", "elsePart");
                 super.increaseFunc();

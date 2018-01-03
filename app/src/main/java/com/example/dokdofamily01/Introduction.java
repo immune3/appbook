@@ -2,7 +2,9 @@ package com.example.dokdofamily01;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,11 +14,12 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataTest;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import static android.content.ContentValues.TAG;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
@@ -64,6 +67,9 @@ public class Introduction extends BaseFragment {
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
+    AlphaAnimation blink;
+
+    Random random;
 
     MediaPlayer musicPlayer;
 
@@ -73,6 +79,8 @@ public class Introduction extends BaseFragment {
     MediaPlayer mp = null;
 
     int animationFlag = 1;
+    int randomN=0;
+    boolean isBlink=true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,297 +131,37 @@ public class Introduction extends BaseFragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 animationCaseFlag = 0;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
                     try {
-                        if(musicPlayer.isPlaying()) {
+                        if (musicPlayer.isPlaying()) {
                             musicPlayer.pause();
                             musicPlayer.release();
                         }
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
 
-                return super.onTouch(view , motionEvent);
+                return super.onTouch(view, motionEvent);
             }
         });
 
         waveBtn.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
 
                 animationCaseFlag = 1;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     try {
-                        if(musicPlayer.isPlaying()) {
+                        if (musicPlayer.isPlaying()) {
                             musicPlayer.pause();
                             musicPlayer.release();
                         }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-
-        birdBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 2;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        buylBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 3;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        fatherBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 4;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        flowerBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 5;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        manBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 6;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        momBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 7;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        postBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 8;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        seagullBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 9;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        squidBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 10;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-        treeBtn.setOnTouchListener(new BlockObjListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 11;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view , motionEvent);
-            }
-        });
-
-//        vp = ((TaleActivity) getActivity()).vp;
-
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        super.soundPlayFunc();
-
-        vp.setOnTouchListener(new CustomTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                customViewPager = vp;
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if(musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -424,6 +172,307 @@ public class Introduction extends BaseFragment {
         });
 
 
+        birdBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 2;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        buylBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 3;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        fatherBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 4;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        flowerBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 5;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        manBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 6;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        momBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 7;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        postBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 8;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        seagullBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 9;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        squidBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 10;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+        treeBtn.setOnTouchListener(new BlockObjListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                animationClear();
+
+                animationCaseFlag = 11;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        isHint = isVisibleToUser;
+        Log.d("isHint", isHint + "");
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isAttached) {
+            if (isVisibleToUser) {
+                System.out.println("PlayByHint");
+                initVisible();
+                soundPlayFunc();
+
+                vp.setOnTouchListener(null);
+                vp.setOnTouchListener(new MyChangeListener());
+
+            } else {
+                CheckMP checkMP = new CheckMP(musicController);
+                checkMP.execute();
+            }
+        }
+    }
+
+    @Override
+    public void soundPlayFunc() {
+        super.soundPlayFunc();
+        vp.setOnTouchListener(new CustomTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                customViewPager = vp;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
+
+
+        introFather.post(new Runnable() {
+            @Override
+            public void run() {
+                blink = new AlphaAnimation(0,1);
+                blink.setDuration(500);
+                blink.setRepeatCount(5);
+                blink.setRepeatMode(Animation.REVERSE);
+                blink.setFillAfter(true);
+                blink.setAnimationListener(new MyBlinkListener());
+                wave.setVisibility(View.VISIBLE);
+                wave.startAnimation(blink);
+                random = new Random();
+            }
+        });
+
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
 //        subtitleList = musicController.makeSubTitleList(
@@ -431,13 +480,13 @@ public class Introduction extends BaseFragment {
 //        );
 //        musicController.excuteAsync();
 //        mp = musicController.getMp();
-//        checkedAnimation = true;
+        checkedAnimation = true;
     }
 
 
     @Override
     public void blockAnimFunc() {
-        switch(animationCaseFlag) {
+        switch (animationCaseFlag) {
             case 0:
 
                 checkVisible();
@@ -581,17 +630,100 @@ public class Introduction extends BaseFragment {
 
     @Override
     public void onResume() {
+        initVisible();
         super.onResume();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        try {
+            if (musicPlayer != null && musicPlayer.isPlaying()) {
+                musicPlayer.pause();
+                musicPlayer.release();
+            }
+            musicPlayer = null;
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        initVisible();
+    }
+
+    public void initVisible() {
+        wave.clearAnimation();
+        waveBtn.setVisibility(View.VISIBLE);
+
+        introBird.clearAnimation();
+        birdBtn.setVisibility(View.VISIBLE);
+
+        introBuyl.clearAnimation();
+        buylBtn.setVisibility(View.VISIBLE);
+
+        introFather.clearAnimation();
+        fatherBtn.setVisibility(View.VISIBLE);
+
+        introFlower.clearAnimation();
+        flowerBtn.setVisibility(View.VISIBLE);
+
+        introMan.clearAnimation();
+        manBtn.setVisibility(View.VISIBLE);
+
+        introMom.clearAnimation();
+        momBtn.setVisibility(View.VISIBLE);
+
+        introPost.clearAnimation();
+        postBtn.setVisibility(View.VISIBLE);
+
+        introSeagull.clearAnimation();
+        seagullBtn.setVisibility(View.VISIBLE);
+
+        introSquid.clearAnimation();
+        squidBtn.setVisibility(View.VISIBLE);
+
+        introTree.clearAnimation();
+        treeBtn.setVisibility(View.VISIBLE);
+
+        wave.setVisibility(View.GONE);
+        waveText.setVisibility(View.GONE);
+
+        introBird.setVisibility(View.GONE);
+        introBirdText.setVisibility(View.GONE);
+
+        introBuyl.setVisibility(View.GONE);
+        introBuylText.setVisibility(View.GONE);
+
+        introFather.setVisibility(View.GONE);
+        introFatherText.setVisibility(View.GONE);
+
+        introFlower.setVisibility(View.GONE);
+        introFlowerText.setVisibility(View.GONE);
+
+        introMan.setVisibility(View.GONE);
+        introManText.setVisibility(View.GONE);
+
+        introMom.setVisibility(View.GONE);
+        introMomText.setVisibility(View.GONE);
+
+        introPost.setVisibility(View.GONE);
+        introPostText.setVisibility(View.GONE);
+
+        introSeagull.setVisibility(View.GONE);
+        introSeagullText.setVisibility(View.GONE);
+
+        introSquid.setVisibility(View.GONE);
+        introSquidText.setVisibility(View.GONE);
+
+        introTree.setVisibility(View.GONE);
+        introTreeText.setVisibility(View.GONE);
+
+        mask.setVisibility(View.GONE);
     }
 
     public void checkVisible() {
 
-        if(mask.getVisibility() == View.VISIBLE) {
+        if (mask.getVisibility() == View.VISIBLE) {
 
             wave.clearAnimation();
             waveBtn.setVisibility(View.VISIBLE);
@@ -628,8 +760,13 @@ public class Introduction extends BaseFragment {
 
             mask.setVisibility(View.GONE);
 
+            isBlink = true;
+            wave.setVisibility(View.VISIBLE);
+            wave.startAnimation(blink);
+            randomN=0;
+
             try {
-                if(musicPlayer.isPlaying()) {
+                if (musicPlayer.isPlaying()) {
                     musicPlayer.pause();
                     musicPlayer.release();
                 }
@@ -694,10 +831,10 @@ public class Introduction extends BaseFragment {
     public void bindViews() {
         super.bindViews();
 
-        mask = (View)layout.findViewById(R.id.mask);
+        mask = (View) layout.findViewById(R.id.mask);
         waveBtn = (Button) layout.findViewById(R.id.waveBtn);
-        wave = (ImageView)layout.findViewById(R.id.wave);
-        waveText = (ImageView)layout.findViewById(R.id.waveText);
+        wave = (ImageView) layout.findViewById(R.id.wave);
+        waveText = (ImageView) layout.findViewById(R.id.waveText);
         this.introTreeText = (ImageView) layout.findViewById(R.id.introTreeText);
         this.treeBtn = (Button) layout.findViewById(R.id.treeBtn);
         this.introTree = (ImageView) layout.findViewById(R.id.introTree);
@@ -753,5 +890,257 @@ public class Introduction extends BaseFragment {
         public void onAnimationStart(Animation animation) {
 
         }
+    }
+    private class MyBlinkListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if(isBlink) {
+                setVisibleGone();
+                Log.e("ramdom", "" + randomN);
+                switch (randomN) {
+                    case 1:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introBuyl.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 2:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introSeagull.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 3:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 4:
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        wave.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 5:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introMan.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 6:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introMom.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 7:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introTree.clearAnimation();
+                        introSquid.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 8:
+                        wave.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introBird.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 9:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introFather.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 10:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introPost.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introFlower.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                    case 11:
+                        wave.clearAnimation();
+                        introBird.clearAnimation();
+                        introBuyl.clearAnimation();
+                        introFather.clearAnimation();
+                        introFlower.clearAnimation();
+                        introMan.clearAnimation();
+                        introMom.clearAnimation();
+                        introSeagull.clearAnimation();
+                        introSquid.clearAnimation();
+                        introTree.clearAnimation();
+                        introPost.startAnimation(blink);
+                        Log.e("ramdom", "" + randomN);
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            switch (randomN){
+                case 1:
+                    introBuyl.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    introSeagull.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    introTree.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    wave.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    introMan.setVisibility(View.VISIBLE);
+                    break;
+                case 6:
+                    introMom.setVisibility(View.VISIBLE);
+                    break;
+                case 7:
+                    introSquid.setVisibility(View.VISIBLE);
+                    break;
+                case 8:
+                    introBird.setVisibility(View.VISIBLE);
+                    break;
+                case 9:
+                    introFather.setVisibility(View.VISIBLE);
+                    break;
+                case 10:
+                    introFlower.setVisibility(View.VISIBLE);
+                    break;
+                case 11:
+                    introPost.setVisibility(View.VISIBLE);
+                    break;
+
+            }
+        }
+    }
+
+    private void setVisibleGone(){
+        randomN = random.nextInt(11)+1;
+
+        introBuyl.setVisibility(View.GONE);
+        introSeagull.setVisibility(View.GONE);
+        introTree.setVisibility(View.GONE);
+        wave.setVisibility(View.GONE);
+        introMan.setVisibility(View.GONE);
+        introMom.setVisibility(View.GONE);
+        introSquid.setVisibility(View.GONE);
+        introBird.setVisibility(View.GONE);
+        introFather.setVisibility(View.GONE);
+        introFlower.setVisibility(View.GONE);
+        introPost.setVisibility(View.GONE);
+    }
+    private void animationClear(){
+        isBlink = false;
+        wave.clearAnimation();
+        introBird.clearAnimation();
+        introBuyl.clearAnimation();
+        introFather.clearAnimation();
+        introFlower.clearAnimation();
+        introMan.clearAnimation();
+        introMom.clearAnimation();
+        introSeagull.clearAnimation();
+        introSquid.clearAnimation();
+        introTree.clearAnimation();
+        introPost.clearAnimation();
+
+        introBuyl.setVisibility(View.GONE);
+        introSeagull.setVisibility(View.GONE);
+        introTree.setVisibility(View.GONE);
+        wave.setVisibility(View.GONE);
+        introMan.setVisibility(View.GONE);
+        introMom.setVisibility(View.GONE);
+        introSquid.setVisibility(View.GONE);
+        introBird.setVisibility(View.GONE);
+        introFather.setVisibility(View.GONE);
+        introFlower.setVisibility(View.GONE);
+        introPost.setVisibility(View.GONE);
     }
 }

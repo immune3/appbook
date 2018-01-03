@@ -39,10 +39,12 @@ public class Prologue extends BaseFragment {
     ArrayList<SubTitleData> subtitleList;
 
     MediaPlayer mp = null;
+    MediaPlayer musicPlayer = null;
 
     private int storyFlag = 0;
     private Handler fadeInHandler, fadeOutHandler;
     private Runnable fadeInRun, fadeOutRun;
+    private int[] syncArray;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class Prologue extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
+//        checkedAnimation = false;
 
     }
 
@@ -79,7 +82,7 @@ public class Prologue extends BaseFragment {
 
         fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
-        fadeIn.setStartOffset(3500);
+        fadeIn.setStartOffset(3000);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
@@ -95,6 +98,7 @@ public class Prologue extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
+        if(checkedAnimation) checkedAnimation = false;
         //델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
         //이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
         MyChangeListener mListener = new MyChangeListener(new CustomTouchListener.AsyncResponse() {
@@ -102,15 +106,29 @@ public class Prologue extends BaseFragment {
             public void onAction(MotionEvent motionEvent, int checkDistance) {
                 // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < subtitleList.size() && checkDistance == 1) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistance == 1) {
 
                     Log.d("storyFlag", "plus");
                     storyFlag++;
+                    if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
+                        musicPlayer.seekTo(syncArray[storyFlag]);
+                    else {
+                        checkedAnimation = true;
+                        vp = ((TaleActivity)getActivity()).vp;
+                        vp.setCurrentItem(vp.getCurrentItem() + 1, true);
+                    }
+
+//                    if(storyFlag == syncArray.length) checkedAnimation = true;
+//                    else checkedAnimation = false;
 
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag > 0 && checkDistance == -1) {
 
+                    checkedAnimation = false;
+
                     Log.d("storyFlag", "minus");
                     storyFlag--;
+                    if (musicPlayer != null && musicPlayer.isPlaying())
+                        musicPlayer.seekTo(syncArray[storyFlag]);
                 }
 
                 Log.d("StoryFlag", storyFlag + " " + checkDistance);
@@ -198,6 +216,9 @@ public class Prologue extends BaseFragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+                Log.d("syncArrayLength", syncArray.length + "");
+
+                checkedAnimation = false;
                 return super.onTouch(view, motionEvent);
             }
         };
@@ -214,11 +235,27 @@ public class Prologue extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        isHint = isVisibleToUser;
+        Log.d("isHint", isHint + "");
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(!isVisibleToUser){
-            CheckMP checkMP = new CheckMP(musicController);
-            checkMP.execute();
+        if (isAttached) {
+            if (isVisibleToUser) {
+                System.out.println("PlayByHint");
+                soundPlayFunc();
+
+//                vp.setOnTouchListener(null);
+//                vp.setOnTouchListener(new MyChangeListener());
+
+            } else {
+//                CheckMP checkMP = new CheckMP(musicController);
+//                checkMP.execute();
+                if (musicPlayer != null) {
+                    musicPlayer.release();
+                    musicPlayer = null;
+                    System.out.println("ReleaseMusic");
+                }
+            }
         }
 
     }
@@ -227,24 +264,37 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-        musicController = new MusicController(getActivity(), R.raw.prologue);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"", "24000"},
-                new String[]{"", "53000"}
-        );
+        syncArray = new int[]{0, 24000, 53000};
 
-        Log.d("subLength", subtitleList.size() + "");
-        musicController.excuteAsync();
-        mp = musicController.getMp();
-        checkedAnimation = true;
+        if(musicPlayer != null && musicPlayer.isPlaying()) {
+            musicPlayer.pause();
+            musicPlayer.release();
+            musicPlayer = null;
+        }
+
+        musicPlayer = new MediaPlayer();
+        musicPlayer = MediaPlayer.create(getContext(), R.raw.prologue);
+        musicPlayer.setLooping(false);
+        musicPlayer.start();
+
+//        musicController = new MusicController(getActivity(), R.raw.prologue);
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"", "24000"},
+//                new String[]{"", "53000"}
+//        );
+
+//        Log.d("subLength", subtitleList.size() + "");
+//        musicController.excuteAsync();
+//        mp = musicController.getMp();
+        checkedAnimation = false;
 
         prologueTextImage.setVisibility(View.INVISIBLE);
         prologueTextImage.setImageResource(R.drawable.prologue_text_01);
 
         storyFlag = 0;
         animationFlag = 1;
-        fadeIn.setStartOffset(3500);
+        fadeIn.setStartOffset(3000);
         prologueTextImage.startAnimation(fadeIn);
 
     }
@@ -262,6 +312,10 @@ public class Prologue extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (musicPlayer != null && musicPlayer.isPlaying()) {
+            musicPlayer.release();
+        }
+        musicPlayer = null;
     }
 
     private void destroyHandler() {
