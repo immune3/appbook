@@ -465,6 +465,7 @@ public class Introduction extends BaseFragment {
                 blink.setRepeatMode(Animation.REVERSE);
                 blink.setFillAfter(true);
                 blink.setAnimationListener(new MyBlinkListener());
+                wave.setVisibility(View.VISIBLE);
                 wave.startAnimation(blink);
                 random = new Random();
             }
