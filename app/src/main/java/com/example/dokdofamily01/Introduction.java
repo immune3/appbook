@@ -402,27 +402,7 @@ public class Introduction extends BaseFragment {
             }
         });
 
-        vp = ((TaleActivity) getActivity()).vp;
-        vp.setOnTouchListener(new CustomTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                customViewPager = vp;
-                checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
-                }
-
-                return super.onTouch(view, motionEvent);
-            }
-        });
 
     }
 
@@ -455,6 +435,28 @@ public class Introduction extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
+        
+        vp = ((TaleActivity) getActivity()).vp;
+        vp.setOnTouchListener(new CustomTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                customViewPager = vp;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
 
         introFather.post(new Runnable() {
             @Override
