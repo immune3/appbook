@@ -92,7 +92,7 @@ public class Introduction extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        checkedAnimation = true;
+
         musicPlayer = new MediaPlayer();
 
     }
@@ -384,7 +384,24 @@ public class Introduction extends BaseFragment {
             }
         });
 
-        vp = ((TaleActivity) getActivity()).vp;
+//        vp = ((TaleActivity) getActivity()).vp;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void soundPlayFunc() {
+        super.soundPlayFunc();
+
         vp.setOnTouchListener(new CustomTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -406,21 +423,6 @@ public class Introduction extends BaseFragment {
             }
         });
 
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        super.soundPlayFunc();
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();

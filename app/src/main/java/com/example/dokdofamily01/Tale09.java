@@ -363,20 +363,35 @@ public class Tale09 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_9);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"언제나 용감한 갈매기의 친구들이 ", "3000"},
-                new String[]{"와글와글~ 줄지어 몰려와 ", "5800"},
-                new String[]{"동도할머니와 서도할아버지를 잇는 갈매기다리를 뚝딱 만들어요. ", "12000"},
-                new String[]{"별이는 사뿐사뿐~ 갈매기다리를 건너, ", "16500"},
-                new String[]{"언제나 멋쟁이인 서도할아버지한테로 가요.", "20500"},
-                new String[]{"서도할아버지는 몇 살이에요?", "26000"},
-                new String[]{"아~주아~주 먼 옛날 일이라 나이가 가물가물하단다.", "32500"},
-                new String[]{"정말 한라산보다도 키가 커요? ", "37500"},
-                new String[]{"그럼~ 내가 더 멋있게 보이려고 바다 \n" +
-                        "속에서 까치발을 번쩍 들었거든. 껄껄~ ", "48000"},
-                new String[]{"까르르~ 별이의 웃음에 물골의 샘물도 퐁퐁퐁~ 따라 웃어요.", "57000"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"언제나 용감한 갈매기의 친구들이 ", "3000"},
+//                new String[]{"와글와글~ 줄지어 몰려와 ", "5800"},
+//                new String[]{"동도할머니와 서도할아버지를 잇는 갈매기다리를 뚝딱 만들어요. ", "12000"},
+//                new String[]{"별이는 사뿐사뿐~ 갈매기다리를 건너, ", "16500"},
+//                new String[]{"언제나 멋쟁이인 서도할아버지한테로 가요.", "20500"},
+//                new String[]{"서도할아버지는 몇 살이에요?", "26000"},
+//                new String[]{"아~주아~주 먼 옛날 일이라 나이가 가물가물하단다.", "32500"},
+//                new String[]{"정말 한라산보다도 키가 커요? ", "37500"},
+//                new String[]{"그럼~ 내가 더 멋있게 보이려고 바다 \n" +
+//                        "속에서 까치발을 번쩍 들었거든. 껄껄~ ", "48000"},
+//                new String[]{"까르르~ 별이의 웃음에 물골의 샘물도 퐁퐁퐁~ 따라 웃어요.", "57000"}
+//        );
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_09_01,3000},
+                new int[]{R.drawable.sub_09_02, 5800},
+                new int[]{R.drawable.sub_09_03, 12000},
+                new int[]{R.drawable.sub_09_04, 16500},
+                new int[]{R.drawable.sub_09_05, 20500},
+                new int[]{R.drawable.sub_09_06, 26000},
+                new int[]{R.drawable.sub_09_07, 32500},
+                new int[]{R.drawable.sub_09_08, 37500},
+                new int[]{R.drawable.sub_09_09, 48000},
+                new int[]{R.drawable.sub_09_10, 99999}
         );
+
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 

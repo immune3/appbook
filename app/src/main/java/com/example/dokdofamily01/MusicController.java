@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
@@ -31,11 +32,16 @@ public class MusicController {
     static ArrayList<SubTitleDataTest> subtitleList;
     private MyAsynTask createMP;
     private MyThread subtitleThread;
+    private CustomViewPager vp;
 
     public MusicController(Context context, int resID) {
         this.mContext = context;
         this.resID = resID;
 
+    }
+
+    public void setVP(CustomViewPager vp) {
+        this.vp = vp;
     }
 
     public MediaPlayer getMp() {
@@ -73,7 +79,7 @@ public class MusicController {
         createMP.execute();
     }
 
-    public void makeSubTitleList(int pageNum, int[]... params) {
+    public void makeSubTitleList(int[]... params) {
         subtitleList = new ArrayList<>();
         for (int[] s : params) {
             SubTitleDataTest subTitleData = new SubTitleDataTest(
@@ -82,7 +88,6 @@ public class MusicController {
             subtitleList.add(subTitleData);
         }
     }
-
 
 
     public ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
@@ -114,6 +119,41 @@ public class MusicController {
                     subtitleThread.setMP(mediaPlayer);
                     timer.schedule(subtitleThread, 0, 500);
                     Log.d("mpLength", mediaPlayer.getDuration() + "");
+                    if (vp != null) {
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            // 고쳐야 함 //
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                System.out.println("PageMove Auto");
+                                new AsyncTask<Void, Void, Void>() {
+                                    Boolean animFlag = false;
+
+                                    @Override
+                                    protected void onPostExecute(Void aVoid) {
+                                        super.onPostExecute(aVoid);
+                                        if (animFlag)
+                                            vp.setCurrentItem(vp.getCurrentItem() + 1);
+
+                                    }
+
+                                    @Override
+                                    protected Void doInBackground(Void... voids) {
+                                        Log.d("checkedAnimation", checkedAnimation + "/");
+                                        while (true) {
+                                            if(checkedAnimation){
+                                                animFlag = true;
+                                                break;
+                                            }else{
+                                                continue;
+                                            }
+                                        }
+                                        return null;
+                                    }
+                                }.execute();
+
+                            }
+                        });
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -196,18 +236,19 @@ public class MusicController {
         }
 
         public boolean increaseSubtitleMusic() {
-            try {
-                if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
-                    subtitleIndex++;
-                    mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
-                    return true;
-                } else {
-                    return false;
-                }
-            }catch (IllegalStateException e){
-                e.printStackTrace();
+//            try {
+            Log.d("subtitleIndex ", subtitleIndex + "");
+            if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                subtitleIndex++;
+                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                return true;
+            } else {
                 return false;
             }
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//                return false;
+//            }
         }
 
         public boolean decreaseSubtitleMusic() {
@@ -219,7 +260,7 @@ public class MusicController {
 //                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음
 //                        인덱스는 -1 씩 이동하되 재생은 그보다 -1 한 인덱스로 재생함으로써 조건을 충족하도록 수정
                         subtitleIndex -= 1;
-                        mp.seekTo(subtitleList.get(subtitleIndex-1).getFinishTime());
+                        mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                         return true;
                     } else if (subtitleIndex == 1) {
                         subtitleIndex = 0;
@@ -252,7 +293,7 @@ public class MusicController {
                 subtitleImageVIew.setImageDrawable(null);
 
 
-}
+        }
     };
 
 

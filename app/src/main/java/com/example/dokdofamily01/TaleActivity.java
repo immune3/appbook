@@ -45,7 +45,7 @@ public class TaleActivity extends AppCompatActivity{
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
-    static boolean checkedAnimation = true;
+    static boolean checkedAnimation = false;
 
     static public TextView subtitleTextView;
     static public ImageView subtitleImageVIew;
