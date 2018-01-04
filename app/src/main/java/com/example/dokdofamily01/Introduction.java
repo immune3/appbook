@@ -127,6 +127,8 @@ public class Introduction extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
+        subtitleImageVIew.setVisibility(View.GONE);
+
         mask.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
@@ -512,8 +514,19 @@ public class Introduction extends BaseFragment {
                 vp.setOnTouchListener(new MyChangeListener());
 
             } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
+
+                try {
+                    if (musicPlayer != null && musicPlayer.isPlaying()) {
+                        Log.d("뮤직플레이어 중지!", "off");
+                        musicPlayer.pause();
+                        musicPlayer.release();
+                        musicPlayer = null;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
@@ -561,9 +574,7 @@ public class Introduction extends BaseFragment {
             }
         });
 
-        introFather.post(new
-
-                                 Runnable() {
+        introFather.post(new Runnable() {
                                      @Override
                                      public void run() {
                                          blink = new AlphaAnimation(0, 1);
@@ -757,6 +768,7 @@ public class Introduction extends BaseFragment {
 
         try {
             if (musicPlayer != null && musicPlayer.isPlaying()) {
+                Log.d("뮤직플레이어 중지!", "off");
                 musicPlayer.pause();
                 musicPlayer.release();
                 musicPlayer = null;
