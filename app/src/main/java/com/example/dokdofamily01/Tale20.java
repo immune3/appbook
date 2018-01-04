@@ -186,7 +186,7 @@ public class Tale20 extends BaseFragment {
                 new int[]{R.drawable.sub_20_09, 99999}
         );
 
-
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 

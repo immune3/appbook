@@ -233,7 +233,7 @@ public class Tale01 extends BaseFragment {
                 new int[]{R.drawable.sub_01_05, 22500}
         );
 
-//        musicController.setVP(vp);
+        musicController.setVP(vp);
 
         musicController.excuteAsync();
         mp = musicController.getMp();
