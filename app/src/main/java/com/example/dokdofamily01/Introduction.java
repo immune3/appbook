@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -521,6 +522,19 @@ public class Introduction extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
+        try {
+            if (musicPlayer != null && musicPlayer.isPlaying()) {
+                musicPlayer.pause();
+                musicPlayer.release();
+                musicPlayer = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        subtitleImageVIew.setVisibility(View.GONE);
+
         vp.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
@@ -546,7 +560,6 @@ public class Introduction extends BaseFragment {
                 return super.onTouch(view, motionEvent);
             }
         });
-
 
         introFather.post(new
 
@@ -581,6 +594,7 @@ public class Introduction extends BaseFragment {
             vp.setCurrentItem(vp.getCurrentItem() + 1, true);
 
         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistance == -1) {
+
             vp.setCurrentItem(vp.getCurrentItem() - 1, true);
         }
 
@@ -745,8 +759,8 @@ public class Introduction extends BaseFragment {
             if (musicPlayer != null && musicPlayer.isPlaying()) {
                 musicPlayer.pause();
                 musicPlayer.release();
+                musicPlayer = null;
             }
-            musicPlayer = null;
 
         } catch (Exception e) {
             e.printStackTrace();

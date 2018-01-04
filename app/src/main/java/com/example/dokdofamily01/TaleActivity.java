@@ -61,6 +61,11 @@ public class TaleActivity extends AppCompatActivity{
     private int currentVpPos = -1;
     static public boolean screenFlag = true;
 
+    protected ImageView goFront;
+    protected ImageView goBack;
+    protected ImageView goHome;
+    protected ImageView showPage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +76,12 @@ public class TaleActivity extends AppCompatActivity{
         width = displayMetrics.widthPixels;
         menuContainer = (LinearLayout) findViewById(R.id.menuContainer);
 
-        ImageView goFront = (ImageView) findViewById(R.id.goFront);
-        ImageView goBack = (ImageView) findViewById(R.id.goBack);
-        ImageView goHome = (ImageView) findViewById(R.id.goHome);
-        ImageView showPage = (ImageView) findViewById(R.id.showPage);
+        goFront = (ImageView) findViewById(R.id.goFront);
+        goBack = (ImageView) findViewById(R.id.goBack);
+        goHome = (ImageView) findViewById(R.id.goHome);
+        showPage = (ImageView) findViewById(R.id.showPage);
+
+
         showMenu = (Button) findViewById(R.id.showMenu);
         menuBtn = (Button) findViewById(R.id.menuBtn);
         goPage = (Spinner) findViewById(R.id.goPage);

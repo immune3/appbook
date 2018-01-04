@@ -18,6 +18,7 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -288,6 +289,8 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
+        subtitleImageVIew.setVisibility(View.GONE);
+
         syncArray = new int[]{0, 24000, 53000};
 
         if (musicPlayer != null && musicPlayer.isPlaying()) {
@@ -300,6 +303,13 @@ public class Prologue extends BaseFragment {
         musicPlayer = MediaPlayer.create(getContext(), R.raw.prologue);
         musicPlayer.setLooping(false);
         musicPlayer.start();
+
+        musicPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if(checkAnim) vp.setCurrentItem(vp.getCurrentItem() + 1, true);
+            }
+        });
 
         checkedAnimation = true;
 

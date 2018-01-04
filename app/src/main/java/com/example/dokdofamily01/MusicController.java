@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataTest;
@@ -291,9 +292,9 @@ public class MusicController {
 //                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
                 subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
+                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
                 subtitleImageVIew.setImageDrawable(null);
-
 
         }
     };
