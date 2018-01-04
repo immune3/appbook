@@ -435,7 +435,7 @@ public class Introduction extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
-        
+
         vp = ((TaleActivity) getActivity()).vp;
         vp.setOnTouchListener(new CustomTouchListener() {
             @Override
