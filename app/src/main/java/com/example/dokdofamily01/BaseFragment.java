@@ -42,6 +42,7 @@ public class BaseFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(xml,container, false);
+        vp = ((TaleActivity) getActivity()).vp;
 
         sv = (CustomScrollView)layout.findViewById(R.id.sv);
         sl = (ScalableLayout)layout.findViewById(R.id.sl);
@@ -89,7 +90,6 @@ public class BaseFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         isAttached = true;
-        vp = ((TaleActivity) getActivity()).vp;
 
         Log.d("VP",vp+"");
     }
@@ -179,6 +179,7 @@ public class BaseFragment extends Fragment{
 
                 }
             };
+
         }
 
         @Override
@@ -203,6 +204,21 @@ public class BaseFragment extends Fragment{
             } else if(checkedAnimation) super.decreaseFunc();
         }
 
+//        @Override
+//        public void increaseFunc() {
+//            Log.d("Start","ASC");
+//            if(musicController!=null){
+//                Log.d("Start","ASC2");
+//                if(musicController.nextPart()){
+//                    Log.d("nextPart","if");
+//                }else{
+//                    Log.d("nextPart","else");
+//                    super.increaseFunc();
+//                }
+//            } else super.increaseFunc();
+//        }
+
+
         @Override
         public void increaseFunc() {
             Log.d("Start","ASC");
@@ -211,10 +227,12 @@ public class BaseFragment extends Fragment{
                 if(musicController.nextPart()){
                     Log.d("ASC", "next");
                 }else{
+                    Log.d("ASC", "nextPart");
                     super.increaseFunc();
                 }
-            } else if(checkedAnimation){
-                Log.d("ASC", "else");
+
+            } else {
+                Log.d("ASC", "elsePart");
                 super.increaseFunc();
             }
         }

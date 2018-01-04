@@ -157,22 +157,36 @@ public class Tale20 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_20);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이를 태운 언제나 용감한 갈매기가 ", "3000"},
-                new String[]{"달님이 꾸벅꾸벅 조는 \n" +
-                        "새벽하늘을 씩씩하게 날아요. ", "8500"},
-                new String[]{"갈매기야 나는 지금 보물섬 독도의 \n" +
-                        "보물들을 만나러 가는 거야!", "15000"},
-                new String[]{"별아 보물들을 찾은 거야?", "18000"},
-                new String[]{"응! 찾은 것 같아!", "21000"},
-                new String[]{"상상해보세요!", "24000"},
-                new String[]{"별이는 보물섬 독도에서 \n" +
-                        "어떤 보물들을 찾아냈을까요?", "29500"},
-                new String[]{"반짝반짝~ 보물섬 독도에서 펼쳐지는 \n" +
-                        "별이의 신나는 보물찾기가 ", "36500"},
-                new String[]{"지금부터 신나게 시작됩니다...!", "40500"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"별이를 태운 언제나 용감한 갈매기가 ", "3000"},
+//                new String[]{"달님이 꾸벅꾸벅 조는 \n" +
+//                        "새벽하늘을 씩씩하게 날아요. ", "8500"},
+//                new String[]{"갈매기야 나는 지금 보물섬 독도의 \n" +
+//                        "보물들을 만나러 가는 거야!", "15000"},
+//                new String[]{"별아 보물들을 찾은 거야?", "18000"},
+//                new String[]{"응! 찾은 것 같아!", "21000"},
+//                new String[]{"상상해보세요!", "24000"},
+//                new String[]{"별이는 보물섬 독도에서 \n" +
+//                        "어떤 보물들을 찾아냈을까요?", "29500"},
+//                new String[]{"반짝반짝~ 보물섬 독도에서 펼쳐지는 \n" +
+//                        "별이의 신나는 보물찾기가 ", "36500"},
+//                new String[]{"지금부터 신나게 시작됩니다...!", "40500"}
+//        );
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_20_01, 3000},
+                new int[]{R.drawable.sub_20_02, 8500},
+                new int[]{R.drawable.sub_20_03, 15000},
+                new int[]{R.drawable.sub_20_04, 18000},
+                new int[]{R.drawable.sub_20_05, 21000},
+                new int[]{R.drawable.sub_20_06, 24000},
+                new int[]{R.drawable.sub_20_07, 29500},
+                new int[]{R.drawable.sub_20_08, 36500},
+                new int[]{R.drawable.sub_20_09, 99999}
         );
+
+
         musicController.excuteAsync();
         mp = musicController.getMp();
 

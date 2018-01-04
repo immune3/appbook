@@ -100,7 +100,7 @@ public class Introduction extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        checkedAnimation = true;
+
         musicPlayer = new MediaPlayer();
 
     }
@@ -413,6 +413,7 @@ public class Introduction extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         isHint = isVisibleToUser;
         Log.d("isHint", isHint + "");
         super.setUserVisibleHint(isVisibleToUser);
@@ -457,6 +458,7 @@ public class Introduction extends BaseFragment {
                 return super.onTouch(view, motionEvent);
             }
         });
+
 
         introFather.post(new Runnable() {
             @Override

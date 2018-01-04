@@ -226,17 +226,30 @@ public class Tale08 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_8);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이랑 언제나 든든한 사철나무 아빠가 도란도란 얘기해요.", "6000"},
-                new String[]{"사철나무 아빠는 왜 자꾸 두리번두리번 해요?", "12000"},
-                new String[]{"나는 가족을 지키는 아빠니까 이렇게 잘 살펴봐야 한단다. ", "18500"},
-                new String[]{"뾰족한 절벽에서 살면 엉덩이가 안 아파요?", "24500"},
-                new String[]{"100년도 넘어서 이제 아무렇지도 않단다.", "29000"},
-                new String[]{"100년? 그럼 사철나무 할아버지예요?", "35000"},
-                new String[]{"하하하~ 우리 독도에는 아~주아~주 먼 옛날에 \n" +
-                        "태어나신 서도할아버지가 계신 걸~ ", "43500"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"별이랑 언제나 든든한 사철나무 아빠가 도란도란 얘기해요.", "6000"},
+//                new String[]{"사철나무 아빠는 왜 자꾸 두리번두리번 해요?", "12000"},
+//                new String[]{"나는 가족을 지키는 아빠니까 이렇게 잘 살펴봐야 한단다. ", "18500"},
+//                new String[]{"뾰족한 절벽에서 살면 엉덩이가 안 아파요?", "24500"},
+//                new String[]{"100년도 넘어서 이제 아무렇지도 않단다.", "29000"},
+//                new String[]{"100년? 그럼 사철나무 할아버지예요?", "35000"},
+//                new String[]{"하하하~ 우리 독도에는 아~주아~주 먼 옛날에 \n" +
+//                        "태어나신 서도할아버지가 계신 걸~ ", "43500"}
+//        );
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_08_01,6000},
+                new int[]{R.drawable.sub_08_02, 12000},
+                new int[]{R.drawable.sub_08_03, 18500},
+                new int[]{R.drawable.sub_08_04, 24500},
+                new int[]{R.drawable.sub_08_05, 29000},
+                new int[]{R.drawable.sub_08_06, 35000},
+                new int[]{R.drawable.sub_08_07, 99999}
         );
+
+        musicController.setVP(vp);
+
         musicController.excuteAsync();
         mp = musicController.getMp();
 

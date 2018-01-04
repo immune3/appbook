@@ -265,26 +265,44 @@ public class Tale16 extends BaseFragment {
     public void soundPlayFunc() {
 
         musicController = new MusicController(getActivity(), R.raw.scene_16);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"달님과 별님이 깨어나는 시간이 되면 오늘도...", "4000"},
-                new String[]{"빨간 우체통 엄마는 부스럭부스럭 \n" +
-                        "편지를 꺼내 상냥하게 읽어주지.  ", "10000"},
-                new String[]{"동도할머니는 옛날 옛날에~하며 \n" +
-                        "마음 따뜻한 이야기를 시작하고...  ", "16500"},
-                new String[]{"든든한 사철나무 아빠와 함께 \n" +
-                        "독도가족들의 꿈나라를 지킨단다. ", "25000"},
-                new String[]{"심심한 파도가 투정부리며 철썩철썩~", "29500"},
-                new String[]{"멋쟁이 서도할아버지한테 간지럼장난을 치는 동안", "33700"},
-                new String[]{"바다제비 친구들은 포근한 이불 속에서 \n" +
-                        "사이좋게 재잘재잘... 재잘.", "41000"},
-                new String[]{"활짝 웃는 땅채송화들이 불러주는 자장자장~ \n" +
-                        "자장가는 하품을 데려오고 ", "47500"},
-                new String[]{"부지런히 이불을 덮어주는 오징어 이모의 긴 다리들은 \n" +
-                        "꿈나라의 문을 열어준단다.", "55000"},
-                new String[]{"우리들은 오늘도 그렇게 \n" +
-                        "꿀잠 속으로 스르르 빠져들지.", "62000"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"달님과 별님이 깨어나는 시간이 되면 오늘도...", "4000"},
+//                new String[]{"빨간 우체통 엄마는 부스럭부스럭 \n" +
+//                        "편지를 꺼내 상냥하게 읽어주지.  ", "10000"},
+//                new String[]{"동도할머니는 옛날 옛날에~하며 \n" +
+//                        "마음 따뜻한 이야기를 시작하고...  ", "16500"},
+//                new String[]{"든든한 사철나무 아빠와 함께 \n" +
+//                        "독도가족들의 꿈나라를 지킨단다. ", "25000"},
+//                new String[]{"심심한 파도가 투정부리며 철썩철썩~", "29500"},
+//                new String[]{"멋쟁이 서도할아버지한테 간지럼장난을 치는 동안", "33700"},
+//                new String[]{"바다제비 친구들은 포근한 이불 속에서 \n" +
+//                        "사이좋게 재잘재잘... 재잘.", "41000"},
+//                new String[]{"활짝 웃는 땅채송화들이 불러주는 자장자장~ \n" +
+//                        "자장가는 하품을 데려오고 ", "47500"},
+//                new String[]{"부지런히 이불을 덮어주는 오징어 이모의 긴 다리들은 \n" +
+//                        "꿈나라의 문을 열어준단다.", "55000"},
+//                new String[]{"우리들은 오늘도 그렇게 \n" +
+//                        "꿀잠 속으로 스르르 빠져들지.", "62000"}
+//        );
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_16_01, 4000},
+                new int[]{R.drawable.sub_16_02, 10000},
+                new int[]{R.drawable.sub_16_03, 16500},
+                new int[]{R.drawable.sub_16_04, 19300},
+                new int[]{R.drawable.sub_16_05, 25000},
+                new int[]{R.drawable.sub_16_06, 29500},
+                new int[]{R.drawable.sub_16_07, 33700},
+                new int[]{R.drawable.sub_16_08, 41000},
+                new int[]{R.drawable.sub_16_09, 47500},
+                new int[]{R.drawable.sub_16_10, 55000},
+                new int[]{R.drawable.sub_16_11, 99999}
+
         );
+
+
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 

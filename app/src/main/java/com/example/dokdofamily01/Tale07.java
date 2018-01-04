@@ -220,18 +220,31 @@ public class Tale07 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_7);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"언제나 용감한 갈매기는 잠시 곰곰... 생각하더니", "5300"},
-                new String[]{"별이의 보물찾기를 위해 조금 특별하게 날아야겠다고 마음먹어요.", "11500"},
-                new String[]{"끼룩끼룩~ 갈매기 롤러코스터 출발!", "18000"},
-                new String[]{"올라갈 때는 바다색 날개를 펄럭이며 훨훨~ ", "24500"},
-                new String[]{"내려올 때는 갈고리 바람을 타고 쌩쌩~  ", "33700"},
-                new String[]{"사철나무 아빠 집까지는 단숨에 휘익~", "37500"},
-                new String[]{"이야~ 까르르~ ", "41500"},
-                new String[]{"구경하던 해님도 신나서 하늘 높이 폴짝~ 튀어요.", "47800"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"언제나 용감한 갈매기는 잠시 곰곰... 생각하더니", "5300"},
+//                new String[]{"별이의 보물찾기를 위해 조금 특별하게 날아야겠다고 마음먹어요.", "11500"},
+//                new String[]{"끼룩끼룩~ 갈매기 롤러코스터 출발!", "18000"},
+//                new String[]{"올라갈 때는 바다색 날개를 펄럭이며 훨훨~ ", "24500"},
+//                new String[]{"내려올 때는 갈고리 바람을 타고 쌩쌩~  ", "33700"},
+//                new String[]{"사철나무 아빠 집까지는 단숨에 휘익~", "37500"},
+//                new String[]{"이야~ 까르르~ ", "41500"},
+//                new String[]{"구경하던 해님도 신나서 하늘 높이 폴짝~ 튀어요.", "47800"}
+//
+//        );
 
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_07_01,5300},
+                new int[]{R.drawable.sub_07_02, 11500},
+                new int[]{R.drawable.sub_07_03, 18000},
+                new int[]{R.drawable.sub_07_04, 24500},
+                new int[]{R.drawable.sub_07_05, 33700},
+                new int[]{R.drawable.sub_07_06, 37500},
+                new int[]{R.drawable.sub_07_07, 41500},
+                new int[]{R.drawable.sub_07_08, 99999}
         );
+
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 

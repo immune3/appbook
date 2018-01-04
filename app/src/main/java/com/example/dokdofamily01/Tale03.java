@@ -181,16 +181,16 @@ public class Tale03 extends BaseFragment {
     public void soundPlayFunc() {
 
         musicController = new MusicController(getActivity(), R.raw.scene_3);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별이가 갈매기의 등에 수줍게 앉아요. ", "4000"},
-                new String[]{"갈매기는 푸르르 날아올라 별님들이 \n" +
-                        "하품하는 새벽하늘을 너울너울 날아요. ", "12500"},
-                new String[]{"별아 동도할머니~ 서도할아버지를 만나러 \n" +
-                        "보물섬 독도에 가는 거야~ ", "20000"},
-                new String[]{"정말? 이렇게 날아서?", "23500"},
-                new String[]{"그래~ 팔을 뻗어 말랑말랑 솜사탕 구름을 만져보렴~", "31000"}
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_03_01,4000},
+                new int[]{R.drawable.sub_03_02, 12500},
+                new int[]{R.drawable.sub_03_03, 20000},
+                new int[]{R.drawable.sub_03_04, 23500},
+                new int[]{R.drawable.sub_03_05, 31000}
         );
+
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 
