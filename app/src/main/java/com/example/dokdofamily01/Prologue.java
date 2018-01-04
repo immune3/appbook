@@ -100,6 +100,8 @@ public class Prologue extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
+        subtitleImageVIew.setVisibility(View.GONE);
+
 //        if(checkedAnimation) checkedAnimation = false;
 //        델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
 //        이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
@@ -268,6 +270,7 @@ public class Prologue extends BaseFragment {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                subtitleImageVIew.setVisibility(View.GONE);
 
 //                vp.setOnTouchListener(null);
 //                vp.setOnTouchListener(new MyChangeListener());
@@ -289,7 +292,7 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-        subtitleImageVIew.setVisibility(View.GONE);
+
 
         syncArray = new int[]{0, 24000, 53000};
 
@@ -310,6 +313,7 @@ public class Prologue extends BaseFragment {
                 if(checkAnim) vp.setCurrentItem(vp.getCurrentItem() + 1, true);
             }
         });
+
 
         checkedAnimation = true;
 
