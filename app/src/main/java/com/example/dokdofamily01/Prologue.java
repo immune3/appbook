@@ -270,6 +270,7 @@ public class Prologue extends BaseFragment {
             if (isVisibleToUser) {
                 System.out.println("PlayByHint");
                 soundPlayFunc();
+                subtitleImageVIew.setVisibility(View.GONE);
 
 //                vp.setOnTouchListener(null);
 //                vp.setOnTouchListener(new MyChangeListener());
@@ -291,7 +292,7 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-        subtitleImageVIew.setVisibility(View.GONE);
+
 
         syncArray = new int[]{0, 24000, 53000};
 
@@ -312,6 +313,7 @@ public class Prologue extends BaseFragment {
                 if(checkAnim) vp.setCurrentItem(vp.getCurrentItem() + 1, true);
             }
         });
+
 
         checkedAnimation = true;
 
