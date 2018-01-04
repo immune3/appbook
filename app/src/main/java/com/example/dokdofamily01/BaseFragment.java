@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
-import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 
@@ -42,6 +41,7 @@ public class BaseFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(xml,container, false);
+        vp = ((TaleActivity) getActivity()).vp;
 
         sv = (CustomScrollView)layout.findViewById(R.id.sv);
         sl = (ScalableLayout)layout.findViewById(R.id.sl);
@@ -89,7 +89,6 @@ public class BaseFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         isAttached = true;
-        vp = ((TaleActivity) getActivity()).vp;
 
         Log.d("VP",vp+"");
     }
@@ -120,6 +119,20 @@ public class BaseFragment extends Fragment{
     }
 
     class BlockObjListener extends CustomTouchListener{
+
+        public BlockObjListener(AsyncResponse asyncResponse) {
+            super.delegate = asyncResponse;
+        }
+
+        public BlockObjListener() {
+            super.delegate = new AsyncResponse() {
+                @Override
+                public void onAction(MotionEvent motionEvent, int checkDistance) {
+
+                }
+            };
+        }
+
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             customViewPager = vp;
@@ -137,7 +150,7 @@ public class BaseFragment extends Fragment{
                 }else{
                     super.decreaseFunc();
                 }
-            } else if(checkedAnimation) super.decreaseFunc();
+            }
         }
 
         @Override
@@ -151,7 +164,7 @@ public class BaseFragment extends Fragment{
                     Log.d("nextPart","else");
                     super.increaseFunc();
                 }
-            } else if(checkedAnimation) super.increaseFunc();
+            }
         }
 
         @Override
@@ -200,8 +213,23 @@ public class BaseFragment extends Fragment{
                     Log.d("DESC", "else");
                     super.decreaseFunc();
                 }
-            } else if(checkedAnimation) super.decreaseFunc();
+            }
         }
+
+//        @Override
+//        public void increaseFunc() {
+//            Log.d("Start","ASC");
+//            if(musicController!=null){
+//                Log.d("Start","ASC2");
+//                if(musicController.nextPart()){
+//                    Log.d("nextPart","if");
+//                }else{
+//                    Log.d("nextPart","else");
+//                    super.increaseFunc();
+//                }
+//            } else super.increaseFunc();
+//        }
+
 
         @Override
         public void increaseFunc() {
@@ -211,11 +239,10 @@ public class BaseFragment extends Fragment{
                 if(musicController.nextPart()){
                     Log.d("ASC", "next");
                 }else{
+                    Log.d("ASC", "nextPart");
                     super.increaseFunc();
                 }
-            } else if(checkedAnimation){
-                Log.d("ASC", "else");
-                super.increaseFunc();
+
             }
         }
     }

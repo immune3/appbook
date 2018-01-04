@@ -247,22 +247,39 @@ public class Tale10 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_10);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"보물들은 다 어디에 있을까?", "4000"},
-                new String[]{"풀죽은 별이가 쪼그리고 앉아요.", "7500"},
-                new String[]{"언제나 사이좋은 바다제비들이 조잘대기 시작해요.", "12500"},
-                new String[]{"별이가 아직 보물을 못 찾았대~ ", "15500"},
-                new String[]{"... 어떡해? ... \n" +
-                        "걱정 마. 금방 찾을 거야~ ", "18700"},
-                new String[]{"... 맞아! 하늘이랑 땅이랑 바다랑 다 이렇게 맑고 푸른 걸~ ", "23700"},
-                new String[]{"... 오래 날아 날개가 막 아파도 밥 먹고 코~ 자고 나면 \n" +
-                        "다시 힘이 펄펄 솟는 섬이잖아~ ", "32300"},
-                new String[]{"... 그럼 또 씩씩하게 날 수 있지! ", "35200"},
-                new String[]{"...우리들은 언제나 튼튼하지! ", "37700"},
-                new String[]{"... 별이가 빨리 보물을 찾았으면~ ", "40500"},
-                new String[]{"... 우리가 알려줄까?", "43000"}
+//        subtitleList = new ArrayList<>();
+//        subtitleList = musicController.makeSubTitleList(
+//                new String[]{"보물들은 다 어디에 있을까?", "4000"},
+//                new String[]{"풀죽은 별이가 쪼그리고 앉아요.", "7500"},
+//                new String[]{"언제나 사이좋은 바다제비들이 조잘대기 시작해요.", "12500"},
+//                new String[]{"별이가 아직 보물을 못 찾았대~ ", "15500"},
+//                new String[]{"... 어떡해? ... \n" +
+//                        "걱정 마. 금방 찾을 거야~ ", "18700"},
+//                new String[]{"... 맞아! 하늘이랑 땅이랑 바다랑 다 이렇게 맑고 푸른 걸~ ", "23700"},
+//                new String[]{"... 오래 날아 날개가 막 아파도 밥 먹고 코~ 자고 나면 \n" +
+//                        "다시 힘이 펄펄 솟는 섬이잖아~ ", "32300"},
+//                new String[]{"... 그럼 또 씩씩하게 날 수 있지! ", "35200"},
+//                new String[]{"...우리들은 언제나 튼튼하지! ", "37700"},
+//                new String[]{"... 별이가 빨리 보물을 찾았으면~ ", "40500"},
+//                new String[]{"... 우리가 알려줄까?", "43000"}
+//        );
+
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_10_01,4000},
+                new int[]{R.drawable.sub_10_02, 7500},
+                new int[]{R.drawable.sub_10_03, 12500},
+                new int[]{R.drawable.sub_10_04, 15500},
+                new int[]{R.drawable.sub_10_05, 18700},
+                new int[]{R.drawable.sub_10_06, 23700},
+                new int[]{R.drawable.sub_10_07, 32300},
+                new int[]{R.drawable.sub_10_08, 35200},
+                new int[]{R.drawable.sub_10_09, 37000},
+                new int[]{R.drawable.sub_10_10, 40500},
+                new int[]{R.drawable.sub_10_11, 99999}
         );
+
+
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 

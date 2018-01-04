@@ -5,23 +5,19 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 
 import java.util.ArrayList;
 
-import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
  * Created by heronation on 2017-11-06.
@@ -135,8 +131,7 @@ public class Tale01 extends BaseFragment {
             light.setVisibility(View.INVISIBLE);
             byul.setVisibility(View.INVISIBLE);
             hand.setVisibility(View.INVISIBLE);
-        }
-        else if (animationFlag == 5) {
+        } else if (animationFlag == 5) {
             fadeIn.setStartOffset(0);
             fadeOut.setStartOffset(0);
             soundID = sp.load(getContext(), R.raw.effect_01, 1);
@@ -212,8 +207,7 @@ public class Tale01 extends BaseFragment {
             } else if (animationFlag == 4) {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
-            }
-            else if (animationFlag == 5) {
+            } else if (animationFlag == 5) {
                 animationFlag = 6;
             } else if (animationFlag == 7) {
                 animationFlag = 8;
@@ -226,16 +220,19 @@ public class Tale01 extends BaseFragment {
     public void soundPlayFunc() {
 
         musicController = new MusicController(getActivity(), R.raw.scene_1);
-        subtitleList = new ArrayList<>();
-        subtitleList = musicController.makeSubTitleList(
-                new String[]{"별님들이 소곤거리는 아직은 까만밤이에요", "5000"},
-                new String[]{"콕콕... 콕콕콕...", "7500"},
-                new String[]{"누가 별이 방 창문을 가만가만 두드려요.", "12500"},
-                new String[]{"별이가 꼬물꼬물 일어나 창가로 가요.", "17000"},
-                new String[]{"가슴이 콩콩거려 커튼을 아주 빼꼼히 열었는데", "22500"}
+        musicController.makeSubTitleList(
+                new int[]{R.drawable.sub_01_01, 5000},
+                new int[]{R.drawable.sub_01_02, 7500},
+                new int[]{R.drawable.sub_01_03, 12500},
+                new int[]{R.drawable.sub_01_04, 17000},
+                new int[]{R.drawable.sub_01_05, 22500}
         );
+
+        musicController.setVP(vp);
+
         musicController.excuteAsync();
         mp = musicController.getMp();
+
         checkedAnimation = true;
         lampLight.clearAnimation();
         byul.clearAnimation();
@@ -270,6 +267,7 @@ public class Tale01 extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override

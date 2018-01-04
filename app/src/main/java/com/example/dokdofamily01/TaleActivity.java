@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -45,7 +44,8 @@ public class TaleActivity extends AppCompatActivity{
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
-    static boolean checkedAnimation = true;
+    static boolean checkedAnimation = false;
+//    static boolean checkEndOfPrologue = false;
 
     static public TextView subtitleTextView;
     static public ImageView subtitleImageVIew;

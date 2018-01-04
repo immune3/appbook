@@ -52,7 +52,7 @@ public class Tale02 extends BaseFragment {
     AlphaAnimation fadeOut;
     int width;
     int height;
-    int animationFlag=0;
+    int animationFlag = 0;
 
     MediaPlayer mp = null;
 
@@ -60,8 +60,6 @@ public class Tale02 extends BaseFragment {
 
     SoundPool sp;
     int soundID;
-
-    MusicController musicController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,12 +80,12 @@ public class Tale02 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
-        byulhead = (ImageView)layout.findViewById(R.id.byulhead);
-        seagullHand = (ImageView)layout.findViewById(R.id.seagullHand);
+        byulhead = (ImageView) layout.findViewById(R.id.byulhead);
+        seagullHand = (ImageView) layout.findViewById(R.id.seagullHand);
         seagullBody = (ImageView) layout.findViewById(R.id.seagullBody);
-        star = (ImageView)layout.findViewById(R.id.star);
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        soundID = sp.load(getContext(),R.raw.effect_02,1);
+        star = (ImageView) layout.findViewById(R.id.star);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        soundID = sp.load(getContext(), R.raw.effect_02, 1);
     }
 
     @Override
@@ -99,7 +97,7 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        blink = new AlphaAnimation(1,0.3f);
+        blink = new AlphaAnimation(1, 0.3f);
         blink.setDuration(500);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
@@ -114,10 +112,10 @@ public class Tale02 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(animationFlag==0) {
+        if (animationFlag == 0) {
             checkedAnimation = false;
             animationFlag = 2;
-            sp.play(soundID,1,1,0,0,1);
+            sp.play(soundID, 1, 1, 0, 0, 1);
             star.clearAnimation();
             byulhead.startAnimation(headDown);
             seagullHand.startAnimation(handAppear);
@@ -130,18 +128,18 @@ public class Tale02 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            switch (animationFlag){
+            switch (animationFlag) {
                 case 1:
-                    animationFlag=0;
+                    animationFlag = 0;
                     checkedAnimation = true;
                     star.startAnimation(blink);
                     break;
                 case 2:
-                    animationFlag=3;
+                    animationFlag = 3;
                     byulhead.startAnimation(headUp);
                     break;
                 case 3:
-                    animationFlag=0;
+                    animationFlag = 0;
                     checkedAnimation = true;
                     star.startAnimation(blink);
                     break;
@@ -158,7 +156,7 @@ public class Tale02 extends BaseFragment {
 
     }
 
-    public void soundPlayFunc(){
+    public void soundPlayFunc() {
         musicController = new MusicController(getActivity(), R.raw.scene_2);
 //        subtitleList = new ArrayList<>();
 //        subtitleList = musicController.makeSubTitleList(
@@ -173,7 +171,7 @@ public class Tale02 extends BaseFragment {
 //                new String[]{"별아 내 등에 앉아!", "31500"},
 //                new String[]{"진짜 꿈이야...", "35000"}
 //        );
-        musicController.makeSubTitleList(2,
+        musicController.makeSubTitleList(
                 new int[]{R.drawable.sub_02_01, 1600},
                 new int[]{R.drawable.sub_02_02, 8500},
                 new int[]{R.drawable.sub_02_03, 12500},
@@ -185,6 +183,7 @@ public class Tale02 extends BaseFragment {
                 new int[]{R.drawable.sub_02_09, 35000}
         );
 
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 
@@ -192,8 +191,8 @@ public class Tale02 extends BaseFragment {
             @Override
             public void run() {
 
-                width = (int)(seagullHand.getWidth()*0.85);
-                height = (int)(seagullHand.getHeight()*0.8);
+                width = (int) (seagullHand.getWidth() * 0.85);
+                height = (int) (seagullHand.getHeight() * 0.8);
 
                 seagullAlpha = new AlphaAnimation(0, 1);
                 seagullAlpha.setDuration(500);
@@ -210,7 +209,7 @@ public class Tale02 extends BaseFragment {
                 seagullAniSet.setFillAfter(true);
 
 
-                seagullClick = new RotateAnimation(10,-10,width,height);
+                seagullClick = new RotateAnimation(10, -10, width, height);
                 seagullClick.setDuration(500);
                 seagullClick.setRepeatCount(1);
                 seagullClick.setRepeatMode(Animation.REVERSE);
@@ -232,7 +231,7 @@ public class Tale02 extends BaseFragment {
                     }
                 });
 
-                handUp = new RotateAnimation(-10,10,width,height);
+                handUp = new RotateAnimation(-10, 10, width, height);
                 handUp.setDuration(500);
                 handUp.setInterpolator(new AccelerateDecelerateInterpolator());
                 handUp.setAnimationListener(new Animation.AnimationListener() {
@@ -252,31 +251,31 @@ public class Tale02 extends BaseFragment {
                     }
                 });
 
-                handDown = new RotateAnimation(10,-10,width,height);
+                handDown = new RotateAnimation(10, -10, width, height);
                 handDown.setDuration(500);
                 handDown.setInterpolator(new AccelerateDecelerateInterpolator());
-                handDown.setAnimationListener(new MyAnimationListener(){
+                handDown.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         seagullHand.setVisibility(View.INVISIBLE);
                     }
                 });
 
-                headUp = new TranslateAnimation(0,0,byulhead.getHeight(),0);
+                headUp = new TranslateAnimation(0, 0, byulhead.getHeight(), 0);
                 headUp.setDuration(3000);
                 headUp.setFillAfter(true);
                 headUp.setInterpolator(new AccelerateDecelerateInterpolator());
                 headUp.setAnimationListener(new MyAnimationListener());
 
-                headDown= new TranslateAnimation(0,0,0,byulhead.getHeight());
+                headDown = new TranslateAnimation(0, 0, 0, byulhead.getHeight());
                 headDown.setDuration(300);
                 headDown.setFillAfter(true);
                 headDown.setInterpolator(new AccelerateDecelerateInterpolator());
                 headDown.setAnimationListener(new MyAnimationListener());
 
-                fadeIn = new AlphaAnimation(0,1);
+                fadeIn = new AlphaAnimation(0, 1);
                 fadeIn.setDuration(500);
-                fadeOut = new AlphaAnimation(1,0);
+                fadeOut = new AlphaAnimation(1, 0);
                 fadeOut.setDuration(500);
 
                 handAppear = new AnimationSet(true);
@@ -289,7 +288,7 @@ public class Tale02 extends BaseFragment {
                 handDisappear.addAnimation(handDown);
                 handDisappear.addAnimation(fadeOut);
 
-                animationFlag=1;
+                animationFlag = 1;
                 seagullHand.setVisibility(View.INVISIBLE);
                 checkedAnimation = false;
                 star.clearAnimation();
@@ -302,22 +301,7 @@ public class Tale02 extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-        isHint = isVisibleToUser;
-
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-
-                vp.setOnTouchListener(null);
-                vp.setOnTouchListener(new MyChangeListener());
-
-            } else {
-                CheckMP checkMP = new CheckMP(musicController);
-                checkMP.execute();
-            }
-        }
+        super.setUserVisibleHint(isVisibleToUser);
 
     }
 
@@ -334,10 +318,5 @@ public class Tale02 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (musicController != null) {
-            CheckMP checkMP = new CheckMP(musicController);
-            checkMP.execute();
-        }
-
     }
 }

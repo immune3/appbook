@@ -26,34 +26,9 @@
                 android:text="FairyTale"
                 app:scale_width="650"
                 app:scale_height="250"
-                app:scale_left="650"
-                app:scale_textsize = "100"
-                app:scale_top="0"
-                />
-            <Button
-                android:id="@+id/introBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Introduce"
-                android:visibility="gone"
-                app:scale_width="650"
-                app:scale_height="250"
                 app:scale_textsize = "100"
                 app:scale_left="0"
-                app:scale_top="0"/>
-
-            <Button
-                android:visibility="gone"
-                android:id="@+id/prologueBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PROLOGUE"
-                app:scale_width="650"
-                app:scale_height="250"
-                app:scale_textsize = "100"
-                app:scale_left="1300"
-                app:scale_top="0"/>
-
+                app:scale_top="0" />
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

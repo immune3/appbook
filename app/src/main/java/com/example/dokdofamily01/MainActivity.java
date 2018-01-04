@@ -11,10 +11,8 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class MainActivity extends AppCompatActivity {
     Button taleBtn;
-    Button introBtn;
     static Context context;
     boolean splashFlag=true;
-    private Button prologueBtn;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
     @Override
@@ -23,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.sv = (CustomScrollView) findViewById(R.id.sv);
         this.sl = (ScalableLayout) findViewById(R.id.sl);
-        this.prologueBtn = (Button) findViewById(R.id.prologueBtn);
 
         if(splashFlag) {
             splashFlag=false;
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
         taleBtn = (Button)findViewById(R.id.taleBtn);
-        introBtn = (Button)findViewById(R.id.introBtn);
 
         taleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,22 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, TaleActivity.class);
                 startActivity(intent);
 //                finish();
-            }
-        });
-
-        introBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, IntroductionActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        prologueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, PrologueActivity.class);
-                startActivity(intent);
             }
         });
 

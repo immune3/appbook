@@ -45,6 +45,7 @@ public class Prologue extends BaseFragment {
     private Handler fadeInHandler, fadeOutHandler;
     private Runnable fadeInRun, fadeOutRun;
     private int[] syncArray;
+    private boolean checkAnim = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class Prologue extends BaseFragment {
 
         fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
-        fadeIn.setStartOffset(3000);
+        fadeIn.setStartOffset(1000);
         fadeIn.setFillAfter(true);
         fadeIn.setAnimationListener(new MyAnimationListener());
 
@@ -98,119 +99,143 @@ public class Prologue extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        if(checkedAnimation) checkedAnimation = false;
-        //델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
-        //이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
+//        if(checkedAnimation) checkedAnimation = false;
+//        델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
+//        이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
         MyChangeListener mListener = new MyChangeListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
                 // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistance == 1) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistance == 1 && checkAnim) {
 
                     Log.d("storyFlag", "plus");
                     storyFlag++;
+
+                    if(storyFlag == 0) storyFlag++;
+
                     if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
                     else {
-                        checkedAnimation = true;
-                        vp = ((TaleActivity)getActivity()).vp;
+                        vp = ((TaleActivity) getActivity()).vp;
                         vp.setCurrentItem(vp.getCurrentItem() + 1, true);
                     }
 
 //                    if(storyFlag == syncArray.length) checkedAnimation = true;
 //                    else checkedAnimation = false;
 
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag > 0 && checkDistance == -1) {
-
-                    checkedAnimation = false;
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistance == -1 && checkAnim) {
 
                     Log.d("storyFlag", "minus");
                     storyFlag--;
-                    if (musicPlayer != null && musicPlayer.isPlaying())
+                    if (storyFlag >= 0 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
                 }
 
                 Log.d("StoryFlag", storyFlag + " " + checkDistance);
 
-                //postDelayed로 인한 callBack 을 취소함
-                destroyHandler();
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && Math.abs(checkDistance) == 1 && checkAnim) {
 
-                switch (storyFlag) {
+                    //postDelayed로 인한 callBack 을 취소함
+                    destroyHandler();
 
-                    case 0:
+                    switch (storyFlag) {
 
-                        prologueTextImage.clearAnimation();
-                        animationFlag = 3;
-                        fadeOut.setStartOffset(0);
-                        prologueTextImage.startAnimation(fadeOut);
+                        case 0:
+                            checkAnim = false;
+                            prologueTextImage.clearAnimation();
+                            animationFlag = 3;
+                            fadeOut.setStartOffset(0);
+                            prologueTextImage.startAnimation(fadeOut);
 
-                        fadeInHandler = new Handler();
-                        fadeInRun = new Runnable() {
-                            @Override
-                            public void run() {
-                                animationFlag = 1;
-                                prologueTextImage.setVisibility(View.INVISIBLE);
-                                prologueTextImage.setImageResource(R.drawable.prologue_text_01);
-                                fadeIn.setStartOffset(2500);
-                                prologueTextImage.startAnimation(fadeIn);
-                            }
-                        };
+                            fadeInHandler = new Handler();
+                            fadeInRun = new Runnable() {
+                                @Override
+                                public void run() {
+                                    animationFlag = 1;
+                                    prologueTextImage.setVisibility(View.INVISIBLE);
+                                    prologueTextImage.setImageResource(R.drawable.prologue_text_01);
+                                    fadeIn.setStartOffset(2500);
+                                    prologueTextImage.startAnimation(fadeIn);
 
-                        fadeInHandler.postDelayed(fadeInRun, 1000);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            checkAnim = true;
+                                        }
+                                    }, 3500);
 
-                        break;
+                                }
+                            };
 
-                    case 1:
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
 
-                        prologueTextImage.clearAnimation();
-                        animationFlag = 3;
-                        fadeOut.setStartOffset(0);
-                        prologueTextImage.startAnimation(fadeOut);
+                            break;
 
-                        fadeInHandler = new Handler();
+                        case 1:
+                            checkAnim = false;
+                            prologueTextImage.clearAnimation();
+                            animationFlag = 3;
+                            fadeOut.setStartOffset(0);
+                            prologueTextImage.startAnimation(fadeOut);
 
-                        fadeInRun = new Runnable() {
-                            @Override
-                            public void run() {
-                                animationFlag = 2;
-                                prologueTextImage.setVisibility(View.INVISIBLE);
-                                prologueTextImage.setImageResource(R.drawable.prologue_text_02);
+                            fadeInHandler = new Handler();
 
-                                fadeIn.setStartOffset(0);
-                                prologueTextImage.startAnimation(fadeIn);
-                            }
-                        };
+                            fadeInRun = new Runnable() {
+                                @Override
+                                public void run() {
+                                    animationFlag = 2;
+                                    prologueTextImage.setVisibility(View.INVISIBLE);
+                                    prologueTextImage.setImageResource(R.drawable.prologue_text_02);
 
-                        fadeInHandler.postDelayed(fadeInRun, 1000);
+                                    fadeIn.setStartOffset(0);
+                                    prologueTextImage.startAnimation(fadeIn);
 
-                        break;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            checkAnim = true;
+                                        }
+                                    }, 1000);
+                                }
+                            };
 
-                    case 2:
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
 
-                        prologueTextImage.clearAnimation();
-                        animationFlag = 3;
-                        fadeOut.setStartOffset(0);
-                        prologueTextImage.startAnimation(fadeOut);
+                            break;
 
-                        fadeInHandler = new Handler();
+                        case 2:
+                            checkAnim = false;
+                            prologueTextImage.clearAnimation();
+                            animationFlag = 3;
+                            fadeOut.setStartOffset(0);
+                            prologueTextImage.startAnimation(fadeOut);
 
-                        fadeInRun = new Runnable() {
-                            @Override
-                            public void run() {
-                                fadeIn.setStartOffset(0);
-                                prologueTextImage.setVisibility(View.INVISIBLE);
-                                prologueTextImage.setImageResource(R.drawable.prologue_text_03);
-                                prologueTextImage.startAnimation(fadeIn);
-                            }
-                        };
+                            fadeInHandler = new Handler();
 
-                        fadeInHandler.postDelayed(fadeInRun, 1000);
+                            fadeInRun = new Runnable() {
+                                @Override
+                                public void run() {
+                                    fadeIn.setStartOffset(0);
+                                    prologueTextImage.setVisibility(View.INVISIBLE);
+                                    prologueTextImage.setImageResource(R.drawable.prologue_text_03);
+                                    prologueTextImage.startAnimation(fadeIn);
 
-                        break;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            checkAnim = true;
+                                        }
+                                    }, 1000);
+                                }
+                            };
 
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
+
+                            break;
+
+                    }
                 }
-
             }
         }) {
             @Override
@@ -218,7 +243,6 @@ public class Prologue extends BaseFragment {
 
                 Log.d("syncArrayLength", syncArray.length + "");
 
-                checkedAnimation = false;
                 return super.onTouch(view, motionEvent);
             }
         };
@@ -264,9 +288,10 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-        syncArray = new int[]{ 0, 24000, 53000 };
 
-        if(musicPlayer != null && musicPlayer.isPlaying()) {
+        syncArray = new int[]{0, 24000, 53000};
+
+        if (musicPlayer != null && musicPlayer.isPlaying()) {
             musicPlayer.pause();
             musicPlayer.release();
             musicPlayer = null;
@@ -277,25 +302,31 @@ public class Prologue extends BaseFragment {
         musicPlayer.setLooping(false);
         musicPlayer.start();
 
-//        musicController = new MusicController(getActivity(), R.raw.prologue);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"", "24000"},
-//                new String[]{"", "53000"}
-//        );
-
-//        Log.d("subLength", subtitleList.size() + "");
-//        musicController.excuteAsync();
-//        mp = musicController.getMp();
-        checkedAnimation = false;
+        checkedAnimation = true;
 
         prologueTextImage.setVisibility(View.INVISIBLE);
         prologueTextImage.setImageResource(R.drawable.prologue_text_01);
 
         storyFlag = 0;
         animationFlag = 1;
-        fadeIn.setStartOffset(3000);
-        prologueTextImage.startAnimation(fadeIn);
+        checkAnim = false;
+
+        prologueTextImage.setVisibility(View.INVISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                prologueTextImage.startAnimation(fadeIn);
+                prologueTextImage.setVisibility(View.VISIBLE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAnim = true;
+                    }
+                }, 2500);
+            }
+        }, 2000);
+
 
     }
 
