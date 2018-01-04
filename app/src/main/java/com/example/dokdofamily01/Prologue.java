@@ -288,7 +288,6 @@ public class Prologue extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-
         syncArray = new int[]{0, 24000, 53000};
 
         if (musicPlayer != null && musicPlayer.isPlaying()) {
@@ -326,7 +325,6 @@ public class Prologue extends BaseFragment {
                 }, 2500);
             }
         }, 2000);
-
 
     }
 
