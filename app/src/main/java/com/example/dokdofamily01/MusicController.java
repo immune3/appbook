@@ -17,7 +17,6 @@ import java.util.TimerTask;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
-import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
  * Created by hero on 2017-12-04.
@@ -84,7 +83,6 @@ public class MusicController {
             subtitleList.add(subTitleData);
         }
     }
-
 
 
     public ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
@@ -206,7 +204,7 @@ public class MusicController {
                 } else {
                     return false;
                 }
-            }catch (IllegalStateException e){
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return false;
             }
@@ -221,7 +219,7 @@ public class MusicController {
 //                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음
 //                        인덱스는 -1 씩 이동하되 재생은 그보다 -1 한 인덱스로 재생함으로써 조건을 충족하도록 수정
                         subtitleIndex -= 1;
-                        mp.seekTo(subtitleList.get(subtitleIndex-1).getFinishTime());
+                        mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                         return true;
                     } else if (subtitleIndex == 1) {
                         subtitleIndex = 0;
@@ -254,8 +252,7 @@ public class MusicController {
                 subtitleImageVIew.setImageDrawable(null);
 
 
-}
+        }
     };
-
 
 }

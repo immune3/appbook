@@ -137,7 +137,7 @@ public class BaseFragment extends Fragment{
                 }else{
                     super.decreaseFunc();
                 }
-            } else super.decreaseFunc();
+            } else if(checkedAnimation) super.decreaseFunc();
         }
 
         @Override
@@ -151,7 +151,7 @@ public class BaseFragment extends Fragment{
                     Log.d("nextPart","else");
                     super.increaseFunc();
                 }
-            } else super.increaseFunc();
+            } else if(checkedAnimation) super.increaseFunc();
         }
 
         @Override

@@ -383,28 +383,6 @@ public class Introduction extends BaseFragment {
             }
         });
 
-        vp = ((TaleActivity) getActivity()).vp;
-        vp.setOnTouchListener(new CustomTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                customViewPager = vp;
-                checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view, motionEvent);
-            }
-        });
-
     }
 
     @Override
@@ -436,6 +414,27 @@ public class Introduction extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
+        vp = ((TaleActivity) getActivity()).vp;
+        vp.setOnTouchListener(new CustomTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                customViewPager = vp;
+                checkedAnimation = true;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        if (musicPlayer.isPlaying()) {
+                            musicPlayer.pause();
+                            musicPlayer.release();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                return super.onTouch(view, motionEvent);
+            }
+        });
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
@@ -444,7 +443,7 @@ public class Introduction extends BaseFragment {
 //        );
 //        musicController.excuteAsync();
 //        mp = musicController.getMp();
-        checkedAnimation = true;
+//        checkedAnimation = true;
     }
 
 
