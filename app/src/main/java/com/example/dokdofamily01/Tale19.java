@@ -35,7 +35,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale19 extends BaseFragment {
 
-    private CustomViewPager vp;
     ImageView byul;
     ImageView starLight;
     ImageView star1;
