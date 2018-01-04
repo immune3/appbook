@@ -248,12 +248,13 @@ public class Tale11 extends BaseFragment {
 //
 
         musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_11_01,6000},
+                new int[]{R.drawable.sub_11_01, 6000},
                 new int[]{R.drawable.sub_11_02, 12500},
                 new int[]{R.drawable.sub_11_03, 19500},
-                new int[]{R.drawable.sub_11_04, 32700},
-                new int[]{R.drawable.sub_11_05, 37000},
-                new int[]{R.drawable.sub_11_06, 99999}
+                new int[]{R.drawable.sub_11_04, 27000},
+                new int[]{R.drawable.sub_11_05, 32700},
+                new int[]{R.drawable.sub_11_06, 37000},
+                new int[]{R.drawable.sub_11_07, 99999}
         );
         // 자막 오류 -> 32.7초에 [독도의 하늘과 땅과 바다에는 어떤 보물들이 숨어있어서]가 빠짐
 
