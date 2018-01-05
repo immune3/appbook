@@ -139,12 +139,11 @@ public class Prologue extends BaseFragment {
 
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP && Math.abs(checkDistance) == 1 && checkAnim) {
 
-                    //postDelayed로 인한 callBack 을 취소함
-                    destroyHandler();
-
                     switch (storyFlag) {
 
                         case 0:
+                            //postDelayed로 인한 callBack 을 취소함
+                            destroyHandler();
                             checkAnim = false;
                             prologueTextImage.clearAnimation();
                             animationFlag = 3;
@@ -167,7 +166,6 @@ public class Prologue extends BaseFragment {
                                             checkAnim = true;
                                         }
                                     }, 3500);
-
                                 }
                             };
 
@@ -176,6 +174,8 @@ public class Prologue extends BaseFragment {
                             break;
 
                         case 1:
+                            //postDelayed로 인한 callBack 을 취소함
+                            destroyHandler();
                             checkAnim = false;
                             prologueTextImage.clearAnimation();
                             animationFlag = 3;
@@ -208,6 +208,8 @@ public class Prologue extends BaseFragment {
                             break;
 
                         case 2:
+                            //postDelayed로 인한 callBack 을 취소함
+                            destroyHandler();
                             checkAnim = false;
                             prologueTextImage.clearAnimation();
                             animationFlag = 3;
@@ -261,6 +263,21 @@ public class Prologue extends BaseFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        try {
+            if(musicPlayer != null && musicPlayer.isPlaying()) {
+                musicPlayer.pause();
+                musicPlayer.release();
+                musicPlayer = null;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         isHint = isVisibleToUser;
         Log.d("isHint", isHint + "");
@@ -278,6 +295,7 @@ public class Prologue extends BaseFragment {
             } else {
 //                CheckMP checkMP = new CheckMP(musicController);
 //                checkMP.execute();
+                subtitleImageVIew.setVisibility(View.VISIBLE);
                 if (musicPlayer != null) {
                     musicPlayer.release();
                     musicPlayer = null;
@@ -291,8 +309,6 @@ public class Prologue extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
-
-
 
         syncArray = new int[]{0, 24000, 53000};
 

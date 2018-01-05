@@ -514,7 +514,7 @@ public class Introduction extends BaseFragment {
                 vp.setOnTouchListener(new MyChangeListener());
 
             } else {
-
+                subtitleImageVIew.setVisibility(View.VISIBLE);
                 try {
                     if (musicPlayer != null && musicPlayer.isPlaying()) {
                         Log.d("뮤직플레이어 중지!", "off");
@@ -768,7 +768,6 @@ public class Introduction extends BaseFragment {
 
         try {
             if (musicPlayer != null && musicPlayer.isPlaying()) {
-                Log.d("뮤직플레이어 중지!", "off");
                 musicPlayer.pause();
                 musicPlayer.release();
                 musicPlayer = null;

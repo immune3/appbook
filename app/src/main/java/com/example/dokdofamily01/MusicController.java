@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataTest;
@@ -142,10 +141,10 @@ public class MusicController {
                                     protected Void doInBackground(Void... voids) {
                                         Log.d("checkedAnimation", checkedAnimation + "/");
                                         while (true) {
-                                            if(checkedAnimation){
+                                            if (checkedAnimation) {
                                                 animFlag = true;
                                                 break;
-                                            }else{
+                                            } else {
                                                 continue;
                                             }
                                         }
@@ -239,19 +238,19 @@ public class MusicController {
 
         public boolean increaseSubtitleMusic() {
 
-//            try {
-            Log.d("subtitleIndex ", subtitleIndex + "");
-            if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
-                subtitleIndex++;
-                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
-                return true;
-            } else {
+            try {
+                Log.d("subtitleIndex ", subtitleIndex + "");
+                if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                    subtitleIndex++;
+                    mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
                 return false;
             }
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//                return false;
-//            }
         }
 
         public boolean decreaseSubtitleMusic() {
@@ -292,7 +291,7 @@ public class MusicController {
 //                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
                 subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
-                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
+//                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
                 subtitleImageVIew.setImageDrawable(null);
 
