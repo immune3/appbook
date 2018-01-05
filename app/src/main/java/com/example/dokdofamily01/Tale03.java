@@ -92,9 +92,6 @@ public class Tale03 extends BaseFragment {
         blinkStar = (ImageView)layout.findViewById(R.id.blinkStar);
         head = (ImageView)layout.findViewById(R.id.head);
         body = (ImageView)layout.findViewById(R.id.body);
-
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-
     }
 
     @Override
@@ -121,12 +118,7 @@ public class Tale03 extends BaseFragment {
 
         blinkStar.setOnTouchListener(new BlockObjListener());
 
-        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                sp.play(soundID, 1, 1, 1, 0, 1);
-            }
-        });
+
 
     }
 
@@ -202,6 +194,14 @@ public class Tale03 extends BaseFragment {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
                         wingSp.play(soundID, 1, 1, 1, 1, 1);
+                    }
+                });
+
+                sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        sp.play(soundID, 1, 1, 1, 0, 1);
                     }
                 });
 
@@ -306,7 +306,12 @@ public class Tale03 extends BaseFragment {
                 checkedAnimation = false;
                 animationFlag = 1;
 //                sp.play(soundID, 1, 1, 0, 0, 1);
-                soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
+                try {
+                    soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
                 cloud[0].startAnimation(cloudAnimation[0]);
                 cloud[1].startAnimation(cloudAnimation[1]);
                 cloud[2].startAnimation(cloudAnimation[1]);

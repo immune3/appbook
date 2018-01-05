@@ -28,8 +28,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale20 extends BaseFragment {
-    private CustomViewPager vp;
-
     ImageView man;
     ImageView dokdo_father;
     ImageView sqeed;
@@ -185,7 +183,7 @@ public class Tale20 extends BaseFragment {
                 new int[]{R.drawable.sub_20_08, 36500},
                 new int[]{R.drawable.sub_20_09, 99999}
         );
-
+        musicController.setVP(vp);
         musicController.excuteAsync();
         mp = musicController.getMp();
 
