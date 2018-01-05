@@ -238,10 +238,11 @@ public class Tale07 extends BaseFragment {
                 new int[]{R.drawable.sub_07_02, 11500},
                 new int[]{R.drawable.sub_07_03, 18000},
                 new int[]{R.drawable.sub_07_04, 24500},
-                new int[]{R.drawable.sub_07_05, 33700},
-                new int[]{R.drawable.sub_07_06, 37500},
-                new int[]{R.drawable.sub_07_07, 41500},
-                new int[]{R.drawable.sub_07_08, 99999}
+                new int[]{R.drawable.sub_07_05, 29000},
+                new int[]{R.drawable.sub_07_06, 33700},
+                new int[]{R.drawable.sub_07_07, 37500},
+                new int[]{R.drawable.sub_07_08, 41500},
+                new int[]{R.drawable.sub_07_09, 99999}
         );
 
         musicController.setVP(vp);

@@ -231,47 +231,47 @@ public class TaleActivity extends AppCompatActivity{
                 case 0:
                     return new Prologue();
                 case 1:
-                    return new Introduction();
-                case 2:
                     return new Tale01();
-                case 3:
+                case 2:
                     return new Tale02();
-                case 4:
+                case 3:
                     return new Tale03();
-                case 5:
+                case 4:
                     return new Tale04();
-                case 6:
+                case 5:
                     return new Tale05();
-                case 7:
+                case 6:
                     return new Tale06();
-                case 8:
+                case 7:
                     return new Tale07();
-                case 9:
+                case 8:
                     return new Tale08();
-                case 10:
+                case 9:
                     return new Tale09();
-                case 11:
+                case 10:
                     return new Tale10();
-                case 12:
+                case 11:
                     return new Tale11();
-                case 13:
+                case 12:
                     return new Tale12();
-                case 14:
+                case 13:
                     return new Tale13();
-                case 15:
+                case 14:
                     return new Tale14();
-                case 16:
+                case 15:
                     return new Tale15();
-                case 17:
+                case 16:
                     return new Tale16();
-                case 18:
+                case 17:
                     return new Tale17();
-                case 19:
+                case 18:
                     return new Tale18();
-                case 20:
+                case 19:
                     return new Tale19();
-                case 21:
+                case 20:
                     return new Tale20();
+                case 21:
+                    return new Introduction();
                 default:
                     return null;
             }
