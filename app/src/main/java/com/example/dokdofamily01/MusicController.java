@@ -142,9 +142,9 @@ public class MusicController {
                                     protected Void doInBackground(Void... voids) {
                                         //Log.d("checkedAnimation", checkedAnimation + "/");
                                         while (!checkedAnimation) {
-                                            // 0.5초마다 검사
+                                            // 1초마다 검사
                                             try {
-                                                Thread.sleep(500);
+                                                Thread.sleep(1000);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
