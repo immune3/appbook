@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -310,6 +311,12 @@ public class Tale03 extends BaseFragment {
                     soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
                 }
                 catch(Exception e) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
+                        }
+                    }, 500);
                     e.printStackTrace();
                 }
                 cloud[0].startAnimation(cloudAnimation[0]);

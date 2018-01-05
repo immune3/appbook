@@ -140,15 +140,17 @@ public class MusicController {
 
                                     @Override
                                     protected Void doInBackground(Void... voids) {
-                                        Log.d("checkedAnimation", checkedAnimation + "/");
-                                        while (true) {
-                                            if(checkedAnimation){
-                                                animFlag = true;
-                                                break;
-                                            }else{
-                                                continue;
+                                        //Log.d("checkedAnimation", checkedAnimation + "/");
+                                        while (!checkedAnimation) {
+                                            // 0.5초마다 검사
+                                            try {
+                                                Thread.sleep(500);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
                                             }
+
                                         }
+                                        animFlag = true;
                                         return null;
                                     }
                                 }.execute();
