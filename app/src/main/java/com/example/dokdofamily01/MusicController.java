@@ -240,7 +240,7 @@ public class MusicController {
 
             try {
                 Log.d("subtitleIndex ", subtitleIndex + "");
-                if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                if (mp!= null && subtitleIndex < subtitleList.size() && mp.isPlaying()) {
                     subtitleIndex++;
                     mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                     return true;
@@ -256,7 +256,7 @@ public class MusicController {
         public boolean decreaseSubtitleMusic() {
 
             try {
-                if (mp.isPlaying()) {
+                if (mp!=null && mp.isPlaying()) {
                     if (subtitleIndex > 1) {
 //                        원래 값 -= 2 일 경우 대사가 3파트일 때 subtitleIndex가 2 일 경우 0이 되버려서
 //                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음

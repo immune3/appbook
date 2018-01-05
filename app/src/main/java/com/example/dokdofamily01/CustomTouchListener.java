@@ -88,6 +88,7 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void increaseFunc(){
+
         if(checkedAnimation) {
             customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
             Log.d("increaseFunc", "if.........");

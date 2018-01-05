@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     boolean splashFlag=true;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
+    private android.widget.Button prologueBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, TaleActivity.class);
                 startActivity(intent);
 //                finish();
+            }
+        });
+
+        this.prologueBtn = (Button) findViewById(R.id.prologueBtn);
+        prologueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PrologueActivity.class);
+                startActivity(intent);
             }
         });
 

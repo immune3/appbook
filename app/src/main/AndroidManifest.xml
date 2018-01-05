@@ -28,6 +28,9 @@
         <activity android:name=".SplashActivity"
             android:screenOrientation="landscape"/>
 
+        <activity android:name=".PrologueActivity"
+            android:screenOrientation="landscape"/>
+
     </application>
 
 </manifest>

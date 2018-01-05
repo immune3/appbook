@@ -127,8 +127,6 @@ public class Introduction extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        subtitleImageVIew.setVisibility(View.GONE);
-
         mask.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
