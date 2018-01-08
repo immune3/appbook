@@ -514,7 +514,7 @@ public class Introduction extends BaseFragment {
                 vp.setOnTouchListener(new MyChangeListener());
 
             } else {
-
+                animationClear();
                 try {
                     if (musicPlayer != null && musicPlayer.isPlaying()) {
                         Log.d("뮤직플레이어 중지!", "off");
@@ -575,19 +575,21 @@ public class Introduction extends BaseFragment {
         });
 
         introFather.post(new Runnable() {
-                                     @Override
-                                     public void run() {
-                                         blink = new AlphaAnimation(0, 1);
-                                         blink.setDuration(500);
-                                         blink.setRepeatCount(5);
-                                         blink.setRepeatMode(Animation.REVERSE);
-                                         blink.setFillAfter(true);
-                                         blink.setAnimationListener(new MyBlinkListener());
-                                         wave.setVisibility(View.VISIBLE);
-                                         wave.startAnimation(blink);
-                                         random = new Random();
-                                     }
-                                 });
+             @Override
+             public void run() {
+                 animationClear();
+                 isBlink = true;
+                 blink = new AlphaAnimation(0, 1);
+                 blink.setDuration(500);
+                 blink.setRepeatCount(5);
+                 blink.setRepeatMode(Animation.REVERSE);
+                 blink.setFillAfter(true);
+                 blink.setAnimationListener(new MyBlinkListener());
+                 wave.setVisibility(View.VISIBLE);
+                 wave.startAnimation(blink);
+                 random = new Random();
+             }
+         });
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
