@@ -512,6 +512,7 @@ public class Introduction extends BaseFragment {
                 vp.setOnTouchListener(new MyChangeListener());
 
             } else {
+                animationClear();
                 subtitleImageVIew.setVisibility(View.VISIBLE);
                 try {
                     if (musicPlayer != null && musicPlayer.isPlaying()) {
@@ -573,19 +574,21 @@ public class Introduction extends BaseFragment {
         });
 
         introFather.post(new Runnable() {
-                                     @Override
-                                     public void run() {
-                                         blink = new AlphaAnimation(0, 1);
-                                         blink.setDuration(500);
-                                         blink.setRepeatCount(5);
-                                         blink.setRepeatMode(Animation.REVERSE);
-                                         blink.setFillAfter(true);
-                                         blink.setAnimationListener(new MyBlinkListener());
-                                         wave.setVisibility(View.VISIBLE);
-                                         wave.startAnimation(blink);
-                                         random = new Random();
-                                     }
-                                 });
+             @Override
+             public void run() {
+                 animationClear();
+                 isBlink = true;
+                 blink = new AlphaAnimation(0, 1);
+                 blink.setDuration(500);
+                 blink.setRepeatCount(5);
+                 blink.setRepeatMode(Animation.REVERSE);
+                 blink.setFillAfter(true);
+                 blink.setAnimationListener(new MyBlinkListener());
+                 wave.setVisibility(View.VISIBLE);
+                 wave.startAnimation(blink);
+                 random = new Random();
+             }
+         });
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
