@@ -15,31 +15,39 @@
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/main"
+            android:background="@drawable/main_background"
             app:scale_base_width="2560"
             app:scale_base_height="1600">
 
+
             <Button
+                android:background="@drawable/autoread_button"
                 android:id="@+id/taleBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FairyTale"
-                app:scale_width="650"
-                app:scale_height="250"
-                app:scale_textsize = "100"
-                app:scale_left="0"
-                app:scale_top="0" />
+                app:scale_width="640"
+                app:scale_height="180"
+                app:scale_left="1665"
+                app:scale_top="835" />
+            <Button
+                android:background="@drawable/menualread_button"
+                android:id="@+id/menualBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_width="640"
+                app:scale_height="180"
+                app:scale_left="1665"
+                app:scale_top="1050" />
 
             <Button
+                android:background="@drawable/prologue_button"
                 android:id="@+id/prologueBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PROLOGUE"
-                app:scale_width="650"
-                app:scale_height="250"
-                app:scale_textsize = "100"
-                app:scale_left="700"
-                app:scale_top="0" />
+                app:scale_width="640"
+                app:scale_height="180"
+                app:scale_left="1670"
+                app:scale_top="1265" />
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

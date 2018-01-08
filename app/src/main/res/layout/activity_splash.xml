@@ -21,11 +21,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_08_byul"
-                app:scale_width="362"
-                app:scale_height="442"
-                app:scale_left="1099"
-                app:scale_top="551"/>
+                android:src="@drawable/splash_background"
+                app:scale_width="2560"
+                app:scale_height="1600"
+                app:scale_left="0"
+                app:scale_top="0"/>
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
