@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 
 public class BaseActivity extends Activity {
 
-    protected Context context;
+    public static Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

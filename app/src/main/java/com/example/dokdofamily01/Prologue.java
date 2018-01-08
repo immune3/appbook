@@ -98,10 +98,10 @@ public class Prologue extends BaseFragment {
 //        이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
         MyChangeListener mListener = new MyChangeListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistance == 1 && checkAnim) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistanceX == 1 && checkAnim) {
 
                     Log.d("storyFlag", "plus");
                     storyFlag++;
@@ -118,7 +118,7 @@ public class Prologue extends BaseFragment {
 //                    if(storyFlag == syncArray.length) checkedAnimation = true;
 //                    else checkedAnimation = false;
 
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistance == -1 && checkAnim) {
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistanceX == -1 && checkAnim) {
 
                     Log.d("storyFlag", "minus");
                     storyFlag--;
@@ -126,9 +126,9 @@ public class Prologue extends BaseFragment {
                         musicPlayer.seekTo(syncArray[storyFlag]);
                 }
 
-                Log.d("StoryFlag", storyFlag + " " + checkDistance);
+                Log.d("StoryFlag", storyFlag + " " + checkDistanceX);
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && Math.abs(checkDistance) == 1 && checkAnim) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && Math.abs(checkDistanceX) == 1 && checkAnim) {
 
                     switch (storyFlag) {
 

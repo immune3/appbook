@@ -15,14 +15,19 @@ import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 public class CustomTouchListener implements View.OnTouchListener {
     private float x1 = 0;
     private float x2 = 0;
-    float deltaX = x2 - x1;
+    private float y1 = 0;
+    private float y2 = 0;
 
-    private int checkDistance = 0;
+    float delta = 0;
+
+    private int checkDistanceX = 0;
+    private int checkDistanceY = 0;
+    private float diff = 0;
 
     CustomViewPager customViewPager;
 
     public interface AsyncResponse {
-        void onAction(MotionEvent motionEvent, int checkDistance);
+        void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff);
     }
 
     public AsyncResponse delegate = null;
@@ -30,7 +35,7 @@ public class CustomTouchListener implements View.OnTouchListener {
     public CustomTouchListener(){
         delegate = new AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
             }
         };
@@ -44,39 +49,61 @@ public class CustomTouchListener implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch(motionEvent.getAction())
         {
+
             case MotionEvent.ACTION_DOWN:
                 x1 = motionEvent.getX();
+                y1 = motionEvent.getY();
                 break;
             case MotionEvent.ACTION_UP:
                 x2 = motionEvent.getX();
+                y2 = motionEvent.getY();
                 float deltaX = x2 - x1;
+                float deltaY = y2 - y1;
+                delta = Math.abs(deltaX) - Math.abs(deltaY);
                 if (Math.abs(deltaX) > MIN_DISTANCE)
                 {
                     if(x2>x1) {
-                        checkDistance = -1;
+                        checkDistanceX = -1;
                         decreaseFunc();
                     }
                     else if(x2<x1) {
-                        checkDistance = 1;
+                        checkDistanceX = 1;
                         increaseFunc();
                     }
-                }
-                else
+
+                } else
                 {
                     Log.i("position", "short");
-                    checkDistance = 0;
+                    checkDistanceX = 0;
+                    animationFunc();
+                }
+
+                if(Math.abs(deltaY) > MIN_DISTANCE) {
+                    if(y2<y1) {
+                        checkDistanceY = 1;
+                    }
+                    else if(y2>y1) {
+                        checkDistanceY = -1;
+                    }
+                } else {
+                    Log.i("position", "short");
+                    checkDistanceY = 0;
                     animationFunc();
                 }
                 break;
         }
 
-        delegate.onAction(motionEvent, checkDistance);
+        if(delta > 0) diff = 1;
+        else if(delta < 0) diff = -1;
+        else diff = 0;
+
+        delegate.onAction(motionEvent, checkDistanceX, checkDistanceY, diff);
 
         return true;
     }
 
     public int checkDistance() {
-        return checkDistance;
+        return checkDistanceX;
     }
 
     public void decreaseFunc(){

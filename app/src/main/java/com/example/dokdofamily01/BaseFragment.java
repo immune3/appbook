@@ -127,7 +127,7 @@ public class BaseFragment extends Fragment{
         public BlockObjListener() {
             super.delegate = new AsyncResponse() {
                 @Override
-                public void onAction(MotionEvent motionEvent, int checkDistance) {
+                public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
                 }
             };
@@ -188,7 +188,7 @@ public class BaseFragment extends Fragment{
         public MyChangeListener() {
             super.delegate = new AsyncResponse() {
                 @Override
-                public void onAction(MotionEvent motionEvent, int checkDistance) {
+                public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
                 }
             };
