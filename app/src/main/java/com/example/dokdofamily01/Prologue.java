@@ -144,6 +144,7 @@ public class Prologue extends BaseFragment {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     animationFlag = 1;
                                     checkAnim = false;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -186,6 +187,7 @@ public class Prologue extends BaseFragment {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     checkAnim = false;
                                     animationFlag = 2;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -215,6 +217,7 @@ public class Prologue extends BaseFragment {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     checkAnim = false;
                                     animationFlag = 3;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -307,6 +310,8 @@ public class Prologue extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         super.soundPlayFunc();
+
+        destroyHandler();
 
         syncArray = new int[]{0, 24000, 53000};
 

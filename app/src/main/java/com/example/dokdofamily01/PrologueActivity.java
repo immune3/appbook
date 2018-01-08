@@ -203,6 +203,7 @@ public class PrologueActivity extends BaseActivity {
     public void setUpEvents() {
         super.setUpEvents();
 
+        destroyHandler();
         offScroll();
 
         CustomTouchListener mListener = new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
@@ -227,8 +228,12 @@ public class PrologueActivity extends BaseActivity {
 
                     Log.d("storyFlag", "minus");
                     storyFlag--;
-                    if (storyFlag >= 0 && musicPlayer != null && musicPlayer.isPlaying())
+                    if (storyFlag >= 0 && storyFlag < 2 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
+                    else if(storyFlag == 2) {
+                        storyFlag = 1;
+                        musicPlayer.seekTo(syncArray[storyFlag]);
+                    }
                 }
 
                 Log.d("StoryFlag", storyFlag + " " + checkDistance);
@@ -249,6 +254,7 @@ public class PrologueActivity extends BaseActivity {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     animationFlag = 1;
                                     checkAnim = false;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -291,6 +297,7 @@ public class PrologueActivity extends BaseActivity {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     checkAnim = false;
                                     animationFlag = 2;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -320,6 +327,7 @@ public class PrologueActivity extends BaseActivity {
                             fadeInRun = new Runnable() {
                                 @Override
                                 public void run() {
+                                    destroyHandler();
                                     checkAnim = false;
                                     animationFlag = 3;
                                     prologueTextImage.setVisibility(View.INVISIBLE);
@@ -543,6 +551,7 @@ public class PrologueActivity extends BaseActivity {
 
                     fadeInHandler = new Handler();
                     fadeOutHandler = new Handler();
+
 
                     fadeInRun = new Runnable() {
                         @Override
