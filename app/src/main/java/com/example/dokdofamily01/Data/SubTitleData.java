@@ -11,6 +11,10 @@ public class SubTitleData {
         this.subtitle = s;
     }
 
+    public SubTitleData(String s) {
+        subtitle = s;
+    }
+
     public String getSubTitle() {
         return subtitle;
     }
