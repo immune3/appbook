@@ -30,6 +30,17 @@
                 app:scale_left="0"
                 app:scale_top="0" />
 
+            <Button
+                android:id="@+id/prologueBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PROLOGUE"
+                app:scale_width="650"
+                app:scale_height="250"
+                app:scale_textsize = "100"
+                app:scale_left="700"
+                app:scale_top="0" />
+
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
     </com.example.dokdofamily01.CustomScrollView>

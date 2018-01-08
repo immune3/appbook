@@ -162,6 +162,7 @@ public class TaleActivity extends AppCompatActivity{
         showPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                goPage.performClick();
             }
         });
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

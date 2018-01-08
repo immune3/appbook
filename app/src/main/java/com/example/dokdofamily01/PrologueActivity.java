@@ -4,11 +4,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -16,20 +15,24 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.example.dokdofamily01.Data.SubTitleData;
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
-import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
- * Created by mapl0 on 2017-12-28.
+ * Created by mapl0 on 2018-01-05.
  */
 
-public class Prologue extends BaseFragment {
+public class PrologueActivity extends BaseActivity {
 
     private android.widget.ImageView prologueTextImage;
+    private com.ssomai.android.scalablelayout.ScalableLayout sl;
+    private CustomScrollView sv;
+
+    int deviceHeight;
+    int deviceWidth;
 
     private AnimationSet animInSet, animOutSet, animTouchOutSet;
     private TranslateAnimation transIn;
@@ -49,35 +52,15 @@ public class Prologue extends BaseFragment {
     private int[] syncArray;
     private boolean checkAnim = false;
 
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.prologue);
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        xml = R.layout.prologue;
-        subtitleTextView.setText(null);
-
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void bindViews() {
-        super.bindViews();
-
-        this.prologueTextImage = (ImageView) layout.findViewById(R.id.prologueTextImage);
-
-    }
-
-    @Override
-    public void setValues() {
-        super.setValues();
-//        checkedAnimation = false;
-
+        bindViews();
+        setValues();
+        setAnimation();
+        setUpEvents();
 
     }
 
@@ -85,18 +68,144 @@ public class Prologue extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
 
-//        prologueTextImage.setTranslationY();
+        prologueTextImage.setImageResource(R.drawable.prologue_text_01);
+        prologueTextImage.setVisibility(View.INVISIBLE);
+
+        storyFlag = 0;
+        animationFlag = 1;
+        checkAnim = false;
+//
+//        fadeIn = new AlphaAnimation(0, 1);
+//        fadeIn.setDuration(1000);
+//        fadeIn.setStartOffset(1000);
+//        fadeIn.setFillAfter(true);
+//        fadeIn.setAnimationListener(new MyAnimationListener());
+
+        prologueTextImage.post(new Runnable() {
+            @Override
+            public void run() {
+
+                checkAnim = false;
+
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(500);
+                fadeIn.setStartOffset(0);
+                fadeIn.setFillAfter(true);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setStartOffset(2000);
+                fadeOut.setDuration(3000);
+                fadeOut.setFillAfter(true);
+                fadeOut.setAnimationListener(new MyAnimationListener());
+
+                fadeTouchOut = new AlphaAnimation(1, 0);
+                fadeTouchOut.setStartOffset(0);
+                fadeTouchOut.setDuration(1000);
+                fadeTouchOut.setFillAfter(true);
+                fadeTouchOut.setAnimationListener(new MyAnimationListener());
+
+                transIn = new TranslateAnimation(0, 0, prologueTextImage.getHeight(), 0);
+                transIn.setDuration(500);
+                transIn.setFillAfter(true);
+                transIn.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                transOut = new TranslateAnimation(0, 0, 0, -prologueTextImage.getHeight() / 5);
+                transOut.setDuration(5000);
+                transOut.setFillAfter(true);
+                transOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                transTouchOut = new TranslateAnimation(0, 0, 0, -prologueTextImage.getHeight() / 5);
+                transTouchOut.setDuration(1000);
+                transTouchOut.setFillAfter(true);
+                transTouchOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                animInSet = new AnimationSet(false);
+                animInSet.addAnimation(fadeIn);
+                animInSet.addAnimation(transIn);
+                animInSet.setFillAfter(true);
+
+                animOutSet = new AnimationSet(false);
+                animOutSet.addAnimation(fadeOut);
+                animOutSet.addAnimation(transOut);
+                animOutSet.setFillAfter(true);
+
+
+                animTouchOutSet = new AnimationSet(false);
+                animTouchOutSet.addAnimation(fadeTouchOut);
+                animTouchOutSet.addAnimation(transTouchOut);
+                animTouchOutSet.setFillAfter(true);
+
+                prologueTextImage.setAnimation(animInSet);
+                prologueTextImage.startAnimation(animInSet);
+
+                animRun = new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAnim = true;
+                    }
+                };
+
+                animHandler = new Handler();
+                animHandler.postDelayed(animRun, 600);
+
+            }
+        });
 
     }
 
     @Override
-    public void setupEvents() {
-        super.setupEvents();
+    public void setUpEvents() {
+        super.setUpEvents();
 
-//        if(checkedAnimation) checkedAnimation = false;
-//        델리케이트를 이용해서 CustomTouchListener 터치 이벤트를 가져옴
-//        이렇게 하지 않으면 터치가 발생한 직후 거리값을 가져올 수가 없음.
-        MyChangeListener mListener = new MyChangeListener(new CustomTouchListener.AsyncResponse() {
+        offScroll();
+
+        CustomTouchListener mListener = new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
                 // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
@@ -108,12 +217,8 @@ public class Prologue extends BaseFragment {
 
                     if (storyFlag == 0) storyFlag++;
 
-                    if (storyFlag < 3 && musicPlayer != null && musicPlayer.isPlaying())
+                    if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
-                    else if(storyFlag == 3){
-                        vp = ((TaleActivity) getActivity()).vp;
-                        vp.setCurrentItem(vp.getCurrentItem() + 1, true);
-                    }
 
 //                    if(storyFlag == syncArray.length) checkedAnimation = true;
 //                    else checkedAnimation = false;
@@ -254,232 +359,13 @@ public class Prologue extends BaseFragment {
         prologueTextImage.setOnTouchListener(mListener);
         sl.setOnTouchListener(mListener);
 
+        startMusic();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        try {
-            if (musicPlayer != null && musicPlayer.isPlaying()) {
-                musicPlayer.pause();
-                musicPlayer.release();
-                musicPlayer = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        isHint = isVisibleToUser;
-        Log.d("isHint", isHint + "");
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isAttached) {
-            if (isVisibleToUser) {
-                System.out.println("PlayByHint");
-                soundPlayFunc();
-
-
-//                vp.setOnTouchListener(null);
-//                vp.setOnTouchListener(new MyChangeListener());
-            } else {
-//                CheckMP checkMP = new CheckMP(musicController);
-//                checkMP.execute();
-                subtitleImageVIew.setVisibility(View.VISIBLE);
-                if (musicPlayer != null) {
-                    musicPlayer.release();
-                    musicPlayer = null;
-                    System.out.println("ReleaseMusic");
-                }
-            }
-        }
-
-    }
-
-    @Override
-    public void soundPlayFunc() {
-        super.soundPlayFunc();
-
+    public void setValues() {
+        super.setValues();
         syncArray = new int[]{0, 24000, 53000};
-
-        if (musicPlayer != null && musicPlayer.isPlaying()) {
-            musicPlayer.pause();
-            musicPlayer.release();
-            musicPlayer = null;
-        }
-        subtitleImageVIew.setVisibility(View.GONE);
-        musicPlayer = new MediaPlayer();
-        musicPlayer = MediaPlayer.create(getContext(), R.raw.prologue);
-        musicPlayer.setLooping(false);
-        musicPlayer.start();
-
-        musicPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-
-                vp.setCurrentItem(vp.getCurrentItem() + 1, true);
-            }
-        });
-
-
-        checkedAnimation = true;
-
-        prologueTextImage.setVisibility(View.INVISIBLE);
-        prologueTextImage.setImageResource(R.drawable.prologue_text_01);
-
-        storyFlag = 0;
-        animationFlag = 1;
-        checkAnim = false;
-//
-//        fadeIn = new AlphaAnimation(0, 1);
-//        fadeIn.setDuration(1000);
-//        fadeIn.setStartOffset(1000);
-//        fadeIn.setFillAfter(true);
-//        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        prologueTextImage.post(new Runnable() {
-            @Override
-            public void run() {
-
-                checkAnim = false;
-
-                fadeIn = new AlphaAnimation(0, 1);
-                fadeIn.setDuration(500);
-                fadeIn.setStartOffset(0);
-                fadeIn.setFillAfter(true);
-                fadeIn.setAnimationListener(new MyAnimationListener());
-
-                fadeOut = new AlphaAnimation(1, 0);
-                fadeOut.setStartOffset(2000);
-                fadeOut.setDuration(3000);
-                fadeOut.setFillAfter(true);
-                fadeOut.setAnimationListener(new MyAnimationListener());
-
-                fadeTouchOut = new AlphaAnimation(1, 0);
-                fadeTouchOut.setStartOffset(0);
-                fadeTouchOut.setDuration(1000);
-                fadeTouchOut.setFillAfter(true);
-                fadeTouchOut.setAnimationListener(new MyAnimationListener());
-
-                transIn = new TranslateAnimation(0, 0, prologueTextImage.getHeight(), 0);
-                transIn.setDuration(500);
-                transIn.setFillAfter(true);
-                transIn.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                transOut = new TranslateAnimation(0, 0, 0, -prologueTextImage.getHeight() / 5);
-                transOut.setDuration(5000);
-                transOut.setFillAfter(true);
-                transOut.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                transTouchOut = new TranslateAnimation(0, 0, 0, -prologueTextImage.getHeight() / 5);
-                transTouchOut.setDuration(1000);
-                transTouchOut.setFillAfter(true);
-                transTouchOut.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                animInSet = new AnimationSet(false);
-                animInSet.addAnimation(fadeIn);
-                animInSet.addAnimation(transIn);
-                animInSet.setFillAfter(true);
-
-                animOutSet = new AnimationSet(false);
-                animOutSet.addAnimation(fadeOut);
-                animOutSet.addAnimation(transOut);
-                animOutSet.setFillAfter(true);
-
-
-                animTouchOutSet = new AnimationSet(false);
-                animTouchOutSet.addAnimation(fadeTouchOut);
-                animTouchOutSet.addAnimation(transTouchOut);
-                animTouchOutSet.setFillAfter(true);
-
-                prologueTextImage.setAnimation(animInSet);
-                prologueTextImage.startAnimation(animInSet);
-
-                animRun = new Runnable() {
-                    @Override
-                    public void run() {
-                        checkAnim = true;
-                    }
-                };
-
-                animHandler = new Handler();
-                animHandler.postDelayed(animRun, 600);
-
-            }
-        });
-
-    }
-
-    @Override
-    public void blockAnimFunc() {
-        super.blockAnimFunc();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (musicPlayer != null && musicPlayer.isPlaying()) {
-            musicPlayer.release();
-        }
-        musicPlayer = null;
     }
 
     private void destroyHandler() {
@@ -499,6 +385,81 @@ public class Prologue extends BaseFragment {
             animHandler = null;
         }
 
+    }
+
+    @Override
+    public void bindViews() {
+        super.bindViews();
+
+        this.prologueTextImage = (ImageView) findViewById(R.id.prologueTextImage);
+        this.sl = (ScalableLayout) findViewById(R.id.sl);
+        this.sv = (CustomScrollView) findViewById(R.id.sv);
+    }
+
+    public void stopMusic() {
+
+        try {
+            if (musicPlayer != null && musicPlayer.isPlaying()) {
+                musicPlayer.pause();
+                musicPlayer.release();
+                musicPlayer = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void startMusic() {
+        musicPlayer = new MediaPlayer();
+        musicPlayer = MediaPlayer.create(context, R.raw.prologue);
+        musicPlayer.setLooping(false);
+        musicPlayer.start();
+    }
+
+    public void offScroll() {
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                deviceHeight = displayMetrics.heightPixels;
+                deviceWidth = displayMetrics.widthPixels;
+
+                int innerWidth = sl.getWidth();
+                int innerHeight = sl.getHeight();
+                Log.e("length", "" + innerHeight);
+                Log.e("length", "" + deviceHeight);
+                sv.scrollTo(0, (innerHeight - deviceHeight) / 2);
+
+            }
+        });
+        sv.setScrolling(false);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        stopMusic();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopMusic();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        checkedAnimation = false;
     }
 
     private class MyAnimationListener implements Animation.AnimationListener {
@@ -583,7 +544,6 @@ public class Prologue extends BaseFragment {
                     fadeInHandler = new Handler();
                     fadeOutHandler = new Handler();
 
-
                     fadeInRun = new Runnable() {
                         @Override
                         public void run() {
@@ -621,5 +581,4 @@ public class Prologue extends BaseFragment {
 
         }
     }
-
 }

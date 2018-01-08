@@ -14,7 +14,6 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 
 /**
  * Created by heronation on 2017-11-17.
@@ -264,7 +263,6 @@ public class BaseFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         if (musicController != null) {
-            subtitleImageVIew.setVisibility(View.GONE);
             CheckMP checkMP = new CheckMP(musicController);
             checkMP.execute();
         }

@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataTest;
@@ -140,15 +139,19 @@ public class MusicController {
 
                                     @Override
                                     protected Void doInBackground(Void... voids) {
-                                        Log.d("checkedAnimation", checkedAnimation + "/");
-                                        while (true) {
-                                            if(checkedAnimation){
-                                                animFlag = true;
-                                                break;
-                                            }else{
-                                                continue;
+
+                                        //Log.d("checkedAnimation", checkedAnimation + "/");
+                                        while (!checkedAnimation) {
+                                            // 1초마다 검사
+                                            try {
+                                                Thread.sleep(1000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+
                                             }
+
                                         }
+                                        animFlag = true;
                                         return null;
                                     }
                                 }.execute();
@@ -239,25 +242,25 @@ public class MusicController {
 
         public boolean increaseSubtitleMusic() {
 
-//            try {
-            Log.d("subtitleIndex ", subtitleIndex + "");
-            if (subtitleIndex < subtitleList.size() && mp.isPlaying()) {
-                subtitleIndex++;
-                mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
-                return true;
-            } else {
+            try {
+                Log.d("subtitleIndex ", subtitleIndex + "");
+                if (mp!= null && subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                    subtitleIndex++;
+                    mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
                 return false;
             }
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//                return false;
-//            }
         }
 
         public boolean decreaseSubtitleMusic() {
 
             try {
-                if (mp.isPlaying()) {
+                if (mp!=null && mp.isPlaying()) {
                     if (subtitleIndex > 1) {
 //                        원래 값 -= 2 일 경우 대사가 3파트일 때 subtitleIndex가 2 일 경우 0이 되버려서
 //                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음
@@ -292,7 +295,7 @@ public class MusicController {
 //                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
                 subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
-                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
+//                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
                 subtitleImageVIew.setImageDrawable(null);
 

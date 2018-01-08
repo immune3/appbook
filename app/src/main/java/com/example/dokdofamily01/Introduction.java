@@ -127,8 +127,6 @@ public class Introduction extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
 
-        subtitleImageVIew.setVisibility(View.GONE);
-
         mask.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistance) {
@@ -515,6 +513,7 @@ public class Introduction extends BaseFragment {
 
             } else {
                 animationClear();
+                subtitleImageVIew.setVisibility(View.VISIBLE);
                 try {
                     if (musicPlayer != null && musicPlayer.isPlaying()) {
                         Log.d("뮤직플레이어 중지!", "off");
@@ -770,7 +769,6 @@ public class Introduction extends BaseFragment {
 
         try {
             if (musicPlayer != null && musicPlayer.isPlaying()) {
-                Log.d("뮤직플레이어 중지!", "off");
                 musicPlayer.pause();
                 musicPlayer.release();
                 musicPlayer = null;
