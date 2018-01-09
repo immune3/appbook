@@ -39,11 +39,7 @@ public class Tale01 extends BaseFragment {
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
 
-    ArrayList<SubTitleData> subtitleList;
-
-
     MediaPlayer mp = null;
-
 
     SoundPool sp;
     int soundID;
@@ -219,31 +215,31 @@ public class Tale01 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_1);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_01_01, 5000},
+                    new int[]{R.drawable.sub_01_02, 7500},
+                    new int[]{R.drawable.sub_01_03, 12500},
+                    new int[]{R.drawable.sub_01_04, 17000},
+                    new int[]{R.drawable.sub_01_05, 22500}
+            );
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else {
+            //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_01_01,
+                    R.drawable.sub_01_02,
+                    R.drawable.sub_01_03,
+                    R.drawable.sub_01_04,
+                    R.drawable.sub_01_05);
 
-//        musicController = new MusicController(getActivity(), R.raw.scene_1);
-//        musicController.makeSubTitleList(
-//                new int[]{R.drawable.sub_01_01, 5000},
-//                new int[]{R.drawable.sub_01_02, 7500},
-//                new int[]{R.drawable.sub_01_03, 12500},
-//                new int[]{R.drawable.sub_01_04, 17000},
-//                new int[]{R.drawable.sub_01_05, 22500}
-//        );
-//
-//        musicController.setVP(vp);
-//
-//        musicController.excuteAsync();
-//        mp = musicController.getMp();
-
-        //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
-        subtitleController = new SubtitleController(vp,
-                R.drawable.sub_01_01,
-                R.drawable.sub_01_02,
-                R.drawable.sub_01_03,
-                R.drawable.sub_01_04,
-                R.drawable.sub_01_05);
-
-        Log.d("asdfa", TaleActivity.subtitleImageVIew.getId() + "");
-        Log.d("asdee", R.drawable.sub_01_01 + "");
+            Log.d("asdfa", TaleActivity.subtitleImageVIew.getId() + "");
+            Log.d("asdee", R.drawable.sub_01_01 + "");
+        }
 
         checkedAnimation = true;
         lampLight.clearAnimation();

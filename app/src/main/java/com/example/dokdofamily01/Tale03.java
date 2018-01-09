@@ -49,9 +49,6 @@ public class Tale03 extends BaseFragment {
 
     MediaPlayer mp = null;
 
-
-    ArrayList<SubTitleData> subtitleList;
-
     SoundPool sp;
     SoundPool wingSp;
     int soundID;
@@ -173,19 +170,27 @@ public class Tale03 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-        musicController = new MusicController(getActivity(), R.raw.scene_3);
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_03_01,4000},
-                new int[]{R.drawable.sub_03_02, 12500},
-                new int[]{R.drawable.sub_03_03, 20000},
-                new int[]{R.drawable.sub_03_04, 23500},
-                new int[]{R.drawable.sub_03_05, 31000}
-        );
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_3);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_03_01, 4000},
+                    new int[]{R.drawable.sub_03_02, 12500},
+                    new int[]{R.drawable.sub_03_03, 20000},
+                    new int[]{R.drawable.sub_03_04, 23500},
+                    new int[]{R.drawable.sub_03_05, 31000}
+            );
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else{
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_03_01,
+                    R.drawable.sub_03_02,
+                    R.drawable.sub_03_03,
+                    R.drawable.sub_03_04,
+                    R.drawable.sub_03_05);
+        }
 
         byulHand.post(new Runnable() {
             @Override

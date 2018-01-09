@@ -68,10 +68,6 @@ public class Tale11 extends BaseFragment {
     private SoundPool beeSoundPool;
     private int beeSound;
 
-
-    ArrayList<SubTitleData> subtitleList;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,32 +231,32 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_11);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"언제나 활짝 웃는 땅채송화들이 랄랄라~ 합창해요.", "6000"},
-//                new String[]{"큰 바다 한가운데 용감하게 혼자인데 무섭지 않아요.", "12500"},
-//                new String[]{"큰 바다 넓은 곳에 덩그러니 혼자인데 심심하지 않아요.", "19500"},
-//                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.", "27000"},
-//                new String[]{"큰 바다 깊은 곳에 수백만 년 혼자인데 쓸쓸하지 않아요.", "32700"},
-//                new String[]{"우리들은 언제나 활짝 웃고 있는 걸까요?", "37000"},
-//                new String[]{"별이가 반짝이는 눈으로 독도의 푸른 풍경을 초롱초롱 바라봐요.", "44500"});
-//
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_11_01, 6000},
-                new int[]{R.drawable.sub_11_02, 12500},
-                new int[]{R.drawable.sub_11_03, 19500},
-                new int[]{R.drawable.sub_11_04, 27000},
-                new int[]{R.drawable.sub_11_05, 32700},
-                new int[]{R.drawable.sub_11_06, 37000},
-                new int[]{R.drawable.sub_11_07, 99999}
-        );
-        // 자막 오류 -> 32.7초에 [독도의 하늘과 땅과 바다에는 어떤 보물들이 숨어있어서]가 빠짐
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_11);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_11_01, 6000},
+                    new int[]{R.drawable.sub_11_02, 12500},
+                    new int[]{R.drawable.sub_11_03, 19500},
+                    new int[]{R.drawable.sub_11_04, 27000},
+                    new int[]{R.drawable.sub_11_05, 32700},
+                    new int[]{R.drawable.sub_11_06, 37000},
+                    new int[]{R.drawable.sub_11_07, 99999}
+            );
+            // 자막 오류 -> 32.7초에 [독도의 하늘과 땅과 바다에는 어떤 보물들이 숨어있어서]가 빠짐
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else{
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_11_01,
+                    R.drawable.sub_11_02,
+                    R.drawable.sub_11_03,
+                    R.drawable.sub_11_04,
+                    R.drawable.sub_11_05,
+                    R.drawable.sub_11_06,
+                    R.drawable.sub_11_07);
+        }
 
         originalFlower.post(new Runnable() {
             @Override

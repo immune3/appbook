@@ -177,29 +177,31 @@ public class Tale05 extends BaseFragment {
 
 
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_5);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"덜컹덜컹 쿵쿵쿵~ ", "2500"},
-//                new String[]{"언제나 상냥한 빨간 우체통 엄마가 호들갑스럽게 달려와 별이를 덥석 끌어안아요.", "11000"},
-//                new String[]{"어서 오렴~ 나는 편지를 아주 재미나게 읽어주는 빨간 우체통 엄마란다.", "17500"},
-//                new String[]{"별이의 편지도 내가 읽어주었지~ 호호호~ ", "21700"},
-//                new String[]{"독도를 생각하는 별이의 마음이 어찌나 예쁘던지... 쪽~ 쪽~ 쪼오옥~ ", "30000"},
-//                new String[]{"아줌마 너무 간지러워요. 까르르~", "40000"}
-//        );
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_5);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_05_01, 2500},
+                    new int[]{R.drawable.sub_05_02, 11000},
+                    new int[]{R.drawable.sub_05_03, 17500},
+                    new int[]{R.drawable.sub_05_04, 21700},
+                    new int[]{R.drawable.sub_05_05, 30000},
+                    new int[]{R.drawable.sub_05_06, 99999}
+            );
 
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_05_01,2500},
-                new int[]{R.drawable.sub_05_02, 11000},
-                new int[]{R.drawable.sub_05_03, 17500},
-                new int[]{R.drawable.sub_05_04, 21700},
-                new int[]{R.drawable.sub_05_05, 30000},
-                new int[]{R.drawable.sub_05_06, 99999}
-        );
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_05_01,
+                    R.drawable.sub_05_02,
+                    R.drawable.sub_05_03,
+                    R.drawable.sub_05_04,
+                    R.drawable.sub_05_05,
+                    R.drawable.sub_05_06);
+        }
 
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
         checkedAnimation = true;
 
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);

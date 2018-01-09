@@ -62,12 +62,8 @@ public class Tale12 extends BaseFragment {
     AnimationSet sqeedLeftHandAniSet;
     AnimationSet sqeedRightHandAniSet;
     int animationFlag = 0;
-    int clickedFlag = 0;
 
     MediaPlayer mp = null;
-
-
-    ArrayList<SubTitleData> subtitleList;
 
     private SoundPool whackSoundPool, handSoundPool;
     private int whackSound, handSound;
@@ -179,30 +175,29 @@ public class Tale12 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_12);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"찰랑찰랑~ ", "1500"},
-//                new String[]{"언제나 부지런한 오징어 이모의 세모난 머리가 바다 위로 쑤욱~ 올라와요.", "8000"},
-//                new String[]{"별아 나랑 혹돔굴에 가보자!", "12000"},
-//                new String[]{"우와~ 혹돔 삼촌도 만나요?", "16500"},
-//                new String[]{"오징어 이모는 쭉쭉 긴 다리로 별이의 팔과 다리를 잡고서 ", "23700"},
-//                new String[]{"하나 둘~ 하나 둘~ 준비운동을 시켜요. ", "28600"}
-//        );
-
-        musicController.setVP(vp);
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_12_01,1500},
-                new int[]{R.drawable.sub_12_02, 8000},
-                new int[]{R.drawable.sub_12_03, 12000},
-                new int[]{R.drawable.sub_12_04, 16500},
-                new int[]{R.drawable.sub_12_05, 23700},
-                new int[]{R.drawable.sub_12_06, 99999}
-        );
-
-
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_12);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_12_01, 1500},
+                    new int[]{R.drawable.sub_12_02, 8000},
+                    new int[]{R.drawable.sub_12_03, 12000},
+                    new int[]{R.drawable.sub_12_04, 16500},
+                    new int[]{R.drawable.sub_12_05, 23700},
+                    new int[]{R.drawable.sub_12_06, 99999}
+            );
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else{
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_12_01,
+                    R.drawable.sub_12_02,
+                    R.drawable.sub_12_03,
+                    R.drawable.sub_12_04,
+                    R.drawable.sub_12_05,
+                    R.drawable.sub_12_06);
+        }
 
         sea1.post(new Runnable() {
             @Override

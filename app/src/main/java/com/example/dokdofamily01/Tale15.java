@@ -33,8 +33,6 @@ public class Tale15 extends BaseFragment {
 
     MediaPlayer mp = null;
 
-    ArrayList<SubTitleData> subtitleList;
-
     private android.widget.ImageView ivCave15;
     private android.widget.ImageView manImage1;
     private android.widget.ImageView manImage2;
@@ -44,7 +42,6 @@ public class Tale15 extends BaseFragment {
     private android.widget.ImageView seaweadImage;
     private android.widget.ImageView fish;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
-    private CustomScrollView sv;
     private ImageView ivLand15;
 
     int animationFlag = 0;
@@ -218,36 +215,34 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_15);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"딸깍~ 대문이 열리고 ", "2500"},
-//                new String[]{"이마에 왕혹을 매달은 언제나 위풍당당한 \n" +
-//                        "혹돔 삼촌이 성큼성큼 나와요.", "10500"},
-//                new String[]{"별아 깊은 바다 속 우리 집까지 와줘서 진짜 고마워!", "16500"},
-//                new String[]{"혹돔 삼촌 목소리가 얼마나 우렁찬지 \n" +
-//                        "깊고 깊은 동해바다 맨 아래까지 쩌렁쩌렁 울려요.", "27000"},
-//                new String[]{"깜깜한 밤인데 혹돔 삼촌 집은 왜 불을 안 켜요? ", "34000"},
-//                new String[]{"그건 깜깜해야 소리를 잘 들을 수 있기 때문이지!", "39000"},
-//                new String[]{"어떤 소리요?", "41000"},
-//                new String[]{"그야 우리 보물섬 독도 가족들의 소리지~", "46500"}
-//        );
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_15);
+            musicController.makeSubTitleList(
+                    new int[]{R.drawable.sub_15_01, 2500},
+                    new int[]{R.drawable.sub_15_02, 10500},
+                    new int[]{R.drawable.sub_15_03, 16500},
+                    new int[]{R.drawable.sub_15_04, 27000},
+                    new int[]{R.drawable.sub_15_05, 34000},
+                    new int[]{R.drawable.sub_15_06, 39000},
+                    new int[]{R.drawable.sub_15_07, 41000},
+                    new int[]{R.drawable.sub_15_08, 99999}
+            );
+            musicController.setVP(vp);
+            musicController.excuteAsync();
+            mp = musicController.getMp();
+        }
+        else{
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_15_01,
+                    R.drawable.sub_15_02,
+                    R.drawable.sub_15_03,
+                    R.drawable.sub_15_04,
+                    R.drawable.sub_15_05,
+                    R.drawable.sub_15_06,
+                    R.drawable.sub_15_07,
+                    R.drawable.sub_15_08);
+        }
 
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_15_01, 2500},
-                new int[]{R.drawable.sub_15_02, 10500},
-                new int[]{R.drawable.sub_15_03, 16500},
-                new int[]{R.drawable.sub_15_04, 27000},
-                new int[]{R.drawable.sub_15_05, 34000},
-                new int[]{R.drawable.sub_15_06, 39000},
-                new int[]{R.drawable.sub_15_07, 41000},
-                new int[]{R.drawable.sub_15_08, 99999}
-        );
-
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
 
         sl.post(new Runnable() {
             @Override

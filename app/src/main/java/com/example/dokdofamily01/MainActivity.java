@@ -12,7 +12,7 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class MainActivity extends BaseActivity {
     static Context context;
-    Button taleBtn;
+    Button taleBtn, menualBtn;
     boolean splashFlag=true;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private CustomScrollView sv;
@@ -42,8 +42,19 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, TaleActivity.class);
+                intent.putExtra("isAutoRead", true);
                 startActivity(intent);
 //                finish();
+            }
+        });
+
+        menualBtn = (Button)findViewById(R.id.menualBtn);
+        menualBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TaleActivity.class);
+                intent.putExtra("isAutoRead", false);
+                startActivity(intent);
             }
         });
 
