@@ -33,10 +33,18 @@ public class MusicController {
     private MyThread subtitleThread;
     private CustomViewPager vp;
 
-    public MusicController(Context context, int resID) {
+    public MusicController(Context context, int audioID) {
         this.mContext = context;
-        this.resID = resID;
+        this.resID = audioID;
 
+    }
+
+    public MusicController(Context context, int audioID, CustomViewPager viewPager, int[]... sub) {
+        this.mContext = context;
+        this.resID = audioID;
+        vp = viewPager;
+        makeSubTitleList(sub);
+        excuteAsync();
     }
 
     public void setVP(CustomViewPager vp) {

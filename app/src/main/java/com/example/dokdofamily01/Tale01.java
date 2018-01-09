@@ -1,11 +1,9 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +38,6 @@ public class Tale01 extends BaseFragment {
     AlphaAnimation fadeOut;
 
     ArrayList<SubTitleData> subtitleList;
-
-
-    MediaPlayer mp = null;
-
 
     SoundPool sp;
     int soundID;
@@ -220,19 +214,12 @@ public class Tale01 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-//        musicController = new MusicController(getActivity(), R.raw.scene_1);
-//        musicController.makeSubTitleList(
-//                new int[]{R.drawable.sub_01_01, 5000},
-//                new int[]{R.drawable.sub_01_02, 7500},
-//                new int[]{R.drawable.sub_01_03, 12500},
-//                new int[]{R.drawable.sub_01_04, 17000},
-//                new int[]{R.drawable.sub_01_05, 22500}
-//        );
-//
-//        musicController.setVP(vp);
-//
-//        musicController.excuteAsync();
-//        mp = musicController.getMp();
+        musicController = new MusicController(getActivity(), R.raw.scene_1, vp,
+                new int[]{R.drawable.sub_01_01, 5000},
+                new int[]{R.drawable.sub_01_02, 7500},
+                new int[]{R.drawable.sub_01_03, 12500},
+                new int[]{R.drawable.sub_01_04, 17000},
+                new int[]{R.drawable.sub_01_05, 22500});
 
         //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
         subtitleController = new SubtitleController(vp,
@@ -241,9 +228,6 @@ public class Tale01 extends BaseFragment {
                 R.drawable.sub_01_03,
                 R.drawable.sub_01_04,
                 R.drawable.sub_01_05);
-
-        Log.d("asdfa", TaleActivity.subtitleImageVIew.getId() + "");
-        Log.d("asdee", R.drawable.sub_01_01 + "");
 
         checkedAnimation = true;
         lampLight.clearAnimation();
