@@ -29,6 +29,7 @@ public class BaseFragment extends Fragment{
     public int xml = 0;
     static public int firstFlag = 0;
     public MusicController musicController;
+    public SubtitleController subtitleController;
     boolean isHint;
     boolean isAttached = false;
     public CustomViewPager vp;
@@ -157,7 +158,7 @@ public class BaseFragment extends Fragment{
         public BlockObjListener() {
             super.delegate = new AsyncResponse() {
                 @Override
-                public void onAction(MotionEvent motionEvent, int checkDistance) {
+                public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
                 }
             };
@@ -180,6 +181,8 @@ public class BaseFragment extends Fragment{
                 }else{
                     super.decreaseFunc();
                 }
+            } else if(subtitleController != null) {
+                subtitleController.front();
             }
         }
 
@@ -194,6 +197,8 @@ public class BaseFragment extends Fragment{
                     Log.d("nextPart","else");
                     super.increaseFunc();
                 }
+            } else if(subtitleController != null) {
+                subtitleController.next();
             }
         }
 
@@ -218,7 +223,7 @@ public class BaseFragment extends Fragment{
         public MyChangeListener() {
             super.delegate = new AsyncResponse() {
                 @Override
-                public void onAction(MotionEvent motionEvent, int checkDistance) {
+                public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
                 }
             };
@@ -243,6 +248,8 @@ public class BaseFragment extends Fragment{
                     Log.d("DESC", "else");
                     super.decreaseFunc();
                 }
+            } else if(subtitleController != null) {
+                subtitleController.front();
             }
         }
 
@@ -273,6 +280,8 @@ public class BaseFragment extends Fragment{
                     super.increaseFunc();
                 }
 
+            } else if(subtitleController != null) {
+                subtitleController.next();
             }
         }
     }

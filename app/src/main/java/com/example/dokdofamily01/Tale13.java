@@ -1,13 +1,10 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,10 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleData;
 import com.ssomai.android.scalablelayout.ScalableLayout;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -33,10 +27,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale13 extends BaseFragment {
 
-    MediaPlayer mp = null;
-
-    ArrayList<SubTitleData> subtitleList;
-
     private android.widget.ImageView ivBuyl13;
     private android.widget.ImageView ivWall13;
     private android.widget.ImageView ivBottom13;
@@ -44,15 +34,11 @@ public class Tale13 extends BaseFragment {
     ImageView bubble;
     ImageView[] wave = new ImageView[4];
 
-    private com.ssomai.android.scalablelayout.ScalableLayout sl;
-    private CustomScrollView sv;
-
     private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation, fishAnimation;
     AlphaAnimation bubbleAlpha;
     TranslateAnimation bubbleTranslate;
     TranslateAnimation[] wavingTransAni = new TranslateAnimation[4];
     AlphaAnimation[] wavingFadeinAni = new AlphaAnimation[4];
-    AlphaAnimation[] wavingFadeoutAni = new AlphaAnimation[4];
     AnimationSet[] wavingAniSet = new AnimationSet[4];
     AnimationSet bubbleAppear;
     AlphaAnimation blink;
@@ -61,8 +47,6 @@ public class Tale13 extends BaseFragment {
 
     private SoundPool bubbleSoundPool, tickSoundPool;
     private int bubbleSound, tickSound;
-
-
 
 
     @Override
@@ -175,31 +159,23 @@ public class Tale13 extends BaseFragment {
     }
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_13);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"첨벙첨벙~ 별이가 바다 안으로 들어가요. ", "5000"},
-//                new String[]{"별이랑 놀고 싶은 해님도 풍덩~ 따라 들어가요. ", "10000"},
-//                new String[]{"맑은 바다 안이 더 환해졌어요.", "14000"},
-//                new String[]{"오징어 이모랑 놀고 싶은 바닷속 친구들이 몰려와서 \n" +
-//                        "헤엄치다 서고, 헤엄치다 멈추면서 가요.", "23000"},
-//                new String[]{"보들보들 감태 숲을 지나니 간질간질 모자반 숲이에요. ", "29500"},
-//                new String[]{"축구하던 성게 꼬마들이 축구공과 함께 데구루루 굴러 가요. ", "36500"}
-//        );
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_13_01,5000},
-                new int[]{R.drawable.sub_13_02, 10000},
-                new int[]{R.drawable.sub_13_03, 14000},
-                new int[]{R.drawable.sub_13_04, 23000},
-                new int[]{R.drawable.sub_13_05, 29500},
-                new int[]{R.drawable.sub_13_06, 99999}
-        );
-
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_13, vp,
+                    new int[]{R.drawable.sub_13_01, 5000},
+                    new int[]{R.drawable.sub_13_02, 10000},
+                    new int[]{R.drawable.sub_13_03, 14000},
+                    new int[]{R.drawable.sub_13_04, 23000},
+                    new int[]{R.drawable.sub_13_05, 29500},
+                    new int[]{R.drawable.sub_13_06, 99999});
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_13_01,
+                    R.drawable.sub_13_02,
+                    R.drawable.sub_13_03,
+                    R.drawable.sub_13_04,
+                    R.drawable.sub_13_05,
+                    R.drawable.sub_13_06);
+        }
 
         ivBuyl13.post(new Runnable() {
             @Override

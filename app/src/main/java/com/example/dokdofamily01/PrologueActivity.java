@@ -88,14 +88,14 @@ public class PrologueActivity extends BaseActivity {
                 checkAnim = false;
 
                 fadeIn = new AlphaAnimation(0, 1);
-                fadeIn.setDuration(500);
+                fadeIn.setDuration(1000);
                 fadeIn.setStartOffset(0);
                 fadeIn.setFillAfter(true);
                 fadeIn.setAnimationListener(new MyAnimationListener());
 
                 fadeOut = new AlphaAnimation(1, 0);
-                fadeOut.setStartOffset(2000);
-                fadeOut.setDuration(3000);
+                fadeOut.setStartOffset(0);
+                fadeOut.setDuration(1000);
                 fadeOut.setFillAfter(true);
                 fadeOut.setAnimationListener(new MyAnimationListener());
 
@@ -105,8 +105,8 @@ public class PrologueActivity extends BaseActivity {
                 fadeTouchOut.setFillAfter(true);
                 fadeTouchOut.setAnimationListener(new MyAnimationListener());
 
-                transIn = new TranslateAnimation(0, 0, prologueTextImage.getHeight(), 0);
-                transIn.setDuration(500);
+                transIn = new TranslateAnimation(0, 0, prologueTextImage.getHeight() / 5, 0);
+                transIn.setDuration(1000);
                 transIn.setFillAfter(true);
                 transIn.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -126,7 +126,7 @@ public class PrologueActivity extends BaseActivity {
                 });
 
                 transOut = new TranslateAnimation(0, 0, 0, -prologueTextImage.getHeight() / 5);
-                transOut.setDuration(5000);
+                transOut.setDuration(1000);
                 transOut.setFillAfter(true);
                 transOut.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -192,7 +192,7 @@ public class PrologueActivity extends BaseActivity {
                 };
 
                 animHandler = new Handler();
-                animHandler.postDelayed(animRun, 600);
+                animHandler.postDelayed(animRun, 1000);
 
             }
         });
@@ -208,10 +208,10 @@ public class PrologueActivity extends BaseActivity {
 
         CustomTouchListener mListener = new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 // onAction 안에 CustomTouchListener onTouch() 이벤트가 끝난 후에 추가로 이벤트를 줄 수 있음.
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistance == 1 && checkAnim) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkAnim && checkDistanceX == 0 && checkDistanceY == 0) {
 
                     Log.d("storyFlag", "plus");
                     storyFlag++;
@@ -220,25 +220,71 @@ public class PrologueActivity extends BaseActivity {
 
                     if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
+                    else finish();
 
 //                    if(storyFlag == syncArray.length) checkedAnimation = true;
 //                    else checkedAnimation = false;
 
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistance == -1 && checkAnim) {
+                } else if(diff > 0) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistanceX == 1 && checkAnim) {
 
-                    Log.d("storyFlag", "minus");
-                    storyFlag--;
-                    if (storyFlag >= 0 && storyFlag < 2 && musicPlayer != null && musicPlayer.isPlaying())
-                        musicPlayer.seekTo(syncArray[storyFlag]);
-                    else if(storyFlag == 2) {
-                        storyFlag = 1;
-                        musicPlayer.seekTo(syncArray[storyFlag]);
+                        Log.d("storyFlag", "plus");
+                        storyFlag++;
+
+                        if (storyFlag == 0) storyFlag++;
+
+                        if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        else finish();
+
+//                    if(storyFlag == syncArray.length) checkedAnimation = true;
+//                    else checkedAnimation = false;
+
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistanceX == -1 && checkAnim) {
+
+                        Log.d("storyFlag", "minus");
+                        storyFlag--;
+                        if (storyFlag >= 0 && storyFlag < 2 && musicPlayer != null && musicPlayer.isPlaying())
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        else if(storyFlag == 2) {
+                            storyFlag = 1;
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        }
                     }
+
+                } else if(diff < 0) {
+
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag < 3 && checkDistanceY == 1 && checkAnim) {
+
+                        Log.d("storyFlag", "plus");
+                        storyFlag++;
+
+                        if (storyFlag == 0) storyFlag++;
+
+                        if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        else finish();
+
+//                    if(storyFlag == syncArray.length) checkedAnimation = true;
+//                    else checkedAnimation = false;
+
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && storyFlag >= 0 && checkDistanceY == -1 && checkAnim) {
+
+                        Log.d("storyFlag", "minus");
+                        storyFlag--;
+                        if (storyFlag >= 0 && storyFlag < 2 && musicPlayer != null && musicPlayer.isPlaying())
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        else if(storyFlag == 2) {
+                            storyFlag = 1;
+                            musicPlayer.seekTo(syncArray[storyFlag]);
+                        }
+                    }
+
                 }
+                Log.d("diff", diff + "");
+                Log.d("StoryFlag", storyFlag + " " + checkDistanceX);
 
-                Log.d("StoryFlag", storyFlag + " " + checkDistance);
-
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && Math.abs(checkDistance) == 1 && checkAnim) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && checkAnim) {
 
                     switch (storyFlag) {
 
@@ -269,7 +315,7 @@ public class PrologueActivity extends BaseActivity {
                                     };
 
                                     animHandler = new Handler();
-                                    animHandler.postDelayed(animRun, 600);
+                                    animHandler.postDelayed(animRun, 1000);
                                 }
                             };
 
@@ -306,7 +352,7 @@ public class PrologueActivity extends BaseActivity {
                                     prologueTextImage.startAnimation(animInSet);
 
                                     animHandler = new Handler();
-                                    animHandler.postDelayed(animRun, 600);
+                                    animHandler.postDelayed(animRun, 1000);
                                 }
                             };
 
@@ -342,7 +388,7 @@ public class PrologueActivity extends BaseActivity {
                                     };
 
                                     animHandler = new Handler();
-                                    animHandler.postDelayed(animRun, 600);
+                                    animHandler.postDelayed(animRun, 1000);
 
                                 }
                             };
@@ -503,11 +549,11 @@ public class PrologueActivity extends BaseActivity {
                                 }
                             };
 
-                            fadeInHandler.postDelayed(fadeInRun, 5000);
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
                         }
                     };
 
-                    fadeOutHandler.postDelayed(fadeOutRun, 18700);
+                    fadeOutHandler.postDelayed(fadeOutRun, 22700);
 
                     break;
 
@@ -537,11 +583,11 @@ public class PrologueActivity extends BaseActivity {
                                 }
                             };
 
-                            fadeInHandler.postDelayed(fadeInRun, 5000);
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
                         }
                     };
 
-                    fadeOutHandler.postDelayed(fadeOutRun, 23500);
+                    fadeOutHandler.postDelayed(fadeOutRun, 27500);
 
                     break;
 
@@ -565,11 +611,11 @@ public class PrologueActivity extends BaseActivity {
                         public void run() {
                             checkAnim = false;
                             prologueTextImage.startAnimation(animOutSet);
-                            fadeInHandler.postDelayed(fadeInRun, 5000);
+                            fadeInHandler.postDelayed(fadeInRun, 1000);
                         }
                     };
 
-                    fadeOutHandler.postDelayed(fadeOutRun, 15000);
+                    fadeOutHandler.postDelayed(fadeOutRun, 19000);
                     break;
 
                 case 4:

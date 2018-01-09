@@ -1,14 +1,11 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-
 import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -17,10 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -54,22 +47,12 @@ public class Tale18 extends BaseFragment {
     RotateAnimation sqeedRotate[] = new RotateAnimation[2];
     RotateAnimation manRotate[] = new RotateAnimation[2];
 
-
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
     boolean clickFlag = false;
 
-
-    MediaPlayer mp = null;
-
-    ArrayList<SubTitleData> subtitleList;
-
     SoundPool sp;
     int soundID;
-//    int appear;
-//    int starEffect;
-//    int scale[] = new int[6];
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,15 +83,6 @@ public class Tale18 extends BaseFragment {
         sqeed18 = (ImageView) layout.findViewById(R.id.sqeed18);
         man18 = (ImageView) layout.findViewById(R.id.man18);
 
-//        sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
-//        appear = sp.load(getContext(), R.raw.effect_18_appear, 1);
-//        starEffect = sp.load(getContext(), R.raw.effect_18_star, 2);
-//        scale[0] = sp.load(getContext(), R.raw.effect_18_do, 3);
-//        scale[1] = sp.load(getContext(), R.raw.effect_18_re, 4);
-//        scale[2] = sp.load(getContext(), R.raw.effect_18_mi, 5);
-//        scale[3] = sp.load(getContext(), R.raw.effect_18_fa, 6);
-//        scale[4] = sp.load(getContext(), R.raw.effect_18_so, 7);
-//        scale[5] = sp.load(getContext(), R.raw.effect_18_la, 8);
     }
 
     @Override
@@ -341,33 +315,23 @@ public class Tale18 extends BaseFragment {
 
 
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_18);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//
-//                new String[]{"별이도 자꾸 하품이 나요.", "3000"},
-//                new String[]{"오징어 이모가 보드라운 감태침대에 \n" +
-//                        "별이를 눕히고 토닥토닥~ 해주어요.", "11000"},
-//                new String[]{"하늘에 금가루를 뿌린 것처럼 별님들이 많아요.", "17000"},
-//                new String[]{"별님들은 아~주아~주 먼 옛날부터 \n" +
-//                        "보물섬 독도를 밝혀주고 지켜주었지.", "26500"},
-//                new String[]{"저 많은 별님들이 다 독도를 지켜주는 거예요? ", "32500"},
-//                new String[]{"그럼~ 그래서 독도 가족들한테는 \n" +
-//                        "자기를 지켜주는 별님이 모두 하나씩 있단다.", "41500"}
-//        );
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_18_01, 3000},
-                new int[]{R.drawable.sub_18_02, 11000},
-                new int[]{R.drawable.sub_18_03, 17000},
-                new int[]{R.drawable.sub_18_04, 26500},
-                new int[]{R.drawable.sub_18_05, 32500},
-                new int[]{R.drawable.sub_18_06, 41500}
-        );
-
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_18, vp,
+                    new int[]{R.drawable.sub_18_01, 3000},
+                    new int[]{R.drawable.sub_18_02, 11000},
+                    new int[]{R.drawable.sub_18_03, 17000},
+                    new int[]{R.drawable.sub_18_04, 26500},
+                    new int[]{R.drawable.sub_18_05, 32500},
+                    new int[]{R.drawable.sub_18_06, 41500});
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_18_01,
+                    R.drawable.sub_18_02,
+                    R.drawable.sub_18_03,
+                    R.drawable.sub_18_04,
+                    R.drawable.sub_18_05,
+                    R.drawable.sub_18_06);
+        }
 
         father18.post(new Runnable() {
             @Override

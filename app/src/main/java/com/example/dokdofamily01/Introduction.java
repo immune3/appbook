@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleDataTest;
+import com.example.dokdofamily01.Data.SubTitleDataById;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class Introduction extends BaseFragment {
 
     int animationCaseFlag = 0;
 
-    ArrayList<SubTitleDataTest> subtitleList;
+    ArrayList<SubTitleDataById> subtitleList;
     MediaPlayer mp = null;
 
     int animationFlag = 1;
@@ -129,8 +129,8 @@ public class Introduction extends BaseFragment {
 
         mask.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -156,8 +156,8 @@ public class Introduction extends BaseFragment {
 
         waveBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -185,8 +185,8 @@ public class Introduction extends BaseFragment {
 
         birdBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -213,8 +213,8 @@ public class Introduction extends BaseFragment {
 
         buylBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -241,8 +241,8 @@ public class Introduction extends BaseFragment {
 
         fatherBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -269,8 +269,8 @@ public class Introduction extends BaseFragment {
 
         flowerBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -297,8 +297,8 @@ public class Introduction extends BaseFragment {
 
         manBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -325,8 +325,8 @@ public class Introduction extends BaseFragment {
 
         momBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -353,8 +353,8 @@ public class Introduction extends BaseFragment {
 
         postBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -381,8 +381,8 @@ public class Introduction extends BaseFragment {
 
         seagullBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -409,8 +409,8 @@ public class Introduction extends BaseFragment {
 
         squidBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -437,8 +437,8 @@ public class Introduction extends BaseFragment {
 
         treeBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -464,8 +464,8 @@ public class Introduction extends BaseFragment {
 
         sl.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
-                moveFragment(motionEvent, checkDistance);
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+                moveFragment(motionEvent, checkDistanceX);
             }
         }) {
             @Override
@@ -549,9 +549,9 @@ public class Introduction extends BaseFragment {
 
         vp.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
-            public void onAction(MotionEvent motionEvent, int checkDistance) {
+            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
-                moveFragment(motionEvent, checkDistance);
+                moveFragment(motionEvent, checkDistanceX);
 
             }
         }) {

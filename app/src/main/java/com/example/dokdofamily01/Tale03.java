@@ -1,14 +1,11 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -16,10 +13,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -47,17 +40,10 @@ public class Tale03 extends BaseFragment {
     int repeatFlag=0;
     int headHeight=0;
 
-    MediaPlayer mp = null;
-
-
-    ArrayList<SubTitleData> subtitleList;
-
     SoundPool sp;
     SoundPool wingSp;
     int soundID;
     int wings;
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -173,19 +159,21 @@ public class Tale03 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-        musicController = new MusicController(getActivity(), R.raw.scene_3);
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_03_01,4000},
-                new int[]{R.drawable.sub_03_02, 12500},
-                new int[]{R.drawable.sub_03_03, 20000},
-                new int[]{R.drawable.sub_03_04, 23500},
-                new int[]{R.drawable.sub_03_05, 31000}
-        );
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_3, vp,
+                    new int[]{R.drawable.sub_03_01, 4000},
+                    new int[]{R.drawable.sub_03_02, 12500},
+                    new int[]{R.drawable.sub_03_03, 20000},
+                    new int[]{R.drawable.sub_03_04, 23500},
+                    new int[]{R.drawable.sub_03_05, 31000});
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_03_01,
+                    R.drawable.sub_03_02,
+                    R.drawable.sub_03_03,
+                    R.drawable.sub_03_04,
+                    R.drawable.sub_03_05);
+        }
 
         byulHand.post(new Runnable() {
             @Override

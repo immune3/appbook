@@ -4,10 +4,14 @@ package com.example.dokdofamily01.Data;
  * Created by hero on 2017-11-22.
  */
 
-public class SubTitleDataTest {
+public class SubTitleDataById {
 
-    public SubTitleDataTest(int id, int time){
+    public SubTitleDataById(int id, int time){
         this.finishtime = time;
+        this.subtitle = id;
+    }
+
+    public SubTitleDataById(int id) {
         this.subtitle = id;
     }
 

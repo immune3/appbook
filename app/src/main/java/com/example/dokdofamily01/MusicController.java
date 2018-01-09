@@ -8,7 +8,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.dokdofamily01.Data.SubTitleData;
-import com.example.dokdofamily01.Data.SubTitleDataTest;
+import com.example.dokdofamily01.Data.SubTitleDataById;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -28,15 +28,23 @@ public class MusicController {
     private Context mContext;
     private int resID;
     static ArrayList<SubTitleData> subtitleList1;
-    static ArrayList<SubTitleDataTest> subtitleList;
+    static ArrayList<SubTitleDataById> subtitleList;
     private MyAsynTask createMP;
     private MyThread subtitleThread;
     private CustomViewPager vp;
 
-    public MusicController(Context context, int resID) {
+    public MusicController(Context context, int audioID) {
         this.mContext = context;
-        this.resID = resID;
+        this.resID = audioID;
 
+    }
+
+    public MusicController(Context context, int audioID, CustomViewPager viewPager, int[]... sub) {
+        this.mContext = context;
+        this.resID = audioID;
+        vp = viewPager;
+        makeSubTitleList(sub);
+        excuteAsync();
     }
 
     public void setVP(CustomViewPager vp) {
@@ -83,7 +91,7 @@ public class MusicController {
     public void makeSubTitleList(int[]... params) {
         subtitleList = new ArrayList<>();
         for (int[] s : params) {
-            SubTitleDataTest subTitleData = new SubTitleDataTest(
+            SubTitleDataById subTitleData = new SubTitleDataById(
                     s[0], s[1]
             );
             subtitleList.add(subTitleData);

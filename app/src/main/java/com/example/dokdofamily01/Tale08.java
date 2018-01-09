@@ -1,32 +1,22 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
-
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 
@@ -68,11 +58,6 @@ public class Tale08 extends BaseFragment {
     AnimationSet eyeBlackAniSet;
     int animationFlag = 0;
 
-    MediaPlayer mp = null;
-
-
-    ArrayList<SubTitleData> subtitleList;
-
     SoundPool laughingSoundPool, eyeSoundPool;
     int laughingSound;
     int eyeSound;
@@ -86,8 +71,6 @@ public class Tale08 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         xml = R.layout.tale08;
-
-        subtitleList = new ArrayList<>();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -225,33 +208,26 @@ public class Tale08 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_8);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"별이랑 언제나 든든한 사철나무 아빠가 도란도란 얘기해요.", "6000"},
-//                new String[]{"사철나무 아빠는 왜 자꾸 두리번두리번 해요?", "12000"},
-//                new String[]{"나는 가족을 지키는 아빠니까 이렇게 잘 살펴봐야 한단다. ", "18500"},
-//                new String[]{"뾰족한 절벽에서 살면 엉덩이가 안 아파요?", "24500"},
-//                new String[]{"100년도 넘어서 이제 아무렇지도 않단다.", "29000"},
-//                new String[]{"100년? 그럼 사철나무 할아버지예요?", "35000"},
-//                new String[]{"하하하~ 우리 독도에는 아~주아~주 먼 옛날에 \n" +
-//                        "태어나신 서도할아버지가 계신 걸~ ", "43500"}
-//        );
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_8, vp,
+                    new int[]{R.drawable.sub_08_01, 6000},
+                    new int[]{R.drawable.sub_08_02, 12000},
+                    new int[]{R.drawable.sub_08_03, 18500},
+                    new int[]{R.drawable.sub_08_04, 24500},
+                    new int[]{R.drawable.sub_08_05, 29000},
+                    new int[]{R.drawable.sub_08_06, 35000},
+                    new int[]{R.drawable.sub_08_07, 99999});
 
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_08_01,6000},
-                new int[]{R.drawable.sub_08_02, 12000},
-                new int[]{R.drawable.sub_08_03, 18500},
-                new int[]{R.drawable.sub_08_04, 24500},
-                new int[]{R.drawable.sub_08_05, 29000},
-                new int[]{R.drawable.sub_08_06, 35000},
-                new int[]{R.drawable.sub_08_07, 99999}
-        );
-
-        musicController.setVP(vp);
-
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_08_01,
+                    R.drawable.sub_08_02,
+                    R.drawable.sub_08_03,
+                    R.drawable.sub_08_04,
+                    R.drawable.sub_08_05,
+                    R.drawable.sub_08_06,
+                    R.drawable.sub_08_07);
+        }
 
         land.post(new Runnable() {
             @Override

@@ -1,24 +1,16 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -37,14 +29,8 @@ public class Tale04 extends BaseFragment {
 
     int[] sunLightLocation = new int[2];
 
-
-    MediaPlayer mp = null;
-
-    ArrayList<SubTitleData> subtitleList;
-
     SoundPool sp;
     int soundID;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -147,33 +133,24 @@ public class Tale04 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_4);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"저기~ 해님이 앉아있는 섬이 보물섬 독도야.", "5000"},
-//                new String[]{"정답게 마주앉은 동도할머니와 서도할아버지 사이에서", "10500"},
-//                new String[]{"잘 자고 일어난 뽀얀 얼굴의 해님이 쭉쭉 기지개를 켜요. ", "16000"},
-//                new String[]{"쌩~ 지나가던 바람이 되돌아와 아주아주 큰소리로 외쳐요", "22500"},
-//                new String[]{"별이가 왔어요! 별이가 왔다구요!", "26500"}
-//        );
-//
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_4, vp,
+                    new int[]{R.drawable.sub_04_01, 5000},
+                    new int[]{R.drawable.sub_04_02, 10500},
+                    new int[]{R.drawable.sub_04_03, 16000},
+                    new int[]{R.drawable.sub_04_04, 22500},
+                    new int[]{R.drawable.sub_04_05, 99999});
 
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_04_01,5000},
-                new int[]{R.drawable.sub_04_02, 10500},
-                new int[]{R.drawable.sub_04_03, 16000},
-                new int[]{R.drawable.sub_04_04, 22500},
-                new int[]{R.drawable.sub_04_05, 99999}
-        );
-
-        musicController.setVP(vp);
-
-        musicController.excuteAsync();
-
+        } else{
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_04_01,
+                    R.drawable.sub_04_02,
+                    R.drawable.sub_04_03,
+                    R.drawable.sub_04_04,
+                    R.drawable.sub_04_05);
+        }
 
         checkedAnimation = true;
-
-
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
