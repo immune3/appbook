@@ -13,10 +13,8 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleDataById;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import static android.view.View.GONE;
@@ -76,9 +74,6 @@ public class Introduction extends BaseFragment {
     MediaPlayer musicPlayer;
 
     int animationCaseFlag = 0;
-
-    ArrayList<SubTitleDataById> subtitleList;
-    MediaPlayer mp = null;
 
     int animationFlag = 1;
     int randomN = 0;
@@ -358,22 +353,6 @@ public class Introduction extends BaseFragment {
             }
         });
 
-//        sl.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
-//            @Override
-//            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-//                moveFragment(motionEvent, checkDistanceX);
-//            }
-//        }) {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//                animationCaseFlag = 0;
-//                checkedAnimation = true;
-//
-//                return super.onTouch(view, motionEvent);
-//            }
-//        });
-
     }
 
     @Override
@@ -413,25 +392,6 @@ public class Introduction extends BaseFragment {
 
         subtitleImageVIew.setVisibility(GONE);
 
-//        vp.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
-//            @Override
-//            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-//
-//                moveFragment(motionEvent, checkDistanceX);
-//
-//            }
-//        }) {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                customViewPager = vp;
-//                checkedAnimation = true;
-//
-//                stopMusic();
-//
-//                return super.onTouch(view, motionEvent);
-//            }
-//        });
-
         introFather.post(new Runnable() {
             @Override
             public void run() {
@@ -449,13 +409,6 @@ public class Introduction extends BaseFragment {
             }
         });
 
-//        musicController = new MusicController(getActivity(), R.raw.scene_1);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//
-//        );
-//        musicController.excuteAsync();
-//        mp = musicController.getMp();
         checkedAnimation = true;
     }
 
@@ -835,211 +788,6 @@ public class Introduction extends BaseFragment {
         animationClear();
         isBlink = false;
     }
-
-//    public void checkVisible() {
-//
-//        if (mask.getVisibility() == View.VISIBLE) {
-//
-//            mask.setVisibility(GONE);
-//
-//            wave.setVisibility(GONE);
-//            waveText.setVisibility(GONE);
-//            waveBtn.setVisibility(View.VISIBLE);
-//
-//            introBird.setVisibility(GONE);
-//            introBirdText.setVisibility(GONE);
-//            birdBtn.setVisibility(View.VISIBLE);
-//
-//            introBuyl.setVisibility(GONE);
-//            introBirdText.setVisibility(GONE);
-//            buylBtn.setVisibility(View.VISIBLE);
-//
-//            introFather.setVisibility(GONE);
-//            introFatherText.setVisibility(GONE);
-//            fatherBtn.setVisibility(View.VISIBLE);
-//
-//            introFlower.setVisibility(GONE);
-//            introFlowerText.setVisibility(GONE);
-//            flowerBtn.setVisibility(View.VISIBLE);
-//
-//            introMan.setVisibility(GONE);
-//            introManText.setVisibility(GONE);
-//            manBtn.setVisibility(View.VISIBLE);
-//
-//            introMom.setVisibility(GONE);
-//            introMomText.setVisibility(GONE);
-//            momBtn.setVisibility(View.VISIBLE);
-//
-//
-//            postBtn.setVisibility(View.VISIBLE);
-//            introPost.setVisibility(GONE);
-//            introPostText.setVisibility(GONE);
-//
-//            introSeagull.setVisibility(GONE);
-//            introSeagullText.setVisibility(GONE);
-//            seagullBtn.setVisibility(View.VISIBLE);
-//
-//            introSquid.setVisibility(GONE);
-//            introSquidText.setVisibility(GONE);
-//            squidBtn.setVisibility(View.VISIBLE);
-//
-//            introTree.setVisibility(GONE);
-//            introTreeText.setVisibility(GONE);
-//            treeBtn.setVisibility(View.VISIBLE);
-//
-//        } else {
-//
-//            mask.setVisibility(GONE);
-//
-//            wave.setVisibility(GONE);
-//            waveText.setVisibility(GONE);
-//            waveBtn.setVisibility(View.VISIBLE);
-//
-//            introBird.setVisibility(GONE);
-//            introBirdText.setVisibility(GONE);
-//            birdBtn.setVisibility(View.VISIBLE);
-//
-//            introBuyl.setVisibility(GONE);
-//            introBirdText.setVisibility(GONE);
-//            buylBtn.setVisibility(View.VISIBLE);
-//
-//            introFather.setVisibility(GONE);
-//            introFatherText.setVisibility(GONE);
-//            fatherBtn.setVisibility(View.VISIBLE);
-//
-//            introFlower.setVisibility(GONE);
-//            introFlowerText.setVisibility(GONE);
-//            flowerBtn.setVisibility(View.VISIBLE);
-//
-//            introMan.setVisibility(GONE);
-//            introManText.setVisibility(GONE);
-//            manBtn.setVisibility(View.VISIBLE);
-//
-//            introMom.setVisibility(GONE);
-//            introMomText.setVisibility(GONE);
-//            momBtn.setVisibility(View.VISIBLE);
-//
-//
-//            postBtn.setVisibility(View.VISIBLE);
-//            introPost.setVisibility(GONE);
-//            introPostText.setVisibility(GONE);
-//
-//            introSeagull.setVisibility(GONE);
-//            introSeagullText.setVisibility(GONE);
-//            seagullBtn.setVisibility(View.VISIBLE);
-//
-//            introSquid.setVisibility(GONE);
-//            introSquidText.setVisibility(GONE);
-//            squidBtn.setVisibility(View.VISIBLE);
-//
-//            introTree.setVisibility(GONE);
-//            introTreeText.setVisibility(GONE);
-//            treeBtn.setVisibility(View.VISIBLE);
-//
-//        }
-//
-//        wave.setVisibility(GONE);
-//        waveText.setVisibility(GONE);
-//
-//        introBird.setVisibility(GONE);
-//        introBirdText.setVisibility(GONE);
-//
-//        introBuyl.setVisibility(GONE);
-//        introBuylText.setVisibility(GONE);
-//
-//        introFather.setVisibility(GONE);
-//        introFatherText.setVisibility(GONE);
-//
-//        introFlower.setVisibility(GONE);
-//        introFlowerText.setVisibility(GONE);
-//
-//        introMan.setVisibility(GONE);
-//        introManText.setVisibility(GONE);
-//
-//        introMom.setVisibility(GONE);
-//        introMomText.setVisibility(GONE);
-//
-//        introPost.setVisibility(GONE);
-//        introPostText.setVisibility(GONE);
-//
-//        introSeagull.setVisibility(GONE);
-//        introSeagullText.setVisibility(GONE);
-//
-//        introSquid.setVisibility(GONE);
-//        introSquidText.setVisibility(GONE);
-//
-//        introTree.setVisibility(GONE);
-//        introTreeText.setVisibility(GONE);
-//
-//        if (mask.getVisibility() == GONE) mask.setVisibility(View.VISIBLE);
-//        else mask.setVisibility((GONE));
-//
-//        if (mask.getVisibility() == View.VISIBLE) {
-//
-//            wave.clearAnimation();
-//            waveBtn.setVisibility(GONE);
-//
-//            introBird.clearAnimation();
-//            birdBtn.setVisibility(GONE);
-//
-//            introBuyl.clearAnimation();
-//            buylBtn.setVisibility(GONE);
-//
-//            introFather.clearAnimation();
-//            fatherBtn.setVisibility(GONE);
-//
-//            introFlower.clearAnimation();
-//            flowerBtn.setVisibility(GONE);
-//
-//            introMan.clearAnimation();
-//            manBtn.setVisibility(GONE);
-//
-//            introMom.clearAnimation();
-//            momBtn.setVisibility(GONE);
-//
-//            introPost.clearAnimation();
-//            postBtn.setVisibility(GONE);
-//
-//            introSeagull.clearAnimation();
-//            seagullBtn.setVisibility(GONE);
-//
-//            introSquid.clearAnimation();
-//            squidBtn.setVisibility(GONE);
-//
-//            introTree.clearAnimation();
-//            treeBtn.setVisibility(GONE);
-//
-
-//
-//
-//        } else {
-//
-//            waveBtn.setVisibility(View.VISIBLE);
-//            birdBtn.setVisibility(View.VISIBLE);
-//            buylBtn.setVisibility(View.VISIBLE);
-//            fatherBtn.setVisibility(View.VISIBLE);
-//            flowerBtn.setVisibility(View.VISIBLE);
-//            manBtn.setVisibility(View.VISIBLE);
-//            momBtn.setVisibility(View.VISIBLE);
-//            postBtn.setVisibility(View.VISIBLE);
-//            seagullBtn.setVisibility(View.VISIBLE);
-//            squidBtn.setVisibility(View.VISIBLE);
-//            treeBtn.setVisibility(View.VISIBLE);
-//
-
-//
-//        }
-//
-//        try {
-//            if (musicPlayer != null && musicPlayer.isPlaying()) {
-//                musicPlayer.pause();
-//                musicPlayer.release();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     @Override
     public void bindViews() {
