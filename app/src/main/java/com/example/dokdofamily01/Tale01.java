@@ -33,6 +33,7 @@ public class Tale01 extends BaseFragment {
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
 
+
     SoundPool sp;
     int soundID;
 
@@ -217,7 +218,7 @@ public class Tale01 extends BaseFragment {
                     new int[]{R.drawable.sub_01_05, 22500});
         }
         else {
-
+            //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
             subtitleController = new SubtitleController(vp,
                     R.drawable.sub_01_01,
                     R.drawable.sub_01_02,

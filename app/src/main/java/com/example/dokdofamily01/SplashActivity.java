@@ -44,7 +44,8 @@ public class SplashActivity extends Activity {
                     startActivity(intent);
                     finish();
                 } else finish();
-//                finish();
+
+                db = null;
             }
         }, 3000); // 3초 후 이미지를 닫습니다
 
@@ -69,7 +70,7 @@ public class SplashActivity extends Activity {
         Log.d("isFirstArray[0][0]", isFirstArray[0][0]);
         isFirst = Integer.parseInt(isFirstArray[0][0]);
         isFirstArray = null; // 메모리 비어줌
-        db = null;
+
     }
 
     public void bindViews() {

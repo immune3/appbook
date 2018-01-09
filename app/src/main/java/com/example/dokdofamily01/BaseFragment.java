@@ -1,5 +1,6 @@
 package com.example.dokdofamily01;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
-
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -44,64 +44,33 @@ public class BaseFragment extends Fragment{
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupEvents();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(xml,container, false);
-        vp = ((TaleActivity) getActivity()).vp;
-        hv = new CustomHorizontalScrollView(getContext());
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        hv.setLayoutParams(lp);
-//        hv.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
-//        hv.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        rl = (RelativeLayout)layout.findViewById(R.id.rl) ;
-        sv = (CustomScrollView)layout.findViewById(R.id.sv);
-        sl = (ScalableLayout)layout.findViewById(R.id.sl);
-        sl.post(new Runnable() {
-            @Override
-            public void run() {
-                int deviceWidth = TaleActivity.width;
-                int deviceHeight = TaleActivity.height;
-                innerHeight = sl.getHeight();
-
-                float ratio = (float)deviceWidth/(float)deviceHeight;
-                Log.e("ratio", ""+ratio);
-                if(ratio<=1.66){
-                    sv.removeView(sl);
-                    rl.removeView(sv);
-                    hv.addView(sl);
-                    rl.addView(hv);
-
-                    innerWidth = hv.getWidth();
-                    Log.e("innerWidth", ""+innerWidth);
-                    hv.scrollTo((innerWidth-deviceWidth)/2,0);
-                    hv.setScrolling(false);
-
-                }else{
-                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
-                    sv.setScrolling(false);
-
-
-                }
-
-//                if(innerWidth>deviceWidth){
-//
-//                    sv.scrollTo((innerWidth-deviceWidth)/2,0);
-//                }else{
-//                }
-
-            }
-        });
         bindViews();
         setValues();
         setAnimation();
-        setupEvents();
+
         return layout;
     }
 
-    public void bindViews(){
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    public void bindViews(){
+        rl = (RelativeLayout)layout.findViewById(R.id.rl) ;
+        sv = (CustomScrollView)layout.findViewById(R.id.sv);
+        sl = (ScalableLayout)layout.findViewById(R.id.sl);
     }
 
     public void setValues(){
@@ -113,6 +82,51 @@ public class BaseFragment extends Fragment{
     }
 
     public void setupEvents(){
+
+        vp = ((TaleActivity) getActivity()).vp;
+        hv = new CustomHorizontalScrollView(getContext());
+        HorizontalScrollView.LayoutParams lp = new HorizontalScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        hv.setLayoutParams(lp);
+//        hv.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+//        hv.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                final int deviceWidth = TaleActivity.width;
+                int deviceHeight = TaleActivity.height;
+                innerHeight = sl.getHeight();
+                Log.d("slWidth", sl.getWidth() + "");
+
+                float ratio = (float)deviceWidth/(float)deviceHeight;
+                Log.e("ratio", ""+ratio);
+                if(ratio<=1.66){
+
+                    sv.removeView(sl);
+                    rl.removeView(sv);
+                    hv.addView(sl);
+                    rl.addView(hv);
+
+                    hv.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            innerWidth = hv.getChildAt(0).getWidth();
+                            Log.e("innerWidth", ""+innerWidth);
+                            hv.scrollTo((innerWidth-deviceWidth)/2,0);
+                            hv.setScrolling(false);
+
+                        }
+                    });
+
+                }else{
+                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                    Log.e("innerHeight", innerHeight + "");
+                    sv.setScrolling(false);
+
+                }
+            }
+        });
 
     }
 
