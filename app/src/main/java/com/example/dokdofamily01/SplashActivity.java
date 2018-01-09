@@ -69,6 +69,7 @@ public class SplashActivity extends Activity {
         Log.d("isFirstArray[0][0]", isFirstArray[0][0]);
         isFirst = Integer.parseInt(isFirstArray[0][0]);
         isFirstArray = null; // 메모리 비어줌
+        db = null;
     }
 
     public void bindViews() {
