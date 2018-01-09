@@ -19,6 +19,7 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.view.View.GONE;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -138,17 +139,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 0;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -166,17 +156,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 1;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -195,17 +174,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 2;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -223,17 +191,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 3;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -251,17 +208,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 4;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -279,17 +225,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 5;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -307,17 +242,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 6;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -335,17 +259,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 7;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -363,17 +276,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 8;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -391,17 +293,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 9;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -419,17 +310,6 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 10;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
@@ -446,48 +326,26 @@ public class Introduction extends BaseFragment {
 
                 animationCaseFlag = 11;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
 
                 return super.onTouch(view, motionEvent);
             }
         });
 
-        sl.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
-            @Override
-            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                animationCaseFlag = 11;
-                checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                return super.onTouch(view, motionEvent);
-            }
-        });
+//        sl.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
+//            @Override
+//            public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
+//                moveFragment(motionEvent, checkDistanceX);
+//            }
+//        }) {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//                animationCaseFlag = 0;
+//                checkedAnimation = true;
+//
+//                return super.onTouch(view, motionEvent);
+//            }
+//        });
 
     }
 
@@ -514,17 +372,7 @@ public class Introduction extends BaseFragment {
             } else {
                 animationClear();
                 subtitleImageVIew.setVisibility(View.VISIBLE);
-                try {
-                    if (musicPlayer != null && musicPlayer.isPlaying()) {
-                        Log.d("뮤직플레이어 중지!", "off");
-                        musicPlayer.pause();
-                        musicPlayer.release();
-                        musicPlayer = null;
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                stopMusic();
 
             }
         }
@@ -534,18 +382,9 @@ public class Introduction extends BaseFragment {
     public void soundPlayFunc() {
         super.soundPlayFunc();
 
-        try {
-            if (musicPlayer != null && musicPlayer.isPlaying()) {
-                musicPlayer.pause();
-                musicPlayer.release();
-                musicPlayer = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        stopMusic();
 
-
-        subtitleImageVIew.setVisibility(View.GONE);
+        subtitleImageVIew.setVisibility(GONE);
 
         vp.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
@@ -559,36 +398,29 @@ public class Introduction extends BaseFragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 customViewPager = vp;
                 checkedAnimation = true;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    try {
-                        if (musicPlayer.isPlaying()) {
-                            musicPlayer.pause();
-                            musicPlayer.release();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+
+                stopMusic();
+
                 return super.onTouch(view, motionEvent);
             }
         });
 
         introFather.post(new Runnable() {
-             @Override
-             public void run() {
-                 animationClear();
-                 isBlink = true;
-                 blink = new AlphaAnimation(0, 1);
-                 blink.setDuration(500);
-                 blink.setRepeatCount(5);
-                 blink.setRepeatMode(Animation.REVERSE);
-                 blink.setFillAfter(true);
-                 blink.setAnimationListener(new MyBlinkListener());
-                 wave.setVisibility(View.VISIBLE);
-                 wave.startAnimation(blink);
-                 random = new Random();
-             }
-         });
+            @Override
+            public void run() {
+                animationClear();
+                isBlink = true;
+                blink = new AlphaAnimation(0, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(5);
+                blink.setRepeatMode(Animation.REVERSE);
+                blink.setFillAfter(true);
+                blink.setAnimationListener(new MyBlinkListener());
+                wave.setVisibility(View.VISIBLE);
+                wave.startAnimation(blink);
+                random = new Random();
+            }
+        });
 
 //        musicController = new MusicController(getActivity(), R.raw.scene_1);
 //        subtitleList = new ArrayList<>();
@@ -618,12 +450,14 @@ public class Introduction extends BaseFragment {
         switch (animationCaseFlag) {
             case 0:
 
-                checkVisible();
+                maskOff();
+                stopMusic();
+
                 break;
 
             case 1:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 wave.setVisibility(View.VISIBLE);
                 wave.startAnimation(fadeIn);
                 waveText.setVisibility(View.VISIBLE);
@@ -635,8 +469,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 2:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introBird.setVisibility(View.VISIBLE);
                 introBird.startAnimation(fadeIn);
                 introBirdText.setVisibility(View.VISIBLE);
@@ -648,8 +482,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 3:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introBuyl.setVisibility(View.VISIBLE);
                 introBuyl.startAnimation(fadeIn);
                 introBuylText.setVisibility(View.VISIBLE);
@@ -660,8 +494,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 4:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introFather.setVisibility(View.VISIBLE);
                 introFather.startAnimation(fadeIn);
                 introFatherText.setVisibility(View.VISIBLE);
@@ -672,8 +506,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 5:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introFlower.setVisibility(View.VISIBLE);
                 introFlower.startAnimation(fadeIn);
                 introFlowerText.setVisibility(View.VISIBLE);
@@ -684,8 +518,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 6:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introMan.setVisibility(View.VISIBLE);
                 introMan.startAnimation(fadeIn);
                 introManText.setVisibility(View.VISIBLE);
@@ -696,8 +530,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 7:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introMom.setVisibility(View.VISIBLE);
                 introMom.startAnimation(fadeIn);
                 introMomText.setVisibility(View.VISIBLE);
@@ -708,8 +542,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 8:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introPost.setVisibility(View.VISIBLE);
                 introPost.startAnimation(fadeIn);
                 introPostText.setVisibility(View.VISIBLE);
@@ -719,8 +553,8 @@ public class Introduction extends BaseFragment {
                 musicPlayer.setLooping(false);
                 break;
             case 9:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introSeagull.setVisibility(View.VISIBLE);
                 introSeagull.startAnimation(fadeIn);
                 introSeagullText.setVisibility(View.VISIBLE);
@@ -731,8 +565,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 10:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introSquid.setVisibility(View.VISIBLE);
                 introSquid.startAnimation(fadeIn);
                 introSquidText.setVisibility(View.VISIBLE);
@@ -743,8 +577,8 @@ public class Introduction extends BaseFragment {
                 break;
 
             case 11:
-                checkVisible();
-                mask.setVisibility(View.VISIBLE);
+                maskOn();
+                stopMusic();
                 introTree.setVisibility(View.VISIBLE);
                 introTree.startAnimation(fadeIn);
                 introTreeText.setVisibility(View.VISIBLE);
@@ -814,147 +648,368 @@ public class Introduction extends BaseFragment {
         introTree.clearAnimation();
         treeBtn.setVisibility(View.VISIBLE);
 
-        wave.setVisibility(View.GONE);
-        waveText.setVisibility(View.GONE);
+        wave.setVisibility(GONE);
+        waveText.setVisibility(GONE);
 
-        introBird.setVisibility(View.GONE);
-        introBirdText.setVisibility(View.GONE);
+        introBird.setVisibility(GONE);
+        introBirdText.setVisibility(GONE);
 
-        introBuyl.setVisibility(View.GONE);
-        introBuylText.setVisibility(View.GONE);
+        introBuyl.setVisibility(GONE);
+        introBuylText.setVisibility(GONE);
 
-        introFather.setVisibility(View.GONE);
-        introFatherText.setVisibility(View.GONE);
+        introFather.setVisibility(GONE);
+        introFatherText.setVisibility(GONE);
 
-        introFlower.setVisibility(View.GONE);
-        introFlowerText.setVisibility(View.GONE);
+        introFlower.setVisibility(GONE);
+        introFlowerText.setVisibility(GONE);
 
-        introMan.setVisibility(View.GONE);
-        introManText.setVisibility(View.GONE);
+        introMan.setVisibility(GONE);
+        introManText.setVisibility(GONE);
 
-        introMom.setVisibility(View.GONE);
-        introMomText.setVisibility(View.GONE);
+        introMom.setVisibility(GONE);
+        introMomText.setVisibility(GONE);
 
-        introPost.setVisibility(View.GONE);
-        introPostText.setVisibility(View.GONE);
+        introPost.setVisibility(GONE);
+        introPostText.setVisibility(GONE);
 
-        introSeagull.setVisibility(View.GONE);
-        introSeagullText.setVisibility(View.GONE);
+        introSeagull.setVisibility(GONE);
+        introSeagullText.setVisibility(GONE);
 
-        introSquid.setVisibility(View.GONE);
-        introSquidText.setVisibility(View.GONE);
+        introSquid.setVisibility(GONE);
+        introSquidText.setVisibility(GONE);
 
-        introTree.setVisibility(View.GONE);
-        introTreeText.setVisibility(View.GONE);
+        introTree.setVisibility(GONE);
+        introTreeText.setVisibility(GONE);
 
-        mask.setVisibility(View.GONE);
+        mask.setVisibility(GONE);
     }
 
-    public void checkVisible() {
-
-        if (mask.getVisibility() == View.VISIBLE) {
-
-            wave.clearAnimation();
-            waveBtn.setVisibility(View.VISIBLE);
-
-            introBird.clearAnimation();
-            birdBtn.setVisibility(View.VISIBLE);
-
-            introBuyl.clearAnimation();
-            buylBtn.setVisibility(View.VISIBLE);
-
-            introFather.clearAnimation();
-            fatherBtn.setVisibility(View.VISIBLE);
-
-            introFlower.clearAnimation();
-            flowerBtn.setVisibility(View.VISIBLE);
-
-            introMan.clearAnimation();
-            manBtn.setVisibility(View.VISIBLE);
-
-            introMom.clearAnimation();
-            momBtn.setVisibility(View.VISIBLE);
-
-            introPost.clearAnimation();
-            postBtn.setVisibility(View.VISIBLE);
-
-            introSeagull.clearAnimation();
-            seagullBtn.setVisibility(View.VISIBLE);
-
-            introSquid.clearAnimation();
-            squidBtn.setVisibility(View.VISIBLE);
-
-            introTree.clearAnimation();
-            treeBtn.setVisibility(View.VISIBLE);
-
-            mask.setVisibility(View.GONE);
-
-            isBlink = true;
-            wave.setVisibility(View.VISIBLE);
-            wave.startAnimation(blink);
-            randomN = 0;
-
-            try {
-                if (musicPlayer.isPlaying()) {
-                    musicPlayer.pause();
-                    musicPlayer.release();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    public void stopMusic() {
+        try {
+            if (musicPlayer != null && musicPlayer.isPlaying()) {
+                musicPlayer.pause();
+                musicPlayer.release();
             }
 
-
-        } else {
-
-            waveBtn.setVisibility(View.GONE);
-            birdBtn.setVisibility(View.GONE);
-            buylBtn.setVisibility(View.GONE);
-            fatherBtn.setVisibility(View.GONE);
-            flowerBtn.setVisibility(View.GONE);
-            manBtn.setVisibility(View.GONE);
-            momBtn.setVisibility(View.GONE);
-            postBtn.setVisibility(View.GONE);
-            seagullBtn.setVisibility(View.GONE);
-            squidBtn.setVisibility(View.GONE);
-            treeBtn.setVisibility(View.GONE);
-
-            mask.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        wave.setVisibility(View.GONE);
-        waveText.setVisibility(View.GONE);
+    public void maskOff() {
 
-        introBird.setVisibility(View.GONE);
-        introBirdText.setVisibility(View.GONE);
+        mask.setVisibility(GONE);
 
-        introBuyl.setVisibility(View.GONE);
-        introBuylText.setVisibility(View.GONE);
+        wave.setVisibility(GONE);
+        waveText.setVisibility(GONE);
+        waveBtn.setVisibility(View.VISIBLE);
 
-        introFather.setVisibility(View.GONE);
-        introFatherText.setVisibility(View.GONE);
+        introBird.setVisibility(GONE);
+        introBirdText.setVisibility(GONE);
+        birdBtn.setVisibility(View.VISIBLE);
 
-        introFlower.setVisibility(View.GONE);
-        introFlowerText.setVisibility(View.GONE);
+        introBuyl.setVisibility(GONE);
+        introBirdText.setVisibility(GONE);
+        buylBtn.setVisibility(View.VISIBLE);
 
-        introMan.setVisibility(View.GONE);
-        introManText.setVisibility(View.GONE);
+        introFather.setVisibility(GONE);
+        introFatherText.setVisibility(GONE);
+        fatherBtn.setVisibility(View.VISIBLE);
 
-        introMom.setVisibility(View.GONE);
-        introMomText.setVisibility(View.GONE);
+        introFlower.setVisibility(GONE);
+        introFlowerText.setVisibility(GONE);
+        flowerBtn.setVisibility(View.VISIBLE);
 
-        introPost.setVisibility(View.GONE);
-        introPostText.setVisibility(View.GONE);
+        introMan.setVisibility(GONE);
+        introManText.setVisibility(GONE);
+        manBtn.setVisibility(View.VISIBLE);
 
-        introSeagull.setVisibility(View.GONE);
-        introSeagullText.setVisibility(View.GONE);
+        introMom.setVisibility(GONE);
+        introMomText.setVisibility(GONE);
+        momBtn.setVisibility(View.VISIBLE);
 
-        introSquid.setVisibility(View.GONE);
-        introSquidText.setVisibility(View.GONE);
 
-        introTree.setVisibility(View.GONE);
-        introTreeText.setVisibility(View.GONE);
+        introPost.setVisibility(GONE);
+        introPostText.setVisibility(GONE);
+        postBtn.setVisibility(View.VISIBLE);
+
+        introSeagull.setVisibility(GONE);
+        introSeagullText.setVisibility(GONE);
+        seagullBtn.setVisibility(View.VISIBLE);
+
+        introSquid.setVisibility(GONE);
+        introSquidText.setVisibility(GONE);
+        squidBtn.setVisibility(View.VISIBLE);
+
+        introTree.setVisibility(GONE);
+        introTreeText.setVisibility(GONE);
+        treeBtn.setVisibility(View.VISIBLE);
+
+        Log.d("MaskOff", "마스크 꺼짐");
 
     }
+
+    public void maskOn() {
+
+        mask.setVisibility(View.VISIBLE);
+
+        wave.setVisibility(GONE);
+        waveText.setVisibility(GONE);
+        waveBtn.setVisibility(View.GONE);
+
+        introBird.setVisibility(GONE);
+        introBirdText.setVisibility(GONE);
+        birdBtn.setVisibility(View.GONE);
+
+        introBuyl.setVisibility(GONE);
+        introBirdText.setVisibility(GONE);
+        buylBtn.setVisibility(View.GONE);
+
+        introFather.setVisibility(GONE);
+        introFatherText.setVisibility(GONE);
+        fatherBtn.setVisibility(View.GONE);
+
+        introFlower.setVisibility(GONE);
+        introFlowerText.setVisibility(GONE);
+        flowerBtn.setVisibility(View.GONE);
+
+        introMan.setVisibility(GONE);
+        introManText.setVisibility(GONE);
+        manBtn.setVisibility(View.GONE);
+
+        introMom.setVisibility(GONE);
+        introMomText.setVisibility(GONE);
+        momBtn.setVisibility(View.GONE);
+
+
+        introPost.setVisibility(GONE);
+        introPostText.setVisibility(GONE);
+        postBtn.setVisibility(View.GONE);
+
+        introSeagull.setVisibility(GONE);
+        introSeagullText.setVisibility(GONE);
+        seagullBtn.setVisibility(View.GONE);
+
+        introSquid.setVisibility(GONE);
+        introSquidText.setVisibility(GONE);
+        squidBtn.setVisibility(View.GONE);
+
+        introTree.setVisibility(GONE);
+        introTreeText.setVisibility(GONE);
+        treeBtn.setVisibility(View.GONE);
+
+        Log.d("MaskOn", "마스크 켜짐");
+
+
+    }
+
+//    public void checkVisible() {
+//
+//        if (mask.getVisibility() == View.VISIBLE) {
+//
+//            mask.setVisibility(GONE);
+//
+//            wave.setVisibility(GONE);
+//            waveText.setVisibility(GONE);
+//            waveBtn.setVisibility(View.VISIBLE);
+//
+//            introBird.setVisibility(GONE);
+//            introBirdText.setVisibility(GONE);
+//            birdBtn.setVisibility(View.VISIBLE);
+//
+//            introBuyl.setVisibility(GONE);
+//            introBirdText.setVisibility(GONE);
+//            buylBtn.setVisibility(View.VISIBLE);
+//
+//            introFather.setVisibility(GONE);
+//            introFatherText.setVisibility(GONE);
+//            fatherBtn.setVisibility(View.VISIBLE);
+//
+//            introFlower.setVisibility(GONE);
+//            introFlowerText.setVisibility(GONE);
+//            flowerBtn.setVisibility(View.VISIBLE);
+//
+//            introMan.setVisibility(GONE);
+//            introManText.setVisibility(GONE);
+//            manBtn.setVisibility(View.VISIBLE);
+//
+//            introMom.setVisibility(GONE);
+//            introMomText.setVisibility(GONE);
+//            momBtn.setVisibility(View.VISIBLE);
+//
+//
+//            postBtn.setVisibility(View.VISIBLE);
+//            introPost.setVisibility(GONE);
+//            introPostText.setVisibility(GONE);
+//
+//            introSeagull.setVisibility(GONE);
+//            introSeagullText.setVisibility(GONE);
+//            seagullBtn.setVisibility(View.VISIBLE);
+//
+//            introSquid.setVisibility(GONE);
+//            introSquidText.setVisibility(GONE);
+//            squidBtn.setVisibility(View.VISIBLE);
+//
+//            introTree.setVisibility(GONE);
+//            introTreeText.setVisibility(GONE);
+//            treeBtn.setVisibility(View.VISIBLE);
+//
+//        } else {
+//
+//            mask.setVisibility(GONE);
+//
+//            wave.setVisibility(GONE);
+//            waveText.setVisibility(GONE);
+//            waveBtn.setVisibility(View.VISIBLE);
+//
+//            introBird.setVisibility(GONE);
+//            introBirdText.setVisibility(GONE);
+//            birdBtn.setVisibility(View.VISIBLE);
+//
+//            introBuyl.setVisibility(GONE);
+//            introBirdText.setVisibility(GONE);
+//            buylBtn.setVisibility(View.VISIBLE);
+//
+//            introFather.setVisibility(GONE);
+//            introFatherText.setVisibility(GONE);
+//            fatherBtn.setVisibility(View.VISIBLE);
+//
+//            introFlower.setVisibility(GONE);
+//            introFlowerText.setVisibility(GONE);
+//            flowerBtn.setVisibility(View.VISIBLE);
+//
+//            introMan.setVisibility(GONE);
+//            introManText.setVisibility(GONE);
+//            manBtn.setVisibility(View.VISIBLE);
+//
+//            introMom.setVisibility(GONE);
+//            introMomText.setVisibility(GONE);
+//            momBtn.setVisibility(View.VISIBLE);
+//
+//
+//            postBtn.setVisibility(View.VISIBLE);
+//            introPost.setVisibility(GONE);
+//            introPostText.setVisibility(GONE);
+//
+//            introSeagull.setVisibility(GONE);
+//            introSeagullText.setVisibility(GONE);
+//            seagullBtn.setVisibility(View.VISIBLE);
+//
+//            introSquid.setVisibility(GONE);
+//            introSquidText.setVisibility(GONE);
+//            squidBtn.setVisibility(View.VISIBLE);
+//
+//            introTree.setVisibility(GONE);
+//            introTreeText.setVisibility(GONE);
+//            treeBtn.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//        wave.setVisibility(GONE);
+//        waveText.setVisibility(GONE);
+//
+//        introBird.setVisibility(GONE);
+//        introBirdText.setVisibility(GONE);
+//
+//        introBuyl.setVisibility(GONE);
+//        introBuylText.setVisibility(GONE);
+//
+//        introFather.setVisibility(GONE);
+//        introFatherText.setVisibility(GONE);
+//
+//        introFlower.setVisibility(GONE);
+//        introFlowerText.setVisibility(GONE);
+//
+//        introMan.setVisibility(GONE);
+//        introManText.setVisibility(GONE);
+//
+//        introMom.setVisibility(GONE);
+//        introMomText.setVisibility(GONE);
+//
+//        introPost.setVisibility(GONE);
+//        introPostText.setVisibility(GONE);
+//
+//        introSeagull.setVisibility(GONE);
+//        introSeagullText.setVisibility(GONE);
+//
+//        introSquid.setVisibility(GONE);
+//        introSquidText.setVisibility(GONE);
+//
+//        introTree.setVisibility(GONE);
+//        introTreeText.setVisibility(GONE);
+//
+//        if (mask.getVisibility() == GONE) mask.setVisibility(View.VISIBLE);
+//        else mask.setVisibility((GONE));
+//
+//        if (mask.getVisibility() == View.VISIBLE) {
+//
+//            wave.clearAnimation();
+//            waveBtn.setVisibility(GONE);
+//
+//            introBird.clearAnimation();
+//            birdBtn.setVisibility(GONE);
+//
+//            introBuyl.clearAnimation();
+//            buylBtn.setVisibility(GONE);
+//
+//            introFather.clearAnimation();
+//            fatherBtn.setVisibility(GONE);
+//
+//            introFlower.clearAnimation();
+//            flowerBtn.setVisibility(GONE);
+//
+//            introMan.clearAnimation();
+//            manBtn.setVisibility(GONE);
+//
+//            introMom.clearAnimation();
+//            momBtn.setVisibility(GONE);
+//
+//            introPost.clearAnimation();
+//            postBtn.setVisibility(GONE);
+//
+//            introSeagull.clearAnimation();
+//            seagullBtn.setVisibility(GONE);
+//
+//            introSquid.clearAnimation();
+//            squidBtn.setVisibility(GONE);
+//
+//            introTree.clearAnimation();
+//            treeBtn.setVisibility(GONE);
+//
+//            isBlink = false;
+//
+//
+//        } else {
+//
+//            waveBtn.setVisibility(View.VISIBLE);
+//            birdBtn.setVisibility(View.VISIBLE);
+//            buylBtn.setVisibility(View.VISIBLE);
+//            fatherBtn.setVisibility(View.VISIBLE);
+//            flowerBtn.setVisibility(View.VISIBLE);
+//            manBtn.setVisibility(View.VISIBLE);
+//            momBtn.setVisibility(View.VISIBLE);
+//            postBtn.setVisibility(View.VISIBLE);
+//            seagullBtn.setVisibility(View.VISIBLE);
+//            squidBtn.setVisibility(View.VISIBLE);
+//            treeBtn.setVisibility(View.VISIBLE);
+//
+//            isBlink = true;
+//            wave.setVisibility(View.VISIBLE);
+//            wave.startAnimation(blink);
+//            randomN = 0;
+//
+//        }
+//
+//        try {
+//            if (musicPlayer != null && musicPlayer.isPlaying()) {
+//                musicPlayer.pause();
+//                musicPlayer.release();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     @Override
     public void bindViews() {
@@ -1237,17 +1292,17 @@ public class Introduction extends BaseFragment {
     private void setVisibleGone() {
         randomN = random.nextInt(11) + 1;
 
-        introBuyl.setVisibility(View.GONE);
-        introSeagull.setVisibility(View.GONE);
-        introTree.setVisibility(View.GONE);
-        wave.setVisibility(View.GONE);
-        introMan.setVisibility(View.GONE);
-        introMom.setVisibility(View.GONE);
-        introSquid.setVisibility(View.GONE);
-        introBird.setVisibility(View.GONE);
-        introFather.setVisibility(View.GONE);
-        introFlower.setVisibility(View.GONE);
-        introPost.setVisibility(View.GONE);
+        introBuyl.setVisibility(GONE);
+        introSeagull.setVisibility(GONE);
+        introTree.setVisibility(GONE);
+        wave.setVisibility(GONE);
+        introMan.setVisibility(GONE);
+        introMom.setVisibility(GONE);
+        introSquid.setVisibility(GONE);
+        introBird.setVisibility(GONE);
+        introFather.setVisibility(GONE);
+        introFlower.setVisibility(GONE);
+        introPost.setVisibility(GONE);
     }
 
     private void animationClear() {
@@ -1264,16 +1319,16 @@ public class Introduction extends BaseFragment {
         introTree.clearAnimation();
         introPost.clearAnimation();
 
-        introBuyl.setVisibility(View.GONE);
-        introSeagull.setVisibility(View.GONE);
-        introTree.setVisibility(View.GONE);
-        wave.setVisibility(View.GONE);
-        introMan.setVisibility(View.GONE);
-        introMom.setVisibility(View.GONE);
-        introSquid.setVisibility(View.GONE);
-        introBird.setVisibility(View.GONE);
-        introFather.setVisibility(View.GONE);
-        introFlower.setVisibility(View.GONE);
-        introPost.setVisibility(View.GONE);
+        introBuyl.setVisibility(GONE);
+        introSeagull.setVisibility(GONE);
+        introTree.setVisibility(GONE);
+        wave.setVisibility(GONE);
+        introMan.setVisibility(GONE);
+        introMom.setVisibility(GONE);
+        introSquid.setVisibility(GONE);
+        introBird.setVisibility(GONE);
+        introFather.setVisibility(GONE);
+        introFlower.setVisibility(GONE);
+        introPost.setVisibility(GONE);
     }
 }
