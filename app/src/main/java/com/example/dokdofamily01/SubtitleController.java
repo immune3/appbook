@@ -4,6 +4,8 @@ import com.example.dokdofamily01.Data.SubTitleDataById;
 
 import java.util.ArrayList;
 
+import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+
 /**
  * Created by mapl0 on 2018-01-08.
  */
@@ -35,7 +37,7 @@ public class SubtitleController {
     }
 
     private boolean canNext() {
-        TaleActivity.subtitleImageVIew.getId();
+//        TaleActivity.subtitleImageVIew.getId();
         if (storyFlag < subTitleList.size() - 1) {
             return true;
         } else return false;
@@ -46,7 +48,7 @@ public class SubtitleController {
         if (canNext()) {
             storyFlag++;
             TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
-        } else viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        } else if(checkedAnimation) viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 
     private boolean canFront() {
@@ -61,7 +63,7 @@ public class SubtitleController {
         if (canFront()) {
             storyFlag--;
             TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
-        } else viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        } else if(checkedAnimation) viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 
 }

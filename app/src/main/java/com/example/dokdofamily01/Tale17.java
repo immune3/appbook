@@ -1,23 +1,15 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -27,11 +19,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale17 extends BaseFragment {
-
-
-    MediaPlayer mp = null;
-
-    ArrayList<SubTitleData> subtitleList;
 
     ImageView dokdo_under_sea;
     ImageView wave_shadow1;
@@ -44,9 +31,6 @@ public class Tale17 extends BaseFragment {
 
     SoundPool sp;
     int soundID;
-//    int clickStar;
-//    int appearDokdo;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,32 +128,23 @@ public class Tale17 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_17);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"깜깜해지면...", "1500"},
-//                new String[]{"이렇게나 깊고 깊은 바닷속까지도", "5000"},
-//                new String[]{"서로를 보살피는 독도 가족들의 소리가 잘 들리지~", "9500"},
-//                new String[]{"동도할머니랑 서도할아버지가 \n" +
-//                        "동해바다에 정답게 마주 앉은 ", "15500"},
-//                new String[]{"아~주아~주 먼 옛날부터 오늘까지", "19000"},
-//                new String[]{"우리들은 언제나 서로 의지하고 \n" +
-//                        "함께 지켜주며 지내왔단다. ", "25000"}
-//        );
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_17_01, 1500},
-                new int[]{R.drawable.sub_17_02, 5000},
-                new int[]{R.drawable.sub_17_03, 9500},
-                new int[]{R.drawable.sub_17_04, 15500},
-                new int[]{R.drawable.sub_17_05, 19000},
-                new int[]{R.drawable.sub_17_06, 99999}
-        );
-
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_17, vp,
+                    new int[]{R.drawable.sub_17_01, 1500},
+                    new int[]{R.drawable.sub_17_02, 5000},
+                    new int[]{R.drawable.sub_17_03, 9500},
+                    new int[]{R.drawable.sub_17_04, 15500},
+                    new int[]{R.drawable.sub_17_05, 19000},
+                    new int[]{R.drawable.sub_17_06, 99999});
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_17_01,
+                    R.drawable.sub_17_02,
+                    R.drawable.sub_17_03,
+                    R.drawable.sub_17_04,
+                    R.drawable.sub_17_05,
+                    R.drawable.sub_17_06);
+        }
         checkedAnimation = true;
 
         sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);

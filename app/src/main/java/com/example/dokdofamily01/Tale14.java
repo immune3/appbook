@@ -1,14 +1,11 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -16,16 +13,11 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateOvershootInterpolator;
-
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -63,11 +55,7 @@ public class Tale14 extends BaseFragment {
     int bellClickFlag = 0;
     int animationFlag = 0;
 
-
-    MediaPlayer mp = null;
-    ArrayList<SubTitleData> subtitleList;
-
-    private SoundPool bubbleSoundPool, lightSoundPool, bellSoundPool;
+    private SoundPool bubbleSoundPool;
     private int soundID;
 
 
@@ -225,34 +213,25 @@ public class Tale14 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_14);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"혹돔굴에 가까워질수록 어둡고 깜깜해져요. ", "5000"},
-//                new String[]{"졸졸 따라오던 해님도 안보여요. ", "8500"},
-//                new String[]{"왠지 으스스한 느낌이 들어서 ", "11500"},
-//                new String[]{"별이는 오징어 이모한테 찰싹~ 붙어요. ", "16000"},
-//                new String[]{"드디어 혹돔굴이에요. ", "19000"},
-//                new String[]{"오징어 이모가 다시 긴 다리를 쭈욱 늘여 \n" +
-//                        "초인종을 꾸욱 눌러요. ", "25500"},
-//                new String[]{"딩동딩동~", "28500"}
-//
-//        );
-
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_14_01,5000},
-                new int[]{R.drawable.sub_14_02, 8500},
-                new int[]{R.drawable.sub_14_03, 11500},
-                new int[]{R.drawable.sub_14_04, 16000},
-                new int[]{R.drawable.sub_14_05, 19000},
-                new int[]{R.drawable.sub_14_06, 25500},
-                new int[]{R.drawable.sub_14_07, 99999}
-        );
-
-
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_14, vp,
+                    new int[]{R.drawable.sub_14_01, 5000},
+                    new int[]{R.drawable.sub_14_02, 8500},
+                    new int[]{R.drawable.sub_14_03, 11500},
+                    new int[]{R.drawable.sub_14_04, 16000},
+                    new int[]{R.drawable.sub_14_05, 19000},
+                    new int[]{R.drawable.sub_14_06, 25500},
+                    new int[]{R.drawable.sub_14_07, 99999});
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_14_01,
+                    R.drawable.sub_14_02,
+                    R.drawable.sub_14_03,
+                    R.drawable.sub_14_04,
+                    R.drawable.sub_14_05,
+                    R.drawable.sub_14_06,
+                    R.drawable.sub_14_07);
+        }
 
         land.post(new Runnable() {
             @Override

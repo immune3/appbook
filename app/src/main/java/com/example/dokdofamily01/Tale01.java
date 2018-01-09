@@ -11,10 +11,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
-
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
@@ -36,8 +32,6 @@ public class Tale01 extends BaseFragment {
     ImageView light;
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
-
-    ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int soundID;
@@ -214,20 +208,25 @@ public class Tale01 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-        musicController = new MusicController(getActivity(), R.raw.scene_1, vp,
-                new int[]{R.drawable.sub_01_01, 5000},
-                new int[]{R.drawable.sub_01_02, 7500},
-                new int[]{R.drawable.sub_01_03, 12500},
-                new int[]{R.drawable.sub_01_04, 17000},
-                new int[]{R.drawable.sub_01_05, 22500});
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_1, vp,
+                    new int[]{R.drawable.sub_01_01, 5000},
+                    new int[]{R.drawable.sub_01_02, 7500},
+                    new int[]{R.drawable.sub_01_03, 12500},
+                    new int[]{R.drawable.sub_01_04, 17000},
+                    new int[]{R.drawable.sub_01_05, 22500});
+        }
+        else {
 
-        //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
-        subtitleController = new SubtitleController(vp,
-                R.drawable.sub_01_01,
-                R.drawable.sub_01_02,
-                R.drawable.sub_01_03,
-                R.drawable.sub_01_04,
-                R.drawable.sub_01_05);
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_01_01,
+                    R.drawable.sub_01_02,
+                    R.drawable.sub_01_03,
+                    R.drawable.sub_01_04,
+                    R.drawable.sub_01_05);
+
+        }
+
 
         checkedAnimation = true;
         lampLight.clearAnimation();

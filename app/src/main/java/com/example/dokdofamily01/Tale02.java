@@ -1,7 +1,6 @@
 package com.example.dokdofamily01;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,10 +14,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-
-import com.example.dokdofamily01.Data.SubTitleData;
-
-import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -50,10 +45,6 @@ public class Tale02 extends BaseFragment {
     int width;
     int height;
     int animationFlag = 0;
-
-    MediaPlayer mp = null;
-
-    ArrayList<SubTitleData> subtitleList;
 
     SoundPool sp;
     int soundID;
@@ -154,35 +145,31 @@ public class Tale02 extends BaseFragment {
     }
 
     public void soundPlayFunc() {
-        musicController = new MusicController(getActivity(), R.raw.scene_2);
-//        subtitleList = new ArrayList<>();
-//        subtitleList = musicController.makeSubTitleList(
-//                new String[]{"갈매기에요", "1600"},
-//                new String[]{"하얀 깃털 옷을 새하얗게 차려입은 갈매기가 \n" +
-//                        "생긋~ 웃더니 말을 해요.", "8500"},
-//                new String[]{"별아 창문을 열어! ", "12500"},
-//                new String[]{"꿈이야...", "16000"},
-//                new String[]{"별이가 창문을 열어요.", "19000"},
-//                new String[]{"폴짝 뛰어든 바다냄새가 시원해요.", "23500"},
-//                new String[]{"갈매기가 또 말을 해요.", "27000"},
-//                new String[]{"별아 내 등에 앉아!", "31500"},
-//                new String[]{"진짜 꿈이야...", "35000"}
-//        );
-        musicController.makeSubTitleList(
-                new int[]{R.drawable.sub_02_01, 1600},
-                new int[]{R.drawable.sub_02_02, 8500},
-                new int[]{R.drawable.sub_02_03, 12500},
-                new int[]{R.drawable.sub_02_04, 16000},
-                new int[]{R.drawable.sub_02_05, 19000},
-                new int[]{R.drawable.sub_02_06, 23500},
-                new int[]{R.drawable.sub_02_07, 27000},
-                new int[]{R.drawable.sub_02_08, 31500},
-                new int[]{R.drawable.sub_02_09, 35000}
-        );
 
-        musicController.setVP(vp);
-        musicController.excuteAsync();
-        mp = musicController.getMp();
+        if( ((TaleActivity) getActivity()).isAutoRead) {
+            musicController = new MusicController(getActivity(), R.raw.scene_2, vp,
+                    new int[]{R.drawable.sub_02_01, 1600},
+                    new int[]{R.drawable.sub_02_02, 8500},
+                    new int[]{R.drawable.sub_02_03, 12500},
+                    new int[]{R.drawable.sub_02_04, 16000},
+                    new int[]{R.drawable.sub_02_05, 19000},
+                    new int[]{R.drawable.sub_02_06, 23500},
+                    new int[]{R.drawable.sub_02_07, 27000},
+                    new int[]{R.drawable.sub_02_08, 31500},
+                    new int[]{R.drawable.sub_02_09, 35000});
+
+        } else {
+            subtitleController = new SubtitleController(vp,
+                    R.drawable.sub_02_01,
+                    R.drawable.sub_02_02,
+                    R.drawable.sub_02_03,
+                    R.drawable.sub_02_04,
+                    R.drawable.sub_02_05,
+                    R.drawable.sub_02_06,
+                    R.drawable.sub_02_07,
+                    R.drawable.sub_02_08,
+                    R.drawable.sub_02_09);
+        }
 
         seagullHand.post(new Runnable() {
             @Override

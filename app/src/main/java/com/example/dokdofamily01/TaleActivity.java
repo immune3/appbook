@@ -66,6 +66,9 @@ public class TaleActivity extends AppCompatActivity{
     protected ImageView goHome;
     protected ImageView showPage;
 
+    Intent intent;
+    public boolean isAutoRead;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,9 @@ public class TaleActivity extends AppCompatActivity{
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
         menuContainer = (LinearLayout) findViewById(R.id.menuContainer);
+
+        intent = getIntent();
+        isAutoRead = intent.getBooleanExtra("isAutoRead", true);
 
         goFront = (ImageView) findViewById(R.id.goFront);
         goBack = (ImageView) findViewById(R.id.goBack);
