@@ -102,6 +102,7 @@ public class CustomTouchListener implements View.OnTouchListener {
         else diff = 0;
 
         delegate.onAction(motionEvent, checkDistanceX, checkDistanceY, diff);
+        delegateEvent();
 
         return true;
     }
@@ -137,6 +138,10 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void animationFunc(){
+
+    }
+
+    public void delegateEvent() {
 
     }
 }

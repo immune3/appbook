@@ -234,9 +234,18 @@ public class BaseFragment extends Fragment{
             blockAnimFunc();
         }
 
+        @Override
+        public void delegateEvent() {
+            super.delegateEvent();
+            delegateFunc();
+        }
     }
 
     public void blockAnimFunc(){
+
+    }
+
+    public void delegateFunc() {
 
     }
 
