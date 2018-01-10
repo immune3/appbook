@@ -204,7 +204,6 @@ public class PrologueActivity extends BaseActivity {
         super.setUpEvents();
 
         destroyHandler();
-        offScroll();
 
         CustomTouchListener mListener = new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
@@ -469,28 +468,6 @@ public class PrologueActivity extends BaseActivity {
         musicPlayer = MediaPlayer.create(context, R.raw.prologue);
         musicPlayer.setLooping(false);
         musicPlayer.start();
-    }
-
-    public void offScroll() {
-        sl.post(new Runnable() {
-            @Override
-            public void run() {
-
-                DisplayMetrics displayMetrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-                deviceHeight = displayMetrics.heightPixels;
-                deviceWidth = displayMetrics.widthPixels;
-
-                int innerWidth = sl.getWidth();
-                int innerHeight = sl.getHeight();
-                Log.e("length", "" + innerHeight);
-                Log.e("length", "" + deviceHeight);
-                sv.scrollTo(0, (innerHeight - deviceHeight) / 2);
-
-            }
-        });
-        sv.setScrolling(false);
     }
 
     @Override

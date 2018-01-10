@@ -8,12 +8,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.dokdofamily01.DB.LocalDB;
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 /**
  * Created by heronation on 2017-12-01.
  */
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     LocalDB db;
     String[][] isFirstArray;
@@ -31,8 +32,13 @@ public class SplashActivity extends Activity {
 
     }
 
-    public void setUpEvents() {
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    }
 
+    public void setUpEvents() {
+        super.setUpEvents();
         Handler hd = new Handler();
         hd.postDelayed(new Runnable() {
             @Override
@@ -74,6 +80,6 @@ public class SplashActivity extends Activity {
     }
 
     public void bindViews() {
-
+        super.bindViews();
     }
 }
