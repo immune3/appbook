@@ -252,6 +252,17 @@ public class Tale20 extends BaseFragment {
 
                     }
                 });
+                if (!homeKeyFlag && screenFlag) {
+                    loopBgm = MediaPlayer.create(getActivity(), R.raw.effect_20_2c);
+                    loopBgm.setVolume(0.2f, 0.2f);
+                    loopBgm.start();
+                    loopBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            loopBgm.start();
+                        }
+                    });
+                }
 
                 if (animationFlag == 0) {
                     checkedAnimation = false;
@@ -273,17 +284,7 @@ public class Tale20 extends BaseFragment {
             }
         });
 
-        if (!homeKeyFlag && screenFlag) {
-            loopBgm = MediaPlayer.create(getActivity(), R.raw.effect_20_2c);
-            loopBgm.setVolume(0.2f, 0.2f);
-            loopBgm.start();
-            loopBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    loopBgm.start();
-                }
-            });
-        }
+
     }
 
     @Override
