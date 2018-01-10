@@ -4,14 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
-
-import com.ssomai.android.scalablelayout.ScalableLayout;
 
 /**
  * Created by mapl0 on 2018-01-05.
