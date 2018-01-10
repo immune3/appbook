@@ -27,7 +27,6 @@ public class BaseFragment extends Fragment{
     RelativeLayout rl;
     public RelativeLayout layout;
     public int xml = 0;
-    static public int firstFlag = 0;
     public MusicController musicController;
     public SubtitleController subtitleController;
     boolean isHint;
