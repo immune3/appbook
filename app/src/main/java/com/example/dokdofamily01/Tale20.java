@@ -115,17 +115,11 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
-
-        cutain.setOnTouchListener(new BlockObjListener());
+//        cutain.setOnTouchListener(new BlockObjListener());
     }
 
     @Override
     public void blockAnimFunc() {
-//        if(animationFlag == 0 && checkedAnimation == true && endFlag == 0) {
-//            checkedAnimation = false;
-//            animationFlag = 1;
-////            cutain.startAnimation(cutainDownAnimation1);
-//        }
         super.blockAnimFunc();
     }
 
@@ -302,7 +296,9 @@ public class Tale20 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (!isVisibleToUser) {
-                loopBgm.release();
+                if(loopBgm != null && loopBgm.isPlaying()) {
+                    loopBgm.release();
+                }
             }
         }
     }
@@ -316,13 +312,17 @@ public class Tale20 extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        loopBgm.release();
+        if(loopBgm != null && loopBgm.isPlaying()) {
+            loopBgm.release();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        loopBgm.release();
+        if(loopBgm != null && loopBgm.isPlaying()) {
+            loopBgm.release();
+        }
     }
 }
 
