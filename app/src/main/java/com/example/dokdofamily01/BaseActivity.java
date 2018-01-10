@@ -20,6 +20,7 @@ public class BaseActivity extends Activity {
 
     public static Context context;
 
+
     ScalableLayout sl;
     CustomScrollView sv;
     RelativeLayout rl;
@@ -37,8 +38,6 @@ public class BaseActivity extends Activity {
 //        setUpEvents();
 
     }
-
-
 
     public void setAnimation() {
 
