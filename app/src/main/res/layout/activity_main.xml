@@ -4,7 +4,11 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
 
+=======
+    android:id="@+id/rl"
+>>>>>>> 1747137060c8477baf1125482afb6227861c19d9
     >
 
     <com.example.dokdofamily01.CustomScrollView

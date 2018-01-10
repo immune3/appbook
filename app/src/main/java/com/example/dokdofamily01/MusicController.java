@@ -126,9 +126,12 @@ public class MusicController {
         return subtitleList1;
     }
 
+<<<<<<< HEAD
     public int getSubtitleIndex(){ return subtitleIndex;}
 
 
+=======
+>>>>>>> 1747137060c8477baf1125482afb6227861c19d9
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
 
@@ -266,7 +269,7 @@ public class MusicController {
 
             try {
                 Log.d("subtitleIndex ", subtitleIndex + "");
-                if (mp!= null && subtitleIndex < subtitleList.size() && mp.isPlaying()) {
+                if (mp!= null && subtitleIndex < subtitleList.size() - 1 && mp.isPlaying()) {
                     subtitleIndex++;
                     mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                     return true;
