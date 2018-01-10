@@ -230,7 +230,7 @@ public class Tale20 extends BaseFragment {
                 });
 
                 cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, cutain.getHeight()*0.45f);
-                cutainDownAnimation2.setDuration(34000);
+                cutainDownAnimation2.setDuration(30000);
                 cutainDownAnimation2.setFillAfter(true);
 
                 cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
@@ -296,8 +296,11 @@ public class Tale20 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isAttached) {
             if (!isVisibleToUser) {
-                if(loopBgm != null && loopBgm.isPlaying()) {
+                try {
+                    loopBgm.pause();
                     loopBgm.release();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
@@ -312,16 +315,22 @@ public class Tale20 extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(loopBgm != null && loopBgm.isPlaying()) {
+        try {
+            loopBgm.pause();
             loopBgm.release();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(loopBgm != null && loopBgm.isPlaying()) {
+        try {
+            loopBgm.pause();
             loopBgm.release();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
