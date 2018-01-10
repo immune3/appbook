@@ -1,11 +1,15 @@
 package com.example.dokdofamily01;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.RelativeLayout;
 
 import com.example.dokdofamily01.DB.LocalDB;
 import com.ssomai.android.scalablelayout.ScalableLayout;
@@ -19,6 +23,11 @@ public class SplashActivity extends BaseActivity {
     LocalDB db;
     String[][] isFirstArray;
     int isFirst;
+
+    ScalableLayout sl;
+    CustomScrollView sv;
+    RelativeLayout rl;
+    CustomHorizontalScrollView hv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,17 +48,23 @@ public class SplashActivity extends BaseActivity {
 
     public void setUpEvents() {
         super.setUpEvents();
+        scrollCenter();
         Handler hd = new Handler();
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if(isFirst == 1) {
                     db.query("update Prologue set isFirst = 0");
-
                     Intent intent = new Intent(getApplicationContext(), PrologueActivity.class);
+                    intent.putExtra("isFirst",true);
                     startActivity(intent);
                     finish();
-                } else finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("isFirst",false);
+                    startActivity(intent);
+                    finish();
+                }
 
                 db = null;
             }
@@ -81,5 +96,55 @@ public class SplashActivity extends BaseActivity {
 
     public void bindViews() {
         super.bindViews();
+
+        sv = (CustomScrollView) findViewById(R.id.sv);
+        rl = (RelativeLayout)findViewById(R.id.rl);
+        sl = (ScalableLayout)findViewById(R.id.sl);
+        hv = new CustomHorizontalScrollView(this);
+        HorizontalScrollView.LayoutParams lp = new HorizontalScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        hv.setLayoutParams(lp);
+    }
+
+    public void scrollCenter(){
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                final int deviceWidth= displayMetrics.widthPixels;
+                int deviceHeight = displayMetrics.heightPixels;
+                Log.d("slWidth", sl.getWidth() + "");
+
+                float ratio = (float)deviceWidth/(float)deviceHeight;
+                Log.e("ratio", ""+ratio);
+                if(ratio<=1.66){
+
+                    sv.removeView(sl);
+                    rl.removeView(sv);
+                    hv.addView(sl);
+                    rl.addView(hv);
+
+                    hv.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int innerWidth = hv.getChildAt(0).getWidth();
+                            Log.e("innerWidth", ""+innerWidth);
+                            hv.scrollTo((innerWidth-deviceWidth)/2,0);
+                            hv.setScrolling(false);
+                            rl.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                }else{
+                    int innerHeight = sl.getHeight();
+                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                    Log.e("innerHeight", innerHeight + "");
+                    sv.setScrolling(false);
+                    rl.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 }

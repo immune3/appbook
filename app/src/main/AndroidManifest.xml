@@ -11,9 +11,9 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppFullScreenTheme">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|screenSize">
+
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +21,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize">
+
+        </activity>
+
         <activity android:name=".TaleActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize"/>
-
-        <activity android:name=".SplashActivity"
-            android:screenOrientation="landscape"/>
 
         <activity android:name=".PrologueActivity"
             android:screenOrientation="landscape"/>
