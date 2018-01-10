@@ -12,7 +12,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
@@ -128,17 +127,17 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 0;
                     checkedAnimation = true;
 
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -148,17 +147,17 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 1;
                     checkedAnimation = true;
 
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -169,16 +168,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 2;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
 
                 return super.onTouch(view, motionEvent);
@@ -189,16 +188,18 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
+                    animationClear();
+                    animationCaseFlag = 3;
+                    checkedAnimation = true;
+                }
             }
         }) {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    animationClear();
-                    animationCaseFlag = 3;
-                    checkedAnimation = true;
-                }
+
 
                 return super.onTouch(view, motionEvent);
             }
@@ -208,16 +209,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 4;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -227,16 +228,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 5;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -246,16 +247,17 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
+                    animationClear();
+                    animationCaseFlag = 6;
+                    checkedAnimation = true;
+                }
             }
         }) {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    animationClear();
-                    animationCaseFlag = 6;
-                    checkedAnimation = true;
-                }
                 return super.onTouch(view, motionEvent);
             }
         });
@@ -264,16 +266,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 7;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -283,16 +285,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 8;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -302,16 +304,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 9;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -321,16 +323,16 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
-            }
-        }) {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 10;
                     checkedAnimation = true;
                 }
+            }
+        }) {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 return super.onTouch(view, motionEvent);
             }
@@ -340,18 +342,22 @@ public class Introduction extends BaseFragment {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
                 moveFragment(motionEvent, checkDistanceX);
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
+                    animationClear();
+                    animationCaseFlag = 11;
+                    checkedAnimation = true;
+                }
             }
         }) {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    animationClear();
-                    animationCaseFlag = 11;
-                    checkedAnimation = true;
-                }
+
                 return super.onTouch(view, motionEvent);
             }
+
+
         });
 
     }
@@ -428,6 +434,13 @@ public class Introduction extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
+
+    }
+
+    @Override
+    public void delegateFunc() {
+        super.delegateFunc();
+
         switch (animationCaseFlag) {
             case 0:
 
