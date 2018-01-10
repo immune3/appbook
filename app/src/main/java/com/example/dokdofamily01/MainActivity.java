@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.dokdofamily01.DB.LocalDB;
 import com.ssomai.android.scalablelayout.ScalableLayout;
@@ -146,4 +147,25 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+    private long pressedTime;
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if(pressedTime == 0){
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            pressedTime = System.currentTimeMillis();
+        }else{
+            int second = (int)(System.currentTimeMillis() - pressedTime);
+
+            if(second > 2000){
+                pressedTime = 0;
+            }else{
+                finish();
+            }
+        }
+
+
+    }
 }

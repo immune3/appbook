@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
@@ -575,6 +576,7 @@ public class Introduction extends BaseFragment {
     public void onResume() {
         initVisible();
         super.onResume();
+
     }
 
     @Override
