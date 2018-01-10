@@ -1,5 +1,7 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -55,6 +57,8 @@ public class Tale19 extends BaseFragment {
     int animationFlag = 0;
     int starFallCount = 0;
 
+    SoundPool starAppearSp, starFallSp;
+    int starAppearEffect, starFallEffect;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,7 +148,9 @@ public class Tale19 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
+
         if(animationFlag == 0) {
+            starAppearEffect = starAppearSp.load(getContext(), R.raw.effect_18_appear, 1);
             checkedAnimation = false;
             starFallCount = 0;
             animationFlag = 1;
@@ -212,14 +218,28 @@ public class Tale19 extends BaseFragment {
         light.post(new Runnable() {
             @Override
             public void run() {
+                starAppearSp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                starAppearSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        starAppearSp.play(starAppearEffect, 1, 1, 1, 0, 1);
+                    }
+                });
+
+                starFallSp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                starFallSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        starFallSp.play(starFallEffect, 1, 1, 1, 0, 1);
+                    }
+                });
+
                 starAppear = new TranslateAnimation(0, 0, -star1.getHeight(), 0);
                 starAppear.setDuration(3000);
-                starAppear.setInterpolator(new AccelerateDecelerateInterpolator());
                 starAppear.setInterpolator(new BounceInterpolator());
                 starAppear.setAnimationListener(new MyAnimationListener());
 
                 starAppearAniSet = new AnimationSet(false);
-
                 starAppearAniSet.addAnimation(starAppear);
                 starAppearAniSet.addAnimation(fadein);
                 starAppearAniSet.setAnimationListener(new Animation.AnimationListener() {
@@ -239,17 +259,17 @@ public class Tale19 extends BaseFragment {
                     }
                 });
 
-                int offsetDelay = 200;
+                int offsetDelay = 100;
 
                 for (int iter = 0; iter < 5; iter++) {
                     miniStarFadein[iter] = new AlphaAnimation(0, 1);
                     miniStarFadein[iter].setStartOffset(iter*offsetDelay);
                     miniStarFadein[iter].setDuration(1000);
 
-                    miniStarAppear[iter] = new TranslateAnimation(0, 0, star2.getHeight()*3, 0);
+                    miniStarAppear[iter] = new TranslateAnimation(0, 0, -star1.getHeight()*1.5f, 0);
                     miniStarAppear[iter].setStartOffset(iter*offsetDelay);
-                    miniStarAppear[iter].setDuration(1000);
-                    miniStarAppear[iter].setInterpolator(new OvershootInterpolator());
+                    miniStarAppear[iter].setDuration(1500);
+                    miniStarAppear[iter].setInterpolator(new BounceInterpolator());
 
                     miniStarFadeout[iter] = new AlphaAnimation(1, 0);
                     miniStarFadeout[iter].setStartOffset(iter*offsetDelay + 5500);
@@ -271,6 +291,22 @@ public class Tale19 extends BaseFragment {
                 starFall.setDuration(1000);
                 starFall.setInterpolator(new AnticipateInterpolator());
                 starFall.setFillAfter(true);
+                starFall.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        starFallEffect = starFallSp.load(getContext(), R.raw.effect_03_clouds, 1);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 starDisappearAniSet = new AnimationSet(false);
                 starDisappearAniSet.addAnimation(starFall);
@@ -322,71 +358,6 @@ public class Tale19 extends BaseFragment {
                     }
                 });
 
-
-//                float ratio = 0.6f;
-//
-//                for (int iter = 0; iter < 5; iter++) {
-//                    starFadein[iter] = new AlphaAnimation(0, 1);
-//                    starFadein[iter].setStartOffset(iter * 300);
-//                    starFadein[iter].setDuration(500);
-////                    starFadein[iter].setFillAfter(true);
-//
-//                    starFall[iter] = new TranslateAnimation(0, 0, 0, star2.getHeight() * ratio);
-//                    starFall[iter].setDuration(800);
-//                    starFall[iter].setStartOffset(iter * 300 + 500);
-//                    starFall[iter].setInterpolator(new AnticipateInterpolator());
-////                    starFall[iter].setFillAfter(true);
-//
-//                    starFadeout[iter] = new AlphaAnimation(1, 0);
-//                    starFadeout[iter].setStartOffset(iter * 300 + 1300);
-//                    starFadeout[iter].setDuration(500);
-//                    starFadeout[iter].setFillAfter(true);
-//
-//                    starFallAniSet[iter] = new AnimationSet(false);
-//                    starFallAniSet[iter].addAnimation(starFadein[iter]);
-//                    starFallAniSet[iter].addAnimation(starFall[iter]);
-//                    starFallAniSet[iter].addAnimation(starFadeout[iter]);
-//                    starFallAniSet[iter].setFillAfter(true);
-//
-//                    ratio *= 1.7f;
-////                    starFallAniSet[iter].setStartOffset(1000*iter);
-//                }
-//
-//
-//                starFadeout[4].setAnimationListener(new Animation.AnimationListener(){
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-//                        if (starFallCount < 4) {
-//                            star6.setVisibility(View.INVISIBLE);
-//                            star2.startAnimation(starFallAniSet[0]);
-//                            star3.startAnimation(starFallAniSet[1]);
-//                            star4.startAnimation(starFallAniSet[2]);
-//                            star5.startAnimation(starFallAniSet[3]);
-//                            star6.startAnimation(starFallAniSet[4]);
-//                        } else {
-//                            checkedAnimation = true;
-//                            starLight.setVisibility(View.INVISIBLE);
-//                            light.setVisibility(View.INVISIBLE);
-//                            star1.startAnimation(blink);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//                    }
-//
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-//                        starFallCount++;
-//                        if (starFallCount < 4) {
-////                            star6.setVisibility(View.INVISIBLE);
-//                        } else {
-//                            starLight.startAnimation(fadeout);
-//                            light.startAnimation(fadeout);
-//                        }
-//                    }
-//                });
-
                 checkedAnimation = false;
                 star1.setVisibility(View.INVISIBLE);
                 starLight.clearAnimation();
@@ -410,6 +381,14 @@ public class Tale19 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if (starAppearSp != null) {
+                starAppearSp.release();
+            }
+            if (starFallSp != null) {
+                starFallSp.release();
+            }
+        }
     }
 
     @Override
