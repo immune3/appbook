@@ -237,9 +237,8 @@ public class Tale20 extends BaseFragment {
                 cutainDownAnimation2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
+                        cutainText.clearAnimation();
                         endFlag = 0;
-//                        Log.d("abab", musicController.getMp().getCurrentPosition()+"/");
-//                        Log.d("abab", musicController.getSubtitleIndex()+"/");
                         animationFlag = 0;
                         checkedAnimation = true;
                     }
@@ -247,11 +246,6 @@ public class Tale20 extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         endFlag = 1;
-//                        Log.d("abab", +"/");
-//                        if( ((TaleActivity) getActivity()).isAutoRead && (musicController !=null) && (musicController.getMp().getCurrentPosition() > 35000)) {
-//                            subtitleImageVIew.setImageResource(android.R.color.transparent);
-//                            cutainText.startAnimation(fadein);
-//                        }
                     }
 
                     @Override
@@ -259,15 +253,6 @@ public class Tale20 extends BaseFragment {
 
                     }
                 });
-//                new int[]{R.drawable.sub_20_01, 3000},
-//                        new int[]{R.drawable.sub_20_02, 8500},
-//                        new int[]{R.drawable.sub_20_03, 15000},
-//                        new int[]{R.drawable.sub_20_04, 18000},
-//                        new int[]{R.drawable.sub_20_05, 21000},
-//                        new int[]{R.drawable.sub_20_06, 24000},
-//                        new int[]{R.drawable.sub_20_07, 29500},
-//                        new int[]{R.drawable.sub_20_08, 36500},
-//                        new int[]{R.drawable.sub_20_09, 99999});
 
                 if (animationFlag == 0) {
                     checkedAnimation = false;

@@ -1,5 +1,7 @@
 package com.example.dokdofamily01;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -55,6 +57,8 @@ public class Tale19 extends BaseFragment {
     int animationFlag = 0;
     int starFallCount = 0;
 
+    SoundPool starAppearSp, starFallSp;
+    int starAppearEffect, starFallEffect;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,7 +148,9 @@ public class Tale19 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
+
         if(animationFlag == 0) {
+            starAppearEffect = starAppearSp.load(getContext(), R.raw.effect_18_appear, 1);
             checkedAnimation = false;
             starFallCount = 0;
             animationFlag = 1;
@@ -212,6 +218,22 @@ public class Tale19 extends BaseFragment {
         light.post(new Runnable() {
             @Override
             public void run() {
+                starAppearSp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                starAppearSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        starAppearSp.play(starAppearEffect, 1, 1, 1, 0, 1);
+                    }
+                });
+
+                starFallSp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                starFallSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                        starFallSp.play(starFallEffect, 1, 1, 1, 0, 1);
+                    }
+                });
+
                 starAppear = new TranslateAnimation(0, 0, -star1.getHeight(), 0);
                 starAppear.setDuration(3000);
                 starAppear.setInterpolator(new BounceInterpolator());
@@ -269,6 +291,22 @@ public class Tale19 extends BaseFragment {
                 starFall.setDuration(1000);
                 starFall.setInterpolator(new AnticipateInterpolator());
                 starFall.setFillAfter(true);
+                starFall.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        starFallEffect = starFallSp.load(getContext(), R.raw.effect_03_clouds, 1);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 starDisappearAniSet = new AnimationSet(false);
                 starDisappearAniSet.addAnimation(starFall);
@@ -343,6 +381,14 @@ public class Tale19 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser) {
+            if (starAppearSp != null) {
+                starAppearSp.release();
+            }
+            if (starFallSp != null) {
+                starFallSp.release();
+            }
+        }
     }
 
     @Override
