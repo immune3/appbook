@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 
 import com.example.dokdofamily01.Data.SubTitleData;
 import com.example.dokdofamily01.Data.SubTitleDataById;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.dokdofamily01.Tale20.cutainText;
+import static com.example.dokdofamily01.Tale20.endFlag;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -32,19 +36,28 @@ public class MusicController {
     private MyAsynTask createMP;
     private MyThread subtitleThread;
     private CustomViewPager vp;
+    int subtitleIndex = 0;
+
+    AlphaAnimation fadein;
+    int animFlag;
 
     public MusicController(Context context, int audioID) {
         this.mContext = context;
         this.resID = audioID;
-
+        animFlag = 0;
     }
 
     public MusicController(Context context, int audioID, CustomViewPager viewPager, int[]... sub) {
         this.mContext = context;
         this.resID = audioID;
         vp = viewPager;
+        fadein = new AlphaAnimation(0,1);
+        fadein.setDuration(500);
+        fadein.setFillAfter(true);
+        animFlag = 0;
         makeSubTitleList(sub);
         excuteAsync();
+
     }
 
     public void setVP(CustomViewPager vp) {
@@ -113,6 +126,8 @@ public class MusicController {
         return subtitleList1;
     }
 
+    public int getSubtitleIndex(){ return subtitleIndex;}
+
 
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
@@ -124,6 +139,7 @@ public class MusicController {
                 if (mediaPlayer != null) {
                     mediaPlayer.start();
                     Timer timer = new Timer();
+                    subtitleIndex = 0;
                     subtitleThread = new MyThread();
                     subtitleThread.setMP(mediaPlayer);
                     timer.schedule(subtitleThread, 0, 500);
@@ -185,14 +201,12 @@ public class MusicController {
             return mp;
         }
 
-
     }
 
 
     class MyThread extends TimerTask {
 
         int finishTime = 0;
-        int subtitleIndex = 0;
         MediaPlayer mp;
 
         public void setMP(MediaPlayer mediaPlayer) {
@@ -266,7 +280,7 @@ public class MusicController {
         }
 
         public boolean decreaseSubtitleMusic() {
-
+//            subtitleImageVIew.setVisibility(View.VISIBLE);
             try {
                 if (mp!=null && mp.isPlaying()) {
                     if (subtitleIndex > 1) {
@@ -294,6 +308,9 @@ public class MusicController {
             }
 
         }
+//        public int getSubtitleIndex(){
+//            return subtitleIndex;
+//        }
     }
 
     Handler mHandler = new Handler() {
@@ -302,7 +319,21 @@ public class MusicController {
             if (msg.what >= 0) {
 //                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
-                subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
+                try {
+                    if(endFlag == 1 && msg.what == 8) {
+                        if(animFlag == 0) {
+                            animFlag = 1;
+                            cutainText.startAnimation(fadein);
+                        }
+                    }
+                    else{
+                        subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+//                subtitleImageVIew.setTag((Integer)msg.what);
 //                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
                 subtitleImageVIew.setImageDrawable(null);
