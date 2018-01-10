@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,7 +26,7 @@ public class MainActivity extends BaseActivity {
     CustomHorizontalScrollView hv;
     private android.widget.Button prologueBtn;
     private boolean isFirst;
-
+    MediaPlayer titleBgm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,18 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        playBgm();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        titleBgm.release();
+    }
+
+    @Override
     public void setAnimation() {
         super.setAnimation();
     }
@@ -61,6 +74,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, TaleActivity.class);
                 intent.putExtra("isAutoRead", true);
                 startActivity(intent);
+                titleBgm.release();
             }
         });
 
@@ -70,6 +84,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, TaleActivity.class);
                 intent.putExtra("isAutoRead", false);
                 startActivity(intent);
+                titleBgm.release();
             }
         });
 
@@ -78,6 +93,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, PrologueActivity.class);
                 startActivity(intent);
+                titleBgm.release();
             }
         });
     }
@@ -147,6 +163,17 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    private void playBgm(){
+        titleBgm = MediaPlayer.create(context, R.raw.title_bgm);
+        titleBgm.setVolume(1f, 1f);
+        titleBgm.start();
+        titleBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                titleBgm.start();
+            }
+        });
+    }
 
     private long pressedTime;
 
