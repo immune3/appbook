@@ -173,7 +173,11 @@ public class BaseFragment extends Fragment{
             super.delegate = new AsyncResponse() {
                 @Override
                 public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-
+                    if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && musicController != null) {
+                        musicController.nextPart();
+                    } else if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && subtitleController != null) {
+                        subtitleController.nextInActionUp();
+                    }
                 }
             };
         }
@@ -238,7 +242,11 @@ public class BaseFragment extends Fragment{
             super.delegate = new AsyncResponse() {
                 @Override
                 public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-
+                    if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && musicController != null) {
+                        musicController.nextPart();
+                    } else if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && subtitleController != null) {
+                        subtitleController.nextInActionUp();
+                    }
                 }
             };
         }
@@ -298,7 +306,10 @@ public class BaseFragment extends Fragment{
                 subtitleController.next();
             }
         }
+
     }
+
+
 
 
     @Override

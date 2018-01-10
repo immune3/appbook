@@ -26,6 +26,7 @@ public class BaseActivity extends Activity {
 
     }
 
+
     public void setAnimation() {
 
     }

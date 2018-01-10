@@ -51,6 +51,13 @@ public class SubtitleController {
         } else if(checkedAnimation) viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 
+    public void nextInActionUp() {
+        if (canNext()) {
+            storyFlag++;
+            TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
+        }
+    }
+
     private boolean canFront() {
         TaleActivity.subtitleImageVIew.getId();
         if (storyFlag > 0) {

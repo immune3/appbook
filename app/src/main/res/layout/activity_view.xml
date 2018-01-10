@@ -28,11 +28,12 @@
         android:layout_height="wrap_content"
         app:scale_base_width="2560"
         app:scale_base_height="480">
+
         <ImageView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             app:scale_width = "2560"
-            app:scale_height= "480"
+            app:scale_height= "550"
             android:id="@+id/subtitleImageView"
             />
 
