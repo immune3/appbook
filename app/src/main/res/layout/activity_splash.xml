@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:id="@+id/rl"
+    android:visibility="invisible"
     >
 
     <com.example.dokdofamily01.CustomScrollView
