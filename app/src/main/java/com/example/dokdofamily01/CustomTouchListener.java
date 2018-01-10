@@ -124,7 +124,6 @@ public class CustomTouchListener implements View.OnTouchListener {
     }
 
     public void increaseFunc(){
-        Log.d("currentItem",customViewPager.getCurrentItem() +"");
         if(checkedAnimation) {
             if(customViewPager.getCurrentItem() == 20){
                 Toast.makeText(mContext, "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
