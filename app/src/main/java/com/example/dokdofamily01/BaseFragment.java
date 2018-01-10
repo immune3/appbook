@@ -1,5 +1,6 @@
 package com.example.dokdofamily01;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,13 +35,15 @@ public class BaseFragment extends Fragment{
     public CustomViewPager vp;
     MyChangeListener change ;
 
+    public Context context;
+
     CustomHorizontalScrollView hv;
     int innerWidth,innerHeight;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        context = getActivity();
     }
 
     @Override
@@ -179,6 +182,7 @@ public class BaseFragment extends Fragment{
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            this.mContext = context;
             customViewPager = vp;
             return super.onTouch(view, motionEvent);
         }
@@ -211,7 +215,10 @@ public class BaseFragment extends Fragment{
                     super.increaseFunc();
                 }
             } else if(subtitleController != null) {
+                Log.d("ASC", "nextSub");
                 subtitleController.next();
+            }else{
+                super.increaseFunc();
             }
         }
 
@@ -229,6 +236,8 @@ public class BaseFragment extends Fragment{
 
     class MyChangeListener extends CustomTouchListener{
 
+
+
         public MyChangeListener(AsyncResponse asyncResponse) {
             super.delegate = asyncResponse;
         }
@@ -245,6 +254,7 @@ public class BaseFragment extends Fragment{
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             Log.d("Touch","On");
+            this.mContext = context;
             customViewPager = vp;
             return super.onTouch(view, motionEvent);
         }
@@ -294,7 +304,10 @@ public class BaseFragment extends Fragment{
                 }
 
             } else if(subtitleController != null) {
+                Log.d("ASC", "nextSub");
                 subtitleController.next();
+            }else{
+                super.increaseFunc();
             }
         }
     }

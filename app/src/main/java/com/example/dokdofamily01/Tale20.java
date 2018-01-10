@@ -1,5 +1,6 @@
 package com.example.dokdofamily01;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
+import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
+import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -40,6 +43,7 @@ public class Tale20 extends BaseFragment {
     AlphaAnimation fadein;
     AlphaAnimation fadeout;
 
+    MediaPlayer loopBgm;
 
     int animationFlag = 0;
     int cutainFlag = 0;
@@ -296,6 +300,18 @@ public class Tale20 extends BaseFragment {
                 }
             }
         });
+
+        if (!homeKeyFlag && screenFlag) {
+            loopBgm = MediaPlayer.create(getActivity(), R.raw.effect_20_2c);
+            loopBgm.setVolume(0.5f, 0.5f);
+            loopBgm.start();
+            loopBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    loopBgm.start();
+                }
+            });
+        }
     }
 
     @Override
@@ -306,16 +322,29 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (isAttached) {
+            if (!isVisibleToUser) {
+                loopBgm.release();
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        loopBgm.release();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        loopBgm.release();
     }
 }
 

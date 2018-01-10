@@ -22,12 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by heronation on 2017-11-06.
  */
 
-public class TaleActivity extends AppCompatActivity{
+public class TaleActivity extends AppCompatActivity {
     // 화면 꺼짐 제어용 변수
     PowerManager.WakeLock m_sleep_lock = null;
 
@@ -41,7 +42,7 @@ public class TaleActivity extends AppCompatActivity{
     TranslateAnimation ani_menuContainer_down;
     Button showMenu;
     Button menuBtn;
-    private float x1,x2;
+    private float x1, x2;
     static final int MIN_DISTANCE = 150;
 
     static boolean checkedAnimation = false;
@@ -148,15 +149,23 @@ public class TaleActivity extends AppCompatActivity{
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = vp.getCurrentItem() - 1;
-                if (checkedAnimation) vp.setCurrentItem(position, true);
+                if (vp.getCurrentItem() == 0) {
+                    Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    int position = vp.getCurrentItem() - 1;
+                    if (checkedAnimation) vp.setCurrentItem(position, true);
+                }
             }
         });
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = vp.getCurrentItem() + 1;
-                if (checkedAnimation) vp.setCurrentItem(position, true);
+                if (vp.getCurrentItem() == 20) {
+                    Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    int position = vp.getCurrentItem() + 1;
+                    if (checkedAnimation) vp.setCurrentItem(position, true);
+                }
             }
         });
         goHome.setOnClickListener(new View.OnClickListener() {
@@ -216,25 +225,22 @@ public class TaleActivity extends AppCompatActivity{
         registerReceiver(screenOffReceiver, screenOffFilter);
 
         // 컨텍스트의 전원에 관한 시스템 서비스를 얻는다.
-        PowerManager power = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        PowerManager power = (PowerManager) getSystemService(Context.POWER_SERVICE);
         // 화면이 꺼지 않도록 제어할 수 있는 권리를 얻는다.
         m_sleep_lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK, "TaleActivity");
 
         m_sleep_lock.acquire();
     }
 
-    private class pagerAdapter extends FragmentStatePagerAdapter
-    {
+    private class pagerAdapter extends FragmentStatePagerAdapter {
 
-        public pagerAdapter(android.support.v4.app.FragmentManager fm)
-        {
+        public pagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
         }
+
         @Override
-        public android.support.v4.app.Fragment getItem(int position)
-        {
-            switch(position)
-            {
+        public android.support.v4.app.Fragment getItem(int position) {
+            switch (position) {
                 case 0:
                     return new Tale01();
                 case 1:
@@ -281,9 +287,9 @@ public class TaleActivity extends AppCompatActivity{
                     return null;
             }
         }
+
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return 21;
         }
 
@@ -298,13 +304,14 @@ public class TaleActivity extends AppCompatActivity{
         }
 
     }
+
     private class MyAnimationListener implements Animation.AnimationListener {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if(showFlag) {
+            if (showFlag) {
                 menuBtn.setTranslationY(0);
-            }else{
+            } else {
                 menuBtn.setTranslationY(showMenuHeight);
             }
         }
@@ -318,14 +325,15 @@ public class TaleActivity extends AppCompatActivity{
         }
 
     }
+
     private class MyAnimationListener1 implements Animation.AnimationListener {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if(showFlag) {
+            if (showFlag) {
                 menuContainer.setTranslationY(0);
                 showFlag = false;
-            }else{
+            } else {
                 menuContainer.setTranslationY(showMenuHeight);
                 showFlag = true;
             }
@@ -341,24 +349,24 @@ public class TaleActivity extends AppCompatActivity{
 
     }
 
-    private void setAnimation(){
+    private void setAnimation() {
 
-        ani_menu_up = new TranslateAnimation(0,0,showMenuHeight,0);
+        ani_menu_up = new TranslateAnimation(0, 0, showMenuHeight, 0);
         ani_menu_up.setDuration(500);
         ani_menu_up.setFillAfter(true);
         ani_menu_up.setAnimationListener(new MyAnimationListener());
 
-        ani_menu_down = new TranslateAnimation(0,0,0,showMenuHeight);
+        ani_menu_down = new TranslateAnimation(0, 0, 0, showMenuHeight);
         ani_menu_down.setDuration(500);
         ani_menu_down.setFillAfter(true);
         ani_menu_down.setAnimationListener(new MyAnimationListener());
 
-        ani_menuContainer_up = new TranslateAnimation(0,0,showMenuHeight,0);
+        ani_menuContainer_up = new TranslateAnimation(0, 0, showMenuHeight, 0);
         ani_menuContainer_up.setDuration(500);
         ani_menuContainer_up.setFillAfter(true);
         ani_menuContainer_up.setAnimationListener(new MyAnimationListener1());
 
-        ani_menuContainer_down = new TranslateAnimation(0,0,0,showMenuHeight);
+        ani_menuContainer_down = new TranslateAnimation(0, 0, 0, showMenuHeight);
         ani_menuContainer_down.setDuration(500);
         ani_menuContainer_down.setFillAfter(true);
         ani_menuContainer_down.setAnimationListener(new MyAnimationListener1());
@@ -369,11 +377,11 @@ public class TaleActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(screenOffReceiver!=null && screenFlag == false){
+        if (screenOffReceiver != null && screenFlag == false) {
             unregisterReceiver(screenOffReceiver);
             screenOffReceiver = null;
         }
-        if(m_sleep_lock.isHeld()) {
+        if (m_sleep_lock.isHeld()) {
             // 화면 제어를 해제한다.
             m_sleep_lock.release();
         }
@@ -390,7 +398,7 @@ public class TaleActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         // 화면 제어가 동작중인 경우
-        if(m_sleep_lock.isHeld()) {
+        if (m_sleep_lock.isHeld()) {
             // 화면 제어를 해제한다.
             m_sleep_lock.release();
         }
@@ -400,12 +408,12 @@ public class TaleActivity extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
 
-        if(screenOffReceiver!=null && screenFlag == false){
+        if (screenOffReceiver != null && screenFlag == false) {
             unregisterReceiver(screenOffReceiver);
             screenOffReceiver = null;
         }
         // 화면 제어가 동작중인 경우
-        if(m_sleep_lock.isHeld()) {
+        if (m_sleep_lock.isHeld()) {
             // 화면 제어를 해제한다.
             m_sleep_lock.release();
         }
@@ -418,7 +426,7 @@ public class TaleActivity extends AppCompatActivity{
         Log.d("homeKeyFlag", homeKeyFlag + "");
         Log.d("currentVpPos", currentVpPos + "");
 
-        if(screenOffReceiver == null ){
+        if (screenOffReceiver == null) {
             screenOffReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -450,6 +458,7 @@ public class TaleActivity extends AppCompatActivity{
         currentVpPos = vp.getCurrentItem();
         super.onUserLeaveHint();
     }
+
 
 }
 

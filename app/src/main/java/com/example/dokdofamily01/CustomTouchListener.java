@@ -1,8 +1,10 @@
 package com.example.dokdofamily01;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import static com.example.dokdofamily01.TaleActivity.MIN_DISTANCE;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
@@ -23,7 +25,7 @@ public class CustomTouchListener implements View.OnTouchListener {
     private int checkDistanceX = 0;
     private int checkDistanceY = 0;
     private float diff = 0;
-
+    Context mContext;
     CustomViewPager customViewPager;
 
     public interface AsyncResponse {
@@ -33,6 +35,8 @@ public class CustomTouchListener implements View.OnTouchListener {
     public AsyncResponse delegate = null;
 
     public CustomTouchListener(){
+
+
         delegate = new AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
@@ -108,17 +112,27 @@ public class CustomTouchListener implements View.OnTouchListener {
 
     public void decreaseFunc(){
         if(checkedAnimation) {
-            customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, true);
-            Log.d("decreaseFunc", "if");
+            if(customViewPager.getCurrentItem() == 0){
+                Toast.makeText(mContext, "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
+            }else{
+                customViewPager.setCurrentItem(customViewPager.getCurrentItem()-1, true);
+                Log.d("decreaseFunc", "if");
+            }
+
         } else Log.d("decreaseFunc", "else");
 
     }
 
     public void increaseFunc(){
-
+        Log.d("currentItem",customViewPager.getCurrentItem() +"");
         if(checkedAnimation) {
-            customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
-            Log.d("increaseFunc", "if.........");
+            if(customViewPager.getCurrentItem() == 20){
+                Toast.makeText(mContext, "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
+            }else{
+                customViewPager.setCurrentItem(customViewPager.getCurrentItem()+1,true);
+                Log.d("increaseFunc", "if.........");
+            }
+
         } else Log.d("increaseFunc", "else");
     }
 
