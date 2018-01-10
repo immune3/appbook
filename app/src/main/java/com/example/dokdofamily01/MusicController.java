@@ -125,13 +125,6 @@ public class MusicController {
 
         return subtitleList1;
     }
-
-<<<<<<< HEAD
-    public int getSubtitleIndex(){ return subtitleIndex;}
-
-
-=======
->>>>>>> 1747137060c8477baf1125482afb6227861c19d9
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
 
