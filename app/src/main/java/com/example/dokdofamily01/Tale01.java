@@ -100,7 +100,7 @@ public class Tale01 extends BaseFragment {
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                sp.play(soundID, 4, 4, 0, 0, 1);
+                sp.play(soundID, 4, 4, 1, 0, 1);
             }
         });
 
@@ -124,10 +124,8 @@ public class Tale01 extends BaseFragment {
         } else if (animationFlag == 5) {
             fadeIn.setStartOffset(0);
             fadeOut.setStartOffset(0);
-            soundID = sp.load(getContext(), R.raw.effect_01, 1);
             lampLight.startAnimation(fadeOut);
         } else if (animationFlag == 7) {
-            soundID = sp.load(getContext(), R.raw.effect_01, 1);
             lampLight.startAnimation(fadeIn);
         }
         super.blockAnimFunc();
@@ -198,8 +196,10 @@ public class Tale01 extends BaseFragment {
                 hand.setVisibility(View.VISIBLE);
                 light.setVisibility(View.VISIBLE);
             } else if (animationFlag == 5) {
+                soundID = sp.load(getContext(), R.raw.effect_01, 1);
                 animationFlag = 6;
             } else if (animationFlag == 7) {
+                soundID = sp.load(getContext(), R.raw.effect_01, 1);
                 animationFlag = 8;
             }
         }
@@ -218,14 +218,12 @@ public class Tale01 extends BaseFragment {
                     new int[]{R.drawable.sub_01_05, 22500});
         }
         else {
-            //혼자보기 버전 테스트하였음. 이대로 하면 될 듯 합니다 ㅎ
             subtitleController = new SubtitleController(vp,
                     R.drawable.sub_01_01,
                     R.drawable.sub_01_02,
                     R.drawable.sub_01_03,
                     R.drawable.sub_01_04,
                     R.drawable.sub_01_05);
-
         }
 
 

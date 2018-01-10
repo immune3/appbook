@@ -4,8 +4,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl"
-    >
+    android:id="@+id/rl">
 
     <com.example.dokdofamily01.CustomScrollView
         android:id="@+id/sv"
@@ -17,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/main_background"
+            android:splitMotionEvents="false"
             app:scale_base_width="2560"
             app:scale_base_height="1600">
 
