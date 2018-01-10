@@ -281,7 +281,7 @@ public class Tale20 extends BaseFragment {
 
         if (!homeKeyFlag && screenFlag) {
             loopBgm = MediaPlayer.create(getActivity(), R.raw.effect_20_2c);
-            loopBgm.setVolume(0.5f, 0.5f);
+            loopBgm.setVolume(0.2f, 0.2f);
             loopBgm.start();
             loopBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
