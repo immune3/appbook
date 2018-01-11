@@ -96,8 +96,12 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                >
-
+                android:splitMotionEvents="false">
+                <ImageView
+                    android:id="@+id/showPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/index"/>
                 <Spinner
                     android:visibility="visible"
                     android:background="#00000000"
@@ -105,14 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:dropDownSelector="#ff0000"
-                    android:entries="@array/page"/>
-                <ImageView
-                    android:id="@+id/showPage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/index"/>
-
+                    android:spinnerMode="dropdown"/>
             </FrameLayout>
 
             <ImageView

@@ -43,7 +43,9 @@ public class Tale03 extends BaseFragment {
     SoundPool sp;
     SoundPool wingSp;
     int soundID;
-    int wings;
+
+    private Handler postSoundHandler;
+    private Runnable postSoundRun;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -299,12 +301,15 @@ public class Tale03 extends BaseFragment {
                     soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
                 }
                 catch(Exception e) {
-                    new Handler().postDelayed(new Runnable() {
+                    postSoundHandler = new Handler();
+                    postSoundRun = new Runnable() {
                         @Override
                         public void run() {
                             soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
                         }
-                    }, 500);
+                    };
+                    postSoundHandler.postDelayed(postSoundRun, 500);
+
                     e.printStackTrace();
                 }
                 cloud[0].startAnimation(cloudAnimation[0]);
@@ -361,5 +366,9 @@ public class Tale03 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (postSoundHandler != null && postSoundRun != null) {
+            postSoundHandler.removeCallbacks(postSoundRun);
+            postSoundHandler = null;
+        }
     }
 }

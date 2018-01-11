@@ -24,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by heronation on 2017-11-06.
  */
@@ -70,6 +72,10 @@ public class TaleActivity extends AppCompatActivity {
     Intent intent;
     public boolean isAutoRead;
 
+    private ArrayList<String> indexItems = new ArrayList<>();
+    private CustomSpinnerAdapter customSpinnerAdapter;
+    private final int NUM_OF_INDEX = 21;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +94,14 @@ public class TaleActivity extends AppCompatActivity {
         goHome = (ImageView) findViewById(R.id.goHome);
         showPage = (ImageView) findViewById(R.id.showPage);
 
-
         showMenu = (Button) findViewById(R.id.showMenu);
         menuBtn = (Button) findViewById(R.id.menuBtn);
         goPage = (Spinner) findViewById(R.id.goPage);
+        for(int iter=1; iter<=NUM_OF_INDEX; iter++){
+            indexItems.add(String.valueOf(iter));
+        }
+        customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
+        goPage.setAdapter(customSpinnerAdapter);
 
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
@@ -132,12 +142,13 @@ public class TaleActivity extends AppCompatActivity {
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (positionOffsetPixels == 0) goPage.setSelection(position);
+//                if (positionOffsetPixels == 0) goPage.setSelection(position);
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                goPage.setAdapter(customSpinnerAdapter);
+                goPage.setSelection(position);
             }
 
             @Override
@@ -180,6 +191,7 @@ public class TaleActivity extends AppCompatActivity {
                 goPage.performClick();
             }
         });
+
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
