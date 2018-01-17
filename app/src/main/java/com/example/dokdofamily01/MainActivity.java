@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         playBgm();
+        scrollCenter();
     }
 
     @Override
@@ -69,60 +70,32 @@ public class MainActivity extends BaseActivity {
     public void setUpEvents() {
         super.setUpEvents();
         scrollCenter();
-
-        taleBtn.setOnTouchListener(new View.OnTouchListener() {
+        taleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                int action=motionEvent.getAction();
-
-                if(action==MotionEvent.ACTION_DOWN) {
-                    taleBtn.setBackgroundResource(R.drawable.auto_clicked);
-                }
-                else if(action==MotionEvent.ACTION_UP){
-                    taleBtn.setBackgroundResource(R.drawable.autoread_button);
-                    Intent intent = new Intent(context, TaleActivity.class);
-                    intent.putExtra("isAutoRead", true);
-                    startActivity(intent);
-                    titleBgm.release();
-                }
-                return true;
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TaleActivity.class);
+                intent.putExtra("isAutoRead", true);
+                startActivity(intent);
+                titleBgm.release();
             }
         });
 
-        menualBtn.setOnTouchListener(new View.OnTouchListener() {
+        menualBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                int action=motionEvent.getAction();
-
-                if(action==MotionEvent.ACTION_DOWN) {
-                    menualBtn.setBackgroundResource(R.drawable.readalone_clicked);
-                }
-                else if(action==MotionEvent.ACTION_UP){
-                    menualBtn.setBackgroundResource(R.drawable.menualread_button);
-                    Intent intent = new Intent(context, TaleActivity.class);
-                    intent.putExtra("isAutoRead", false);
-                    startActivity(intent);
-                    titleBgm.release();
-                }
-                return true;
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TaleActivity.class);
+                intent.putExtra("isAutoRead", false);
+                startActivity(intent);
+                titleBgm.release();
             }
         });
 
-        prologueBtn.setOnTouchListener(new View.OnTouchListener() {
+        prologueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                int action=motionEvent.getAction();
-
-                if(action==MotionEvent.ACTION_DOWN) {
-                    prologueBtn.setBackgroundResource(R.drawable.prologue_clicked);
-                }
-                else if(action==MotionEvent.ACTION_UP){
-                    prologueBtn.setBackgroundResource(R.drawable.prologue_button);
-                    Intent intent = new Intent(context, PrologueActivity.class);
-                    startActivity(intent);
-                    titleBgm.release();
-                }
-                return true;
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PrologueActivity.class);
+                startActivity(intent);
+                titleBgm.release();
             }
         });
 

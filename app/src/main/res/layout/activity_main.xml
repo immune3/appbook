@@ -22,7 +22,7 @@
 
 
             <Button
-                android:background="@drawable/autoread_button"
+                android:background="@drawable/img_autoread"
                 android:id="@+id/taleBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 app:scale_left="1665"
                 app:scale_top="835" />
             <Button
-                android:background="@drawable/menualread_button"
+                android:background="@drawable/img_readonly"
                 android:id="@+id/menualBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 app:scale_top="1050" />
 
             <Button
-                android:background="@drawable/prologue_button"
+                android:background="@drawable/img_prologue"
                 android:id="@+id/prologueBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

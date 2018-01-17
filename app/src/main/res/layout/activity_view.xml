@@ -78,14 +78,14 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:src="@drawable/left"/>
+                android:src="@drawable/img_left"/>
 
             <ImageView
                 android:id="@+id/goHome"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:src="@drawable/home"/>
+                android:src="@drawable/img_home"/>
 
             <Button
                 android:visibility="invisible"
@@ -101,7 +101,7 @@
                     android:id="@+id/showPage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/index"/>
+                    android:src="@drawable/img_index"/>
                 <Spinner
                     android:visibility="visible"
                     android:background="#00000000"
@@ -117,7 +117,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:src="@drawable/right"/>
+                android:src="@drawable/img_right"/>
 
         </LinearLayout>
         <Button
