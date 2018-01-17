@@ -109,7 +109,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown"
+                    android:overlapAnchor="false"
+                    android:popupBackground="@drawable/spinner_border"
+                    />
             </FrameLayout>
 
             <ImageView
