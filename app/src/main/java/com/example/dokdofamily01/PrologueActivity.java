@@ -447,8 +447,9 @@ public class PrologueActivity extends BaseActivity {
         prologueTextImage.setOnTouchListener(mListener);
         sl.setOnTouchListener(mListener);
 
-        startMusic();
     }
+
+
 
     @Override
     public void setValues() {
@@ -513,10 +514,20 @@ public class PrologueActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         stopMusic();
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        storyFlag = 0;
+        destroyHandler();
+        stopMusic();
+        startMusic();
+        setAnimation();
+    }
+
+
 
     @Override
     protected void onDestroy() {
@@ -653,6 +664,8 @@ public class PrologueActivity extends BaseActivity {
 
         }
     }
+
+
 
     public void scrollCenter(){
         sl.post(new Runnable() {
