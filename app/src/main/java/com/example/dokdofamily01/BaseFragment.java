@@ -251,8 +251,6 @@ public class BaseFragment extends Fragment{
 
     class MyChangeListener extends CustomTouchListener{
 
-
-
         public MyChangeListener(AsyncResponse asyncResponse) {
             super.delegate = asyncResponse;
         }
