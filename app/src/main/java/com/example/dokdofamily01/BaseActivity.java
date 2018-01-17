@@ -22,7 +22,7 @@ public class BaseActivity extends Activity {
 //        bindViews();
 //        setValues();
 //        setAnimation();
-//        setUpEvents();
+//        setUpEvents();    ``
 
     }
 
