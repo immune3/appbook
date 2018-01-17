@@ -126,7 +126,6 @@ public class Introduction extends BaseFragment {
         mask.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
@@ -134,6 +133,7 @@ public class Introduction extends BaseFragment {
                     checkedAnimation = true;
 
                 }
+
             }
         }) {
             @Override
@@ -146,14 +146,13 @@ public class Introduction extends BaseFragment {
         waveBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 1;
                     checkedAnimation = true;
-
                 }
+
             }
         }) {
             @Override
@@ -167,13 +166,13 @@ public class Introduction extends BaseFragment {
         birdBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 2;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -187,13 +186,13 @@ public class Introduction extends BaseFragment {
         buylBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 3;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -208,13 +207,13 @@ public class Introduction extends BaseFragment {
         fatherBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 4;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -227,13 +226,13 @@ public class Introduction extends BaseFragment {
         flowerBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 5;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -246,13 +245,13 @@ public class Introduction extends BaseFragment {
         manBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 6;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -265,13 +264,13 @@ public class Introduction extends BaseFragment {
         momBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 7;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -284,13 +283,13 @@ public class Introduction extends BaseFragment {
         postBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 8;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -303,13 +302,13 @@ public class Introduction extends BaseFragment {
         seagullBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 9;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -322,13 +321,13 @@ public class Introduction extends BaseFragment {
         squidBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 10;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -341,13 +340,13 @@ public class Introduction extends BaseFragment {
         treeBtn.setOnTouchListener(new BlockObjListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
-                moveFragment(motionEvent, checkDistanceX);
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistanceX == 0) {
                     animationClear();
                     animationCaseFlag = 11;
                     checkedAnimation = true;
                 }
+
             }
         }) {
             @Override
@@ -423,10 +422,12 @@ public class Introduction extends BaseFragment {
         if (motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistance == 1) {
 
             vp.setCurrentItem(vp.getCurrentItem() + 1, true);
+            stopMusic();
 
         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP && checkDistance == -1) {
 
             vp.setCurrentItem(vp.getCurrentItem() - 1, true);
+            stopMusic();
         }
 
     }
@@ -438,8 +439,8 @@ public class Introduction extends BaseFragment {
     }
 
     @Override
-    public void delegateFunc() {
-        super.delegateFunc();
+    public void delegateFunc(MotionEvent motionEvent, int checkDistance) {
+        super.delegateFunc(motionEvent, checkDistance);
 
         switch (animationCaseFlag) {
             case 0:
@@ -583,6 +584,8 @@ public class Introduction extends BaseFragment {
                 break;
 
         }
+
+        moveFragment(motionEvent, checkDistance);
     }
 
     @Override
@@ -590,6 +593,12 @@ public class Introduction extends BaseFragment {
         initVisible();
         super.onResume();
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopMusic();
     }
 
     @Override
@@ -1099,6 +1108,7 @@ public class Introduction extends BaseFragment {
     }
 
     private void animationClear() {
+
         isBlink = false;
         wave.clearAnimation();
         introBird.clearAnimation();

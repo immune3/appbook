@@ -235,9 +235,9 @@ public class BaseFragment extends Fragment{
         }
 
         @Override
-        public void delegateEvent() {
-            super.delegateEvent();
-            delegateFunc();
+        public void delegateEvent(MotionEvent motionEvent, int checkDistance) {
+
+            delegateFunc(motionEvent, checkDistance);
         }
     }
 
@@ -245,7 +245,7 @@ public class BaseFragment extends Fragment{
 
     }
 
-    public void delegateFunc() {
+    public void delegateFunc(MotionEvent motionEvent, int checkDistance) {
 
     }
 
