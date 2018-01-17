@@ -96,8 +96,12 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                >
-
+                android:splitMotionEvents="false">
+                <ImageView
+                    android:id="@+id/showPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/index"/>
                 <Spinner
                     android:visibility="visible"
                     android:background="#00000000"
@@ -105,14 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:dropDownSelector="#ff0000"
-                    android:entries="@array/page"/>
-                <ImageView
-                    android:id="@+id/showPage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/index"/>
-
+                    android:spinnerMode="dropdown"/>
             </FrameLayout>
 
             <ImageView
@@ -133,6 +130,18 @@
             app:scale_left="0"
             app:scale_top="0"
             android:layout_gravity="center"/>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/starHand"
+            android:src="@drawable/img_star_hand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_width="80"
+            app:scale_height="146"
+            app:scale_left="60"
+            app:scale_top="-60"
+            android:layout_gravity="center"
+            />
         <Button
             android:id="@+id/menuBtn"
             android:layout_width="wrap_content"
