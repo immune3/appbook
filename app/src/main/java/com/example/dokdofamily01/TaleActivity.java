@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -157,38 +158,77 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
-        goFront.setOnClickListener(new View.OnClickListener() {
+        goFront.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                if (vp.getCurrentItem() == 0) {
-                    Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    int position = vp.getCurrentItem() - 1;
-                    if (checkedAnimation) vp.setCurrentItem(position, true);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action=motionEvent.getAction();
+
+                if(action==MotionEvent.ACTION_DOWN) {
+                    goFront.setImageResource(R.drawable.left_clicked);
                 }
-            }
-        });
-        goBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vp.getCurrentItem() == 20) {
-                    Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    int position = vp.getCurrentItem() + 1;
-                    if (checkedAnimation) vp.setCurrentItem(position, true);
+                else if(action==MotionEvent.ACTION_UP){
+                    goFront.setImageResource(R.drawable.left);
+                    if (vp.getCurrentItem() == 0) {
+                        Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int position = vp.getCurrentItem() - 1;
+                        if (checkedAnimation) vp.setCurrentItem(position, true);
+                    }
                 }
+                return true;
             }
         });
-        goHome.setOnClickListener(new View.OnClickListener() {
+
+        goBack.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action=motionEvent.getAction();
+
+                if(action==MotionEvent.ACTION_DOWN) {
+                    goBack.setImageResource(R.drawable.right_clicked);
+                }
+                else if(action==MotionEvent.ACTION_UP){
+                    goBack.setImageResource(R.drawable.right);
+                    if (vp.getCurrentItem() == 20) {
+                        Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int position = vp.getCurrentItem() + 1;
+                        if (checkedAnimation) vp.setCurrentItem(position, true);
+                    }
+                }
+                return true;
             }
         });
-        showPage.setOnClickListener(new View.OnClickListener() {
+
+        goHome.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                goPage.performClick();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action=motionEvent.getAction();
+
+                if(action==MotionEvent.ACTION_DOWN) {
+                    goHome.setImageResource(R.drawable.home_clicked);
+                }
+                else if(action==MotionEvent.ACTION_UP){
+                    goHome.setImageResource(R.drawable.home);
+                    finish();
+                }
+                return true;
+            }
+        });
+
+        showPage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action=motionEvent.getAction();
+
+                if(action==MotionEvent.ACTION_DOWN) {
+                    showPage.setImageResource(R.drawable.index_clicked);
+                }
+                else if(action==MotionEvent.ACTION_UP){
+                    showPage.setImageResource(R.drawable.index);
+                    goPage.performClick();
+                }
+                return true;
             }
         });
 
