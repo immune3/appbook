@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,34 +18,34 @@ import java.util.ArrayList;
  * Created by heronation on 2018-01-11.
  */
 
-public class CustomSpinnerAdapter extends BaseAdapter{
+public class CustomSpinnerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> data;
     private LayoutInflater inflater;
     private LinearLayout llWrapper;
 
-    public CustomSpinnerAdapter(Context context, ArrayList<String> data){
+    public CustomSpinnerAdapter(Context context, ArrayList<String> data) {
         this.context = context;
         this.data = data;
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        if(data != null) return data.size();
+        if (data != null) return data.size();
         else return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null) {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_normal_view, parent, false);
         }
 
-        if(data!=null){
+        if (data != null) {
             //데이터세팅
             String text = data.get(position);
-            ((TextView)convertView.findViewById(R.id.spinnerText)).setText(text);
+            ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
 
         return convertView;
@@ -52,11 +53,11 @@ public class CustomSpinnerAdapter extends BaseAdapter{
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null) {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_dropdown_view, parent, false);
 //            convertView.setPadding(convertView.getPaddingLeft(),10,convertView.getPaddingRight(),10);
         }
-        if(data!=null){
+        if (data != null) {
 //            llWrapper = (LinearLayout) convertView.findViewById(R.id.ll_wrapper);
 //
 //            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -79,13 +80,19 @@ public class CustomSpinnerAdapter extends BaseAdapter{
 
             //데이터세팅
             String text = data.get(position);
-            String ImageName = "@drawable/spinner_item_"+data.get(position);
-            Log.d("ImageName", ImageName+"/");
-            int imageID =context.getResources().getIdentifier(ImageName, "drawable", context.getPackageName());
+            String ImageName = "@drawable/spinner_item_" + data.get(position);
+            int imageID = context.getResources().getIdentifier(ImageName, "drawable", context.getPackageName());
 
-            ((ImageView)convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
+            ((ImageView) convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
         }
 
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        parent.setPadding(0, 10, 0, 10);
         return convertView;
     }
 
