@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.dokdofamily01.Tale20.cutainText;
-import static com.example.dokdofamily01.Tale20.endFlag;
+//import static com.example.dokdofamily01.Tale20.cutainText;
+//import static com.example.dokdofamily01.Tale20.endFlag;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
@@ -316,15 +316,15 @@ public class MusicController {
 //                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
                 try {
-                    if(endFlag == 1 && msg.what == 8) {
-                        if(animFlag == 0) {
-                            animFlag = 1;
-                            cutainText.startAnimation(fadein);
-                        }
-                    }
-                    else{
+//                    if(endFlag == 1 && msg.what == 8) {
+//                        if(animFlag == 0) {
+//                            animFlag = 1;
+//                            cutainText.startAnimation(fadein);
+//                        }
+//                    }
+//                    else{
                         subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
-                    }
+//                    }
                 }
                 catch (Exception e){
                     e.printStackTrace();

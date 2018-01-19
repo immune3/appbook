@@ -107,7 +107,6 @@ public class TaleActivity extends AppCompatActivity {
         customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
         goPage.setAdapter(customSpinnerAdapter);
 
-
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
         showFlag = true;

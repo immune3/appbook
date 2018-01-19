@@ -20,8 +20,6 @@ import java.util.ArrayList;
  * Created by heronation on 2018-01-11.
  */
 
-
-
 public class CustomSpinnerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> data;
@@ -51,7 +49,6 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             String text = data.get(position);
             ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
-        parent.setPadding(0, (int)context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int)context.getResources().getDimension(R.dimen.spinnerPadding));
         return convertView;
     }
 
@@ -91,7 +88,9 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             ((ImageView) convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
         }
 
-        parent.setPadding(0, (int)context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int)context.getResources().getDimension(R.dimen.spinnerPadding));
+        parent.setPadding(0, (int) context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int) context.getResources().getDimension(R.dimen.spinnerPadding));
+
+
         return convertView;
     }
 
