@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.dokdofamily01.DB.LocalDB;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class MainActivity extends BaseActivity {
@@ -26,7 +24,6 @@ public class MainActivity extends BaseActivity {
     RelativeLayout rl;
     CustomHorizontalScrollView hv;
     private android.widget.Button prologueBtn;
-    private boolean isFirst;
     MediaPlayer titleBgm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,6 @@ public class MainActivity extends BaseActivity {
 
         context = getApplicationContext();
 
-        Intent intent = getIntent();
-        isFirst = intent.getBooleanExtra("isFirst",false);
 //        if(splashFlag) {
 //            splashFlag=false;
 //            startActivity(new Intent(this,SplashActivity.class));
@@ -93,9 +88,9 @@ public class MainActivity extends BaseActivity {
         prologueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, PrologueActivity.class);
-                startActivity(intent);
-                titleBgm.release();
+//                Intent intent = new Intent(context, IntroActivity.class);
+//                startActivity(intent);
+//                titleBgm.release();
             }
         });
 
@@ -104,8 +99,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setValues() {
         super.setValues();
-        if(isFirst) prologueBtn.setVisibility(View.GONE);
-        else prologueBtn.setVisibility(View.VISIBLE);
+        prologueBtn.setVisibility(View.VISIBLE);
     }
 
     @Override

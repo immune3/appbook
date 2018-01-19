@@ -141,6 +141,8 @@ public class Tale04 extends BaseFragment {
                     new int[]{R.drawable.sub_04_04, 22500},
                     new int[]{R.drawable.sub_04_05, 99999});
 
+            musicController.getMp().setVolume(1.2f,1.2f);
+
         } else{
             subtitleController = new SubtitleController(vp,
                     R.drawable.sub_04_01,

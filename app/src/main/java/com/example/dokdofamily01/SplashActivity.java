@@ -53,20 +53,10 @@ public class SplashActivity extends BaseActivity {
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(isFirst == 1) {
-                    db.query("update Prologue set isFirst = 0");
-                    Intent intent = new Intent(getApplicationContext(), PrologueActivity.class);
-                    intent.putExtra("isFirst",true);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("isFirst",false);
-                    startActivity(intent);
-                    finish();
-                }
 
-                db = null;
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         }, 3000); // 3초 후 이미지를 닫습니다
 
@@ -80,17 +70,17 @@ public class SplashActivity extends BaseActivity {
 
     public void setValues() {
 
-        db = new LocalDB(BaseActivity.context);
-        isFirstArray = db.selectQuery("select isFirst from Prologue;");
-        if(isFirstArray == null) {
-            db.query("insert into Prologue values(1);");
-        }
-
-        isFirstArray = db.selectQuery("select isFirst from Prologue;");
-        System.out.println("isFirstArray : " + isFirstArray);
-        Log.d("isFirstArray[0][0]", isFirstArray[0][0]);
-        isFirst = Integer.parseInt(isFirstArray[0][0]);
-        isFirstArray = null; // 메모리 비어줌
+//        db = new LocalDB(BaseActivity.context);
+//        isFirstArray = db.selectQuery("select isFirst from Prologue;");
+//        if(isFirstArray == null) {
+//            db.query("insert into Prologue values(1);");
+//        }
+//
+//        isFirstArray = db.selectQuery("select isFirst from Prologue;");
+//        System.out.println("isFirstArray : " + isFirstArray);
+//        Log.d("isFirstArray[0][0]", isFirstArray[0][0]);
+//        isFirst = Integer.parseInt(isFirstArray[0][0]);
+//        isFirstArray = null; // 메모리 비어줌
 
     }
 
