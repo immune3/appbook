@@ -69,6 +69,7 @@ public class TaleActivity extends AppCompatActivity {
     protected ImageView goBack;
     protected ImageView goHome;
     protected ImageView showPage;
+    protected ImageView showPageBtn;
 
     Intent intent;
     public boolean isAutoRead;
@@ -98,6 +99,7 @@ public class TaleActivity extends AppCompatActivity {
         goBack = (ImageView) findViewById(R.id.goBack);
         goHome = (ImageView) findViewById(R.id.goHome);
         showPage = (ImageView) findViewById(R.id.showPage);
+        showPageBtn = (ImageView) findViewById(R.id.showPageBtn);
 
         showMenu = (Button) findViewById(R.id.showMenu);
         menuBtn = (Button) findViewById(R.id.menuBtn);
@@ -148,23 +150,29 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //                if (positionOffsetPixels == 0) goPage.setSelection(position);
+
             }
 
             @Override
             public void onPageSelected(int position) {
                 goPage.setAdapter(customSpinnerAdapter);
                 goPage.setSelection(position);
+//                destroyMenuHandler();
+//                autoCloseMenu(3000);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                autoCloseMenu(3000);
             }
         });
 
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                destroyMenuHandler();
+                autoCloseMenu(3000);
+
                 if (vp.getCurrentItem() == 0) {
                     Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
                 } else {
@@ -177,6 +185,9 @@ public class TaleActivity extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                destroyMenuHandler();
+                autoCloseMenu(3000);
+
                 if (vp.getCurrentItem() == 19) {
                     Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
                 } else {
@@ -193,9 +204,11 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
-        showPage.setOnClickListener(new View.OnClickListener() {
+        showPageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                destroyMenuHandler();
+                autoCloseMenu(3000);
                 goPage.performClick();
             }
         });
@@ -203,13 +216,20 @@ public class TaleActivity extends AppCompatActivity {
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+//                destroyMenuHandler();
+//                if(i != 0)
+//                    autoCloseMenu(3000);
+//                Log.d("setOnItemSelectedListener", "qwerqwerqwerqwer");
                 vp.setCurrentItem(i, false);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+//                destroyMenuHandler();
+//                autoCloseMenu(3000);
             }
+
         });
 
         menuBtn.setOnClickListener(new View.OnClickListener() {
@@ -222,6 +242,7 @@ public class TaleActivity extends AppCompatActivity {
                 }
             }
         });
+
         screenOffReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -242,7 +263,7 @@ public class TaleActivity extends AppCompatActivity {
         m_sleep_lock.acquire();
     }
 
-    public void autoCloseMenu() {
+    public void autoCloseMenu(int milsec) {
 
         closeMenuRunnable = new Runnable() {
             @Override
@@ -252,7 +273,7 @@ public class TaleActivity extends AppCompatActivity {
         };
 
         closeMenuHandler = new Handler();
-        closeMenuHandler.postDelayed(closeMenuRunnable, 3000);
+        closeMenuHandler.postDelayed(closeMenuRunnable, milsec);
 
     }
 
@@ -267,8 +288,7 @@ public class TaleActivity extends AppCompatActivity {
         menuContainer.clearAnimation();
         menuContainer.startAnimation(ani_menuContainer_up);
 
-        autoCloseMenu();
-
+        autoCloseMenu(3000);
 
     }
 
@@ -277,6 +297,7 @@ public class TaleActivity extends AppCompatActivity {
         if (closeMenuHandler != null && closeMenuRunnable != null) {
             closeMenuHandler.removeCallbacks(closeMenuRunnable);
             closeMenuHandler = null;
+            closeMenuRunnable = null;
         }
     }
 
