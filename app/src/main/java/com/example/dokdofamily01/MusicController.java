@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 
 import com.example.dokdofamily01.Data.SubTitleData;
@@ -16,12 +15,13 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import static com.example.dokdofamily01.Tale20.cutainText;
-//import static com.example.dokdofamily01.Tale20.endFlag;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
 import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
+
+//import static com.example.dokdofamily01.Tale20.cutainText;
+//import static com.example.dokdofamily01.Tale20.endFlag;
 
 /**
  * Created by hero on 2017-12-04.
