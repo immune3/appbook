@@ -56,6 +56,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_dropdown_view, parent, false);
 //            convertView.setPadding(convertView.getPaddingLeft(),10,convertView.getPaddingRight(),10);
+
         }
         if (data != null) {
 //            llWrapper = (LinearLayout) convertView.findViewById(R.id.ll_wrapper);
@@ -86,13 +87,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             ((ImageView) convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
         }
 
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-        );
-
-        parent.setPadding(0, 10, 0, 10);
+        parent.setPadding(0, 15, 0, 15);
         return convertView;
     }
 

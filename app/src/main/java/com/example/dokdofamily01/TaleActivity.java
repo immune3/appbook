@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -78,6 +79,8 @@ public class TaleActivity extends AppCompatActivity {
     private CustomSpinnerAdapter customSpinnerAdapter;
     private final int NUM_OF_INDEX = 21;
 
+    android.widget.ListPopupWindow popupWindow;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +112,11 @@ public class TaleActivity extends AppCompatActivity {
             popup.setAccessible(true);
 
             // Get private mPopup member variable and try cast to ListPopupWindow
-            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(goPage);
+            popupWindow = (android.widget.ListPopupWindow) popup.get(goPage);
 
             // Set popupWindow height to 500px
-//            popupWindow.setHeight(500);
+//            popupWindow.setHeight((int)(popupWindow.getHeight() * 0.5f));
+
         }
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
