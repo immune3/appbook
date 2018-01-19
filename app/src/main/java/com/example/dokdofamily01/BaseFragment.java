@@ -33,6 +33,7 @@ public class BaseFragment extends Fragment{
     boolean isHint;
     boolean isAttached = false;
     public CustomViewPager vp;
+    public TaleActivity taleAct;
     MyChangeListener change ;
 
     public Context context;
@@ -44,6 +45,7 @@ public class BaseFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
+
     }
 
     @Override
@@ -86,6 +88,7 @@ public class BaseFragment extends Fragment{
     public void setupEvents(){
 
         vp = ((TaleActivity) getActivity()).vp;
+        taleAct = (TaleActivity)getActivity();
         hv = new CustomHorizontalScrollView(getContext());
         HorizontalScrollView.LayoutParams lp = new HorizontalScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         hv.setLayoutParams(lp);
@@ -182,6 +185,7 @@ public class BaseFragment extends Fragment{
 //                    else if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && subtitleController != null) {
 //                        subtitleController.nextInActionUp();
 //                    }
+                    Log.d("autoClose", "close2");
                 }
             };
         }
@@ -190,6 +194,7 @@ public class BaseFragment extends Fragment{
         public boolean onTouch(View view, MotionEvent motionEvent) {
             this.mContext = context;
             customViewPager = vp;
+
             return super.onTouch(view, motionEvent);
         }
 
@@ -264,6 +269,7 @@ public class BaseFragment extends Fragment{
 //                    } else if(motionEvent.getAction() == MotionEvent.ACTION_UP && (checkDistanceX == 0 && checkDistanceY == 0) && subtitleController != null) {
 //                        subtitleController.nextInActionUp();
 //                    }
+                    Log.d("autoClose", "close");
                 }
             };
         }
