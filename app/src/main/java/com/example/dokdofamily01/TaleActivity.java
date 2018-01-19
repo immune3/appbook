@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -18,14 +19,12 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -76,7 +75,10 @@ public class TaleActivity extends AppCompatActivity {
 
     private ArrayList<String> indexItems = new ArrayList<>();
     private CustomSpinnerAdapter customSpinnerAdapter;
-    private final int NUM_OF_INDEX = 21;
+    private final int NUM_OF_INDEX = 20;
+
+    private Handler closeMenuHandler;
+    private Runnable closeMenuRunnable;
 
 
     @Override
@@ -100,7 +102,7 @@ public class TaleActivity extends AppCompatActivity {
         showMenu = (Button) findViewById(R.id.showMenu);
         menuBtn = (Button) findViewById(R.id.menuBtn);
         goPage = (Spinner) findViewById(R.id.goPage);
-        for(int iter=1; iter<=NUM_OF_INDEX; iter++){
+        for (int iter = 1; iter <= NUM_OF_INDEX; iter++) {
             indexItems.add(String.valueOf(iter));
         }
         customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
@@ -176,7 +178,7 @@ public class TaleActivity extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (vp.getCurrentItem() == 20) {
+                if (vp.getCurrentItem() == 19) {
                     Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     int position = vp.getCurrentItem() + 1;
@@ -191,7 +193,7 @@ public class TaleActivity extends AppCompatActivity {
                 finish();
             }
         });
-        
+
         showPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,19 +217,9 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (showFlag) {
-                    showMenu.setTranslationY(0);
-                    showMenu.clearAnimation();
-                    showMenu.startAnimation(ani_menu_up);
-                    menuContainer.setTranslationY(0);
-                    menuContainer.clearAnimation();
-                    menuContainer.startAnimation(ani_menuContainer_up);
+                    openMenu();
                 } else {
-                    showMenu.setTranslationY(0);
-                    showMenu.clearAnimation();
-                    showMenu.startAnimation(ani_menu_down);
-                    menuContainer.setTranslationY(0);
-                    menuContainer.clearAnimation();
-                    menuContainer.startAnimation(ani_menuContainer_down);
+                    closeMenu();
                 }
             }
         });
@@ -249,6 +241,56 @@ public class TaleActivity extends AppCompatActivity {
         m_sleep_lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK, "TaleActivity");
 
         m_sleep_lock.acquire();
+    }
+
+    public void autoCloseMenu() {
+
+        closeMenuRunnable = new Runnable() {
+            @Override
+            public void run() {
+                closeMenu();
+            }
+        };
+
+        closeMenuHandler = new Handler();
+        closeMenuHandler.postDelayed(closeMenuRunnable, 3000);
+
+    }
+
+    public void openMenu() {
+
+        destroyMenuHandler();
+
+        showMenu.setTranslationY(0);
+        showMenu.clearAnimation();
+        showMenu.startAnimation(ani_menu_up);
+        menuContainer.setTranslationY(0);
+        menuContainer.clearAnimation();
+        menuContainer.startAnimation(ani_menuContainer_up);
+
+        autoCloseMenu();
+
+
+    }
+
+    public void destroyMenuHandler() {
+
+        if (closeMenuHandler != null && closeMenuRunnable != null) {
+            closeMenuHandler.removeCallbacks(closeMenuRunnable);
+            closeMenuHandler = null;
+        }
+    }
+
+    public void closeMenu() {
+
+        destroyMenuHandler();
+
+        showMenu.setTranslationY(0);
+        showMenu.clearAnimation();
+        showMenu.startAnimation(ani_menu_down);
+        menuContainer.setTranslationY(0);
+        menuContainer.clearAnimation();
+        menuContainer.startAnimation(ani_menuContainer_down);
     }
 
     private class pagerAdapter extends FragmentStatePagerAdapter {
@@ -300,8 +342,7 @@ public class TaleActivity extends AppCompatActivity {
                     return new Tale19();
                 case 19:
                     return new Tale20();
-                case 20:
-                    return new Introduction();
+
                 default:
                     return null;
             }
@@ -309,7 +350,7 @@ public class TaleActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 21;
+            return 20;
         }
 
         @Override
