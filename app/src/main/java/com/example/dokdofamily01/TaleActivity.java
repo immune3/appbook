@@ -160,6 +160,8 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
+
+
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,15 +200,24 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
+        goPage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+
+
         goPage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 vp.setCurrentItem(i, false);
+                Log.d("cdcd", "cdcd");
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                Log.d("ababab", "abab");
             }
         });
 

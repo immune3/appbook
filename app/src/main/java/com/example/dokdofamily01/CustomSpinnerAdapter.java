@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * Created by heronation on 2018-01-11.
  */
 
+
 public class CustomSpinnerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> data;
@@ -49,6 +50,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             String text = data.get(position);
             ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
+        parent.setPadding(0, (int) context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int) context.getResources().getDimension(R.dimen.spinnerPadding));
         return convertView;
     }
 
@@ -60,25 +62,6 @@ public class CustomSpinnerAdapter extends BaseAdapter {
 
         }
         if (data != null) {
-//            llWrapper = (LinearLayout) convertView.findViewById(R.id.ll_wrapper);
-//
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT
-//            );
-//
-//            if(position == data.size() - 1){
-//                params.setMargins(10,0,10,10);
-//                llWrapper.setLayoutParams(params);
-//            }
-//            else if(position == 0){
-//                params.setMargins(10,10,10,0);
-//                llWrapper.setLayoutParams(params);
-//            }
-//            else{
-//                params.setMargins(10,0,10,0);
-//                llWrapper.setLayoutParams(params);
-//            }
 
             //데이터세팅
             String text = data.get(position);
@@ -87,10 +70,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
 
             ((ImageView) convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
         }
-
         parent.setPadding(0, (int) context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int) context.getResources().getDimension(R.dimen.spinnerPadding));
-
-
         return convertView;
     }
 
