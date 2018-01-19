@@ -87,9 +87,9 @@ public class MainActivity extends BaseActivity {
         prologueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, IntroActivity.class);
-//                startActivity(intent);
-//                titleBgm.release();
+                Intent intent = new Intent(context, IntroActivity.class);
+                startActivity(intent);
+                titleBgm.release();
             }
         });
 

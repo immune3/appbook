@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
@@ -17,7 +19,6 @@ import java.util.Random;
 
 import static android.view.View.GONE;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 
 /**
  * Created by mapl0 on 2018-01-19.
@@ -60,7 +61,6 @@ public class IntroActivity extends BaseActivity {
     private Button seagullBtn;
     private Button squidBtn;
     private Button treeBtn;
-    private com.ssomai.android.scalablelayout.ScalableLayout sl;
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
@@ -76,9 +76,15 @@ public class IntroActivity extends BaseActivity {
     int randomN = 0;
     boolean isBlink = true;
 
+    private com.ssomai.android.scalablelayout.ScalableLayout sl;
+    private CustomScrollView sv;
+    private android.widget.RelativeLayout rl;
+    CustomHorizontalScrollView hv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_introduction);
 
         bindViews();
         setValues();
@@ -90,6 +96,18 @@ public class IntroActivity extends BaseActivity {
     @Override
     public void setAnimation() {
         super.setAnimation();
+
+        fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(1000);
+        fadeIn.setStartOffset(0);
+        fadeIn.setFillAfter(true);
+        fadeIn.setAnimationListener(new MyAnimationListener());
+
+        fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setStartOffset(0);
+        fadeOut.setDuration(1000);
+        fadeOut.setFillAfter(true);
+        fadeOut.setAnimationListener(new MyAnimationListener());
 
         introFather.post(new Runnable() {
             @Override
@@ -114,9 +132,10 @@ public class IntroActivity extends BaseActivity {
     public void setUpEvents() {
         super.setUpEvents();
 
+        scrollCenter();
         stopMusic();
 
-        mask.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        mask.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -136,7 +155,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        waveBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        waveBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -156,7 +175,7 @@ public class IntroActivity extends BaseActivity {
         });
 
 
-        birdBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        birdBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -176,7 +195,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        buylBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        buylBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -197,7 +216,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        fatherBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        fatherBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -216,7 +235,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        flowerBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        flowerBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -235,7 +254,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        manBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        manBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -254,7 +273,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        momBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        momBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -273,7 +292,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        postBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        postBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -292,7 +311,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        seagullBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        seagullBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -311,7 +330,7 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        squidBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        squidBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -328,9 +347,11 @@ public class IntroActivity extends BaseActivity {
 
                 return super.onTouch(view, motionEvent);
             }
+
+
         });
 
-        treeBtn.setOnTouchListener(new CustomTouchListener(new CustomTouchListener.AsyncResponse() {
+        treeBtn.setOnTouchListener(new TouchListener(new CustomTouchListener.AsyncResponse() {
             @Override
             public void onAction(MotionEvent motionEvent, int checkDistanceX, int checkDistanceY, float diff) {
 
@@ -456,6 +477,49 @@ public class IntroActivity extends BaseActivity {
         introTreeText.setVisibility(GONE);
 
         mask.setVisibility(GONE);
+    }
+
+    public void scrollCenter(){
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                final int deviceWidth= displayMetrics.widthPixels;
+                int deviceHeight = displayMetrics.heightPixels;
+                Log.d("slWidth", sl.getWidth() + "");
+
+                float ratio = (float)deviceWidth/(float)deviceHeight;
+                Log.e("ratio", ""+ratio);
+                if(ratio<=1.66){
+
+                    sv.removeView(sl);
+                    rl.removeView(sv);
+                    hv.addView(sl);
+                    rl.addView(hv);
+
+                    hv.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int innerWidth = hv.getChildAt(0).getWidth();
+                            Log.e("innerWidth", ""+innerWidth);
+                            hv.scrollTo((innerWidth-deviceWidth)/2,0);
+                            hv.setScrolling(false);
+                            rl.setVisibility(View.VISIBLE);
+
+                        }
+                    });
+
+                }else{
+                    int innerHeight = sl.getHeight();
+                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                    Log.e("innerHeight", innerHeight + "");
+                    sv.setScrolling(false);
+                    rl.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 
     public void stopMusic() {
@@ -649,6 +713,8 @@ public class IntroActivity extends BaseActivity {
         this.introBuylText = (ImageView) findViewById(R.id.introByulText);
         this.buylBtn = (Button) findViewById(R.id.byulBtn);
         this.introBuyl = (ImageView) findViewById(R.id.introByul);
+        this.rl = (RelativeLayout) findViewById(R.id.rl);
+        this.sv = (CustomScrollView) findViewById(R.id.sv);
         this.sl = (ScalableLayout) findViewById(R.id.sl);
     }
 
@@ -878,6 +944,191 @@ public class IntroActivity extends BaseActivity {
         introFather.setVisibility(GONE);
         introFlower.setVisibility(GONE);
         introPost.setVisibility(GONE);
+    }
+
+    private class TouchListener extends CustomTouchListener {
+
+        public TouchListener() {
+            super();
+        }
+
+        public TouchListener(AsyncResponse delegate) {
+            super(delegate);
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return super.onTouch(view, motionEvent);
+        }
+
+        @Override
+        public int checkDistance() {
+            return super.checkDistance();
+        }
+
+        @Override
+        public void decreaseFunc() {
+
+
+        }
+
+        @Override
+        public void increaseFunc() {
+
+        }
+
+        @Override
+        public void animationFunc() {
+            super.animationFunc();
+        }
+
+        @Override
+        public void delegateEvent(MotionEvent motionEvent, int checkDistance) {
+            super.delegateEvent(motionEvent, checkDistance);
+
+            switch (animationCaseFlag) {
+                case 0:
+
+                    maskOff();
+                    stopMusic();
+
+                    break;
+
+                case 1:
+                    maskOn();
+                    stopMusic();
+                    wave.setVisibility(View.VISIBLE);
+                    wave.startAnimation(fadeIn);
+                    waveText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_wave);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+
+                    break;
+
+                case 2:
+                    maskOn();
+                    stopMusic();
+                    introBird.setVisibility(View.VISIBLE);
+                    introBird.startAnimation(fadeIn);
+                    introBirdText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_bird);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+
+                    break;
+
+                case 3:
+                    maskOn();
+                    stopMusic();
+                    introBuyl.setVisibility(View.VISIBLE);
+                    introBuyl.startAnimation(fadeIn);
+                    introBuylText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_buyl);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 4:
+                    maskOn();
+                    stopMusic();
+                    introFather.setVisibility(View.VISIBLE);
+                    introFather.startAnimation(fadeIn);
+                    introFatherText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_father);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 5:
+                    maskOn();
+                    stopMusic();
+                    introFlower.setVisibility(View.VISIBLE);
+                    introFlower.startAnimation(fadeIn);
+                    introFlowerText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_flower);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 6:
+                    maskOn();
+                    stopMusic();
+                    introMan.setVisibility(View.VISIBLE);
+                    introMan.startAnimation(fadeIn);
+                    introManText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_man);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 7:
+                    maskOn();
+                    stopMusic();
+                    introMom.setVisibility(View.VISIBLE);
+                    introMom.startAnimation(fadeIn);
+                    introMomText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_mom);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 8:
+                    maskOn();
+                    stopMusic();
+                    introPost.setVisibility(View.VISIBLE);
+                    introPost.startAnimation(fadeIn);
+                    introPostText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_post);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+                case 9:
+                    maskOn();
+                    stopMusic();
+                    introSeagull.setVisibility(View.VISIBLE);
+                    introSeagull.startAnimation(fadeIn);
+                    introSeagullText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_seagull);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 10:
+                    maskOn();
+                    stopMusic();
+                    introSquid.setVisibility(View.VISIBLE);
+                    introSquid.startAnimation(fadeIn);
+                    introSquidText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_squid);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+                case 11:
+                    maskOn();
+                    stopMusic();
+                    introTree.setVisibility(View.VISIBLE);
+                    introTree.startAnimation(fadeIn);
+                    introTreeText.setVisibility(View.VISIBLE);
+
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_tree);
+                    musicPlayer.start();
+                    musicPlayer.setLooping(false);
+                    break;
+
+            }
+        }
     }
 
 
