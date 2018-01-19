@@ -66,11 +66,6 @@ public class PrologueActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.prologue);
 
-        Intent intent = getIntent();
-        isFirst = intent.getBooleanExtra("isFirst",false);
-
-        Log.e("prologue", "onCreate: "+isFirst);
-
         bindViews();
         setValues();
         setAnimation();
@@ -234,11 +229,7 @@ public class PrologueActivity extends BaseActivity {
                     if (storyFlag != 3 && musicPlayer != null && musicPlayer.isPlaying())
                         musicPlayer.seekTo(syncArray[storyFlag]);
                     else {
-                        if(isFirst){
-                            Intent intent = new Intent(context,MainActivity.class);
-                            intent.putExtra("isFirst",true);
-                            startActivity(intent);
-                        }
+
                         finish();
                     }
 
