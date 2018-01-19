@@ -9,25 +9,29 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
  * Created by heronation on 2018-01-11.
  */
 
+
+
 public class CustomSpinnerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> data;
     private LayoutInflater inflater;
-    private LinearLayout llWrapper;
 
     public CustomSpinnerAdapter(Context context, ArrayList<String> data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
 
     @Override
@@ -47,7 +51,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             String text = data.get(position);
             ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
-
+        parent.setPadding(0, (int)context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int)context.getResources().getDimension(R.dimen.spinnerPadding));
         return convertView;
     }
 
@@ -87,7 +91,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             ((ImageView) convertView.findViewById(R.id.spinnerImage)).setImageResource(imageID);
         }
 
-        parent.setPadding(0, 15, 0, 15);
+        parent.setPadding(0, (int)context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int)context.getResources().getDimension(R.dimen.spinnerPadding));
         return convertView;
     }
 

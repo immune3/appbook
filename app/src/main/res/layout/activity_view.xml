@@ -111,7 +111,7 @@
                     android:textAlignment="center"
                     android:spinnerMode="dropdown"
                     android:popupBackground="@drawable/spinner_border"
-                    android:overlapAnchor="false"
+                    android:dropDownVerticalOffset="-30dp"
                     />
             </FrameLayout>
 

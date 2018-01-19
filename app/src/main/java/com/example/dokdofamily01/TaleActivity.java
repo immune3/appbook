@@ -79,7 +79,6 @@ public class TaleActivity extends AppCompatActivity {
     private CustomSpinnerAdapter customSpinnerAdapter;
     private final int NUM_OF_INDEX = 21;
 
-    android.widget.ListPopupWindow popupWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,20 +106,7 @@ public class TaleActivity extends AppCompatActivity {
         }
         customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
         goPage.setAdapter(customSpinnerAdapter);
-        try {
-            Field popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
 
-            // Get private mPopup member variable and try cast to ListPopupWindow
-            popupWindow = (android.widget.ListPopupWindow) popup.get(goPage);
-
-            // Set popupWindow height to 500px
-//            popupWindow.setHeight((int)(popupWindow.getHeight() * 0.5f));
-
-        }
-        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
 
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
