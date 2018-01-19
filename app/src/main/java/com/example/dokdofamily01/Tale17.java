@@ -151,7 +151,7 @@ public class Tale17 extends BaseFragment {
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                sp.play(soundID, 1, 1, 0, 0, 1);
+                sp.play(soundID, 0.3f, 0.3f, 0, 0, 1);
             }
         });
 

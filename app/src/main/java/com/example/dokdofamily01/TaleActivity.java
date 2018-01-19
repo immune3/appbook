@@ -170,6 +170,8 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
+
+
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -224,8 +226,6 @@ public class TaleActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-//                destroyMenuHandler();
-//                autoCloseMenu(3000);
             }
 
         });
