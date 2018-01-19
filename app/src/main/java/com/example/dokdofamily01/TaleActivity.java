@@ -38,7 +38,7 @@ public class TaleActivity extends AppCompatActivity {
     public CustomViewPager vp;
     Spinner goPage;
     LinearLayout menuContainer;
-    boolean showFlag;
+    boolean showFlag, animFlag;
     TranslateAnimation ani_menu_up;
     TranslateAnimation ani_menu_down;
     TranslateAnimation ani_menuContainer_up;
@@ -57,6 +57,8 @@ public class TaleActivity extends AppCompatActivity {
     static int height;
     static int width;
     int showMenuHeight;
+
+    boolean isOpen = false;
 
     /* 추가 필드 */
     BroadcastReceiver screenOffReceiver;
@@ -113,6 +115,7 @@ public class TaleActivity extends AppCompatActivity {
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
         showFlag = true;
+        animFlag = false;
 
         showMenu.post(new Runnable() {
             @Override
@@ -171,7 +174,6 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 destroyMenuHandler();
-                autoCloseMenu(3000);
 
                 if (vp.getCurrentItem() == 0) {
                     Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
@@ -186,7 +188,6 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 destroyMenuHandler();
-                autoCloseMenu(3000);
 
                 if (vp.getCurrentItem() == 19) {
                     Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
@@ -208,7 +209,6 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 destroyMenuHandler();
-                autoCloseMenu(3000);
                 goPage.performClick();
             }
         });
@@ -217,9 +217,7 @@ public class TaleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-//                destroyMenuHandler();
-//                if(i != 0)
-//                    autoCloseMenu(3000);
+                autoCloseMenu(3000);
 //                Log.d("setOnItemSelectedListener", "qwerqwerqwerqwer");
                 vp.setCurrentItem(i, false);
             }
@@ -235,11 +233,11 @@ public class TaleActivity extends AppCompatActivity {
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (showFlag) {
+                if (showFlag && !animFlag) {
                     openMenu();
-                } else {
+                } else if(!showFlag && !animFlag){
                     closeMenu();
-                }
+                } else destroyMenuHandler();
             }
         });
 
@@ -265,20 +263,24 @@ public class TaleActivity extends AppCompatActivity {
 
     public void autoCloseMenu(int milsec) {
 
-        closeMenuRunnable = new Runnable() {
-            @Override
-            public void run() {
-                closeMenu();
-            }
-        };
+        if (isOpen) {
+            destroyMenuHandler();
+            closeMenuRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    closeMenu();
+                }
+            };
 
-        closeMenuHandler = new Handler();
-        closeMenuHandler.postDelayed(closeMenuRunnable, milsec);
+            closeMenuHandler = new Handler();
+            closeMenuHandler.postDelayed(closeMenuRunnable, milsec);
+        }
 
     }
 
     public void openMenu() {
 
+        isOpen = true;
         destroyMenuHandler();
 
         showMenu.setTranslationY(0);
@@ -295,6 +297,7 @@ public class TaleActivity extends AppCompatActivity {
     public void destroyMenuHandler() {
 
         if (closeMenuHandler != null && closeMenuRunnable != null) {
+            Log.d("핸들러 제거", "ㅎㅎ");
             closeMenuHandler.removeCallbacks(closeMenuRunnable);
             closeMenuHandler = null;
             closeMenuRunnable = null;
@@ -303,6 +306,7 @@ public class TaleActivity extends AppCompatActivity {
 
     public void closeMenu() {
 
+        isOpen = false;
         destroyMenuHandler();
 
         showMenu.setTranslationY(0);
@@ -394,6 +398,8 @@ public class TaleActivity extends AppCompatActivity {
             } else {
                 menuBtn.setTranslationY(showMenuHeight);
             }
+
+            animFlag = false;
         }
 
         @Override
@@ -402,6 +408,7 @@ public class TaleActivity extends AppCompatActivity {
 
         @Override
         public void onAnimationStart(Animation animation) {
+            animFlag = true;
         }
 
     }
@@ -417,6 +424,8 @@ public class TaleActivity extends AppCompatActivity {
                 menuContainer.setTranslationY(showMenuHeight);
                 showFlag = true;
             }
+
+            animFlag = false;
         }
 
         @Override
@@ -425,6 +434,7 @@ public class TaleActivity extends AppCompatActivity {
 
         @Override
         public void onAnimationStart(Animation animation) {
+            animFlag = true;
         }
 
     }
