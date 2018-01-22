@@ -72,7 +72,6 @@ public class Tale13 extends BaseFragment {
 
     public void bindViews() {
         super.bindViews();
-
         this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
         this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
         this.ivBottom13 = (ImageView) layout.findViewById(R.id.ivBottom13);
@@ -149,6 +148,7 @@ public class Tale13 extends BaseFragment {
 
     private void animationClear() {
         animationFlag = 0;
+        clickFlag=0;
         ivFishes13.clearAnimation();
         ivWall13.clearAnimation();
         ivBottom13.clearAnimation();
@@ -310,7 +310,8 @@ public class Tale13 extends BaseFragment {
                 }
 
 
-                if (animationFlag == 0 && bottomAnimation != null) {
+//                if (animationFlag == 0 && bottomAnimation != null) {
+//                if (animationFlag == 0) {
                     animationClear();
                     checkedAnimation = false;
                     animationFlag = 1;
@@ -318,7 +319,7 @@ public class Tale13 extends BaseFragment {
                     ivWall13.startAnimation(wallAnimation);
                     ivBuyl13.startAnimation(characterAnimation);
                     ivFishes13.startAnimation(fishAnimation);
-                }
+//                }
             }
         });
     }

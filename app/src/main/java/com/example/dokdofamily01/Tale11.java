@@ -208,6 +208,7 @@ public class Tale11 extends BaseFragment {
         cutFlower.setVisibility(View.INVISIBLE);
         flowers.setVisibility(View.INVISIBLE);
         animationFlag = 0;
+        byulAppearFlag = 0;
         flowers.clearAnimation();
         bee1.clearAnimation();
         bee2.clearAnimation();
@@ -362,7 +363,7 @@ public class Tale11 extends BaseFragment {
                 hideButterflyAniSet.addAnimation(butterflyTranslate);
                 hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
 
-                if (animationFlag == 0) {
+//                if (animationFlag == 0) {
                     animationClear();
                     checkedAnimation = false;
                     animationFlag = 1;
@@ -370,7 +371,7 @@ public class Tale11 extends BaseFragment {
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
                     bee2.startAnimation(beeAnimation);
-                }
+//                }
             }
         });
     }
