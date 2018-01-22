@@ -25,12 +25,23 @@ public class MainActivity extends BaseActivity {
     CustomHorizontalScrollView hv;
     private android.widget.Button prologueBtn;
     MediaPlayer titleBgm;
+    private int deviceWidth;
+    private int deviceHeight;
+    int innerWidth;
+    int innerHeight;
+    float ratio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         context = getApplicationContext();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        deviceWidth= displayMetrics.widthPixels;
+        deviceHeight = displayMetrics.heightPixels;
+        ratio = (float)deviceWidth/(float)deviceHeight;
 
 //        if(splashFlag) {
 //            splashFlag=false;
@@ -47,7 +58,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         playBgm();
-        scrollCenter();
     }
 
     @Override
@@ -120,13 +130,7 @@ public class MainActivity extends BaseActivity {
         sl.post(new Runnable() {
             @Override
             public void run() {
-                DisplayMetrics displayMetrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                final int deviceWidth= displayMetrics.widthPixels;
-                int deviceHeight = displayMetrics.heightPixels;
-                Log.d("slWidth", sl.getWidth() + "");
 
-                float ratio = (float)deviceWidth/(float)deviceHeight;
                 Log.e("ratio", ""+ratio);
                 if(ratio<=1.66){
 
@@ -140,8 +144,9 @@ public class MainActivity extends BaseActivity {
                     hv.post(new Runnable() {
                         @Override
                         public void run() {
-                            int innerWidth = hv.getChildAt(0).getWidth();
+                            innerWidth = hv.getChildAt(0).getWidth();
                             Log.e("innerWidth", ""+innerWidth);
+                            Log.e("deviceWidth", ""+deviceWidth);
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
                             rl.setVisibility(View.VISIBLE);
@@ -150,9 +155,10 @@ public class MainActivity extends BaseActivity {
                     });
 
                 }else{
-                    int innerHeight = sl.getHeight();
+                    innerHeight = sl.getHeight();
                     sv.scrollTo(0,(innerHeight-deviceHeight)/2);
                     Log.e("innerHeight", innerHeight + "");
+                    Log.e("deviceHieght", deviceHeight + "");
                     sv.setScrolling(false);
                     rl.setVisibility(View.VISIBLE);
                 }
