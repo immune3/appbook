@@ -116,6 +116,7 @@ public class Tale03 extends BaseFragment {
         if (animationFlag == 0) {
             checkedAnimation = false;
             animationFlag = 1;
+            repeatFlag = 0;
             blinkStar.clearAnimation();
             wing[1].clearAnimation();
             blinkStar.startAnimation(wingAppear2);
