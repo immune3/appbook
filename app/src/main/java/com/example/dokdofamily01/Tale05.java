@@ -215,7 +215,12 @@ public class Tale05 extends BaseFragment {
         letter[5].clearAnimation();
 
         letter[0].clearAnimation();
-        letter[0].startAnimation(blink);
+        letter[0].post(new Runnable() {
+            @Override
+            public void run() {
+                letter[0].startAnimation(blink);
+            }
+        });
 
 
     }
