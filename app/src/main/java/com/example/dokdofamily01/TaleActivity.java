@@ -88,6 +88,27 @@ public class TaleActivity extends AppCompatActivity {
     private Handler closeMenuHandler;
     private Runnable closeMenuRunnable;
 
+    BaseFragment tale01;
+    BaseFragment tale02;
+    BaseFragment tale03;
+    BaseFragment tale04;
+    BaseFragment tale05;
+    BaseFragment tale06;
+    BaseFragment tale07;
+    BaseFragment tale08;
+    BaseFragment tale09;
+    BaseFragment tale10;
+    BaseFragment tale11;
+    BaseFragment tale12;
+    BaseFragment tale13;
+    BaseFragment tale14;
+    BaseFragment tale15;
+    BaseFragment tale16;
+    BaseFragment tale17;
+    BaseFragment tale18;
+    BaseFragment tale19;
+    BaseFragment tale20;
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -95,7 +116,7 @@ public class TaleActivity extends AppCompatActivity {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                for(View view : getWindowManagerViews()){
+                for (View view : getWindowManagerViews()) {
                     try {
                         Class clazz = view.getClass();
                         Field outerField = clazz.getDeclaredField("this$0");
@@ -108,14 +129,14 @@ public class TaleActivity extends AppCompatActivity {
                         View.OnTouchListener outerOnTOuchListener = new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
-                                 Log.d(MainActivity.class.getSimpleName(), String.format("popupwindow event %s at %s-%s", motionEvent.getAction(), motionEvent.getX(), motionEvent.getY()));
-                                 autoCloseMenu(3000);
-                                 return innerOnTouchListener.onTouch(view, motionEvent);
+                                Log.d(MainActivity.class.getSimpleName(), String.format("popupwindow event %s at %s-%s", motionEvent.getAction(), motionEvent.getX(), motionEvent.getY()));
+                                autoCloseMenu(3000);
+                                return innerOnTouchListener.onTouch(view, motionEvent);
                             }
 
                         };
                         field.set(popupWindow, outerOnTOuchListener);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         //e.printStackTrace();
                     }
                 }
@@ -128,32 +149,32 @@ public class TaleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
+
+        setValues();
+        bindViews();
+        setUpEvents();
+
+    }
+
+    public void setValues() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
-        menuContainer = (LinearLayout) findViewById(R.id.menuContainer);
+    }
+
+    public void setUpEvents() {
 
         intent = getIntent();
         isAutoRead = intent.getBooleanExtra("isAutoRead", true);
 
-        goFront = (ImageView) findViewById(R.id.goFront);
-        goBack = (ImageView) findViewById(R.id.goBack);
-        goHome = (ImageView) findViewById(R.id.goHome);
-        showPage = (ImageView) findViewById(R.id.showPage);
-        showPageBtn = (ImageView) findViewById(R.id.showPageBtn);
 
-        showMenu = (Button) findViewById(R.id.showMenu);
-        menuBtn = (Button) findViewById(R.id.menuBtn);
-        goPage = (Spinner) findViewById(R.id.goPage);
         for (int iter = 1; iter <= NUM_OF_INDEX; iter++) {
             indexItems.add(String.valueOf(iter));
         }
         customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
         goPage.setAdapter(customSpinnerAdapter);
 
-        subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
-        subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
         showFlag = true;
         animFlag = false;
 
@@ -222,13 +243,17 @@ public class TaleActivity extends AppCompatActivity {
         goFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                destroyMenuHandler();
+                autoCloseMenu(3000);
 
                 if (vp.getCurrentItem() == 0) {
                     Toast.makeText(getApplicationContext(), "첫번째 페이지입니다.", Toast.LENGTH_SHORT).show();
                 } else {
+
                     int position = vp.getCurrentItem() - 1;
-                    if (checkedAnimation) vp.setCurrentItem(position, true);
+                    if (checkedAnimation) {
+                        destroyAllDelayedPaging();
+                        vp.setCurrentItem(position, true);
+                    }
                 }
             }
         });
@@ -236,13 +261,17 @@ public class TaleActivity extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                destroyMenuHandler();
+                autoCloseMenu(3000);
 
                 if (vp.getCurrentItem() == 19) {
                     Toast.makeText(getApplicationContext(), "마지막 페이지입니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     int position = vp.getCurrentItem() + 1;
-                    if (checkedAnimation) vp.setCurrentItem(position, true);
+                    if (checkedAnimation) {
+                        destroyAllDelayedPaging();
+                        vp.setCurrentItem(position, true);
+                    }
+
                 }
             }
         });
@@ -291,7 +320,7 @@ public class TaleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (showFlag && !animFlag) {
                     openMenu();
-                } else if(!showFlag && !animFlag){
+                } else if (!showFlag && !animFlag) {
                     closeMenu();
                 } else destroyMenuHandler();
             }
@@ -315,6 +344,47 @@ public class TaleActivity extends AppCompatActivity {
         m_sleep_lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK, "TaleActivity");
 
         m_sleep_lock.acquire();
+
+    }
+
+    public void bindViews() {
+
+        menuContainer = (LinearLayout) findViewById(R.id.menuContainer);
+
+        goFront = (ImageView) findViewById(R.id.goFront);
+        goBack = (ImageView) findViewById(R.id.goBack);
+        goHome = (ImageView) findViewById(R.id.goHome);
+        showPage = (ImageView) findViewById(R.id.showPage);
+        showPageBtn = (ImageView) findViewById(R.id.showPageBtn);
+
+        showMenu = (Button) findViewById(R.id.showMenu);
+        menuBtn = (Button) findViewById(R.id.menuBtn);
+        goPage = (Spinner) findViewById(R.id.goPage);
+
+        subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
+        subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
+
+        tale01 = new Tale01();
+        tale02 = new Tale02();
+        tale03 = new Tale03();
+        tale04 = new Tale04();
+        tale05 = new Tale05();
+        tale06 = new Tale06();
+        tale07 = new Tale07();
+        tale08 = new Tale08();
+        tale09 = new Tale09();
+        tale10 = new Tale10();
+        tale11 = new Tale11();
+        tale12 = new Tale12();
+        tale13 = new Tale13();
+        tale14 = new Tale14();
+        tale15 = new Tale15();
+        tale16 = new Tale16();
+        tale17 = new Tale17();
+        tale18 = new Tale18();
+        tale19 = new Tale19();
+        tale20 = new Tale20();
+
     }
 
     public void autoCloseMenu(int milsec) {
@@ -331,6 +401,31 @@ public class TaleActivity extends AppCompatActivity {
             closeMenuHandler = new Handler();
             closeMenuHandler.postDelayed(closeMenuRunnable, milsec);
         }
+
+    }
+
+    public void destroyAllDelayedPaging() {
+
+        if(tale01.musicController != null) tale01.musicController.destroyPaging();
+        if(tale02.musicController != null) tale02.musicController.destroyPaging();
+        if(tale03.musicController != null) tale03.musicController.destroyPaging();
+        if(tale04.musicController != null) tale04.musicController.destroyPaging();
+        if(tale05.musicController != null) tale05.musicController.destroyPaging();
+        if(tale06.musicController != null) tale06.musicController.destroyPaging();
+        if(tale07.musicController != null) tale07.musicController.destroyPaging();
+        if(tale08.musicController != null) tale08.musicController.destroyPaging();
+        if(tale09.musicController != null) tale09.musicController.destroyPaging();
+        if(tale10.musicController != null) tale10.musicController.destroyPaging();
+        if(tale11.musicController != null) tale11.musicController.destroyPaging();
+        if(tale12.musicController != null) tale12.musicController.destroyPaging();
+        if(tale13.musicController != null) tale13.musicController.destroyPaging();
+        if(tale14.musicController != null) tale14.musicController.destroyPaging();
+        if(tale15.musicController != null) tale15.musicController.destroyPaging();
+        if(tale16.musicController != null) tale16.musicController.destroyPaging();
+        if(tale17.musicController != null) tale17.musicController.destroyPaging();
+        if(tale18.musicController != null) tale18.musicController.destroyPaging();
+        if(tale19.musicController != null) tale19.musicController.destroyPaging();
+        if(tale20.musicController != null) tale20.musicController.destroyPaging();
 
     }
 
@@ -383,45 +478,45 @@ public class TaleActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new Tale01();
+                    return tale01;
                 case 1:
-                    return new Tale02();
+                    return tale02;
                 case 2:
-                    return new Tale03();
+                    return tale03;
                 case 3:
-                    return new Tale04();
+                    return tale04;
                 case 4:
-                    return new Tale05();
+                    return tale05;
                 case 5:
-                    return new Tale06();
+                    return tale06;
                 case 6:
-                    return new Tale07();
+                    return tale07;
                 case 7:
-                    return new Tale08();
+                    return tale08;
                 case 8:
-                    return new Tale09();
+                    return tale09;
                 case 9:
-                    return new Tale10();
+                    return tale10;
                 case 10:
-                    return new Tale11();
+                    return tale11;
                 case 11:
-                    return new Tale12();
+                    return tale12;
                 case 12:
-                    return new Tale13();
+                    return tale13;
                 case 13:
-                    return new Tale14();
+                    return tale14;
                 case 14:
-                    return new Tale15();
+                    return tale15;
                 case 15:
-                    return new Tale16();
+                    return tale16;
                 case 16:
-                    return new Tale17();
+                    return tale17;
                 case 17:
-                    return new Tale18();
+                    return tale18;
                 case 18:
-                    return new Tale19();
+                    return tale19;
                 case 19:
-                    return new Tale20();
+                    return tale20;
 
                 default:
                     return null;
@@ -642,7 +737,7 @@ public class TaleActivity extends AppCompatActivity {
         if (views instanceof List) {
             return (List<View>) viewsField.get(wmInstance);
         } else if (views instanceof View[]) {
-            return Arrays.asList((View[])viewsField.get(wmInstance));
+            return Arrays.asList((View[]) viewsField.get(wmInstance));
         }
 
         return new ArrayList<View>();

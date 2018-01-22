@@ -41,6 +41,9 @@ public class MusicController {
     AlphaAnimation fadein;
     int animFlag;
 
+    Handler delayedPagingHandler;
+    Runnable delayedPagingRunnable;
+
     public MusicController(Context context, int audioID) {
         this.mContext = context;
         this.resID = audioID;
@@ -75,7 +78,7 @@ public class MusicController {
 
                 return true;// 자막만 넘기는
             } else {
-
+                destroyPaging();
                 return false; // 자막이 끝났으니까 다음 페이지로 넘겨라
             }
         } else {
@@ -89,10 +92,31 @@ public class MusicController {
             if (subtitleThread.decreaseSubtitleMusic()) {
                 return true;
             } else {
+                destroyPaging();
                 return false;
             }
         } else {
             return false;
+        }
+    }
+
+    public void delayedPaging() {
+        delayedPagingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                vp.setCurrentItem(vp.getCurrentItem() + 1, false);
+            }
+        };
+
+        delayedPagingHandler = new Handler();
+        delayedPagingHandler.postDelayed(delayedPagingRunnable, 3000);
+    }
+
+    public void destroyPaging() {
+        if(delayedPagingHandler != null && delayedPagingRunnable != null) {
+            delayedPagingHandler.removeCallbacks(delayedPagingRunnable);
+            delayedPagingHandler = null;
+            delayedPagingRunnable = null;
         }
     }
 
@@ -152,8 +176,9 @@ public class MusicController {
                                     @Override
                                     protected void onPostExecute(Void aVoid) {
                                         super.onPostExecute(aVoid);
-                                        if (animFlag)
-                                            vp.setCurrentItem(vp.getCurrentItem() + 1);
+                                        if (animFlag) {
+                                            delayedPaging();
+                                        }
 
                                     }
 
