@@ -34,9 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_06_sea"
-                app:scale_width="2560"
-                app:scale_height="452"
-                app:scale_left="0"
+                app:scale_width="2570"
+                app:scale_height="462"
+                app:scale_left="-10"
                 app:scale_top="1100"/>
             <ImageView
                 android:id="@+id/smallwave1"
@@ -104,7 +104,7 @@
                 android:src="@drawable/img_06_bigwave_02"
                 app:scale_width="1200"
                 app:scale_height="488"
-                app:scale_left="1366"
+                app:scale_left="1386"
                 app:scale_top="975"/>
             <ImageView
                 android:id="@+id/bigwave1"

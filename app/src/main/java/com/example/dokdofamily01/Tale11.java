@@ -141,7 +141,7 @@ public class Tale11 extends BaseFragment {
         flowerAnimation.setDuration(300);
 
         blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(1000);
+        blink.setDuration(500);
         blink.setInterpolator(new LinearInterpolator());
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
