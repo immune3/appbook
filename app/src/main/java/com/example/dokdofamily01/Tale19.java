@@ -35,6 +35,11 @@ public class Tale19 extends BaseFragment {
     ImageView star4;
     ImageView star5;
     ImageView star6;
+    ImageView star7;
+    ImageView star8;
+    ImageView star9;
+    ImageView star10;
+    ImageView star11;
     ImageView light;
     Boolean isAuto;
 
@@ -44,11 +49,11 @@ public class Tale19 extends BaseFragment {
     AlphaAnimation fadeout;
     AlphaAnimation starLightFadeout;
     AlphaAnimation starFadeout;
-    AlphaAnimation[] miniStarFadein = new AlphaAnimation[5];
-    AlphaAnimation[] miniStarFadeout = new AlphaAnimation[5];
-    TranslateAnimation[] miniStarAppear = new TranslateAnimation[5];
-    TranslateAnimation[] miniStarDisappear = new TranslateAnimation[5];
-    AnimationSet[] miniStarAppearAniSet = new AnimationSet[5];
+    AlphaAnimation[] miniStarFadein = new AlphaAnimation[10];
+    AlphaAnimation[] miniStarFadeout = new AlphaAnimation[10];
+    TranslateAnimation[] miniStarAppear = new TranslateAnimation[10];
+    TranslateAnimation[] miniStarDisappear = new TranslateAnimation[10];
+    AnimationSet[] miniStarAppearAniSet = new AnimationSet[10];
 
     AlphaAnimation blink;
     AnimationSet starAppearAniSet;
@@ -87,6 +92,12 @@ public class Tale19 extends BaseFragment {
         star5 = (ImageView) layout.findViewById(R.id.star5);
         star6 = (ImageView) layout.findViewById(R.id.star6);
         light = (ImageView) layout.findViewById(R.id.light);
+
+        star7 = (ImageView) layout.findViewById(R.id.star7);
+        star8 = (ImageView) layout.findViewById(R.id.star8);
+        star9 = (ImageView) layout.findViewById(R.id.star9);
+        star10 = (ImageView) layout.findViewById(R.id.star10);
+        star11 = (ImageView) layout.findViewById(R.id.star11);
 
 
     }
@@ -164,6 +175,11 @@ public class Tale19 extends BaseFragment {
             star4.startAnimation(miniStarAppearAniSet[2]);
             star5.startAnimation(miniStarAppearAniSet[3]);
             star6.startAnimation(miniStarAppearAniSet[4]);
+            star11.startAnimation(miniStarAppearAniSet[5]);
+            star10.startAnimation(miniStarAppearAniSet[6]);
+            star7.startAnimation(miniStarAppearAniSet[7]);
+            star9.startAnimation(miniStarAppearAniSet[8]);
+            star8.startAnimation(miniStarAppearAniSet[9]);
         }
 
         super.blockAnimFunc();
@@ -262,7 +278,7 @@ public class Tale19 extends BaseFragment {
 
                 int offsetDelay = 100;
 
-                for (int iter = 0; iter < 5; iter++) {
+                for (int iter = 0; iter < 10; iter++) {
                     miniStarFadein[iter] = new AlphaAnimation(0, 1);
                     miniStarFadein[iter].setStartOffset(iter*offsetDelay);
                     miniStarFadein[iter].setDuration(1000);
@@ -314,7 +330,7 @@ public class Tale19 extends BaseFragment {
                 starDisappearAniSet.addAnimation(starFadeout);
                 starDisappearAniSet.setFillAfter(true);
 
-                miniStarAppear[4].setAnimationListener(new Animation.AnimationListener() {
+                miniStarAppear[9].setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         new Handler().postDelayed(new Runnable() {
@@ -337,7 +353,7 @@ public class Tale19 extends BaseFragment {
                     }
                 });
 
-                miniStarFadeout[4].setAnimationListener(new Animation.AnimationListener() {
+                miniStarFadeout[9].setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
 
@@ -368,6 +384,11 @@ public class Tale19 extends BaseFragment {
                 star4.clearAnimation();
                 star5.clearAnimation();
                 star6.clearAnimation();
+                star7.clearAnimation();
+                star8.clearAnimation();
+                star9.clearAnimation();
+                star10.clearAnimation();
+                star11.clearAnimation();
                 animationFlag = 1;
                 star1.startAnimation(starAppearAniSet);
             }

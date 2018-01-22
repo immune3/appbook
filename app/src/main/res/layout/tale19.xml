@@ -108,6 +108,57 @@
                 app:scale_left="1820"
                 app:scale_top="246"/>
             <ImageView
+                android:id="@+id/star7"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_02"
+                app:scale_width="154"
+                app:scale_height="156"
+                app:scale_left="1600"
+                app:scale_top="603"/>
+            <ImageView
+                android:id="@+id/star8"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_03"
+                app:scale_width="100"
+                app:scale_height="100"
+                app:scale_left="1500"
+                app:scale_top="790"/>
+            <ImageView
+                android:id="@+id/star9"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_04"
+                app:scale_width="75"
+                app:scale_height="75"
+                app:scale_left="1575"
+                app:scale_top="745"/>
+            <ImageView
+                android:id="@+id/star10"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_03"
+                app:scale_width="94"
+                app:scale_height="94"
+                app:scale_left="1853"
+                app:scale_top="517"/>
+            <ImageView
+                android:id="@+id/star11"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_19_star_04"
+                app:scale_width="86"
+                app:scale_height="84"
+                app:scale_left="1920"
+                app:scale_top="646"/>
+
+            <ImageView
                 android:id="@+id/light"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"

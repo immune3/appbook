@@ -43,9 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_14_land"
-                app:scale_width="2560"
+                app:scale_width="2570"
                 app:scale_height="970"
-                app:scale_left="0"
+                app:scale_left="-5"
                 app:scale_top="575"/>
             <ImageView
                 android:id="@+id/bell"

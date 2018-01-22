@@ -209,14 +209,14 @@ public class Tale06 extends BaseFragment {
                 gullSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        gullSoundPool.play(gullSound, 1, 1, 0, 0, 1);
+                        gullSoundPool.play(gullSound, 0.3f, 0.3f, 0, 0, 1);
                     }
                 });
 
                 waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        waveSoundPool.play(waveSound, 0.8f, 0.8f, 0, 3, 1);
+                        waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 3, 1);
                     }
                 });
 
