@@ -295,7 +295,7 @@ public class Tale16 extends BaseFragment {
                     }
                 });
 
-                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight(), 0);
+                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight()*1.3f, 0);
                 moonAppearAnimation.setDuration(2000);
                 moonAppearAnimation.setStartOffset(1000);
                 moonAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());

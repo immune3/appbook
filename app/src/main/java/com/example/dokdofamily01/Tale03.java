@@ -216,7 +216,7 @@ public class Tale03 extends BaseFragment {
                 cloudAnimation[1].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 중앙 위 구름(cloud[3])
-                cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight(), 0);
+                cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight()*1.3f, 0);
                 cloudAnimation[2].setStartOffset(2000);
                 cloudAnimation[2].setDuration(2000);
                 cloudAnimation[2].setFillAfter(true);

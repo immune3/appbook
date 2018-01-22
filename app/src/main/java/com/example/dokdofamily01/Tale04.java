@@ -63,27 +63,6 @@ public class Tale04 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-        dokdo.post(new Runnable() {
-            @Override
-            public void run() {
-
-                sunLight.getLocationOnScreen(sunLightLocation);
-
-                sun.setY(sunLightLocation[1]);
-//                Log.d("SunLightLocation:", "LocationX"+sunLightLocation[0]);
-//                Log.d("SunLightLocation:", "LocationY"+sunLightLocation[1]);
-
-                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight() / 2));
-                sunRiseAni.setDuration(3000);
-                sunRiseAni.setFillAfter(true);
-                sunRiseAni.setAnimationListener(new MyAnimationListener());
-
-                animationFlag=0;
-                sun.clearAnimation();
-                sunLight.clearAnimation();
-                sunLight.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 
     @Override
@@ -163,6 +142,7 @@ public class Tale04 extends BaseFragment {
                     R.drawable.sub_04_05);
         }
 
+
         checkedAnimation = true;
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -180,6 +160,18 @@ public class Tale04 extends BaseFragment {
         dokdo.post(new Runnable() {
             @Override
             public void run() {
+                sun.setTranslationY(sun.getHeight()*0.6f);
+
+                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()*0.6f));
+                sunRiseAni.setDuration(3000);
+                sunRiseAni.setFillAfter(true);
+                sunRiseAni.setAnimationListener(new MyAnimationListener());
+
+                animationFlag=0;
+                sun.clearAnimation();
+                sunLight.clearAnimation();
+                sunLight.setVisibility(View.INVISIBLE);
+
                 dokdo.startAnimation(blink);
             }
         });
