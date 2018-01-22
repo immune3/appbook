@@ -151,6 +151,16 @@ public class MusicController {
     }
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
+        @Override
+        protected MediaPlayer doInBackground(Void... voids) {
+            try{
+                mp = MediaPlayer.create(mContext, resID);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return mp;
+        }
 
         @Override
         protected void onPostExecute(MediaPlayer mediaPlayer) {
@@ -212,11 +222,7 @@ public class MusicController {
 
         }
 
-        @Override
-        protected MediaPlayer doInBackground(Void... voids) {
-            mp = MediaPlayer.create(mContext, resID);
-            return mp;
-        }
+
 
         public MediaPlayer getMp() {
             return mp;
