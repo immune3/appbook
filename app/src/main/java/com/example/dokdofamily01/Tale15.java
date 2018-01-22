@@ -34,9 +34,9 @@ public class Tale15 extends BaseFragment {
     private android.widget.ImageView fish;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private ImageView ivLand15;
+    Boolean isAuto;
 
     int animationFlag = 0;
-    int appearFlag = 0;
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
@@ -84,7 +84,7 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if (animationFlag == 0 && appearFlag == 0) {
+        if ((animationFlag == 0 || animationFlag ==4)) {
             checkedAnimation = false;
             animationFlag = 1;
             fish.clearAnimation();
@@ -102,7 +102,12 @@ public class Tale15 extends BaseFragment {
         @Override
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
+                case 0:
+                    checkedAnimation = false;
                 case 1:
+                    checkedAnimation = false;
+                    fish.clearAnimation();
+                    fish.setVisibility(View.GONE);
                     moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     break;
                 case 2:
@@ -122,8 +127,10 @@ public class Tale15 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 0:
+                    checkedAnimation = true;
                     break;
                 case 1:
+                    checkedAnimation = false;
                     animationFlag = 2;
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
@@ -147,15 +154,20 @@ public class Tale15 extends BaseFragment {
                 case 4:
                     manImage3.clearAnimation();
                     manImage4.clearAnimation();
+
+                    fish.setVisibility(View.VISIBLE);
+                    fish.startAnimation(blink);
+
                     checkedAnimation = true;
+
                     break;
             }
-            if (appearFlag == 1) {
-                appearFlag = 0;
-                fish.setVisibility(View.VISIBLE);
-                fish.startAnimation(blink);
-                checkedAnimation = true;
-            }
+//            if (appearFlag == 1) {
+//                appearFlag = 0;
+//                fish.setVisibility(View.VISIBLE);
+//                fish.startAnimation(blink);
+//                checkedAnimation = true;
+//            }
 
         }
 
@@ -184,7 +196,6 @@ public class Tale15 extends BaseFragment {
     }
 
     public void animationClear() {
-        appearFlag=0;
         animationFlag=0;
         fish.setVisibility(View.INVISIBLE);
         manImage1.setVisibility(View.INVISIBLE);
@@ -206,7 +217,9 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_15, vp,
                     new int[]{R.drawable.sub_15_01, 2500},
                     new int[]{R.drawable.sub_15_02, 10500},
@@ -289,10 +302,17 @@ public class Tale15 extends BaseFragment {
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
 
+                fish.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fish.setVisibility(View.VISIBLE);
+                        fish.startAnimation(blink);
+                    }
+                }, 3000);
+
                 if (landAnimation != null) {
                     animationClear();
-                    checkedAnimation = false;
-                    appearFlag = 1;
+                    checkedAnimation = true;
                     ivLand15.startAnimation(landAnimation);
                     seaweadImage.startAnimation(landAnimation);
                     ivCave15.startAnimation(caveAnimation);

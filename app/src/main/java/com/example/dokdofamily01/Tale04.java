@@ -25,7 +25,9 @@ public class Tale04 extends BaseFragment {
     ImageView sunLight;
     TranslateAnimation sunRiseAni;
     AlphaAnimation sunLightAppear;
+    AlphaAnimation blink;
     int animationFlag = 0;
+    Boolean isAuto;
 
     int[] sunLightLocation = new int[2];
 
@@ -90,6 +92,13 @@ public class Tale04 extends BaseFragment {
         sunLightAppear = new AlphaAnimation(0, 1);
         sunLightAppear.setDuration(3000);
         sunLightAppear.setFillAfter(true);
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
+
     }
 
     @Override
@@ -102,6 +111,7 @@ public class Tale04 extends BaseFragment {
     @Override
     public void blockAnimFunc() {
         if(animationFlag==0){
+            dokdo.clearAnimation();
             checkedAnimation = false;
             soundID = sp.load(getContext(), R.raw.effect_04_sun, 1);
             sun.startAnimation(sunRiseAni);
@@ -133,7 +143,10 @@ public class Tale04 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_4, vp,
                     new int[]{R.drawable.sub_04_01, 5000},
                     new int[]{R.drawable.sub_04_02, 10500},
@@ -162,6 +175,14 @@ public class Tale04 extends BaseFragment {
         sun.clearAnimation();
         sunLight.clearAnimation();
         sunLight.setVisibility(View.INVISIBLE);
+
+        dokdo.clearAnimation();
+        dokdo.post(new Runnable() {
+            @Override
+            public void run() {
+                dokdo.startAnimation(blink);
+            }
+        });
     }
 
     @Override

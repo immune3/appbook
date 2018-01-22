@@ -30,6 +30,7 @@ public class Tale03 extends BaseFragment {
     ImageView blinkStar;
     ImageView head;
     ImageView body;
+    Boolean isAuto;
 
     Animation fadein;
     AlphaAnimation blink;
@@ -161,7 +162,9 @@ public class Tale03 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_3, vp,
                     new int[]{R.drawable.sub_03_01, 4000},
                     new int[]{R.drawable.sub_03_02, 12500},

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
@@ -37,6 +38,8 @@ public class Tale07 extends BaseFragment {
     RotateAnimation rotateDokdo;
     ScaleAnimation scaleDokdo;
     AnimationSet moveDokdo;
+    AlphaAnimation blink;
+    Boolean isAuto;
 
     int animationFlag = 0;
     boolean clickFlag = false;
@@ -83,6 +86,11 @@ public class Tale07 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -153,8 +161,11 @@ public class Tale07 extends BaseFragment {
                         @Override
                         public void run() {
                             seagullEffect = sp.load(getContext(), R.raw.effect_07_seagull, 1);
+
                         }
                     }, 500);
+
+
                     break;
             }
         }
@@ -166,6 +177,7 @@ public class Tale07 extends BaseFragment {
                 case 1:
                     animationFlag = 0;
                     seagull[0].clearAnimation();
+                    seagull[0].startAnimation(blink);
                     checkedAnimation = true;
                     break;
                 case 2:
@@ -188,6 +200,7 @@ public class Tale07 extends BaseFragment {
                     animationFlag = 5;
                     checkedAnimation=true;
                     seagull[2].clearAnimation();
+                    seagull[2].startAnimation(blink);
                     break;
                 case 6:
                     animationFlag = 2;
@@ -208,7 +221,9 @@ public class Tale07 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_7, vp,
                     new int[]{R.drawable.sub_07_01, 5300},
                     new int[]{R.drawable.sub_07_02, 11500},
@@ -232,6 +247,14 @@ public class Tale07 extends BaseFragment {
                     R.drawable.sub_07_08,
                     R.drawable.sub_07_09);
         }
+
+        seagull[0].post(new Runnable() {
+            @Override
+            public void run() {
+                seagull[0].clearAnimation();
+                seagull[0].startAnimation(blink);
+            }
+        });
 
         sl.post(new Runnable() {
             @Override

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -33,6 +32,8 @@ public class Tale01 extends BaseFragment {
     ImageView light;
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
+    AlphaAnimation blink;
+    Boolean isAuto;
 
 
     SoundPool sp;
@@ -89,6 +90,11 @@ public class Tale01 extends BaseFragment {
         fadeOut.setFillAfter(true);
         fadeOut.setAnimationListener(new MyAnimationListener());
 
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
+
     }
 
     @Override
@@ -96,6 +102,7 @@ public class Tale01 extends BaseFragment {
         super.setupEvents();
 
 //        CustomViewPager.isPageScrollEnabled = true;
+
         lamp.setOnTouchListener(new BlockObjListener());
 
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -209,8 +216,9 @@ public class Tale01 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
+        this.isAuto = getArguments().getBoolean("isAuto");
 
-        if (((TaleActivity) getActivity()).isAutoRead) {
+        if (isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_1, vp,
                     new int[]{R.drawable.sub_01_01, 5000},
                     new int[]{R.drawable.sub_01_02, 7500},
@@ -245,6 +253,14 @@ public class Tale01 extends BaseFragment {
         bedLight.setVisibility(View.INVISIBLE);
         byul.setVisibility(View.INVISIBLE);
         animationFlag = 0;
+
+        lampLight.setVisibility(View.VISIBLE);
+        sl.post(new Runnable() {
+            @Override
+            public void run() {
+                lampLight.startAnimation(blink);
+            }
+        });
 
     }
 

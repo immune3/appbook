@@ -35,6 +35,7 @@ public class Tale11 extends BaseFragment {
     ImageView flowers;
     ImageView dokdo;
     ImageView byul;
+    Boolean isAuto;
 
     TranslateAnimation dokdoAnimation;
     TranslateAnimation originalFlowerAnimation;
@@ -141,7 +142,7 @@ public class Tale11 extends BaseFragment {
         flowerAnimation.setDuration(300);
 
         blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(1000);
+        blink.setDuration(500);
         blink.setInterpolator(new LinearInterpolator());
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
@@ -219,7 +220,9 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_11, vp,
                     new int[]{R.drawable.sub_11_01, 6000},
                     new int[]{R.drawable.sub_11_02, 12500},

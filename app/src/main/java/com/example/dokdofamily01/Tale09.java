@@ -47,6 +47,7 @@ public class Tale09 extends BaseFragment {
     ImageView deco;
     ImageView sea;
     ImageView effect;
+    Boolean isAuto;
 
     ScaleAnimation seagullAppear;
     AlphaAnimation appear;
@@ -344,7 +345,9 @@ public class Tale09 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_9, vp,
                     new int[]{R.drawable.sub_09_01, 3000},
                     new int[]{R.drawable.sub_09_02, 5800},

@@ -31,6 +31,7 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivWall13;
     private android.widget.ImageView ivBottom13;
     private android.widget.ImageView ivFishes13;
+    Boolean isAuto;
     ImageView bubble;
     ImageView[] wave = new ImageView[4];
 
@@ -159,7 +160,9 @@ public class Tale13 extends BaseFragment {
     }
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_13, vp,
                     new int[]{R.drawable.sub_13_01, 5000},
                     new int[]{R.drawable.sub_13_02, 10000},

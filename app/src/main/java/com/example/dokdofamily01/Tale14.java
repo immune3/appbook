@@ -35,6 +35,7 @@ public class Tale14 extends BaseFragment {
     ImageView bubble;
     ImageView bell;
     ImageView light;
+    Boolean isAuto;
 
     TranslateAnimation caveAppearAni;
     TranslateAnimation byulAppearAni;
@@ -213,7 +214,9 @@ public class Tale14 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_14, vp,
                     new int[]{R.drawable.sub_14_01, 5000},
                     new int[]{R.drawable.sub_14_02, 8500},

@@ -57,6 +57,7 @@ public class Tale08 extends BaseFragment {
     AnimationSet leafAniSet;
     AnimationSet eyeBlackAniSet;
     int animationFlag = 0;
+    Boolean isAuto;
 
     SoundPool laughingSoundPool, eyeSoundPool;
     int laughingSound;
@@ -208,7 +209,9 @@ public class Tale08 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_8, vp,
                     new int[]{R.drawable.sub_08_01, 6000},
                     new int[]{R.drawable.sub_08_02, 12000},

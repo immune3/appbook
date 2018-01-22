@@ -38,6 +38,7 @@ public class Tale12 extends BaseFragment {
     ImageView sqeedBody;
     ImageView sqeedHead;
     ImageView hairpin;
+    Boolean isAuto;
 
     TranslateAnimation seaAppear;
     TranslateAnimation dokdoAppear;
@@ -164,7 +165,9 @@ public class Tale12 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_12, vp,
                     new int[]{R.drawable.sub_12_01, 1500},
                     new int[]{R.drawable.sub_12_02, 8000},

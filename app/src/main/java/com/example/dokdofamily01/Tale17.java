@@ -25,6 +25,7 @@ public class Tale17 extends BaseFragment {
     ImageView wave_shadow2;
     ImageView star;
 
+    Boolean isAuto;
     AlphaAnimation fadeIn;
     AlphaAnimation blink;
     int animationFlag = 0;
@@ -128,7 +129,9 @@ public class Tale17 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_17, vp,
                     new int[]{R.drawable.sub_17_01, 1500},
                     new int[]{R.drawable.sub_17_02, 5000},
