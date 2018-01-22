@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,8 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if ((animationFlag == 0 || animationFlag ==4)) {
+        if ((animationFlag == 0 || animationFlag ==4) && checkedAnimation) {
+            animationClear();
             checkedAnimation = false;
             animationFlag = 1;
             fish.clearAnimation();
@@ -103,12 +105,11 @@ public class Tale15 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
                 case 0:
-                    checkedAnimation = false;
+
                 case 1:
-                    checkedAnimation = false;
+
                     fish.clearAnimation();
-                    fish.setVisibility(View.GONE);
-                    moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
+//                    fish.setVisibility(View.GONE);
                     break;
                 case 2:
                     moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
@@ -127,10 +128,10 @@ public class Tale15 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 0:
-                    checkedAnimation = true;
+
                     break;
                 case 1:
-                    checkedAnimation = false;
+
                     animationFlag = 2;
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
@@ -152,13 +153,20 @@ public class Tale15 extends BaseFragment {
                     manImage4.startAnimation(fadeIn);
                     break;
                 case 4:
-                    manImage3.clearAnimation();
-                    manImage4.clearAnimation();
 
-                    fish.setVisibility(View.VISIBLE);
-                    fish.startAnimation(blink);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            manImage3.clearAnimation();
+                            manImage4.clearAnimation();
 
-                    checkedAnimation = true;
+                            fish.setVisibility(View.VISIBLE);
+                            fish.startAnimation(blink);
+
+                            checkedAnimation = true;
+                        }
+                    }, 1000);
+
 
                     break;
             }
@@ -241,6 +249,7 @@ public class Tale15 extends BaseFragment {
                     R.drawable.sub_15_08);
         }
 
+        checkedAnimation = true;
 
         sl.post(new Runnable() {
             @Override
@@ -248,6 +257,7 @@ public class Tale15 extends BaseFragment {
                 clickFishSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 moveManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 appearManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+
                 clickFishSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {

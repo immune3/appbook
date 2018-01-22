@@ -54,7 +54,7 @@ public class MusicController {
         this.mContext = context;
         this.resID = audioID;
         vp = viewPager;
-        fadein = new AlphaAnimation(0,1);
+        fadein = new AlphaAnimation(0, 1);
         fadein.setDuration(500);
         fadein.setFillAfter(true);
         animFlag = 0;
@@ -113,7 +113,7 @@ public class MusicController {
     }
 
     public void destroyPaging() {
-        if(delayedPagingHandler != null && delayedPagingRunnable != null) {
+        if (delayedPagingHandler != null && delayedPagingRunnable != null) {
             delayedPagingHandler.removeCallbacks(delayedPagingRunnable);
             delayedPagingHandler = null;
             delayedPagingRunnable = null;
@@ -149,12 +149,14 @@ public class MusicController {
 
         return subtitleList1;
     }
+
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
 
         @Override
         protected void onPostExecute(MediaPlayer mediaPlayer) {
             super.onPostExecute(mediaPlayer);
+
             try {
                 if (mediaPlayer != null) {
                     mediaPlayer.start();
@@ -214,12 +216,25 @@ public class MusicController {
 
         @Override
         protected MediaPlayer doInBackground(Void... voids) {
-            mp = MediaPlayer.create(mContext, resID);
+
+            try {
+                mp = MediaPlayer.create(mContext, resID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return mp;
         }
 
         public MediaPlayer getMp() {
             return mp;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
         }
 
     }
@@ -287,7 +302,7 @@ public class MusicController {
 
             try {
                 Log.d("subtitleIndex ", subtitleIndex + "");
-                if (mp!= null && subtitleIndex < subtitleList.size() - 1 && mp.isPlaying()) {
+                if (mp != null && subtitleIndex < subtitleList.size() - 1 && mp.isPlaying()) {
                     subtitleIndex++;
                     mp.seekTo(subtitleList.get(subtitleIndex - 1).getFinishTime());
                     return true;
@@ -303,7 +318,7 @@ public class MusicController {
         public boolean decreaseSubtitleMusic() {
 //            subtitleImageVIew.setVisibility(View.VISIBLE);
             try {
-                if (mp!=null && mp.isPlaying()) {
+                if (mp != null && mp.isPlaying()) {
                     if (subtitleIndex > 1) {
 //                        원래 값 -= 2 일 경우 대사가 3파트일 때 subtitleIndex가 2 일 경우 0이 되버려서
 //                        else if 조건은 1일 경우로 넘어가지 못하고 두번째 대사에서 첫번째 대사로 이동하지 않는 문제가 있음
@@ -348,10 +363,9 @@ public class MusicController {
 //                        }
 //                    }
 //                    else{
-                        subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
+                    subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
 //                    }
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 //                subtitleImageVIew.setTag((Integer)msg.what);
