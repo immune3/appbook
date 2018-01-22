@@ -47,6 +47,7 @@ public class Tale16 extends BaseFragment {
 
     int animationFlag = 0;
     int bubbleSP = 0;
+    int bubbleSoundFlag = 0;
 
     SoundPool bubbleEffectSp, bombSp;
     int bubbleEffect;
@@ -180,6 +181,7 @@ public class Tale16 extends BaseFragment {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
                 bombSp.play(bumbEffect, 1, 1, 1, 0, 1);
+                bubbleSoundFlag = 1;
             }
         });
 
@@ -284,7 +286,9 @@ public class Tale16 extends BaseFragment {
                 bubbleEffectSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        bubbleEffectSp.play(bubbleEffect, 0.05f, 0.05f, 1, 0, 1);
+                        if(bubbleSoundFlag == 0) {
+                            bubbleEffectSp.play(bubbleEffect, 0.05f, 0.05f, 1, 0, 1);
+                        }
                     }
                 });
 
@@ -375,6 +379,7 @@ public class Tale16 extends BaseFragment {
 
 
                 checkedAnimation = false;
+                bubbleSoundFlag=0;
                 animationFlag = 1;
                 moon.startAnimation(moonAppearAnimation);
                 bubble.startAnimation(moonAppearAnimation);

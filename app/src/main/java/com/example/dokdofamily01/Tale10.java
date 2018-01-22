@@ -99,7 +99,7 @@ public class Tale10 extends BaseFragment {
 
         repeat = new AlphaAnimation(1, 1);
         repeat.setDuration(500);
-        repeat.setRepeatCount(20);
+        repeat.setRepeatCount(16);
 //        repeat.setRepeatCount(Animation.INFINITE);
         repeat.setRepeatMode(Animation.REVERSE);
         repeat.setAnimationListener(new MyAnimationListener());
@@ -108,9 +108,7 @@ public class Tale10 extends BaseFragment {
     @Override
     public void setupEvents() {
         super.setupEvents();
-
         blinkBird.setOnTouchListener(new BlockObjListener());
-
     }
 
     @Override
@@ -284,7 +282,7 @@ public class Tale10 extends BaseFragment {
                 byulHeadRotate = new RotateAnimation(0, -20, byulHead.getWidth() / 2, byulHead.getHeight() / 2);
                 byulHeadRotate.setDuration(2000);
                 byulHeadRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-                byulHeadRotate.setRepeatCount(5);
+                byulHeadRotate.setRepeatCount(3);
                 byulHeadRotate.setRepeatMode(Animation.REVERSE);
                 byulHeadRotate.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -307,7 +305,7 @@ public class Tale10 extends BaseFragment {
                 byulHandRotate = new RotateAnimation(0, 8, 0, byulHand.getHeight());
                 byulHandRotate.setDuration(2000);
                 byulHandRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-                byulHandRotate.setRepeatCount(5);
+                byulHandRotate.setRepeatCount(3);
                 byulHandRotate.setRepeatMode(Animation.REVERSE);
 
                 checkedAnimation = false;

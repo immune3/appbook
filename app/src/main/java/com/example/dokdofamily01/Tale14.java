@@ -39,6 +39,7 @@ public class Tale14 extends BaseFragment {
     TranslateAnimation caveAppearAni;
     TranslateAnimation byulAppearAni;
     TranslateAnimation landAppearAni;
+    TranslateAnimation bellAppearAni;
     AlphaAnimation fadein;
     AlphaAnimation lightFadein;
     AlphaAnimation blink;
@@ -48,7 +49,6 @@ public class Tale14 extends BaseFragment {
     ScaleAnimation sqeedHandAfterClinkAni2;
     RotateAnimation sqeedHandRotateAni;
 
-    AnimationSet bellAnimSet;
     AnimationSet sqeedHandScaleAnimSet;
     AnimationSet sqeedHandAfterClinkAnimSet;
 
@@ -122,8 +122,7 @@ public class Tale14 extends BaseFragment {
         sqeedHandFadein.setDuration(300);
 
         blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setInterpolator(new LinearInterpolator());
+        blink.setDuration(600);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
 
@@ -133,8 +132,6 @@ public class Tale14 extends BaseFragment {
     public void setupEvents() {
         super.setupEvents();
         bell.setOnTouchListener(new BlockObjListener());
-
-
     }
 
     @Override
@@ -179,7 +176,6 @@ public class Tale14 extends BaseFragment {
                 animationFlag = 0;
                 bubble.setVisibility(View.VISIBLE);
                 bubble.startAnimation(fadein);
-                bell.startAnimation(blink);
                 checkedAnimation = true;
             }
         }
@@ -198,16 +194,16 @@ public class Tale14 extends BaseFragment {
     }
 
     private void animationClear() {
-        cave.setVisibility(View.INVISIBLE);
+//        cave.setVisibility(View.INVISIBLE);
         animationFlag = 0;
         bellClickFlag = 0;
         cave.clearAnimation();
+        bell.clearAnimation();
         land.clearAnimation();
         sqeedBody.clearAnimation();
         sqeedHand.clearAnimation();
         byul.clearAnimation();
         bubble.clearAnimation();
-        bell.clearAnimation();
         light.clearAnimation();
     }
 
@@ -244,15 +240,38 @@ public class Tale14 extends BaseFragment {
                     }
                 });
 
-                bellAnimSet = new AnimationSet(false);
                 sqeedHandScaleAnimSet = new AnimationSet(false);
                 sqeedHandAfterClinkAnimSet = new AnimationSet(false);
 
+                landAppearAni = new TranslateAnimation(0, 0, land.getHeight(), 0);
+                landAppearAni.setDuration(2000);
+                landAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                landAppearAni.setFillAfter(true);
+
                 caveAppearAni = new TranslateAnimation(cave.getWidth(), 0, 0, 0);
-                caveAppearAni.setDuration(1500);
-                caveAppearAni.setStartOffset(1000);
+                caveAppearAni.setStartOffset(500);
+                caveAppearAni.setDuration(2500);
                 caveAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
-                caveAppearAni.setFillAfter(true);
+
+                bellAppearAni = new TranslateAnimation(cave.getWidth(), 0, 0, 0);
+                bellAppearAni.setStartOffset(500);
+                bellAppearAni.setDuration(2500);
+                bellAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
+                bellAppearAni.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bell.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+//                caveAppearAni.setFillAfter(true);
 
                 byulAppearAni = new TranslateAnimation(-sqeedBody.getWidth(), 0, sqeedBody.getHeight(), 0);
                 byulAppearAni.setDuration(2000);
@@ -261,16 +280,6 @@ public class Tale14 extends BaseFragment {
                 byulAppearAni.setFillAfter(true);
                 byulAppearAni.setAnimationListener(new MyAnimationListener());
 
-                landAppearAni = new TranslateAnimation(0, 0, land.getHeight(), 0);
-                landAppearAni.setDuration(2000);
-                landAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
-                landAppearAni.setFillAfter(true);
-//                landAppearAni.setAnimationListener(new MyAnimationListener());
-
-                bellAnimSet.addAnimation(caveAppearAni);
-//                bellAnimSet.addAnimation(blink);
-
-//                Log.d("123123", "msg"+sqeedHand.getWidth());
                 sqeedHandScaleAni = new ScaleAnimation(0.95f, 1, 1, 1, 0, sqeedHand.getHeight());
                 sqeedHandScaleAni.setInterpolator(new AnticipateOvershootInterpolator());
                 sqeedHandScaleAni.setStartOffset(700);
@@ -289,6 +298,7 @@ public class Tale14 extends BaseFragment {
                 sqeedHandAfterClinkAni.setInterpolator(new AccelerateDecelerateInterpolator());
                 sqeedHandAfterClinkAni.setStartOffset(1400);
                 sqeedHandAfterClinkAni.setDuration(1000);
+
 
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandAfterClinkAni);
                 sqeedHandScaleAnimSet.addAnimation(sqeedHandScaleAni);
@@ -340,12 +350,11 @@ public class Tale14 extends BaseFragment {
                 animationClear();
                 checkedAnimation = false;
                 animationFlag = 1;
-                cave.startAnimation(caveAppearAni);
                 land.startAnimation(landAppearAni);
                 byul.startAnimation(byulAppearAni);
                 sqeedBody.startAnimation(byulAppearAni);
-                bell.startAnimation(bellAnimSet);
-
+                cave.startAnimation(caveAppearAni);
+                bell.startAnimation(bellAppearAni);
             }
         });
 
