@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -42,11 +43,6 @@ public class MainActivity extends BaseActivity {
         deviceWidth= displayMetrics.widthPixels;
         deviceHeight = displayMetrics.heightPixels;
         ratio = (float)deviceWidth/(float)deviceHeight;
-
-//        if(splashFlag) {
-//            splashFlag=false;
-//            startActivity(new Intent(this,SplashActivity.class));
-//        }
 
         bindViews();
         setValues();
