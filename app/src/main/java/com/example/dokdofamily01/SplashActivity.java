@@ -109,10 +109,12 @@ public class SplashActivity extends BaseActivity {
                 Log.e("ratio", ""+ratio);
                 if(ratio<=1.66){
 
-                    sv.removeView(sl);
-                    rl.removeView(sv);
-                    hv.addView(sl);
-                    rl.addView(hv);
+                    if(hv.getChildCount()==0) {
+                        sv.removeView(sl);
+                        rl.removeView(sv);
+                        hv.addView(sl);
+                        rl.addView(hv);
+                    }
 
                     hv.post(new Runnable() {
                         @Override
