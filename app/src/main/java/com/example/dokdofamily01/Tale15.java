@@ -95,6 +95,7 @@ public class Tale15 extends BaseFragment {
             clickFish = clickFishSp.load(getContext(), R.raw.effect_15_fish, 1);
             manImage4.setVisibility(View.INVISIBLE);
             manImage1.startAnimation(fadeIn);
+            moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
         }
 
         super.blockAnimFunc();

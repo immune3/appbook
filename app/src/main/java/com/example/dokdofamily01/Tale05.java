@@ -106,7 +106,7 @@ public class Tale05 extends BaseFragment {
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
                 case 1:
-                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
+//                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 1);
                     letter[1].setVisibility(View.VISIBLE);
                     break;
                 case 2:
@@ -162,6 +162,7 @@ public class Tale05 extends BaseFragment {
                 case 5:
                     letter[5].clearAnimation();
                     animationFlag = 10;
+                    soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
                     checkedAnimation = true;
                     break;
 
