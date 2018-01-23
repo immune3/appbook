@@ -6,7 +6,7 @@
     android:splitMotionEvents="false">
     <TextView
         android:id="@+id/spinnerText"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textColor="#FFF"
         android:shadowColor="#000"
         android:shadowDx="1"
@@ -16,6 +16,6 @@
         android:background="@drawable/spinner_item_background"
         android:textColorHint="#ff000000"
         android:layout_weight="1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
