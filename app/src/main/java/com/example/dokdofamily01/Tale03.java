@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -185,12 +186,27 @@ public class Tale03 extends BaseFragment {
             @Override
             public void run() {
                 wingSp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-                wingSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                    @Override
-                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        wingSp.play(soundID, 1, 1, 1, 1, 1);
-                    }
-                });
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1){
+                    //사용가능한 버전이 아님
+                    wingSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                        @Override
+                        public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                            wingSp.play(soundID, 1, 1, 1, 2, 1);
+                        }
+                    });
+
+                }
+                else{
+                    //사용가능한 버전
+                    wingSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                        @Override
+                        public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                            wingSp.play(soundID, 1, 1, 1, 1, 1);
+                        }
+                    });
+
+                }
 
                 sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
                 sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
