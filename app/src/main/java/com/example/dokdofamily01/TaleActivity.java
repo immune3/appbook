@@ -79,7 +79,7 @@ public class TaleActivity extends AppCompatActivity {
     protected ImageView showPageBtn;
 
     Intent intent;
-    public boolean isAutoRead;
+    public boolean isAutoRead = true;
 
     private ArrayList<String> indexItems = new ArrayList<>();
     private CustomSpinnerAdapter customSpinnerAdapter;
@@ -88,26 +88,26 @@ public class TaleActivity extends AppCompatActivity {
     private Handler closeMenuHandler;
     private Runnable closeMenuRunnable;
 
-    BaseFragment tale01;
-    BaseFragment tale02;
-    BaseFragment tale03;
-    BaseFragment tale04;
-    BaseFragment tale05;
-    BaseFragment tale06;
-    BaseFragment tale07;
-    BaseFragment tale08;
-    BaseFragment tale09;
-    BaseFragment tale10;
-    BaseFragment tale11;
-    BaseFragment tale12;
-    BaseFragment tale13;
-    BaseFragment tale14;
-    BaseFragment tale15;
-    BaseFragment tale16;
-    BaseFragment tale17;
-    BaseFragment tale18;
-    BaseFragment tale19;
-    BaseFragment tale20;
+    Tale01 tale01;
+    Tale02 tale02;
+    Tale03 tale03;
+    Tale04 tale04;
+    Tale05 tale05;
+    Tale06 tale06;
+    Tale07 tale07;
+    Tale08 tale08;
+    Tale09 tale09;
+    Tale10 tale10;
+    Tale11 tale11;
+    Tale12 tale12;
+    Tale13 tale13;
+    Tale14 tale14;
+    Tale15 tale15;
+    Tale16 tale16;
+    Tale17 tale17;
+    Tale18 tale18;
+    Tale19 tale19;
+    Tale20 tale20;
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -168,6 +168,7 @@ public class TaleActivity extends AppCompatActivity {
         intent = getIntent();
         isAutoRead = intent.getBooleanExtra("isAutoRead", true);
 
+        sendBundle();
 
         for (int iter = 1; iter <= NUM_OF_INDEX; iter++) {
             indexItems.add(String.valueOf(iter));
@@ -326,24 +327,61 @@ public class TaleActivity extends AppCompatActivity {
             }
         });
 
-        screenOffReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d("SCREEN", "SCREEN OFF");
-                screenFlag = false;
-            }
-        };
+        try {
 
-        screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+            screenOffReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Log.d("SCREEN", "SCREEN OFF");
+                    screenFlag = false;
+                }
+            };
 
-        registerReceiver(screenOffReceiver, screenOffFilter);
+            screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
 
-        // 컨텍스트의 전원에 관한 시스템 서비스를 얻는다.
-        PowerManager power = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        // 화면이 꺼지 않도록 제어할 수 있는 권리를 얻는다.
-        m_sleep_lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK, "TaleActivity");
 
-        m_sleep_lock.acquire();
+            registerReceiver(screenOffReceiver, screenOffFilter);
+
+            // 컨텍스트의 전원에 관한 시스템 서비스를 얻는다.
+            PowerManager power = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            // 화면이 꺼지 않도록 제어할 수 있는 권리를 얻는다.
+            m_sleep_lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK, "TaleActivity");
+
+            m_sleep_lock.acquire();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void sendBundle() {
+
+        Bundle autoReadBundle = new Bundle();
+        autoReadBundle.putBoolean("isAuto", isAutoRead);
+
+        tale01.setArguments(autoReadBundle);
+        tale02.setArguments(autoReadBundle);
+        tale03.setArguments(autoReadBundle);
+        tale04.setArguments(autoReadBundle);
+        tale05.setArguments(autoReadBundle);
+        tale06.setArguments(autoReadBundle);
+        tale07.setArguments(autoReadBundle);
+        tale08.setArguments(autoReadBundle);
+        tale09.setArguments(autoReadBundle);
+        tale10.setArguments(autoReadBundle);
+        tale11.setArguments(autoReadBundle);
+        tale12.setArguments(autoReadBundle);
+        tale13.setArguments(autoReadBundle);
+        tale14.setArguments(autoReadBundle);
+        tale15.setArguments(autoReadBundle);
+        tale16.setArguments(autoReadBundle);
+        tale17.setArguments(autoReadBundle);
+        tale18.setArguments(autoReadBundle);
+        tale19.setArguments(autoReadBundle);
+        tale20.setArguments(autoReadBundle);
+
 
     }
 
@@ -406,26 +444,26 @@ public class TaleActivity extends AppCompatActivity {
 
     public void destroyAllDelayedPaging() {
 
-        if(tale01.musicController != null) tale01.musicController.destroyPaging();
-        if(tale02.musicController != null) tale02.musicController.destroyPaging();
-        if(tale03.musicController != null) tale03.musicController.destroyPaging();
-        if(tale04.musicController != null) tale04.musicController.destroyPaging();
-        if(tale05.musicController != null) tale05.musicController.destroyPaging();
-        if(tale06.musicController != null) tale06.musicController.destroyPaging();
-        if(tale07.musicController != null) tale07.musicController.destroyPaging();
-        if(tale08.musicController != null) tale08.musicController.destroyPaging();
-        if(tale09.musicController != null) tale09.musicController.destroyPaging();
-        if(tale10.musicController != null) tale10.musicController.destroyPaging();
-        if(tale11.musicController != null) tale11.musicController.destroyPaging();
-        if(tale12.musicController != null) tale12.musicController.destroyPaging();
-        if(tale13.musicController != null) tale13.musicController.destroyPaging();
-        if(tale14.musicController != null) tale14.musicController.destroyPaging();
-        if(tale15.musicController != null) tale15.musicController.destroyPaging();
-        if(tale16.musicController != null) tale16.musicController.destroyPaging();
-        if(tale17.musicController != null) tale17.musicController.destroyPaging();
-        if(tale18.musicController != null) tale18.musicController.destroyPaging();
-        if(tale19.musicController != null) tale19.musicController.destroyPaging();
-        if(tale20.musicController != null) tale20.musicController.destroyPaging();
+        if (tale01.musicController != null) tale01.musicController.destroyPaging();
+        if (tale02.musicController != null) tale02.musicController.destroyPaging();
+        if (tale03.musicController != null) tale03.musicController.destroyPaging();
+        if (tale04.musicController != null) tale04.musicController.destroyPaging();
+        if (tale05.musicController != null) tale05.musicController.destroyPaging();
+        if (tale06.musicController != null) tale06.musicController.destroyPaging();
+        if (tale07.musicController != null) tale07.musicController.destroyPaging();
+        if (tale08.musicController != null) tale08.musicController.destroyPaging();
+        if (tale09.musicController != null) tale09.musicController.destroyPaging();
+        if (tale10.musicController != null) tale10.musicController.destroyPaging();
+        if (tale11.musicController != null) tale11.musicController.destroyPaging();
+        if (tale12.musicController != null) tale12.musicController.destroyPaging();
+        if (tale13.musicController != null) tale13.musicController.destroyPaging();
+        if (tale14.musicController != null) tale14.musicController.destroyPaging();
+        if (tale15.musicController != null) tale15.musicController.destroyPaging();
+        if (tale16.musicController != null) tale16.musicController.destroyPaging();
+        if (tale17.musicController != null) tale17.musicController.destroyPaging();
+        if (tale18.musicController != null) tale18.musicController.destroyPaging();
+        if (tale19.musicController != null) tale19.musicController.destroyPaging();
+        if (tale20.musicController != null) tale20.musicController.destroyPaging();
 
     }
 
@@ -618,6 +656,14 @@ public class TaleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        try {
+            unregisterReceiver(screenOffReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         if (screenOffReceiver != null && screenFlag == false) {
             unregisterReceiver(screenOffReceiver);
             screenOffReceiver = null;

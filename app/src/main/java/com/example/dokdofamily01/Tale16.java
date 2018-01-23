@@ -31,6 +31,7 @@ public class Tale16 extends BaseFragment {
     ImageView dokdo_father;
     ImageView dokdo_mom;
     ImageView wave;
+    Boolean isAuto;
 
     TranslateAnimation moonAppearAnimation;
     TranslateAnimation dokdoFatherAppearAnimation;
@@ -251,7 +252,9 @@ public class Tale16 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_16, vp,
                     new int[]{R.drawable.sub_16_01, 4000},
                     new int[]{R.drawable.sub_16_02, 10000},
@@ -292,7 +295,7 @@ public class Tale16 extends BaseFragment {
                     }
                 });
 
-                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight(), 0);
+                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight()*1.3f, 0);
                 moonAppearAnimation.setDuration(2000);
                 moonAppearAnimation.setStartOffset(1000);
                 moonAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());

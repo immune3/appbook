@@ -30,6 +30,7 @@ public class Tale06 extends BaseFragment {
     ImageView[] smallwave = new ImageView[4];
     ImageView[] bigwave = new ImageView[3];
     ImageView[] seagull = new ImageView[2];
+    Boolean isAuto;
 
     TranslateAnimation waveAppear;
     TranslateAnimation backgroundWaving;
@@ -172,7 +173,9 @@ public class Tale06 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_6, vp,
                 new int[]{R.drawable.sub_06_01, 8000},
                 new int[]{R.drawable.sub_06_02, 16500},

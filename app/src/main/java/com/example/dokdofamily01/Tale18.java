@@ -32,6 +32,7 @@ public class Tale18 extends BaseFragment {
     ImageView sqeed18;
     ImageView post18;
     ImageView tree18;
+    Boolean isAuto;
 
     TranslateAnimation fatherAppear;
     TranslateAnimation momAppear;
@@ -315,7 +316,9 @@ public class Tale18 extends BaseFragment {
 
 
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_18, vp,
                     new int[]{R.drawable.sub_18_01, 3000},
                     new int[]{R.drawable.sub_18_02, 11000},

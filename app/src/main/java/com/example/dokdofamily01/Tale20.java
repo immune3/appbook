@@ -4,7 +4,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
-
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -33,7 +30,8 @@ public class Tale20 extends BaseFragment {
     ImageView wave;
     ImageView cutain;
     ImageView byul;
-//    CustomTextView cutainText;
+    //    CustomTextView cutainText;
+    Boolean isAuto;
 
     TranslateAnimation manAppearAnimation;
     TranslateAnimation dokdoFatherAppearAnimation;
@@ -68,7 +66,6 @@ public class Tale20 extends BaseFragment {
         subtitleTextView.setText(null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
 
 
     @Override
@@ -144,9 +141,12 @@ public class Tale20 extends BaseFragment {
         }
 
     }
+
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if (isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_20, vp,
                     new int[]{R.drawable.sub_20_01, 3000},
                     new int[]{R.drawable.sub_20_02, 8500},
@@ -262,7 +262,7 @@ public class Tale20 extends BaseFragment {
 //                    }
 //                });
 
-                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0,-(cutain.getHeight()*0.55f));
+                cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, -(cutain.getHeight() * 0.55f));
                 cutainDownAnimation2.setDuration(30000);
                 cutainDownAnimation2.setFillAfter(true);
 
@@ -333,7 +333,7 @@ public class Tale20 extends BaseFragment {
                 try {
                     loopBgm.pause();
                     loopBgm.release();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -352,7 +352,7 @@ public class Tale20 extends BaseFragment {
         try {
             loopBgm.pause();
             loopBgm.release();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -363,7 +363,7 @@ public class Tale20 extends BaseFragment {
         try {
             loopBgm.pause();
             loopBgm.release();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

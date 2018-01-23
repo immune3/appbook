@@ -35,6 +35,7 @@ public class Tale11 extends BaseFragment {
     ImageView flowers;
     ImageView dokdo;
     ImageView byul;
+    Boolean isAuto;
 
     TranslateAnimation dokdoAnimation;
     TranslateAnimation originalFlowerAnimation;
@@ -207,6 +208,7 @@ public class Tale11 extends BaseFragment {
         cutFlower.setVisibility(View.INVISIBLE);
         flowers.setVisibility(View.INVISIBLE);
         animationFlag = 0;
+        byulAppearFlag = 0;
         flowers.clearAnimation();
         bee1.clearAnimation();
         bee2.clearAnimation();
@@ -219,7 +221,9 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_11, vp,
                     new int[]{R.drawable.sub_11_01, 6000},
                     new int[]{R.drawable.sub_11_02, 12500},
@@ -359,7 +363,7 @@ public class Tale11 extends BaseFragment {
                 hideButterflyAniSet.addAnimation(butterflyTranslate);
                 hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
 
-                if (animationFlag == 0) {
+//                if (animationFlag == 0) {
                     animationClear();
                     checkedAnimation = false;
                     animationFlag = 1;
@@ -367,7 +371,7 @@ public class Tale11 extends BaseFragment {
                     dokdo.startAnimation(dokdoAnimation);
                     originalFlower.startAnimation(originalFlowerAnimation);
                     bee2.startAnimation(beeAnimation);
-                }
+//                }
             }
         });
     }

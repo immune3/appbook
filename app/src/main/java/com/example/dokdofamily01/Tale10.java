@@ -32,6 +32,7 @@ public class Tale10 extends BaseFragment {
     ImageView byulHand;
     ImageView blinkBird;
     ImageView bird[] = new ImageView[3];
+    Boolean isAuto;
 
     TranslateAnimation mountainAppear;
     TranslateAnimation rockAppear;
@@ -227,7 +228,9 @@ public class Tale10 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_10, vp,
                     new int[]{R.drawable.sub_10_01, 4000},
                     new int[]{R.drawable.sub_10_02, 7500},

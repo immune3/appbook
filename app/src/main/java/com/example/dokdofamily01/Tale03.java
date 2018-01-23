@@ -30,6 +30,7 @@ public class Tale03 extends BaseFragment {
     ImageView blinkStar;
     ImageView head;
     ImageView body;
+    Boolean isAuto;
 
     Animation fadein;
     AlphaAnimation blink;
@@ -116,6 +117,7 @@ public class Tale03 extends BaseFragment {
         if (animationFlag == 0) {
             checkedAnimation = false;
             animationFlag = 1;
+            repeatFlag = 0;
             blinkStar.clearAnimation();
             wing[1].clearAnimation();
             blinkStar.startAnimation(wingAppear2);
@@ -161,7 +163,9 @@ public class Tale03 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
 
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_3, vp,
                     new int[]{R.drawable.sub_03_01, 4000},
                     new int[]{R.drawable.sub_03_02, 12500},
@@ -212,7 +216,7 @@ public class Tale03 extends BaseFragment {
                 cloudAnimation[1].setInterpolator(new AccelerateDecelerateInterpolator());
 
                 // 중앙 위 구름(cloud[3])
-                cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight(), 0);
+                cloudAnimation[2] = new TranslateAnimation(0, 0, -cloud[3].getHeight()*1.3f, 0);
                 cloudAnimation[2].setStartOffset(2000);
                 cloudAnimation[2].setDuration(2000);
                 cloudAnimation[2].setFillAfter(true);

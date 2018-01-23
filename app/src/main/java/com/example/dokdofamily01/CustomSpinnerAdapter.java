@@ -58,8 +58,6 @@ public class CustomSpinnerAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_dropdown_view, parent, false);
-//            convertView.setPadding(convertView.getPaddingLeft(),10,convertView.getPaddingRight(),10);
-
         }
         if (data != null) {
 

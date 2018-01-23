@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,9 @@ public class Tale15 extends BaseFragment {
     private android.widget.ImageView fish;
     private com.ssomai.android.scalablelayout.ScalableLayout sl;
     private ImageView ivLand15;
+    Boolean isAuto;
 
     int animationFlag = 0;
-    int appearFlag = 0;
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
@@ -84,7 +85,8 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if (animationFlag == 0 && appearFlag == 0) {
+        if ((animationFlag == 0 || animationFlag ==4) && checkedAnimation) {
+            animationClear();
             checkedAnimation = false;
             animationFlag = 1;
             fish.clearAnimation();
@@ -102,8 +104,12 @@ public class Tale15 extends BaseFragment {
         @Override
         public void onAnimationStart(Animation animation) {
             switch (animationFlag) {
+                case 0:
+
                 case 1:
-                    moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
+
+                    fish.clearAnimation();
+//                    fish.setVisibility(View.GONE);
                     break;
                 case 2:
                     moveMan = moveManSp.load(getContext(), R.raw.effect_05_move_letters, 2);
@@ -122,8 +128,10 @@ public class Tale15 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 0:
+
                     break;
                 case 1:
+
                     animationFlag = 2;
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
@@ -145,17 +153,29 @@ public class Tale15 extends BaseFragment {
                     manImage4.startAnimation(fadeIn);
                     break;
                 case 4:
-                    manImage3.clearAnimation();
-                    manImage4.clearAnimation();
-                    checkedAnimation = true;
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            manImage3.clearAnimation();
+                            manImage4.clearAnimation();
+
+                            fish.setVisibility(View.VISIBLE);
+                            fish.startAnimation(blink);
+
+                            checkedAnimation = true;
+                        }
+                    }, 1000);
+
+
                     break;
             }
-            if (appearFlag == 1) {
-                appearFlag = 0;
-                fish.setVisibility(View.VISIBLE);
-                fish.startAnimation(blink);
-                checkedAnimation = true;
-            }
+//            if (appearFlag == 1) {
+//                appearFlag = 0;
+//                fish.setVisibility(View.VISIBLE);
+//                fish.startAnimation(blink);
+//                checkedAnimation = true;
+//            }
 
         }
 
@@ -184,7 +204,6 @@ public class Tale15 extends BaseFragment {
     }
 
     public void animationClear() {
-        appearFlag=0;
         animationFlag=0;
         fish.setVisibility(View.INVISIBLE);
         manImage1.setVisibility(View.INVISIBLE);
@@ -206,7 +225,9 @@ public class Tale15 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_15, vp,
                     new int[]{R.drawable.sub_15_01, 2500},
                     new int[]{R.drawable.sub_15_02, 10500},
@@ -228,6 +249,7 @@ public class Tale15 extends BaseFragment {
                     R.drawable.sub_15_08);
         }
 
+        checkedAnimation = true;
 
         sl.post(new Runnable() {
             @Override
@@ -235,6 +257,7 @@ public class Tale15 extends BaseFragment {
                 clickFishSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 moveManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 appearManSp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+
                 clickFishSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
@@ -289,10 +312,17 @@ public class Tale15 extends BaseFragment {
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
 
+                fish.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fish.setVisibility(View.VISIBLE);
+                        fish.startAnimation(blink);
+                    }
+                }, 3000);
+
                 if (landAnimation != null) {
                     animationClear();
-                    checkedAnimation = false;
-                    appearFlag = 1;
+                    checkedAnimation = true;
                     ivLand15.startAnimation(landAnimation);
                     seaweadImage.startAnimation(landAnimation);
                     ivCave15.startAnimation(caveAnimation);

@@ -28,6 +28,7 @@ public class Tale02 extends BaseFragment {
     ImageView seagullHand;
     ImageView seagullBody;
     ImageView star;
+    Boolean isAuto;
 
     AlphaAnimation blink;
     AlphaAnimation seagullAlpha;
@@ -146,7 +147,9 @@ public class Tale02 extends BaseFragment {
 
     public void soundPlayFunc() {
 
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_2, vp,
                     new int[]{R.drawable.sub_02_01, 1600},
                     new int[]{R.drawable.sub_02_02, 8500},

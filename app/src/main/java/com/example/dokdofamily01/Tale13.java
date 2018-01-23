@@ -31,6 +31,7 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivWall13;
     private android.widget.ImageView ivBottom13;
     private android.widget.ImageView ivFishes13;
+    Boolean isAuto;
     ImageView bubble;
     ImageView[] wave = new ImageView[4];
 
@@ -71,7 +72,6 @@ public class Tale13 extends BaseFragment {
 
     public void bindViews() {
         super.bindViews();
-
         this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
         this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
         this.ivBottom13 = (ImageView) layout.findViewById(R.id.ivBottom13);
@@ -148,6 +148,7 @@ public class Tale13 extends BaseFragment {
 
     private void animationClear() {
         animationFlag = 0;
+        clickFlag=0;
         ivFishes13.clearAnimation();
         ivWall13.clearAnimation();
         ivBottom13.clearAnimation();
@@ -159,7 +160,9 @@ public class Tale13 extends BaseFragment {
     }
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_13, vp,
                     new int[]{R.drawable.sub_13_01, 5000},
                     new int[]{R.drawable.sub_13_02, 10000},
@@ -307,7 +310,8 @@ public class Tale13 extends BaseFragment {
                 }
 
 
-                if (animationFlag == 0 && bottomAnimation != null) {
+//                if (animationFlag == 0 && bottomAnimation != null) {
+//                if (animationFlag == 0) {
                     animationClear();
                     checkedAnimation = false;
                     animationFlag = 1;
@@ -315,7 +319,7 @@ public class Tale13 extends BaseFragment {
                     ivWall13.startAnimation(wallAnimation);
                     ivBuyl13.startAnimation(characterAnimation);
                     ivFishes13.startAnimation(fishAnimation);
-                }
+//                }
             }
         });
     }

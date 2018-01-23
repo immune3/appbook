@@ -8,14 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -43,6 +41,7 @@ public class Tale19 extends BaseFragment {
     ImageView star10;
     ImageView star11;
     ImageView light;
+    Boolean isAuto;
 
     TranslateAnimation starAppear;
     TranslateAnimation starFall;
@@ -209,7 +208,9 @@ public class Tale19 extends BaseFragment {
 
     @Override
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_19, vp,
                     new int[]{R.drawable.sub_19_01, 9000},
                     new int[]{R.drawable.sub_19_02, 15000},

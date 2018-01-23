@@ -27,8 +27,9 @@ public class Tale05 extends BaseFragment {
 
     SoundPool sp;
     int soundID;
+    Boolean isAuto;
 
-
+    AlphaAnimation blink;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,11 @@ public class Tale05 extends BaseFragment {
         letterAppear.setDuration(700);
         letterAppear.setFillAfter(true);
         letterAppear.setAnimationListener(new MyAnimationListener());
+
+        blink = new AlphaAnimation(1, 0.3f);
+        blink.setDuration(500);
+        blink.setRepeatCount(Animation.INFINITE);
+        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -129,6 +135,7 @@ public class Tale05 extends BaseFragment {
                 case 0:
                     break;
                 case 1:
+                    letter[0].clearAnimation();
                     letter[1].clearAnimation();
                     animationFlag = 2;
                     soundID = sp.load(getContext(), R.raw.effect_05_move_letters, 2);
@@ -165,7 +172,9 @@ public class Tale05 extends BaseFragment {
 
 
     public void soundPlayFunc() {
-        if( ((TaleActivity) getActivity()).isAutoRead) {
+        this.isAuto = getArguments().getBoolean("isAuto");
+
+        if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_5, vp,
                     new int[]{R.drawable.sub_05_01, 2500},
                     new int[]{R.drawable.sub_05_02, 11000},
@@ -204,6 +213,16 @@ public class Tale05 extends BaseFragment {
         letter[3].clearAnimation();
         letter[4].clearAnimation();
         letter[5].clearAnimation();
+
+        letter[0].clearAnimation();
+        letter[0].post(new Runnable() {
+            @Override
+            public void run() {
+                letter[0].startAnimation(blink);
+            }
+        });
+
+
     }
 
     @Override
