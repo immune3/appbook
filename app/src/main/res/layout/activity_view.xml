@@ -112,9 +112,8 @@
                     android:layout_height="match_parent"
                     android:textAlignment="center"
                     android:spinnerMode="dropdown"
-                    android:popupBackground="@drawable/spinner_border"
-                    android:dropDownVerticalOffset="-30dp"
                     android:overlapAnchor="false"
+                    android:popupBackground="@color/colorGray"
                     />
 
                 <ImageView

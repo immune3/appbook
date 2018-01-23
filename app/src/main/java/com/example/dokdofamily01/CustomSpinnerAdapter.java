@@ -50,7 +50,6 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             String text = data.get(position);
             ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
-        parent.setPadding(0, (int) context.getResources().getDimension(R.dimen.spinnerPadding), 0, (int) context.getResources().getDimension(R.dimen.spinnerPadding));
         return convertView;
     }
 

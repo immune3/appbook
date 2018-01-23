@@ -148,7 +148,7 @@ public class Tale04 extends BaseFragment {
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                sp.play(soundID, 1, 1, 1, 0, 1);
+                sp.play(soundID, 0.6f, 0.6f, 1, 0, 1);
             }
         });
         animationFlag=0;
@@ -160,9 +160,9 @@ public class Tale04 extends BaseFragment {
         dokdo.post(new Runnable() {
             @Override
             public void run() {
-                sun.setTranslationY(sun.getHeight()*0.6f);
+//                sun.setTranslationY(sun.getHeight()*0.6f);
 
-                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()*0.6f));
+                sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()*0.5f));
                 sunRiseAni.setDuration(3000);
                 sunRiseAni.setFillAfter(true);
                 sunRiseAni.setAnimationListener(new MyAnimationListener());
@@ -172,7 +172,7 @@ public class Tale04 extends BaseFragment {
                 sunLight.clearAnimation();
                 sunLight.setVisibility(View.INVISIBLE);
 
-                dokdo.startAnimation(blink);
+                sun.startAnimation(blink);
             }
         });
     }
