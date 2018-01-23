@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -213,12 +214,26 @@ public class Tale06 extends BaseFragment {
                     }
                 });
 
-                waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                    @Override
-                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 3, 1);
-                    }
-                });
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1){
+                    //사용가능한 버전이 아님
+                    waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                        @Override
+                        public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                            waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 4, 1);
+                        }
+                    });
+
+                }
+                else{
+                    //사용가능한 버전
+                    waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                        @Override
+                        public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                            waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 3, 1);
+                        }
+                    });
+
+                }
 
                 waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
                 waveAppear.setDuration(800);

@@ -117,8 +117,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 app:scale_height="510"
-                app:scale_left="1634"
-                app:scale_top="1090"
+                app:scale_left="1650"
+                app:scale_top="1000"
                 app:scale_width="756" />
 
             <Button
@@ -360,8 +360,8 @@
                 android:src="@drawable/intro_squid"
                 android:visibility="gone"
                 app:scale_height="510"
-                app:scale_left="1634"
-                app:scale_top="1090"
+                app:scale_left="1650"
+                app:scale_top="1000"
                 app:scale_width="756" />
 
             <ImageView
@@ -372,7 +372,7 @@
                 android:visibility="gone"
                 app:scale_height="1116"
                 app:scale_left="600"
-                app:scale_top="450"
+                app:scale_top="400"
                 app:scale_width="1350" />
 
             <ImageView
