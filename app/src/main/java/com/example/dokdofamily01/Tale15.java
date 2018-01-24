@@ -5,6 +5,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,10 +130,10 @@ public class Tale15 extends BaseFragment {
         public void onAnimationEnd(Animation animation) {
             switch (animationFlag) {
                 case 0:
-
+                    checkedAnimation = true;
                     break;
                 case 1:
-
+                    Log.d("Case1", "AnimationFlag" + animationFlag);
                     animationFlag = 2;
                     manImage1.clearAnimation();
                     manImage2.clearAnimation();
@@ -323,7 +324,7 @@ public class Tale15 extends BaseFragment {
 
                 if (landAnimation != null) {
                     animationClear();
-                    checkedAnimation = true;
+                    checkedAnimation = false;
                     ivLand15.startAnimation(landAnimation);
                     seaweadImage.startAnimation(landAnimation);
                     ivCave15.startAnimation(caveAnimation);
