@@ -3,6 +3,7 @@ package com.example.dokdofamily01;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +35,9 @@ public class Tale18 extends BaseFragment {
     ImageView tree18;
     Boolean isAuto;
 
+    Handler handler;
+    Runnable run;
+
     TranslateAnimation fatherAppear;
     TranslateAnimation momAppear;
     TranslateAnimation starsAppear;
@@ -51,6 +55,7 @@ public class Tale18 extends BaseFragment {
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
     boolean clickFlag = false;
+    boolean delayFlag = false;
 
     SoundPool[] soundsPool;
     SoundPool sp;
@@ -100,6 +105,20 @@ public class Tale18 extends BaseFragment {
     public void setAnimation() {
         super.setAnimation();
     }
+
+    public void delay(final int delay) {
+        handler = new Handler();
+
+        run = new Runnable() {
+            @Override
+            public void run() {
+                delayFlag = false;
+            }
+        };
+
+        handler.postDelayed(run, delay);
+    }
+
 
     @Override
     public void setupEvents() {
@@ -167,7 +186,7 @@ public class Tale18 extends BaseFragment {
     @Override
     public void blockAnimFunc() {
 
-        if(sp != null) {
+        if(sp != null && !delayFlag) {
 
             switch (animationCaseFlag) {
                 case 0:
@@ -214,8 +233,8 @@ public class Tale18 extends BaseFragment {
             }
 
         }
-
-
+        delayFlag = true;
+        delay(300);
 
         super.blockAnimFunc();
     }
