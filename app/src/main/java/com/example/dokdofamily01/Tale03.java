@@ -2,6 +2,7 @@ package com.example.dokdofamily01;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -317,21 +318,29 @@ public class Tale03 extends BaseFragment {
                 checkedAnimation = false;
                 animationFlag = 1;
 //                sp.play(soundID, 1, 1, 0, 0, 1);
-                try {
-                    soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
-                }
-                catch(Exception e) {
-                    postSoundHandler = new Handler();
-                    postSoundRun = new Runnable() {
-                        @Override
-                        public void run() {
-                            soundID = sp.load(getContext(),R.raw.effect_03_clouds,1);
-                        }
-                    };
-                    postSoundHandler.postDelayed(postSoundRun, 500);
 
-                    e.printStackTrace();
-                }
+                new AsyncTask<Void, Void, Integer>(){
+                    int sID;
+                    @Override
+                    protected Integer doInBackground(Void... voids) {
+                        sID = R.raw.effect_03_clouds;
+                        return sID;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Integer integer) {
+                        super.onPostExecute(integer);
+                        try {
+                            soundID = sp.load(getContext(),integer,1);
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                            doInBackground();
+                        }
+                    }
+                }.execute();
+
+
                 cloud[0].startAnimation(cloudAnimation[0]);
                 cloud[1].startAnimation(cloudAnimation[1]);
                 cloud[2].startAnimation(cloudAnimation[1]);
