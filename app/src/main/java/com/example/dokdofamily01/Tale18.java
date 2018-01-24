@@ -52,7 +52,9 @@ public class Tale18 extends BaseFragment {
     int rotateFlag[] = new int[4];
     boolean clickFlag = false;
 
+    SoundPool[] soundsPool;
     SoundPool sp;
+    int[] soundsID;
     int soundID;
 
     @Override
@@ -83,12 +85,15 @@ public class Tale18 extends BaseFragment {
         tree18 = (ImageView) layout.findViewById(R.id.tree18);
         sqeed18 = (ImageView) layout.findViewById(R.id.sqeed18);
         man18 = (ImageView) layout.findViewById(R.id.man18);
+        soundsPool = new SoundPool[6];
+        soundsID = new int[6];
 
     }
 
     @Override
     public void setValues() {
         super.setValues();
+
     }
 
     @Override
@@ -162,49 +167,55 @@ public class Tale18 extends BaseFragment {
     @Override
     public void blockAnimFunc() {
 
-        switch (animationCaseFlag) {
-            case 0:
-                soundID = sp.load(getContext(), R.raw.effect_18_star, 2);
-//                sp.play(starEffect, 1, 1, 1, 0, 1);
-                if (animationFlag == 0) {
-                    checkedAnimation = false;
-                    animationFlag = 2;
-                    animationClear();
-                    flower18.clearAnimation();
+        if(sp != null) {
 
-                    rotateFlag[0] = 1;
-                    rotateFlag[1] = 1;
-                    rotateFlag[2] = 1;
-                    rotateFlag[3] = 1;
-                    post18.setVisibility(View.VISIBLE);
-                    tree18.setVisibility(View.VISIBLE);
-                    sqeed18.setVisibility(View.VISIBLE);
-                    man18.setVisibility(View.VISIBLE);
-                    post18.startAnimation(postAppear);
-                    tree18.startAnimation(treeAppear);
-                    sqeed18.startAnimation(sqeedAppear);
-                    man18.startAnimation(manAppear);
-                }
-                break;
-            case 1:
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_do, 3);
-                break;
-            case 2:
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_re, 4);
-                break;
-            case 3 :
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_mi, 5);
-                break;
-            case 4 :
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_fa, 6);
-                break;
-            case 5 :
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_so, 7);
-                break;
-            case 6 :
-                if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_la, 8);
-                break;
+            switch (animationCaseFlag) {
+                case 0:
+                    soundID = sp.load(getContext(), R.raw.effect_18_star, 2);
+//                soundsPool.play(starEffect, 1, 1, 1, 0, 1);
+                    if (animationFlag == 0) {
+                        checkedAnimation = false;
+                        animationFlag = 2;
+                        animationClear();
+                        flower18.clearAnimation();
+
+                        rotateFlag[0] = 1;
+                        rotateFlag[1] = 1;
+                        rotateFlag[2] = 1;
+                        rotateFlag[3] = 1;
+                        post18.setVisibility(View.VISIBLE);
+                        tree18.setVisibility(View.VISIBLE);
+                        sqeed18.setVisibility(View.VISIBLE);
+                        man18.setVisibility(View.VISIBLE);
+                        post18.startAnimation(postAppear);
+                        tree18.startAnimation(treeAppear);
+                        sqeed18.startAnimation(sqeedAppear);
+                        man18.startAnimation(manAppear);
+                    }
+                    break;
+                case 1:
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_do, 4);
+                    break;
+                case 2:
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_re, 4);
+                    break;
+                case 3 :
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_mi, 5);
+                    break;
+                case 4 :
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_fa, 6);
+                    break;
+                case 5 :
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_so, 7);
+                    break;
+                case 6 :
+                    if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_la, 8);
+                    break;
+            }
+
         }
+
+
 
         super.blockAnimFunc();
     }
@@ -247,7 +258,7 @@ public class Tale18 extends BaseFragment {
             super.onAnimationStart(animation);
             if (rotateFlag[1] == 1) {
                 soundID = sp.load(getContext(), R.raw.effect_18_appear, 1);
-//                sp.play(appear, 1, 1, 1, 0, 1);
+//                soundsPool.play(appear, 1, 1, 1, 0, 1);
             }
         }
 
@@ -339,7 +350,7 @@ public class Tale18 extends BaseFragment {
         father18.post(new Runnable() {
             @Override
             public void run() {
-                sp = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+                sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
                 sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
