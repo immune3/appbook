@@ -96,20 +96,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                app:scale_height="518"
-                app:scale_left="1720"
-                app:scale_top="0"
-                app:scale_width="830" />
+                app:scale_height="446"
+                app:scale_left="1714"
+                app:scale_top="50"
+                app:scale_width="720"/>
 
             <Button
                 android:id="@+id/byulBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                app:scale_height="280"
-                app:scale_left="2000"
-                app:scale_top="10"
-                app:scale_width="196" />
+                app:scale_left="1915"
+                app:scale_top="78"
+                app:scale_height="316"
+                app:scale_width="260" />
 
             <Button
                 android:id="@+id/squidBtn"
@@ -175,10 +175,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_byul"
                 android:visibility="invisible"
-                app:scale_height="408"
-                app:scale_left="1953"
-                app:scale_top="5"
-                app:scale_width="296" />
+                app:scale_left="1915"
+                app:scale_top="78"
+                app:scale_height="316"
+                app:scale_width="260" />
 
 
 
@@ -336,11 +336,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_seagull"
-                android:visibility="gone"
-                app:scale_height="518"
-                app:scale_left="1720"
-                app:scale_top="0"
-                app:scale_width="830" />
+                android:visibility="visible"
+                app:scale_height="446"
+                app:scale_left="1714"
+                app:scale_top="50"
+                app:scale_width="720" />
 
             <ImageView
                 android:id="@+id/introSeagullText"
@@ -396,6 +396,8 @@
                 app:scale_left="110"
                 app:scale_top="430"
                 app:scale_width="1488" />
+
+
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
