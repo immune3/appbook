@@ -23,21 +23,22 @@
 
 
     <com.ssomai.android.scalablelayout.ScalableLayout
+        android:id="@+id/scalarView"
         android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:scale_base_width="2560"
-        app:scale_base_height="480">
+        app:scale_base_height="1600">
 
         <ImageView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:scale_width = "2560"
-            app:scale_height= "550"
             android:id="@+id/subtitleImageView"
-            />
+            app:scale_width = "2560"
+            app:scale_height = "1600"/>
 
         <com.example.dokdofamily01.CustomTextView
+            android:visibility="gone"
             android:id="@+id/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

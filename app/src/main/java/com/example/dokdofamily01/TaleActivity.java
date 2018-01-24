@@ -27,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ssomai.android.scalablelayout.ScalableLayout;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +60,7 @@ public class TaleActivity extends AppCompatActivity {
 
     static public TextView subtitleTextView;
     static public ImageView subtitleImageVIew;
+    static public ScalableLayout scalarView;
 
     static int height;
     static int width;
@@ -401,6 +404,7 @@ public class TaleActivity extends AppCompatActivity {
 
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
+        scalarView = (ScalableLayout) findViewById(R.id.scalarView);
 
         tale01 = new Tale01();
         tale02 = new Tale02();
