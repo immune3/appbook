@@ -1,9 +1,11 @@
 package com.example.dokdofamily01;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -41,7 +44,7 @@ public class TaleActivity extends AppCompatActivity {
     PowerManager.WakeLock m_sleep_lock = null;
 
     public CustomViewPager vp;
-    Spinner goPage;
+    CustomSpinner goPage;
     LinearLayout menuContainer;
     boolean showFlag, animFlag;
     TranslateAnimation ani_menu_up;
@@ -109,41 +112,41 @@ public class TaleActivity extends AppCompatActivity {
     Tale19 tale19;
     Tale20 tale20;
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                for (View view : getWindowManagerViews()) {
-                    try {
-                        Class clazz = view.getClass();
-                        Field outerField = clazz.getDeclaredField("this$0");
-                        outerField.setAccessible(true);
-                        Object popupWindow = outerField.get(view);
-
-                        Field field = popupWindow.getClass().getDeclaredField("mTouchInterceptor");
-                        field.setAccessible(true);
-                        final View.OnTouchListener innerOnTouchListener = (View.OnTouchListener) field.get(popupWindow);
-                        View.OnTouchListener outerOnTOuchListener = new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View view, MotionEvent motionEvent) {
-                                Log.d(MainActivity.class.getSimpleName(), String.format("popupwindow event %s at %s-%s", motionEvent.getAction(), motionEvent.getX(), motionEvent.getY()));
-                                autoCloseMenu(3000);
-                                return innerOnTouchListener.onTouch(view, motionEvent);
-                            }
-
-                        };
-                        field.set(popupWindow, outerOnTOuchListener);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (View view : getWindowManagerViews()) {
+//                    try {
+//                        Class clazz = view.getClass();
+//                        Field outerField = clazz.getDeclaredField("this$0");
+//                        outerField.setAccessible(true);
+//                        Object popupWindow = outerField.get(view);
+//
+//                        Field field = popupWindow.getClass().getDeclaredField("mTouchInterceptor");
+//                        field.setAccessible(true);
+//                        final View.OnTouchListener innerOnTouchListener = (View.OnTouchListener) field.get(popupWindow);
+//                        View.OnTouchListener outerOnTOuchListener = new View.OnTouchListener() {
+//                            @Override
+//                            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                                Log.d(MainActivity.class.getSimpleName(), String.format("popupwindow event %s at %s-%s", motionEvent.getAction(), motionEvent.getX(), motionEvent.getY()));
+//                                autoCloseMenu(3000);
+//                                return innerOnTouchListener.onTouch(view, motionEvent);
+//                            }
+//
+//                        };
+//                        field.set(popupWindow, outerOnTOuchListener);
+//                    } catch (Exception e) {
+//                        //e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -175,6 +178,7 @@ public class TaleActivity extends AppCompatActivity {
         }
         customSpinnerAdapter = new CustomSpinnerAdapter(this, indexItems);
         goPage.setAdapter(customSpinnerAdapter);
+        goPage.setDropDownVerticalOffset(0);
 
         showFlag = true;
         animFlag = false;
@@ -397,7 +401,8 @@ public class TaleActivity extends AppCompatActivity {
 
         showMenu = (Button) findViewById(R.id.showMenu);
         menuBtn = (Button) findViewById(R.id.menuBtn);
-        goPage = (Spinner) findViewById(R.id.goPage);
+        goPage = (CustomSpinner) findViewById(R.id.goPage);
+        goPage.setTaleActivity(this);
 
         subtitleTextView = (CustomTextView) findViewById(R.id.CustomTextView);
         subtitleImageVIew = (ImageView) findViewById(R.id.subtitleImageView);
@@ -788,6 +793,7 @@ public class TaleActivity extends AppCompatActivity {
 
         return new ArrayList<View>();
     }
+
 
 
 }
