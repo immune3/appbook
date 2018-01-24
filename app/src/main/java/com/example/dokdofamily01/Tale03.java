@@ -124,7 +124,7 @@ public class Tale03 extends BaseFragment {
             wing[1].clearAnimation();
             blinkStar.startAnimation(wingAppear2);
             soundID = wingSp.load(getContext(),R.raw.effect_03_wings,1);
-//            sp.play(wings,1,1,1,1,1);
+//            soundsPool.play(wings,1,1,1,1,1);
         }
         super.blockAnimFunc();
     }
@@ -317,7 +317,6 @@ public class Tale03 extends BaseFragment {
                 animationClear();
                 checkedAnimation = false;
                 animationFlag = 1;
-//                sp.play(soundID, 1, 1, 0, 0, 1);
 
                 new AsyncTask<Void, Void, Integer>(){
                     int sID;
@@ -336,6 +335,7 @@ public class Tale03 extends BaseFragment {
                         catch(Exception e) {
                             e.printStackTrace();
                             doInBackground();
+
                         }
                     }
                 }.execute();
