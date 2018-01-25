@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -47,6 +48,12 @@ public class Tale18 extends BaseFragment {
     TranslateAnimation postAppear;
     TranslateAnimation treeAppear;
     AlphaAnimation blink;
+    AlphaAnimation postBlink;
+    AlphaAnimation treeBlink;
+    AlphaAnimation sqeedBlink;
+    AlphaAnimation manBlink;
+    AlphaAnimation fatherBlink;
+    AlphaAnimation momBlink;
     RotateAnimation postRotate[] = new RotateAnimation[2];
     RotateAnimation treeRotate[] = new RotateAnimation[2];
     RotateAnimation sqeedRotate[] = new RotateAnimation[2];
@@ -167,7 +174,7 @@ public class Tale18 extends BaseFragment {
         father18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                animationCaseFlag = 5;
+                if(rotateFlag[3]==0) animationCaseFlag = 5;
                 return super.onTouch(view , motionEvent);
             }
         });
@@ -175,7 +182,7 @@ public class Tale18 extends BaseFragment {
         mom18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                animationCaseFlag = 6;
+                if(rotateFlag[3]==0) animationCaseFlag = 6;
                 return super.onTouch(view , motionEvent);
             }
         });
@@ -260,7 +267,10 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 3:
                     animationFlag = 4;
-                    post18.startAnimation(postRotate[1]);
+                    AnimationSet postSet = new AnimationSet(false);
+                    postSet.addAnimation(postBlink);
+                    postSet.addAnimation(postRotate[1]);
+                    post18.startAnimation(postSet);
                     break;
             }
         }
@@ -291,7 +301,10 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[1] = 0;
-                    tree18.startAnimation(treeRotate[1]);
+                    AnimationSet treeSet = new AnimationSet(false);
+                    treeSet.addAnimation(treeBlink);
+                    treeSet.addAnimation(treeRotate[1]);
+                    tree18.startAnimation(treeSet);
                     break;
             }
         }
@@ -308,7 +321,12 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[2] = 0;
-                    sqeed18.startAnimation(sqeedRotate[1]);
+                    AnimationSet sqeedSet = new AnimationSet(false);
+                    sqeedSet.addAnimation(sqeedBlink);
+                    sqeedSet.addAnimation(sqeedRotate[1]);
+                    sqeed18.startAnimation(sqeedSet);
+                    father18.startAnimation(fatherBlink);
+//                    sqeed18.startAnimation(sqeedRotate[1]);
                     break;
             }
         }
@@ -327,7 +345,11 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[3] = 0;
-                    man18.startAnimation(manRotate[1]);
+                    AnimationSet manSet = new AnimationSet(false);
+                    manSet.addAnimation(manBlink);
+                    manSet.addAnimation(manRotate[1]);
+                    man18.startAnimation(manSet);
+                    mom18.startAnimation(momBlink);
                     break;
             }
         }
@@ -342,6 +364,8 @@ public class Tale18 extends BaseFragment {
         tree18.clearAnimation();
         sqeed18.clearAnimation();
         man18.clearAnimation();
+        father18.clearAnimation();
+        mom18.clearAnimation();
     }
 
 
@@ -381,6 +405,36 @@ public class Tale18 extends BaseFragment {
                 blink.setDuration(500);
                 blink.setRepeatCount(Animation.INFINITE);
                 blink.setRepeatMode(Animation.REVERSE);
+
+                postBlink = new AlphaAnimation(1, 0.3f);
+                postBlink.setDuration(500);
+                postBlink.setRepeatCount(Animation.INFINITE);
+                postBlink.setRepeatMode(Animation.REVERSE);
+
+                treeBlink = new AlphaAnimation(1, 0.3f);
+                treeBlink.setDuration(500);
+                treeBlink.setRepeatCount(Animation.INFINITE);
+                treeBlink.setRepeatMode(Animation.REVERSE);
+
+                sqeedBlink = new AlphaAnimation(1, 0.3f);
+                sqeedBlink.setDuration(500);
+                sqeedBlink.setRepeatCount(Animation.INFINITE);
+                sqeedBlink.setRepeatMode(Animation.REVERSE);
+
+                manBlink = new AlphaAnimation(1, 0.3f);
+                manBlink.setDuration(500);
+                manBlink.setRepeatCount(Animation.INFINITE);
+                manBlink.setRepeatMode(Animation.REVERSE);
+
+                fatherBlink = new AlphaAnimation(1, 0.3f);
+                fatherBlink.setDuration(500);
+                fatherBlink.setRepeatCount(Animation.INFINITE);
+                fatherBlink.setRepeatMode(Animation.REVERSE);
+
+                momBlink = new AlphaAnimation(1, 0.3f);
+                momBlink.setDuration(500);
+                momBlink.setRepeatCount(Animation.INFINITE);
+                momBlink.setRepeatMode(Animation.REVERSE);
 
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
