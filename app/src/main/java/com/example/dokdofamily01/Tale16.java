@@ -124,9 +124,8 @@ public class Tale16 extends BaseFragment {
         fadeout.setDuration(500);
 //        fadeout.setFillAfter(true);
 
-        blink = new AlphaAnimation(1, 0.5f);
-        blink.setDuration(1000);
-        blink.setInterpolator(new LinearInterpolator());
+        blink = new AlphaAnimation(1, 0.6f);
+        blink.setDuration(600);
         blink.setRepeatCount(Animation.INFINITE);
         blink.setRepeatMode(Animation.REVERSE);
 
@@ -144,6 +143,7 @@ public class Tale16 extends BaseFragment {
             public void onAnimationEnd(Animation animation) {
                 animationFlag = 0;
                 bubble.startAnimation(bubbleScaleAni);
+                moon.startAnimation(blink);
             }
 
             @Override
@@ -168,14 +168,13 @@ public class Tale16 extends BaseFragment {
             }
         });
 
-        bubble.setOnTouchListener(new BlockObjListener(){
+        bubble.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 animationCaseFlag = 1;
                 return super.onTouch(view, motionEvent);
             }
         });
-
 
 
         bombSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -195,6 +194,7 @@ public class Tale16 extends BaseFragment {
         switch (animationCaseFlag) {
             case 0:
                 if (animationFlag == 0) {
+                    moon.clearAnimation();
                     animationFlag = 1;
                     bomb.setVisibility(View.VISIBLE);
                     bubble.setVisibility(View.INVISIBLE);
@@ -208,6 +208,7 @@ public class Tale16 extends BaseFragment {
                 break;
             case 1:
                 if (animationFlag == 0) {
+                    moon.clearAnimation();
                     animationFlag = 1;
                     bomb.setVisibility(View.VISIBLE);
                     bubble.setVisibility(View.INVISIBLE);
@@ -224,27 +225,6 @@ public class Tale16 extends BaseFragment {
         super.blockAnimFunc();
     }
 
-    private class MyAnimationListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            animationFlag = 0;
-            bubble.startAnimation(bubbleScaleAni);
-            checkedAnimation = true;
-//            moon.startAnimation(blink);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-            bomb.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
     private void animationClear() {
         animationFlag = 0;
         bomb.setVisibility(View.INVISIBLE);
@@ -254,7 +234,7 @@ public class Tale16 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
+        if (isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_16, vp,
                     new int[]{R.drawable.sub_16_01, 4000},
                     new int[]{R.drawable.sub_16_02, 10000},
@@ -289,18 +269,36 @@ public class Tale16 extends BaseFragment {
                 bubbleEffectSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        if(bubbleSoundFlag == 0) {
+                        if (bubbleSoundFlag == 0) {
                             bubbleEffectSp.play(bubbleEffect, 0.05f, 0.05f, 1, 0, 1);
                         }
                     }
                 });
 
-                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight()*1.3f, 0);
+                moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight() * 1.3f, 0);
                 moonAppearAnimation.setDuration(2000);
                 moonAppearAnimation.setStartOffset(1000);
                 moonAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 moonAppearAnimation.setFillAfter(true);
-                moonAppearAnimation.setAnimationListener(new MyAnimationListener());
+                moonAppearAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        bubble.startAnimation(bubbleScaleAni);
+                        checkedAnimation = true;
+                        moon.startAnimation(blink);
+//            moon.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        bomb.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 dokdoFatherAppearAnimation = new TranslateAnimation(-dokdo_father.getWidth(), 0, 0, 0);
                 dokdoFatherAppearAnimation.setDuration(1200);
@@ -324,7 +322,7 @@ public class Tale16 extends BaseFragment {
                 waveAppearAnimation.setDuration(1500);
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
-                waveAppearAnimation.setAnimationListener(new MyAnimationListener() {
+                waveAppearAnimation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         wave.startAnimation(wavingAnimation);
@@ -344,7 +342,7 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni = new ScaleAnimation(1, 0.7f, 1, 0.7f, 0, 0);
                 bubbleScaleAni.setDuration(800);
                 bubbleScaleAni.setInterpolator(new AccelerateDecelerateInterpolator());
-                bubbleScaleAni.setAnimationListener(new MyAnimationListener() {
+                bubbleScaleAni.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
 
@@ -364,7 +362,7 @@ public class Tale16 extends BaseFragment {
                 bubbleScaleAni2 = new ScaleAnimation(0.7f, 1, 0.7f, 1, 0, 0);
                 bubbleScaleAni2.setDuration(800);
                 bubbleScaleAni2.setInterpolator(new AccelerateDecelerateInterpolator());
-                bubbleScaleAni2.setAnimationListener(new MyAnimationListener() {
+                bubbleScaleAni2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         bubbleEffect = bubbleEffectSp.load(getContext(), R.raw.effect_16_bubble, 1);
@@ -382,7 +380,7 @@ public class Tale16 extends BaseFragment {
 
 
                 checkedAnimation = false;
-                bubbleSoundFlag=0;
+                bubbleSoundFlag = 0;
                 animationFlag = 1;
                 moon.startAnimation(moonAppearAnimation);
                 bubble.startAnimation(moonAppearAnimation);
@@ -403,7 +401,7 @@ public class Tale16 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(bubbleEffectSp != null) {
+            if (bubbleEffectSp != null) {
                 bubbleEffectSp.release();
             }
         }
