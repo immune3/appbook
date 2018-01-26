@@ -120,6 +120,7 @@ public class BaseFragment extends Fragment{
                             Log.e("innerWidth", ""+innerWidth);
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
+                            hv.setHorizontalScrollBarEnabled(false);
 
                         }
                     });
@@ -128,7 +129,7 @@ public class BaseFragment extends Fragment{
                     sv.scrollTo(0,(innerHeight-deviceHeight)/2);
                     Log.e("innerHeight", innerHeight + "");
                     sv.setScrolling(false);
-
+                    sv.setVerticalScrollBarEnabled(false);
                 }
             }
         });

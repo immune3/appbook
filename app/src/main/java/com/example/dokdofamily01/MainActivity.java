@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity {
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
                             rl.setVisibility(View.VISIBLE);
-
+                            hv.setHorizontalScrollBarEnabled(false);
                         }
                     });
 
@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity {
                     Log.e("deviceHieght", deviceHeight + "");
                     sv.setScrolling(false);
                     rl.setVisibility(View.VISIBLE);
+                    sv.setVerticalScrollBarEnabled(false);
                 }
             }
         });

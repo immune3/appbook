@@ -124,7 +124,7 @@ public class SplashActivity extends BaseActivity {
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
                             rl.setVisibility(View.VISIBLE);
-
+                            hv.setHorizontalScrollBarEnabled(false);
                         }
                     });
 
@@ -134,6 +134,7 @@ public class SplashActivity extends BaseActivity {
                     Log.e("innerHeight", innerHeight + "");
                     sv.setScrolling(false);
                     rl.setVisibility(View.VISIBLE);
+                    sv.setVerticalScrollBarEnabled(false);
                 }
             }
         });
