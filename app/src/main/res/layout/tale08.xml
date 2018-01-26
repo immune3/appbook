@@ -30,16 +30,6 @@
                 app:scale_top="210"/>
 
             <ImageView
-                android:id="@+id/land"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_08_land"
-                app:scale_width="2208"
-                app:scale_height="1038"
-                app:scale_left="357"
-                app:scale_top="500"/>
-
-            <ImageView
                 android:id="@+id/treeHand"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
@@ -100,20 +90,13 @@
                 app:scale_left="227"
                 app:scale_top="158"/>
 
-
-
-
-
-
-
-
             <ImageView
                 android:id="@+id/plant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_08_plant"
                 app:scale_width="1798"
-                app:scale_height="540"
+                app:scale_height="545"
                 app:scale_left="0"
                 app:scale_top="1000"/>
 
@@ -130,7 +113,7 @@
 
 
             <ImageView
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/byul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,7 +121,17 @@
                 app:scale_width="362"
                 app:scale_height="442"
                 app:scale_left="1940"
-                app:scale_top="290"/>
+                app:scale_top="291"/>
+
+            <ImageView
+                android:id="@+id/land"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_land"
+                app:scale_height="1050"
+                app:scale_left="357"
+                app:scale_top="500"
+                app:scale_width="2208" />
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>

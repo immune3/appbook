@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_18_dokdo_mom"
                 app:scale_width="572"
-                app:scale_height="266"
+                app:scale_height="270"
                 app:scale_left="1420"
                 app:scale_top="1275"/>
             <ImageView

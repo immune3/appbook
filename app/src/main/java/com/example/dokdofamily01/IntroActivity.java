@@ -83,20 +83,22 @@ public class IntroActivity extends BaseActivity {
     private android.widget.RelativeLayout rl;
     CustomHorizontalScrollView hv;
 
-    DisplayMetrics displayMetrics;
     int deviceWidth;
     int deviceHeight;
     int innerWidth;
     int innerHeight;
+    float ratio;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduction);
 
-        displayMetrics = new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         deviceWidth= displayMetrics.widthPixels;
         deviceHeight = displayMetrics.heightPixels;
+        ratio = (float)deviceWidth/(float)deviceHeight;
+
 
         bindViews();
         setValues();
@@ -495,32 +497,26 @@ public class IntroActivity extends BaseActivity {
         sl.post(new Runnable() {
             @Override
             public void run() {
-                float ratio = (float)deviceWidth/(float)deviceHeight;
                 if(ratio<=1.66){
-
                     if(hv.getChildCount()==0) {
                         sv.removeView(sl);
                         rl.removeView(sv);
                         hv.addView(sl);
                         rl.addView(hv);
                     }
-
                     hv.post(new Runnable() {
                         @Override
                         public void run() {
                             innerWidth = hv.getChildAt(0).getWidth();
-                            Log.e("innerWidth", ""+innerWidth);
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
                             rl.setVisibility(View.VISIBLE);
                             hv.setHorizontalScrollBarEnabled(false);
                         }
                     });
-
                 }else{
                     innerHeight = sl.getHeight();
                     sv.scrollTo(0,(innerHeight-deviceHeight)/2);
-                    Log.e("innerHeight", innerHeight + "");
                     sv.setScrolling(false);
                     rl.setVisibility(View.VISIBLE);
                     sv.setVerticalScrollBarEnabled(false);

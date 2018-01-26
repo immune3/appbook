@@ -19,8 +19,6 @@
             app:scale_base_height="1600"
             app:scale_base_width="2560">
 
-
-
             <Button
                 android:id="@+id/waveBtn"
                 android:layout_width="wrap_content"
@@ -143,7 +141,6 @@
                 app:scale_top="0"
                 app:scale_width="2560" />
 
-
             <ImageView
                 android:id="@+id/wave"
                 android:layout_width="wrap_content"
@@ -166,9 +163,6 @@
                 app:scale_top="160"
                 app:scale_width="1408" />
 
-            <!--add-->
-
-
             <ImageView
                 android:id="@+id/introByul"
                 android:layout_width="wrap_content"
@@ -179,8 +173,6 @@
                 app:scale_top="78"
                 app:scale_height="316"
                 app:scale_width="260" />
-
-
 
             <ImageView
                 android:id="@+id/introByulText"
@@ -193,7 +185,6 @@
                 app:scale_top="60"
                 app:scale_width="1286" />
 
-
             <ImageView
                 android:id="@+id/introFather"
                 android:layout_width="wrap_content"
@@ -205,17 +196,16 @@
                 app:scale_top="290"
                 app:scale_width="1080" />
 
-
             <ImageView
                 android:id="@+id/introFatherText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_father_text"
                 android:visibility="gone"
-                app:scale_height="936"
-                app:scale_left="30"
+                app:scale_height="986"
+                app:scale_left="730"
                 app:scale_top="160"
-                app:scale_width="3100" />
+                app:scale_width="1582" />
 
             <ImageView
                 android:id="@+id/introBird"
@@ -227,8 +217,6 @@
                 app:scale_left="95"
                 app:scale_top="465"
                 app:scale_width="312" />
-
-
 
             <ImageView
                 android:id="@+id/introBirdText"
@@ -246,13 +234,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_flower"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:scale_height="322"
                 app:scale_left="726"
                 app:scale_top="535"
                 app:scale_width="344" />
-
-
 
             <ImageView
                 android:id="@+id/introFlowerText"
@@ -260,10 +246,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_flower_text"
                 android:visibility="gone"
-                app:scale_height="874"
+                app:scale_height="890"
                 app:scale_left="890"
                 app:scale_top="660"
-                app:scale_width="1670" />
+                app:scale_width="1700" />
 
             <ImageView
                 android:id="@+id/introMan"
@@ -304,10 +290,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_mom_text"
                 android:visibility="gone"
-                app:scale_height="936"
-                app:scale_left="500"
-                app:scale_top="330"
-                app:scale_width="1408" />
+                app:scale_height="1168"
+                app:scale_left="300"
+                app:scale_top="300"
+                app:scale_width="1556" />
 
             <ImageView
                 android:id="@+id/introPost"
@@ -326,10 +312,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_post_text"
                 android:visibility="gone"
-                app:scale_height="892"
-                app:scale_left="600"
-                app:scale_top="280"
-                app:scale_width="1606" />
+                app:scale_height="878"
+                app:scale_left="630"
+                app:scale_top="300"
+                app:scale_width="1612" />
 
             <ImageView
                 android:id="@+id/introSeagull"
@@ -370,10 +356,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/intro_squid_text"
                 android:visibility="gone"
-                app:scale_height="1116"
-                app:scale_left="600"
+                app:scale_height="1090"
+                app:scale_left="620"
                 app:scale_top="400"
-                app:scale_width="1350" />
+                app:scale_width="1310" />
 
             <ImageView
                 android:id="@+id/introTree"
@@ -396,8 +382,6 @@
                 app:scale_left="110"
                 app:scale_top="430"
                 app:scale_width="1488" />
-
-
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
 

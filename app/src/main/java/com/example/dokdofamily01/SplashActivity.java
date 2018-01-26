@@ -29,10 +29,21 @@ public class SplashActivity extends BaseActivity {
     RelativeLayout rl;
     CustomHorizontalScrollView hv;
 
+    int deviceWidth;
+    int deviceHeight;
+    int innerWidth;
+    int innerHeight;
+    float ratio;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        deviceWidth= displayMetrics.widthPixels;
+        deviceHeight = displayMetrics.heightPixels;
+        ratio = (float)deviceWidth/(float)deviceHeight;
 
         bindViews();
         setValues();
@@ -99,39 +110,26 @@ public class SplashActivity extends BaseActivity {
         sl.post(new Runnable() {
             @Override
             public void run() {
-                DisplayMetrics displayMetrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                final int deviceWidth= displayMetrics.widthPixels;
-                int deviceHeight = displayMetrics.heightPixels;
-                Log.d("slWidth", sl.getWidth() + "");
-
-                float ratio = (float)deviceWidth/(float)deviceHeight;
-                Log.e("ratio", ""+ratio);
                 if(ratio<=1.66){
-
                     if(hv.getChildCount()==0) {
                         sv.removeView(sl);
                         rl.removeView(sv);
                         hv.addView(sl);
                         rl.addView(hv);
                     }
-
                     hv.post(new Runnable() {
                         @Override
                         public void run() {
-                            int innerWidth = hv.getChildAt(0).getWidth();
-                            Log.e("innerWidth", ""+innerWidth);
+                            innerWidth = hv.getChildAt(0).getWidth();
                             hv.scrollTo((innerWidth-deviceWidth)/2,0);
                             hv.setScrolling(false);
                             rl.setVisibility(View.VISIBLE);
                             hv.setHorizontalScrollBarEnabled(false);
                         }
                     });
-
                 }else{
-                    int innerHeight = sl.getHeight();
+                    innerHeight = sl.getHeight();
                     sv.scrollTo(0,(innerHeight-deviceHeight)/2);
-                    Log.e("innerHeight", innerHeight + "");
                     sv.setScrolling(false);
                     rl.setVisibility(View.VISIBLE);
                     sv.setVerticalScrollBarEnabled(false);

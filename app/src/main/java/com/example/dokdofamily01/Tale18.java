@@ -5,6 +5,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+
+import java.util.Random;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
@@ -58,6 +61,10 @@ public class Tale18 extends BaseFragment {
     RotateAnimation treeRotate[] = new RotateAnimation[2];
     RotateAnimation sqeedRotate[] = new RotateAnimation[2];
     RotateAnimation manRotate[] = new RotateAnimation[2];
+    AnimationSet postSet;
+    AnimationSet treeSet;
+    AnimationSet sqeedSet;
+    AnimationSet manSet;
 
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
@@ -68,6 +75,8 @@ public class Tale18 extends BaseFragment {
     SoundPool sp;
     int[] soundsID;
     int soundID;
+
+    Random random;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,7 +114,7 @@ public class Tale18 extends BaseFragment {
     @Override
     public void setValues() {
         super.setValues();
-
+        random = new Random();
     }
 
     @Override
@@ -174,7 +183,7 @@ public class Tale18 extends BaseFragment {
         father18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(rotateFlag[3]==0) animationCaseFlag = 5;
+                animationCaseFlag = 5;
                 return super.onTouch(view , motionEvent);
             }
         });
@@ -182,7 +191,7 @@ public class Tale18 extends BaseFragment {
         mom18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(rotateFlag[3]==0) animationCaseFlag = 6;
+                animationCaseFlag = 6;
                 return super.onTouch(view , motionEvent);
             }
         });
@@ -267,10 +276,7 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 3:
                     animationFlag = 4;
-                    AnimationSet postSet = new AnimationSet(false);
-                    postSet.addAnimation(postBlink);
-                    postSet.addAnimation(postRotate[1]);
-                    post18.startAnimation(postSet);
+                    post18.startAnimation(postRotate[1]);
                     break;
             }
         }
@@ -301,10 +307,7 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[1] = 0;
-                    AnimationSet treeSet = new AnimationSet(false);
-                    treeSet.addAnimation(treeBlink);
-                    treeSet.addAnimation(treeRotate[1]);
-                    tree18.startAnimation(treeSet);
+                    tree18.startAnimation(treeRotate[1]);
                     break;
             }
         }
@@ -321,12 +324,7 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[2] = 0;
-                    AnimationSet sqeedSet = new AnimationSet(false);
-                    sqeedSet.addAnimation(sqeedBlink);
-                    sqeedSet.addAnimation(sqeedRotate[1]);
-                    sqeed18.startAnimation(sqeedSet);
-                    father18.startAnimation(fatherBlink);
-//                    sqeed18.startAnimation(sqeedRotate[1]);
+                    sqeed18.startAnimation(sqeedRotate[1]);
                     break;
             }
         }
@@ -345,11 +343,9 @@ public class Tale18 extends BaseFragment {
                     break;
                 case 2:
                     rotateFlag[3] = 0;
-                    AnimationSet manSet = new AnimationSet(false);
-                    manSet.addAnimation(manBlink);
-                    manSet.addAnimation(manRotate[1]);
-                    man18.startAnimation(manSet);
-                    mom18.startAnimation(momBlink);
+                    man18.startAnimation(manRotate[1]);
+                    Log.e("onAnimationEnd: " , "man2");
+                    randomBlink();
                     break;
             }
         }
@@ -366,6 +362,7 @@ public class Tale18 extends BaseFragment {
         man18.clearAnimation();
         father18.clearAnimation();
         mom18.clearAnimation();
+        clickFlag = false;
     }
 
 
@@ -408,33 +405,137 @@ public class Tale18 extends BaseFragment {
 
                 postBlink = new AlphaAnimation(1, 0.3f);
                 postBlink.setDuration(500);
-                postBlink.setRepeatCount(Animation.INFINITE);
+                postBlink.setRepeatCount(3);
                 postBlink.setRepeatMode(Animation.REVERSE);
+                postBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 3;
+                        post18.startAnimation(postRotate[0]);
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 treeBlink = new AlphaAnimation(1, 0.3f);
                 treeBlink.setDuration(500);
-                treeBlink.setRepeatCount(Animation.INFINITE);
+                treeBlink.setRepeatCount(3);
                 treeBlink.setRepeatMode(Animation.REVERSE);
+                treeBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rotateFlag[1] = 2;
+                        tree18.startAnimation(treeRotate[0]);
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 sqeedBlink = new AlphaAnimation(1, 0.3f);
                 sqeedBlink.setDuration(500);
-                sqeedBlink.setRepeatCount(Animation.INFINITE);
+                sqeedBlink.setRepeatCount(3);
                 sqeedBlink.setRepeatMode(Animation.REVERSE);
+                sqeedBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rotateFlag[2] = 2;
+                        sqeed18.startAnimation(sqeedRotate[0]);
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 manBlink = new AlphaAnimation(1, 0.3f);
                 manBlink.setDuration(500);
-                manBlink.setRepeatCount(Animation.INFINITE);
+                manBlink.setRepeatCount(3);
                 manBlink.setRepeatMode(Animation.REVERSE);
+                manBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rotateFlag[3] = 2;
+                        man18.startAnimation(manRotate[0]);
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 fatherBlink = new AlphaAnimation(1, 0.3f);
                 fatherBlink.setDuration(500);
-                fatherBlink.setRepeatCount(Animation.INFINITE);
+                fatherBlink.setRepeatCount(3);
                 fatherBlink.setRepeatMode(Animation.REVERSE);
+                fatherBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 momBlink = new AlphaAnimation(1, 0.3f);
                 momBlink.setDuration(500);
-                momBlink.setRepeatCount(Animation.INFINITE);
+                momBlink.setRepeatCount(3);
                 momBlink.setRepeatMode(Animation.REVERSE);
+                momBlink.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        randomBlink();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 fatherAppear = new TranslateAnimation(0, 0, father18.getHeight(), 0);
                 fatherAppear.setDuration(1500);
@@ -517,6 +618,22 @@ public class Tale18 extends BaseFragment {
                 manRotate[1].setRepeatCount(Animation.INFINITE);
                 manRotate[1].setRepeatMode(Animation.REVERSE);
 
+                postSet = new AnimationSet(false);
+                postSet.addAnimation(postBlink);
+                postSet.addAnimation(postRotate[1]);
+
+                treeSet = new AnimationSet(false);
+                treeSet.addAnimation(treeBlink);
+                treeSet.addAnimation(treeRotate[1]);
+
+                sqeedSet = new AnimationSet(false);
+                sqeedSet.addAnimation(sqeedBlink);
+                sqeedSet.addAnimation(sqeedRotate[1]);
+
+                manSet = new AnimationSet(false);
+                manSet.addAnimation(manBlink);
+                manSet.addAnimation(manRotate[1]);
+
 
                 animationClear();
                 checkedAnimation = false;
@@ -553,5 +670,49 @@ public class Tale18 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private void randomBlink(){
+        int randomNumber = random.nextInt(6) + 1;
+        Log.e("randomBlink" , randomNumber+"");
+        switch (randomNumber){
+            case 1:
+                Log.e("randomBlink" , "1,"+randomNumber);
+//                sqeed18.clearAnimation();
+                sqeed18.setAnimation(sqeedBlink);
+                sqeedBlink.start();
+//                sqeed18.startAnimation(sqeedSet);
+//                sqeed18.setAnimation(sqeedSet);
+                break;
+            case 2:
+                Log.e("randomBlink" , "2,"+randomNumber);
+//                man18.clearAnimation();
+//                man18.startAnimation(manSet);
+                man18.setAnimation(manBlink);
+                manBlink.start();
+                break;
+            case 3:
+                Log.e("randomBlink" , "3,"+randomNumber);
+//                post18.clearAnimation();
+//                post18.startAnimation(postSet);
+                post18.setAnimation(postBlink);
+                postBlink.start();
+                break;
+            case 4:
+                Log.e("randomBlink" , "4,"+randomNumber);
+//                tree18.clearAnimation();
+//                tree18.startAnimation(treeSet);
+                tree18.setAnimation(treeBlink);
+                treeBlink.start();
+                break;
+            case 5:
+                Log.e("randomBlink" , "5,"+randomNumber);
+                father18.startAnimation(fatherBlink);
+                break;
+            case 6:
+                Log.e("randomBlink" , "6,"+randomNumber);
+                mom18.startAnimation(momBlink);
+                break;
+        }
     }
 }

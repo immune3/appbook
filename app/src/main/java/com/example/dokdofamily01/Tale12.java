@@ -218,7 +218,7 @@ public class Tale12 extends BaseFragment {
                 seagullAppear.setDuration(1000);
                 seagullAppear.setInterpolator(new AccelerateDecelerateInterpolator());
 
-                smallSqeedAppear = new TranslateAnimation(0, 0, sea1.getHeight() * 0.5f, 0);
+                smallSqeedAppear = new TranslateAnimation(0, 0, sea1.getHeight() * 0.7f, 0);
                 smallSqeedAppear.setStartOffset(1500);
                 smallSqeedAppear.setDuration(2000);
                 smallSqeedAppear.setInterpolator(new DecelerateInterpolator());
