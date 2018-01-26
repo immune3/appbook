@@ -54,6 +54,15 @@ public class BaseFragment extends Fragment{
         setupEvents();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (musicController != null) {
+            CheckMP checkMP = new CheckMP(musicController);
+            checkMP.execute();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
