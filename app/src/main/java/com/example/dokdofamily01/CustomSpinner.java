@@ -79,21 +79,20 @@ public class CustomSpinner extends android.support.v7.widget.AppCompatSpinner {
     public boolean performClick() {
         // register that the Spinner was opened so we have a status
         // indicator for when the container holding this Spinner may lose focus
-        Field popup = null;
-        try {
-            popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
-            ListPopupWindow window = (ListPopupWindow)popup.get(taleActivity.goPage);
-            Log.d("slheight", taleActivity.height+"/");
-            Log.d("showmenuheight", taleActivity.showMenuHeight+"/");
-            window.setHeight((int)(taleActivity.height - (taleActivity.showMenuHeight*2.3f)));
+//        Field popup = null;
+//        try {
+//            popup = Spinner.class.getDeclaredField("mPopup");
+//            popup.setAccessible(true);
+//            ListPopupWindow window = (ListPopupWindow)popup.get(taleActivity.goPage);
+//            Log.d("slheight", taleActivity.height+"/");
+//            Log.d("showmenuheight", taleActivity.showMenuHeight+"/");
+//            window.setHeight((int)(taleActivity.height - (taleActivity.showMenuHeight*2.3f)));
 //            window.setHeight(300);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
 
         mOpenInitiated = true;
         if (mListener != null) {

@@ -134,10 +134,6 @@ public class Tale10 extends BaseFragment {
                     byulHand.setVisibility(View.INVISIBLE);
                     byulBody.setVisibility(View.INVISIBLE);
                     seagull.setVisibility(View.INVISIBLE);
-                    birds.setVisibility(View.INVISIBLE);
-                    bird[0].setVisibility(View.INVISIBLE);
-                    bird[1].setVisibility(View.INVISIBLE);
-                    bird[2].setVisibility(View.INVISIBLE);
                     mountain.setVisibility(View.VISIBLE);
                     rock.setVisibility(View.VISIBLE);
                     break;
@@ -233,15 +229,15 @@ public class Tale10 extends BaseFragment {
         if(isAuto) {
             musicController = new MusicController(getActivity(), R.raw.scene_10, vp,
                     new int[]{R.drawable.sub_10_01, 4000},
-                    new int[]{R.drawable.sub_10_02, 7500},
-                    new int[]{R.drawable.sub_10_03, 12500},
-                    new int[]{R.drawable.sub_10_04, 15500},
-                    new int[]{R.drawable.sub_10_05, 18700},
-                    new int[]{R.drawable.sub_10_06, 23700},
-                    new int[]{R.drawable.sub_10_07, 32300},
-                    new int[]{R.drawable.sub_10_08, 35200},
-                    new int[]{R.drawable.sub_10_09, 37000},
-                    new int[]{R.drawable.sub_10_10, 40500},
+                    new int[]{R.drawable.sub_10_02, 7400},
+                    new int[]{R.drawable.sub_10_03, 12400},
+                    new int[]{R.drawable.sub_10_04, 15400},
+                    new int[]{R.drawable.sub_10_05, 18600},
+                    new int[]{R.drawable.sub_10_06, 23600},
+                    new int[]{R.drawable.sub_10_07, 32100},
+                    new int[]{R.drawable.sub_10_08, 35000},
+                    new int[]{R.drawable.sub_10_09, 37600},
+                    new int[]{R.drawable.sub_10_10, 40400},
                     new int[]{R.drawable.sub_10_11, 99999});
         } else {
             subtitleController = new SubtitleController(vp,
@@ -260,6 +256,11 @@ public class Tale10 extends BaseFragment {
         mountain.post(new Runnable() {
             @Override
             public void run() {
+                birds.setVisibility(View.INVISIBLE);
+                bird[0].setVisibility(View.INVISIBLE);
+                bird[1].setVisibility(View.INVISIBLE);
+                bird[2].setVisibility(View.INVISIBLE);
+
                 tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 tweetSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
