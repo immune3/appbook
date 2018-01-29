@@ -465,7 +465,7 @@ public class Tale18 extends BaseFragment {
                         sqeed18.startAnimation(sqeedRotate[0]);
                         randomBlink();
                     }
-
+ 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
 

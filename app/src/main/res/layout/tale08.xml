@@ -30,6 +30,16 @@
                 app:scale_top="210"/>
 
             <ImageView
+                android:id="@+id/land"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_08_land"
+                app:scale_height="1050"
+                app:scale_left="357"
+                app:scale_top="500"
+                app:scale_width="2208" />
+
+            <ImageView
                 android:id="@+id/treeHand"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
@@ -123,15 +133,6 @@
                 app:scale_left="1940"
                 app:scale_top="291"/>
 
-            <ImageView
-                android:id="@+id/land"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_08_land"
-                app:scale_height="1050"
-                app:scale_left="357"
-                app:scale_top="500"
-                app:scale_width="2208" />
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
