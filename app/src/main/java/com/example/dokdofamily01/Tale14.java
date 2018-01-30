@@ -235,7 +235,7 @@ public class Tale14 extends BaseFragment {
         land.post(new Runnable() {
             @Override
             public void run() {
-                bubbleSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+                bubbleSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 1);
                 bubbleSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {

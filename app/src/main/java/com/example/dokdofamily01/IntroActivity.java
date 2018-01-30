@@ -1034,7 +1034,7 @@ public class IntroActivity extends BaseActivity {
                     introBuyl.startAnimation(fadeIn);
                     introBuylText.setVisibility(View.VISIBLE);
 
-                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_buyl);
+                    musicPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cast_byul);
                     musicPlayer.start();
                     musicPlayer.setLooping(false);
                     break;

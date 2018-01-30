@@ -483,7 +483,7 @@ public class Introduction extends BaseFragment {
                 introBuyl.startAnimation(fadeIn);
                 introBuylText.setVisibility(View.VISIBLE);
 
-                musicPlayer = MediaPlayer.create(getContext(), R.raw.cast_buyl);
+                musicPlayer = MediaPlayer.create(getContext(), R.raw.cast_byul);
                 musicPlayer.start();
                 musicPlayer.setLooping(false);
                 break;
