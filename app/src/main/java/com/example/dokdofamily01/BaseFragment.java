@@ -363,6 +363,7 @@ public class BaseFragment extends Fragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        layout = null;
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
             checkMP.execute();

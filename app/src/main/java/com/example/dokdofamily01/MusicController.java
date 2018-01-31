@@ -1,6 +1,7 @@
 package com.example.dokdofamily01;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -152,12 +153,12 @@ public class MusicController {
 
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
+
         @Override
         protected MediaPlayer doInBackground(Void... voids) {
-            try{
+            try {
                 mp = MediaPlayer.create(mContext, resID);
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return mp;
@@ -352,26 +353,16 @@ public class MusicController {
         public void handleMessage(Message msg) {
 
             if (msg.what >= 0) {
-//                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
                 subtitleImageVIew.setImageDrawable(null);
+//                ((BitmapDrawable) subtitleImageVIew.getDrawable()).getBitmap().recycle();
                 try {
-//                    if(endFlag == 1 && msg.what == 8) {
-//                        if(animFlag == 0) {
-//                            animFlag = 1;
-//                            cutainText.startAnimation(fadein);
-//                        }
-//                    }
-//                    else{
                     subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
-//                    }
+//                    subtitleImageVIew.setImageDrawable(mContext.getResources().getDrawable(subtitleList.get(msg.what).getSubTitle()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                subtitleImageVIew.setTag((Integer)msg.what);
-//                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
                 subtitleImageVIew.setImageDrawable(null);
-
         }
     };
 
