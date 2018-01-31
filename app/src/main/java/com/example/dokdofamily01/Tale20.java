@@ -146,8 +146,10 @@ public class Tale20 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if (isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_20, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_20, vp,
                     new int[]{R.drawable.sub_20_01, 3000},
                     new int[]{R.drawable.sub_20_02, 8500},
                     new int[]{R.drawable.sub_20_03, 15000},
@@ -158,7 +160,7 @@ public class Tale20 extends BaseFragment {
                     new int[]{R.drawable.sub_20_08, 36500},
                     new int[]{R.drawable.sub_20_09, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_20_01,
                     R.drawable.sub_20_02,
                     R.drawable.sub_20_03,
@@ -216,7 +218,7 @@ public class Tale20 extends BaseFragment {
                         cutainRunnable = new Runnable() {
                             @Override
                             public void run() {
-                                cutain.startAnimation(cutainDownAnimation2);
+                                if(cutain!=null && cutainDownAnimation2 != null) cutain.startAnimation(cutainDownAnimation2);
                             }
                         };
                         cutainHandler = new Handler();
@@ -233,34 +235,6 @@ public class Tale20 extends BaseFragment {
                 waveAppearAnimation.setDuration(1000);
                 waveAppearAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                 waveAppearAnimation.setFillAfter(true);
-
-//                cutainAppearAni = new TranslateAnimation(0, 0, -cutain.getHeight()*0.2f, cutain.getHeight()*0.45f);
-//                cutainAppearAni.setDuration(1000);
-//                cutainAppearAni.setFillAfter(true);
-//                cutainAppearAni.setInterpolator(new AccelerateDecelerateInterpolator());
-//                cutainAppearAni.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-//                        cutainText.clearAnimation();
-//                        cutainText.setVisibility(View.INVISIBLE);
-//                    }
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                cutain.startAnimation(cutainDownAnimation2);
-//                            }
-//                        }, 2000);
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//
-//                    }
-//                });
 
                 cutainDownAnimation2 = new TranslateAnimation(0, 0, 0, -(cutain.getHeight() * 0.55f));
                 cutainDownAnimation2.setDuration(30000);
@@ -357,15 +331,53 @@ public class Tale20 extends BaseFragment {
         }
     }
 
+    private void returnMemory() {
+
+        man = null;
+        dokdo_father = null;
+        sqeed = null;
+        dokdo_mom = null;
+        wave = null;
+        cutain = null;
+        byul = null;
+
+        if(manAppearAnimation != null) manAppearAnimation.cancel();
+        if(dokdoFatherAppearAnimation != null) dokdoFatherAppearAnimation.cancel();
+        if(sqeedAppearAnimation != null) sqeedAppearAnimation.cancel();
+        if(dokdoMomAppearAnimation != null) dokdoMomAppearAnimation.cancel();
+        if(waveAppearAnimation != null) waveAppearAnimation.cancel();
+        if(cutainAppearAni != null) cutainAppearAni.cancel();
+        if(cutainDownAnimation1 != null) cutainDownAnimation1.cancel();
+        if(cutainDownAnimation2 != null) cutainDownAnimation2.cancel();
+        if(fadein != null) fadein.cancel();
+        if(fadeout != null) fadeout.cancel();
+
+        manAppearAnimation = null;
+        dokdoFatherAppearAnimation = null;
+        sqeedAppearAnimation = null;
+        dokdoMomAppearAnimation = null;
+        waveAppearAnimation = null;
+        cutainAppearAni = null;
+        cutainDownAnimation1 = null;
+        cutainDownAnimation2 = null;
+        fadein = null;
+        fadeout = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         try {
-            loopBgm.pause();
-            loopBgm.release();
+            if(loopBgm.isPlaying()) {
+                loopBgm.pause();
+                loopBgm.release();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        returnMemory();
     }
 }
 

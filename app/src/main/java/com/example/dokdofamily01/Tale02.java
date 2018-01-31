@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,8 +150,10 @@ public class Tale02 extends BaseFragment {
 
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_2, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_2, vp,
                     new int[]{R.drawable.sub_02_01, 1600},
                     new int[]{R.drawable.sub_02_02, 8500},
                     new int[]{R.drawable.sub_02_03, 12500},
@@ -162,7 +165,7 @@ public class Tale02 extends BaseFragment {
                     new int[]{R.drawable.sub_02_09, 35000});
 
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_02_01,
                     R.drawable.sub_02_02,
                     R.drawable.sub_02_03,
@@ -178,8 +181,8 @@ public class Tale02 extends BaseFragment {
             @Override
             public void run() {
 
-                width = (int) (seagullHand.getWidth() * 0.85);
-                height = (int) (seagullHand.getHeight() * 0.8);
+                int width = (int) (seagullHand.getWidth() * 0.85);
+                int height = (int) (seagullHand.getHeight() * 0.8);
 
                 seagullAlpha = new AlphaAnimation(0, 1);
                 seagullAlpha.setDuration(500);
@@ -277,10 +280,10 @@ public class Tale02 extends BaseFragment {
 
                 animationFlag = 1;
                 seagullHand.setVisibility(View.INVISIBLE);
-                checkedAnimation = false;
                 star.clearAnimation();
                 byulhead.startAnimation(headUp);
                 seagullBody.setAnimation(seagullAniSet);
+
             }
         });
 
@@ -302,8 +305,48 @@ public class Tale02 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        byulhead = null;
+        seagullHand = null;
+        seagullBody = null;
+        star = null;
+
+        if(blink != null) blink.cancel();
+        if(seagullAlpha != null) seagullAlpha.cancel();
+        if(headUp != null) headUp.cancel();
+        if(headDown != null) headDown.cancel();
+        if(seagullTrans != null) seagullTrans.cancel();
+        if(handAppear != null) handAppear.cancel();
+        if(handDisappear != null) handDisappear.cancel();
+        if(seagullAniSet != null) seagullAniSet.cancel();
+        if(seagullClick != null) seagullClick.cancel();
+        if(handUp != null) handUp.cancel();
+        if(handDown != null) handDown.cancel();
+        if(fadeIn != null) fadeIn.cancel();
+        if(fadeOut != null) fadeOut.cancel();
+
+        blink = null;
+        seagullAlpha = null;
+        headUp = null;
+        headDown = null;
+        seagullTrans = null;
+        handAppear = null;
+        handDisappear = null;
+        seagullAniSet = null;
+        seagullClick = null;
+        handUp = null;
+        handDown = null;
+        fadeIn = null;
+        fadeOut = null;
+
+
+        Log.d("Tale02", "return Memory");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnBackgroundMemory();
     }
 }

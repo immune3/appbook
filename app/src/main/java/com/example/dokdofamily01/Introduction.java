@@ -19,7 +19,6 @@ import java.util.Random;
 
 import static android.view.View.GONE;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -383,7 +382,7 @@ public class Introduction extends BaseFragment {
 
             } else {
                 animationClear();
-                subtitleImageVIew.setVisibility(View.VISIBLE);
+//                subtitleImageVIew.setVisibility(View.VISIBLE);
                 stopMusic();
 
             }
@@ -396,7 +395,7 @@ public class Introduction extends BaseFragment {
 
         stopMusic();
 
-        subtitleImageVIew.setVisibility(GONE);
+//        subtitleImageVIew.setVisibility(GONE);
 
         introFather.post(new Runnable() {
             @Override

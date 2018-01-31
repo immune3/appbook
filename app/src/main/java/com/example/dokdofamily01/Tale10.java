@@ -31,7 +31,7 @@ public class Tale10 extends BaseFragment {
     ImageView byulBody;
     ImageView byulHand;
     ImageView blinkBird;
-    ImageView bird[] = new ImageView[3];
+    ImageView bird[];
     Boolean isAuto;
 
     TranslateAnimation mountainAppear;
@@ -65,6 +65,9 @@ public class Tale10 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        bird = new ImageView[3];
+
         birds = (ImageView) layout.findViewById(R.id.birds);
         mountain = (ImageView) layout.findViewById(R.id.mountain);
         rock = (ImageView) layout.findViewById(R.id.rock);
@@ -226,8 +229,10 @@ public class Tale10 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_10, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_10, vp,
                     new int[]{R.drawable.sub_10_01, 4000},
                     new int[]{R.drawable.sub_10_02, 7400},
                     new int[]{R.drawable.sub_10_03, 12400},
@@ -240,7 +245,7 @@ public class Tale10 extends BaseFragment {
                     new int[]{R.drawable.sub_10_10, 40400},
                     new int[]{R.drawable.sub_10_11, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_10_01,
                     R.drawable.sub_10_02,
                     R.drawable.sub_10_03,
@@ -312,7 +317,6 @@ public class Tale10 extends BaseFragment {
                 byulHandRotate.setRepeatCount(3);
                 byulHandRotate.setRepeatMode(Animation.REVERSE);
 
-                checkedAnimation = false;
                 blinkBird.setVisibility(View.INVISIBLE);
                 blinkBird.clearAnimation();
                 animationFlag = 1;
@@ -344,9 +348,42 @@ public class Tale10 extends BaseFragment {
         }
     }
 
+    private void returnMemory() {
+
+        birds = null;
+        mountain = null;
+        rock = null;
+        seagull = null;
+        byulHead = null;
+        byulBody = null;
+        byulHand = null;
+        blinkBird = null;
+        bird = null;
+
+        if(mountainAppear != null) mountainAppear.cancel();
+        if(rockAppear != null) rockAppear.cancel();
+        if(birdsAppear != null) birdsAppear.cancel();
+        if(byulHeadRotate != null) byulHeadRotate.cancel();
+        if(byulHandRotate != null) byulHandRotate.cancel();
+        if(fadeIn != null) fadeIn.cancel();
+        if(blink != null) blink.cancel();
+        if(repeat != null) repeat.cancel();
+
+        mountainAppear = null;
+        rockAppear = null;
+        birdsAppear = null;
+        byulHeadRotate = null;
+        byulHandRotate = null;
+        fadeIn = null;
+        blink = null;
+        repeat = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
 
     }
 }

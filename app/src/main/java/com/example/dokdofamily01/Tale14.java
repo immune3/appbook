@@ -13,7 +13,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
@@ -212,8 +211,10 @@ public class Tale14 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_14, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_14, vp,
                     new int[]{R.drawable.sub_14_01, 5000},
                     new int[]{R.drawable.sub_14_02, 8500},
                     new int[]{R.drawable.sub_14_03, 11500},
@@ -222,7 +223,7 @@ public class Tale14 extends BaseFragment {
                     new int[]{R.drawable.sub_14_06, 25500},
                     new int[]{R.drawable.sub_14_07, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_14_01,
                     R.drawable.sub_14_02,
                     R.drawable.sub_14_03,
@@ -268,6 +269,7 @@ public class Tale14 extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         bell.startAnimation(blink);
+                        checkedAnimation = true;
                     }
 
                     @Override
@@ -383,8 +385,48 @@ public class Tale14 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        cave = null;
+        land = null;
+        sqeedBody = null;
+        sqeedHand = null;
+        byul = null;
+        bubble = null;
+        bell = null;
+        light = null;
+
+        if(caveAppearAni != null) caveAppearAni.cancel();
+        if(byulAppearAni != null) byulAppearAni.cancel();
+        if(landAppearAni != null) landAppearAni.cancel();
+        if(bellAppearAni != null) bellAppearAni.cancel();
+        if(fadein != null) fadein.cancel();
+        if(lightFadein != null) lightFadein.cancel();
+        if(blink != null) blink.cancel();
+        if(sqeedHandFadein != null) sqeedHandFadein.cancel();
+        if(sqeedHandScaleAni != null) sqeedHandScaleAni.cancel();
+        if(sqeedHandAfterClinkAni != null) sqeedHandAfterClinkAni.cancel();
+        if(sqeedHandAfterClinkAni2 != null) sqeedHandAfterClinkAni2.cancel();
+        if(sqeedHandRotateAni != null) sqeedHandRotateAni.cancel();
+
+        caveAppearAni = null;
+        byulAppearAni = null;
+        landAppearAni = null;
+        bellAppearAni = null;
+        fadein = null;
+        lightFadein = null;
+        blink = null;
+        sqeedHandFadein = null;
+        sqeedHandScaleAni = null;
+        sqeedHandAfterClinkAni = null;
+        sqeedHandAfterClinkAni2 = null;
+        sqeedHandRotateAni = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

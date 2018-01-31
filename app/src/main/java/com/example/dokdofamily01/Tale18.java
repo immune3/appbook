@@ -54,10 +54,10 @@ public class Tale18 extends BaseFragment {
     AlphaAnimation manBlink;
     AlphaAnimation fatherBlink;
     AlphaAnimation momBlink;
-    RotateAnimation postRotate[] = new RotateAnimation[2];
-    RotateAnimation treeRotate[] = new RotateAnimation[2];
-    RotateAnimation sqeedRotate[] = new RotateAnimation[2];
-    RotateAnimation manRotate[] = new RotateAnimation[2];
+    RotateAnimation postRotate[];
+    RotateAnimation treeRotate[];
+    RotateAnimation sqeedRotate[];
+    RotateAnimation manRotate[];
 
     int animationFlag = 0;
     int rotateFlag[] = new int[4];
@@ -89,6 +89,12 @@ public class Tale18 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        postRotate = new RotateAnimation[2];
+        treeRotate = new RotateAnimation[2];
+        sqeedRotate = new RotateAnimation[2];
+        manRotate = new RotateAnimation[2];
+
         father18 = (ImageView) layout.findViewById(R.id.father18);
         mom18 = (ImageView) layout.findViewById(R.id.mom18);
         stars18 = (ImageView) layout.findViewById(R.id.stars18);
@@ -126,6 +132,15 @@ public class Tale18 extends BaseFragment {
         handler.postDelayed(run, delay);
     }
 
+    public void destroyHandler() {
+        if (handler != null) {
+            handler.removeCallbacks(run);
+        }
+
+        handler = null;
+        run = null;
+    }
+
 
     @Override
     public void setupEvents() {
@@ -151,7 +166,7 @@ public class Tale18 extends BaseFragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 animationCaseFlag = 2;
-                return super.onTouch(view , motionEvent);
+                return super.onTouch(view, motionEvent);
             }
         });
 
@@ -159,7 +174,7 @@ public class Tale18 extends BaseFragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 animationCaseFlag = 3;
-                return super.onTouch(view , motionEvent);
+                return super.onTouch(view, motionEvent);
             }
         });
 
@@ -167,23 +182,23 @@ public class Tale18 extends BaseFragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 animationCaseFlag = 4;
-                return super.onTouch(view , motionEvent);
+                return super.onTouch(view, motionEvent);
             }
         });
 
         father18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(rotateFlag[3]==0) animationCaseFlag = 5;
-                return super.onTouch(view , motionEvent);
+                if (rotateFlag[3] == 0) animationCaseFlag = 5;
+                return super.onTouch(view, motionEvent);
             }
         });
 
         mom18.setOnTouchListener(new BlockObjListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(rotateFlag[3]==0) animationCaseFlag = 6;
-                return super.onTouch(view , motionEvent);
+                if (rotateFlag[3] == 0) animationCaseFlag = 6;
+                return super.onTouch(view, motionEvent);
             }
         });
     }
@@ -193,7 +208,7 @@ public class Tale18 extends BaseFragment {
     @Override
     public void blockAnimFunc() {
 
-        if(sp != null && !delayFlag) {
+        if (sp != null && !delayFlag) {
 
             switch (animationCaseFlag) {
                 case 0:
@@ -225,16 +240,16 @@ public class Tale18 extends BaseFragment {
                 case 2:
                     if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_re, 4);
                     break;
-                case 3 :
+                case 3:
                     if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_mi, 5);
                     break;
-                case 4 :
+                case 4:
                     if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_fa, 6);
                     break;
-                case 5 :
+                case 5:
                     if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_so, 7);
                     break;
-                case 6 :
+                case 6:
                     if (clickFlag) soundID = sp.load(getContext(), R.raw.effect_18_la, 8);
                     break;
             }
@@ -372,8 +387,10 @@ public class Tale18 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_18, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_18, vp,
                     new int[]{R.drawable.sub_18_01, 3000},
                     new int[]{R.drawable.sub_18_02, 11000},
                     new int[]{R.drawable.sub_18_03, 17000},
@@ -381,7 +398,7 @@ public class Tale18 extends BaseFragment {
                     new int[]{R.drawable.sub_18_05, 32500},
                     new int[]{R.drawable.sub_18_06, 41500});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_18_01,
                     R.drawable.sub_18_02,
                     R.drawable.sub_18_03,
@@ -540,7 +557,7 @@ public class Tale18 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(sp != null) {
+            if (sp != null) {
                 sp.release();
             }
         }
@@ -551,8 +568,78 @@ public class Tale18 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+        father18 = null;
+        mom18 = null;
+        stars18 = null;
+        flower18 = null;
+        man18 = null;
+        sqeed18 = null;
+        post18 = null;
+        tree18 = null;
+
+        if(fatherAppear != null) fatherAppear.cancel();
+        if(momAppear != null) momAppear.cancel();
+        if(starsAppear != null) starsAppear.cancel();
+        if(flowerAppear != null) flowerAppear.cancel();
+        if(sqeedAppear != null) sqeedAppear.cancel();
+        if(manAppear != null) manAppear.cancel();
+        if(postAppear != null) postAppear.cancel();
+        if(treeAppear != null) treeAppear.cancel();
+        if(blink != null) blink.cancel();
+        if(postBlink != null) postBlink.cancel();
+        if(treeBlink != null) treeBlink.cancel();
+        if(sqeedBlink != null) sqeedBlink.cancel();
+        if(manBlink != null) manBlink.cancel();
+        if(fatherBlink != null) fatherBlink.cancel();
+        if(momBlink != null) momBlink.cancel();
+
+        fatherAppear = null;
+        momAppear = null;
+        starsAppear = null;
+        flowerAppear = null;
+        sqeedAppear = null;
+        manAppear = null;
+        postAppear = null;
+        treeAppear = null;
+        blink = null;
+        postBlink = null;
+        treeBlink = null;
+        sqeedBlink = null;
+        manBlink = null;
+        fatherBlink = null;
+        momBlink = null;
+
+        for (int i = 0; i < postRotate.length; i++) {
+            if(postRotate[i] != null) postRotate[i].cancel();
+            postRotate[i] = null;
+        }
+        postRotate = null;
+
+        for (int i = 0; i < treeRotate.length; i++) {
+            if(treeRotate[i] != null) treeRotate[i].cancel();
+            treeRotate[i] = null;
+        }
+        treeRotate = null;
+
+        for (int i = 0; i < sqeedRotate.length; i++) {
+            if(sqeedRotate[i] != null) sqeedRotate[i].cancel();
+            sqeedRotate[i] = null;
+        }
+        sqeedRotate = null;
+
+        for (int i = 0; i < manRotate.length; i++) {
+            if(manRotate[i] != null) manRotate[i].cancel();
+            manRotate[i] = null;
+        }
+        manRotate = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        destroyHandler();
+        returnMemory();
     }
 }

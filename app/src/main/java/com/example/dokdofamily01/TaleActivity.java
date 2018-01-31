@@ -1,11 +1,9 @@
 package com.example.dokdofamily01;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,10 +12,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +57,7 @@ public class TaleActivity extends AppCompatActivity {
 //    static boolean checkEndOfPrologue = false;
 
     static public TextView subtitleTextView;
-    static public ImageView subtitleImageVIew;
+    public ImageView subtitleImageVIew;
     static public ScalableLayout scalarView;
 
     static int height;
@@ -260,6 +255,7 @@ public class TaleActivity extends AppCompatActivity {
                     int position = vp.getCurrentItem() - 1;
                     if (checkedAnimation) {
                         destroyAllDelayedPaging();
+                        checkedAnimation = false;
                         vp.setCurrentItem(position, true);
                     }
                 }
@@ -277,6 +273,7 @@ public class TaleActivity extends AppCompatActivity {
                     int position = vp.getCurrentItem() + 1;
                     if (checkedAnimation) {
                         destroyAllDelayedPaging();
+                        checkedAnimation = false;
                         vp.setCurrentItem(position, true);
                     }
 
@@ -432,6 +429,11 @@ public class TaleActivity extends AppCompatActivity {
         tale19 = new Tale19();
         tale20 = new Tale20();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     public void autoCloseMenu(int milsec) {
@@ -681,12 +683,67 @@ public class TaleActivity extends AppCompatActivity {
             // 화면 제어를 해제한다.
             m_sleep_lock.release();
         }
+
+        destroyTale();
+        destroyMenuHandler();
+//        System.exit(0);
     }
 
     @Override
     protected void onResume() {
 
         super.onResume();
+
+    }
+
+    private void destroyTale() {
+
+        tale01.returnBackgroundMemory();
+        tale02.returnBackgroundMemory();
+        tale03.returnBackgroundMemory();
+        tale04.returnBackgroundMemory();
+        tale05.returnBackgroundMemory();
+        tale06.returnBackgroundMemory();
+        tale07.returnBackgroundMemory();
+        tale08.returnBackgroundMemory();
+        tale09.returnBackgroundMemory();
+        tale10.returnBackgroundMemory();
+        tale11.returnBackgroundMemory();
+        tale12.returnBackgroundMemory();
+        tale13.returnBackgroundMemory();
+        tale14.returnBackgroundMemory();
+        tale15.returnBackgroundMemory();
+        tale16.returnBackgroundMemory();
+        tale17.returnBackgroundMemory();
+        tale18.returnBackgroundMemory();
+        tale19.returnBackgroundMemory();
+        tale20.returnBackgroundMemory();
+
+
+        tale01 = null;
+        tale02 = null;
+        tale03 = null;
+        tale04 = null;
+        tale05 = null;
+        tale06 = null;
+        tale07 = null;
+        tale08 = null;
+        tale09 = null;
+        tale10 = null;
+        tale11 = null;
+        tale12 = null;
+        tale13 = null;
+        tale14 = null;
+        tale15 = null;
+        tale16 = null;
+        tale17 = null;
+        tale18 = null;
+        tale19 = null;
+        tale20 = null;
+        subtitleImageVIew = null;
+        vp = null;
+
+        Log.d("taleActivity", "finish()");
 
     }
 

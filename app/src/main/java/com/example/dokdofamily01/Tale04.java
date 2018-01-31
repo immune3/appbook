@@ -125,8 +125,10 @@ public class Tale04 extends BaseFragment {
 
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_4, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_4, vp,
                     new int[]{R.drawable.sub_04_01, 5000},
                     new int[]{R.drawable.sub_04_02, 10500},
                     new int[]{R.drawable.sub_04_03, 16000},
@@ -134,7 +136,7 @@ public class Tale04 extends BaseFragment {
                     new int[]{R.drawable.sub_04_05, 99999});
 
         } else{
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_04_01,
                     R.drawable.sub_04_02,
                     R.drawable.sub_04_03,
@@ -142,8 +144,6 @@ public class Tale04 extends BaseFragment {
                     R.drawable.sub_04_05);
         }
 
-
-        checkedAnimation = true;
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -173,6 +173,7 @@ public class Tale04 extends BaseFragment {
                 sunLight.setVisibility(View.INVISIBLE);
 
                 sun.startAnimation(blink);
+                checkedAnimation = true;
             }
         });
     }
@@ -197,9 +198,24 @@ public class Tale04 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+        dokdo = null;
+        sun = null;
+        sunLight = null;
+
+        if(sunRiseAni != null) sunRiseAni.cancel();
+        if(sunLightAppear != null) sunLightAppear.cancel();
+        if(blink != null) blink.cancel();
+
+        sunRiseAni = null;
+        sunLightAppear = null;
+        blink = null;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }
 

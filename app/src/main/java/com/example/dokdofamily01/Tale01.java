@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -217,16 +218,17 @@ public class Tale01 extends BaseFragment {
     @Override
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
+        checkedAnimation = false;
 
         if (isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_1, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_1, vp,
                     new int[]{R.drawable.sub_01_01, 5000},
                     new int[]{R.drawable.sub_01_02, 7500},
                     new int[]{R.drawable.sub_01_03, 12500},
                     new int[]{R.drawable.sub_01_04, 17000},
                     new int[]{R.drawable.sub_01_05, 22500});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_01_01,
                     R.drawable.sub_01_02,
                     R.drawable.sub_01_03,
@@ -234,8 +236,6 @@ public class Tale01 extends BaseFragment {
                     R.drawable.sub_01_05);
         }
 
-
-        checkedAnimation = true;
         lampLight.clearAnimation();
         byul.clearAnimation();
         bedLight.clearAnimation();
@@ -259,6 +259,7 @@ public class Tale01 extends BaseFragment {
             @Override
             public void run() {
                 lampLight.startAnimation(blink);
+                checkedAnimation = true;
             }
         });
 
@@ -279,9 +280,39 @@ public class Tale01 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        lamp = null;
+        lampLight = null;
+        bedLight = null;
+        head = null;
+        blanket = null;
+        byul = null;
+        hand = null;
+        curtain = null;
+        light = null;
+
+        if(fadeIn != null) {
+            fadeIn.cancel();
+        }
+        if(fadeOut != null) {
+            fadeOut.cancel();
+        }
+        if(blink != null) {
+            blink.cancel();
+        }
+
+        fadeIn = null;
+        fadeOut = null;
+        blink = null;
+
+        Log.d("Tale01", "return Memory");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 
 }

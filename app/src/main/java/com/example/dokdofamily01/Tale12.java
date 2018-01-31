@@ -124,7 +124,7 @@ public class Tale12 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(animationFlag == 0) {
+        if (animationFlag == 0) {
             animationClear();
             animationFlag = 1;
             checkedAnimation = false;
@@ -167,8 +167,10 @@ public class Tale12 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_12, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_12, vp,
                     new int[]{R.drawable.sub_12_01, 1500},
                     new int[]{R.drawable.sub_12_02, 8000},
                     new int[]{R.drawable.sub_12_03, 12000},
@@ -176,7 +178,7 @@ public class Tale12 extends BaseFragment {
                     new int[]{R.drawable.sub_12_05, 23700},
                     new int[]{R.drawable.sub_12_06, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_12_01,
                     R.drawable.sub_12_02,
                     R.drawable.sub_12_03,
@@ -249,11 +251,11 @@ public class Tale12 extends BaseFragment {
                     }
                 });
 
-                sqeedLeftHandScale = new ScaleAnimation(1, 0.8f,1,1,sqeedLeftHand.getWidth(),0);
+                sqeedLeftHandScale = new ScaleAnimation(1, 0.8f, 1, 1, sqeedLeftHand.getWidth(), 0);
                 sqeedLeftHandScale.setDuration(50);
 //                sqeedLeftHandScale.setFillAfter(true);
 
-                sqeedRightHandScale = new ScaleAnimation(1, 0.8f,1,1,sqeedRightHand.getWidth(),0);
+                sqeedRightHandScale = new ScaleAnimation(1, 0.8f, 1, 1, sqeedRightHand.getWidth(), 0);
                 sqeedRightHandScale.setDuration(50);
 //                sqeedRightHandScale.setFillAfter(true);
 
@@ -346,10 +348,10 @@ public class Tale12 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(whackSoundPool != null) {
+            if (whackSoundPool != null) {
                 whackSoundPool.release();
             }
-            if(handSoundPool != null) {
+            if (handSoundPool != null) {
                 handSoundPool.release();
             }
         }
@@ -360,9 +362,54 @@ public class Tale12 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        sea1 = null;
+        sea2 = null;
+        dokdo = null;
+        byul = null;
+        byulHand = null;
+        seagull = null;
+        smallsqeed = null;
+        sqeedLeftHand = null;
+        sqeedRightHand = null;
+        sqeedBody = null;
+        sqeedHead = null;
+        hairpin = null;
+
+        if (seaAppear != null) seaAppear.cancel();
+        if (dokdoAppear != null) dokdoAppear.cancel();
+        if (smallSqeedAppear != null) smallSqeedAppear.cancel();
+        if (seagullAppear != null) seagullAppear.cancel();
+        if (sqeedAppear != null) sqeedAppear.cancel();
+        if (sqeedClinkAni != null) sqeedClinkAni.cancel();
+        if (sqeedLeftHandScale != null) sqeedLeftHandScale.cancel();
+        if (sqeedRightHandScale != null) sqeedRightHandScale.cancel();
+        if (blink != null) blink.cancel();
+        if (sqeedHandFadein != null) sqeedHandFadein.cancel();
+        if (sqeedHandFadeout != null) sqeedHandFadeout.cancel();
+        if (sqeedLeftHandAniSet != null) sqeedLeftHandAniSet.cancel();
+        if (sqeedRightHandAniSet != null) sqeedRightHandAniSet.cancel();
+
+        seaAppear = null;
+        dokdoAppear = null;
+        smallSqeedAppear = null;
+        seagullAppear = null;
+        sqeedAppear = null;
+        sqeedClinkAni = null;
+        sqeedLeftHandScale = null;
+        sqeedRightHandScale = null;
+        blink = null;
+        sqeedHandFadein = null;
+        sqeedHandFadeout = null;
+        sqeedLeftHandAniSet = null;
+        sqeedRightHandAniSet = null;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }
 

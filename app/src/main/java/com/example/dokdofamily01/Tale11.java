@@ -118,7 +118,7 @@ public class Tale11 extends BaseFragment {
         beeButterflyFadeOut.setStartOffset(5000);
         beeButterflyFadeOut.setDuration(1000);
         beeButterflyFadeOut.setInterpolator(new DecelerateInterpolator());
-        beeButterflyFadeOut.setAnimationListener(new MyAnimationListener(){
+        beeButterflyFadeOut.setAnimationListener(new MyAnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 animationFlag = 0;
@@ -158,14 +158,13 @@ public class Tale11 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(animationFlag == 0) {
+        if (animationFlag == 0) {
             animationFlag = 1;
             checkedAnimation = false;
-            if(byulAppearFlag == 0) {
+            if (byulAppearFlag == 0) {
                 byulAppearFlag = 1;
                 byul.startAnimation(byulAnimation);
-            }
-            else{
+            } else {
                 bee1.startAnimation(hideBeeAniSet);
                 butterfly.startAnimation(hideButterflyAniSet);
             }
@@ -181,7 +180,7 @@ public class Tale11 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if(animationFlag==1) {
+            if (animationFlag == 1) {
                 animationFlag = 0;
                 cutFlower.setVisibility(View.VISIBLE);
                 flowers.setVisibility(View.VISIBLE);
@@ -223,8 +222,10 @@ public class Tale11 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_11, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_11, vp,
                     new int[]{R.drawable.sub_11_01, 6000},
                     new int[]{R.drawable.sub_11_02, 12500},
                     new int[]{R.drawable.sub_11_03, 19500},
@@ -234,7 +235,7 @@ public class Tale11 extends BaseFragment {
                     new int[]{R.drawable.sub_11_07, 99999});
 
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_11_01,
                     R.drawable.sub_11_02,
                     R.drawable.sub_11_03,
@@ -262,7 +263,7 @@ public class Tale11 extends BaseFragment {
                 dokdoAnimation = new TranslateAnimation(-dokdo.getWidth(), 0, 0, 0);
                 dokdoAnimation.setDuration(2000);
                 dokdoAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                dokdoAnimation.setAnimationListener(new MyAnimationListener(){
+                dokdoAnimation.setAnimationListener(new MyAnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
 
@@ -334,8 +335,8 @@ public class Tale11 extends BaseFragment {
                 beeTranslate.setRepeatMode(Animation.REVERSE);
 
 
-                Log.d("butterWidth", "butter"+butterfly.getWidth());
-                Log.d("butterHeight", "butter"+butterfly.getHeight());
+                Log.d("butterWidth", "butter" + butterfly.getWidth());
+                Log.d("butterHeight", "butter" + butterfly.getHeight());
                 butterflyRotate = new RotateAnimation(50, 10, butterfly.getWidth() / 1.5f, butterfly.getHeight() * 0.5f);
                 butterflyRotate.setDuration(1000);
                 butterflyRotate.setStartOffset(500);
@@ -364,13 +365,13 @@ public class Tale11 extends BaseFragment {
                 hideButterflyAniSet.addAnimation(beeButterflyFadeOut);
 
 //                if (animationFlag == 0) {
-                    animationClear();
-                    checkedAnimation = false;
-                    animationFlag = 1;
-                    byulAppearFlag = 0;
-                    dokdo.startAnimation(dokdoAnimation);
-                    originalFlower.startAnimation(originalFlowerAnimation);
-                    bee2.startAnimation(beeAnimation);
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                byulAppearFlag = 0;
+                dokdo.startAnimation(dokdoAnimation);
+                originalFlower.startAnimation(originalFlowerAnimation);
+                bee2.startAnimation(beeAnimation);
 //                }
             }
         });
@@ -385,7 +386,7 @@ public class Tale11 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(beeSoundPool != null) {
+            if (beeSoundPool != null) {
                 beeSoundPool.release();
             }
         }
@@ -396,8 +397,52 @@ public class Tale11 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        bee1 = null;
+        bee2 = null;
+        butterfly = null;
+        originalFlower = null;
+        cutFlower = null;
+        flowers = null;
+        dokdo = null;
+        byul = null;
+
+        if (dokdoAnimation != null) dokdoAnimation.cancel();
+        if (originalFlowerAnimation != null) originalFlowerAnimation.cancel();
+        if (byulAnimation != null) byulAnimation.cancel();
+        if (beeAnimation != null) beeAnimation.cancel();
+        if (beeTranslate != null) beeTranslate.cancel();
+        if (butterflyTranslate != null) butterflyTranslate.cancel();
+        if (beeRotate != null) beeRotate.cancel();
+        if (butterflyRotate != null) butterflyRotate.cancel();
+        if (beeButterflyFadeIn != null) beeButterflyFadeIn.cancel();
+        if (beeButterflyFadeOut != null) beeButterflyFadeOut.cancel();
+        if (blink != null) blink.cancel();
+        if (flowerAnimation != null) flowerAnimation.cancel();
+        if (hideBeeAniSet != null) hideBeeAniSet.cancel();
+        if (hideButterflyAniSet != null) hideButterflyAniSet.cancel();
+
+        dokdoAnimation = null;
+        originalFlowerAnimation = null;
+        byulAnimation = null;
+        beeAnimation = null;
+        beeTranslate = null;
+        butterflyTranslate = null;
+        beeRotate = null;
+        butterflyRotate = null;
+        beeButterflyFadeIn = null;
+        beeButterflyFadeOut = null;
+        blink = null;
+        flowerAnimation = null;
+        hideBeeAniSet = null;
+        hideButterflyAniSet = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

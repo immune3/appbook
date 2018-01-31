@@ -1,5 +1,7 @@
 package com.example.dokdofamily01;
 
+import android.util.Log;
+
 import com.example.dokdofamily01.Data.SubTitleDataById;
 
 import java.util.ArrayList;
@@ -12,11 +14,14 @@ import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 
 public class SubtitleController {
 
-    ArrayList<SubTitleDataById> subTitleList;
-    CustomViewPager viewPager;
-    int storyFlag = 0;
+    private ArrayList<SubTitleDataById> subTitleList;
+    private TaleActivity taleActivity;
+    private CustomViewPager viewPager;
+    private int storyFlag = 0;
 
-    public SubtitleController(CustomViewPager vp, int... sub) {
+    public SubtitleController(TaleActivity taleAct, CustomViewPager vp, int... sub) {
+
+        setTaleActivity(taleAct);
         makeSubTitleList(sub);
         setVP(vp);
     }
@@ -28,12 +33,26 @@ public class SubtitleController {
             subTitleList.add(new SubTitleDataById(name));
         }
 
-        TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
+        getTaleActivity().subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
 
     }
 
     private void setVP(CustomViewPager vp) {
         viewPager = vp;
+    }
+
+    private void setTaleActivity(TaleActivity taleAct) {
+        if(taleActivity == null) {
+            this.taleActivity = taleAct;
+        }
+    }
+
+    private TaleActivity getTaleActivity() {
+        if(taleActivity != null) return taleActivity;
+        else {
+            Log.d("taleActivity", "NULL : setTaleActivity를 먼저 사용하여야 합니다.");
+            return null;
+        }
     }
 
     private boolean canNext() {
@@ -47,19 +66,19 @@ public class SubtitleController {
     public void next() {
         if (canNext()) {
             storyFlag++;
-            TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
+            taleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
         } else if(checkedAnimation) viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 
     public void nextInActionUp() {
         if (canNext()) {
             storyFlag++;
-            TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
+            getTaleActivity().subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
         }
     }
 
     private boolean canFront() {
-        TaleActivity.subtitleImageVIew.getId();
+        getTaleActivity().subtitleImageVIew.getId();
         if (storyFlag > 0) {
             return true;
         } else return false;
@@ -69,7 +88,7 @@ public class SubtitleController {
     public void front() {
         if (canFront()) {
             storyFlag--;
-            TaleActivity.subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
+            getTaleActivity().subtitleImageVIew.setImageResource(subTitleList.get(storyFlag).getSubTitle());
         } else if(checkedAnimation) viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 

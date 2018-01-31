@@ -347,8 +347,10 @@ public class Tale09 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_9, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_9, vp,
                     new int[]{R.drawable.sub_09_01, 3000},
                     new int[]{R.drawable.sub_09_02, 5800},
                     new int[]{R.drawable.sub_09_03, 12000},
@@ -360,7 +362,7 @@ public class Tale09 extends BaseFragment {
                     new int[]{R.drawable.sub_09_09, 48000},
                     new int[]{R.drawable.sub_09_10, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_09_01,
                     R.drawable.sub_09_02,
                     R.drawable.sub_09_03,
@@ -506,8 +508,62 @@ public class Tale09 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        bird = null;
+        birds1 = null;
+        birds2 = null;
+        birds3 = null;
+        birds4 = null;
+        birds5 = null;
+        birds6 = null;
+        byulBody1 = null;
+        byulBody2 = null;
+        byulBody3 = null;
+        byulBody4 = null;
+        byulBody5 = null;
+        byulHead1 = null;
+        byulHead2 = null;
+        byulHead3 = null;
+        byulHead4 = null;
+        byulHead5 = null;
+        birds = null;
+        fatherDokdo = null;
+        fatherDokdoHand = null;
+        momDokdo = null;
+        deco = null;
+        sea = null;
+        effect = null;
+
+        if(seagullAppear != null) seagullAppear.cancel();
+        if(appear != null) appear.cancel();
+        if(fadeIn != null) fadeIn.cancel();
+        if(fadeOut != null) fadeOut.cancel();
+        if(birdsAppear != null) birdsAppear.cancel();
+        if(decoAppear != null) decoAppear.cancel();
+        if(fatherAppear != null) fatherAppear.cancel();
+        if(momAppear != null) momAppear.cancel();
+        if(seaAppear != null) seaAppear.cancel();
+        if(wavingAnimation != null) wavingAnimation.cancel();
+        if(blink != null) blink.cancel();
+
+        seagullAppear = null;
+        appear = null;
+        fadeIn = null;
+        fadeOut = null;
+        birdsAppear = null;
+        decoAppear = null;
+        fatherAppear = null;
+        momAppear = null;
+        seaAppear = null;
+        wavingAnimation = null;
+        blink = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }
