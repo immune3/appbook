@@ -129,6 +129,16 @@
                 app:scale_top="457"
                 app:scale_width="388" />
 
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_backbutton"
+                app:scale_width="230"
+                app:scale_height="230"
+                app:scale_left="122"
+                app:scale_top="115"/>
+
             <View
                 android:id="@+id/mask"
                 android:layout_width="wrap_content"
