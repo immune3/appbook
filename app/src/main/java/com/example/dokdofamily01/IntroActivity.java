@@ -63,6 +63,7 @@ public class IntroActivity extends BaseActivity {
     private Button seagullBtn;
     private Button squidBtn;
     private Button treeBtn;
+    private Button backBtn;
 
     AlphaAnimation fadeIn;
     AlphaAnimation fadeOut;
@@ -157,7 +158,6 @@ public class IntroActivity extends BaseActivity {
                     animationClear();
                     animationCaseFlag = 0;
                     checkedAnimation = true;
-
                 }
 
             }
@@ -387,6 +387,13 @@ public class IntroActivity extends BaseActivity {
 
         });
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -539,7 +546,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     public void maskOff() {
-
+        backBtn.setVisibility(View.VISIBLE);
         mask.setVisibility(GONE);
 
         wave.setVisibility(GONE);
@@ -597,7 +604,7 @@ public class IntroActivity extends BaseActivity {
     }
 
     public void maskOn() {
-
+        backBtn.setVisibility(GONE);
         mask.setVisibility(View.VISIBLE);
 
         wave.setVisibility(GONE);
@@ -649,6 +656,7 @@ public class IntroActivity extends BaseActivity {
 
         animationClear();
         isBlink = false;
+
     }
 
     private void animationClear() {
@@ -717,6 +725,7 @@ public class IntroActivity extends BaseActivity {
         this.introBuylText = (ImageView) findViewById(R.id.introByulText);
         this.buylBtn = (Button) findViewById(R.id.byulBtn);
         this.introBuyl = (ImageView) findViewById(R.id.introByul);
+        this.backBtn = (Button)findViewById(R.id.backButton);
         this.rl = (RelativeLayout) findViewById(R.id.rl);
         this.sv = (CustomScrollView) findViewById(R.id.sv);
         this.sl = (ScalableLayout) findViewById(R.id.sl);
