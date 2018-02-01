@@ -377,7 +377,15 @@ public class Tale20 extends BaseFragment {
             e.printStackTrace();
         }
 
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         returnMemory();
     }
+
+
 }
 

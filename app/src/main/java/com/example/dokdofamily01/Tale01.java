@@ -310,7 +310,12 @@ public class Tale01 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        returnMemory();
+
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        returnMemory();
+    }
 }

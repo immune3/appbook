@@ -439,7 +439,11 @@ public class Tale03 extends BaseFragment {
             postSoundHandler.removeCallbacks(postSoundRun);
             postSoundHandler = null;
         }
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         returnMemory();
     }
 }
