@@ -79,23 +79,6 @@ public class Tale01 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-
-        fadeIn = new AlphaAnimation(0, 1);
-
-        fadeIn.setDuration(1000);
-        fadeIn.setFillAfter(true);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setDuration(1000);
-        fadeOut.setFillAfter(true);
-        fadeOut.setAnimationListener(new MyAnimationListener());
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
     }
 
     @Override
@@ -258,6 +241,21 @@ public class Tale01 extends BaseFragment {
         sl.post(new Runnable() {
             @Override
             public void run() {
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setDuration(1000);
+                fadeOut.setFillAfter(true);
+                fadeOut.setAnimationListener(new MyAnimationListener());
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 lampLight.startAnimation(blink);
                 checkedAnimation = true;
             }

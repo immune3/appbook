@@ -68,15 +68,6 @@ public class Tale05 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        letterAppear = new AlphaAnimation(0, 1);
-        letterAppear.setDuration(700);
-        letterAppear.setFillAfter(true);
-        letterAppear.setAnimationListener(new MyAnimationListener());
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -223,6 +214,15 @@ public class Tale05 extends BaseFragment {
         letter[0].post(new Runnable() {
             @Override
             public void run() {
+                letterAppear = new AlphaAnimation(0, 1);
+                letterAppear.setDuration(700);
+                letterAppear.setFillAfter(true);
+                letterAppear.setAnimationListener(new MyAnimationListener());
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 letter[0].startAnimation(blink);
                 checkedAnimation = true;

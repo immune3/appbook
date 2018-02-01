@@ -116,43 +116,6 @@ public class Tale19 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(2000);
-        fadein.setFillAfter(true);
-
-        fadeout = new AlphaAnimation(1, 0);
-        fadeout.setStartOffset(500);
-        fadeout.setDuration(2500);
-        fadeout.setFillAfter(true);
-
-        starFadeout = new AlphaAnimation(1, 0);
-        starFadeout.setDuration(1500);
-        starFadeout.setFillAfter(true);
-
-        starLightFadeout = new AlphaAnimation(1, 0);
-        starLightFadeout.setDuration(2500);
-        starLightFadeout.setFillAfter(true);
-        starLightFadeout.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                star1.startAnimation(starDisappearAniSet);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(700);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -258,6 +221,44 @@ public class Tale19 extends BaseFragment {
                         starFallSp.play(starFallEffect, 1, 1, 1, 0, 1);
                     }
                 });
+
+                fadein = new AlphaAnimation(0, 1);
+                fadein.setDuration(2000);
+                fadein.setFillAfter(true);
+
+                fadeout = new AlphaAnimation(1, 0);
+                fadeout.setStartOffset(500);
+                fadeout.setDuration(2500);
+                fadeout.setFillAfter(true);
+
+                starFadeout = new AlphaAnimation(1, 0);
+                starFadeout.setDuration(1500);
+                starFadeout.setFillAfter(true);
+
+                starLightFadeout = new AlphaAnimation(1, 0);
+                starLightFadeout.setDuration(2500);
+                starLightFadeout.setFillAfter(true);
+                starLightFadeout.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        star1.startAnimation(starDisappearAniSet);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(700);
+                blink.setInterpolator(new LinearInterpolator());
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 starAppear = new TranslateAnimation(0, 0, -star1.getHeight(), 0);
                 starAppear.setDuration(3000);

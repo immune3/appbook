@@ -90,23 +90,6 @@ public class Tale10 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-//        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(1000);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        blink = new AlphaAnimation(0.3f, 1);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-//        blink.setAnimationListener(new MyAnimationListener());
-
-        repeat = new AlphaAnimation(1, 1);
-        repeat.setDuration(500);
-        repeat.setRepeatCount(16);
-//        repeat.setRepeatCount(Animation.INFINITE);
-        repeat.setRepeatMode(Animation.REVERSE);
-        repeat.setAnimationListener(new MyAnimationListener());
     }
 
     @Override
@@ -265,6 +248,24 @@ public class Tale10 extends BaseFragment {
                 bird[0].setVisibility(View.INVISIBLE);
                 bird[1].setVisibility(View.INVISIBLE);
                 bird[2].setVisibility(View.INVISIBLE);
+
+                //        fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(1000);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                blink = new AlphaAnimation(0.3f, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+//        blink.setAnimationListener(new MyAnimationListener());
+
+                repeat = new AlphaAnimation(1, 1);
+                repeat.setDuration(500);
+                repeat.setRepeatCount(16);
+//        repeat.setRepeatCount(Animation.INFINITE);
+                repeat.setRepeatMode(Animation.REVERSE);
+                repeat.setAnimationListener(new MyAnimationListener());
 
                 tweetSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 tweetSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {

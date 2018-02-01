@@ -90,27 +90,6 @@ public class Tale20 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(500);
-        fadein.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-//                cutainText.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        fadeout = new AlphaAnimation(1, 0);
-        fadeout.setDuration(10);
     }
 
     @Override
@@ -177,6 +156,27 @@ public class Tale20 extends BaseFragment {
             public void run() {
 //                endFlag = 0;
 //                cutainText.setVisibility(View.INVISIBLE);
+                fadein = new AlphaAnimation(0, 1);
+                fadein.setDuration(500);
+                fadein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+//                cutainText.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                fadeout = new AlphaAnimation(1, 0);
+                fadeout.setDuration(10);
 
                 manAppearAnimation = new TranslateAnimation(0, 0, man.getHeight(), 0);
                 manAppearAnimation.setDuration(1000);

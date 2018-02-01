@@ -94,58 +94,6 @@ public class Tale11 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        beeButterflyFadeIn = new AlphaAnimation(0, 1);
-        beeButterflyFadeIn.setDuration(600);
-        beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
-        beeButterflyFadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                beeSound = beeSoundPool.load(getContext(), R.raw.effect_11_bee, 1);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        beeButterflyFadeOut = new AlphaAnimation(1, 0);
-        beeButterflyFadeOut.setStartOffset(5000);
-        beeButterflyFadeOut.setDuration(1000);
-        beeButterflyFadeOut.setInterpolator(new DecelerateInterpolator());
-        beeButterflyFadeOut.setAnimationListener(new MyAnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animationFlag = 0;
-                bee2.startAnimation(blink);
-                checkedAnimation = true;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-                bee2.clearAnimation();
-            }
-        });
-
-
-        flowerAnimation = new AlphaAnimation(0, 1);
-        flowerAnimation.setStartOffset(200);
-        flowerAnimation.setDuration(300);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -255,6 +203,59 @@ public class Tale11 extends BaseFragment {
                         beeSoundPool.play(beeSound, 0.1f, 0.1f, 0, 3, 1);
                     }
                 });
+
+                beeButterflyFadeIn = new AlphaAnimation(0, 1);
+                beeButterflyFadeIn.setDuration(600);
+                beeButterflyFadeIn.setInterpolator(new AccelerateDecelerateInterpolator());
+                beeButterflyFadeIn.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        beeSound = beeSoundPool.load(getContext(), R.raw.effect_11_bee, 1);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                beeButterflyFadeOut = new AlphaAnimation(1, 0);
+                beeButterflyFadeOut.setStartOffset(5000);
+                beeButterflyFadeOut.setDuration(1000);
+                beeButterflyFadeOut.setInterpolator(new DecelerateInterpolator());
+                beeButterflyFadeOut.setAnimationListener(new MyAnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        bee2.startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        bee2.clearAnimation();
+                    }
+                });
+
+                flowerAnimation = new AlphaAnimation(0, 1);
+                flowerAnimation.setStartOffset(200);
+                flowerAnimation.setDuration(300);
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setInterpolator(new LinearInterpolator());
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
                 originalFlowerAnimation.setDuration(2000);
                 originalFlowerAnimation.setInterpolator(new AccelerateDecelerateInterpolator());

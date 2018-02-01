@@ -98,35 +98,6 @@ public class Tale06 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(1000);
-        fadeIn.setFillAfter(true);
-
-        seagullFadein = new AlphaAnimation(0, 1);
-        seagullFadein.setDuration(1000);
-        seagullFadein.setFillAfter(true);
-        seagullFadein.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animationFlag = 0;
-                seagull[0].startAnimation(blink);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -233,7 +204,6 @@ public class Tale06 extends BaseFragment {
                             waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 4, 1);
                         }
                     });
-
                 } else {
                     //사용가능한 버전
                     waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -242,8 +212,37 @@ public class Tale06 extends BaseFragment {
                             waveSoundPool.play(waveSound, 0.2f, 0.2f, 0, 3, 1);
                         }
                     });
-
                 }
+
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+
+                seagullFadein = new AlphaAnimation(0, 1);
+                seagullFadein.setDuration(1000);
+                seagullFadein.setFillAfter(true);
+                seagullFadein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        seagull[0].startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setInterpolator(new LinearInterpolator());
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 waveAppear = new TranslateAnimation(0, 0, (int) (sea.getHeight() * 0.8), 0);
                 waveAppear.setDuration(800);

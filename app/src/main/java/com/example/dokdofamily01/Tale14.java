@@ -96,36 +96,6 @@ public class Tale14 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(1500);
-
-        lightFadein = new AlphaAnimation(0, 1);
-        lightFadein.setStartOffset(700);
-        lightFadein.setDuration(1500);
-        lightFadein.setAnimationListener(new MyAnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bell.startAnimation(blink);
-                checkedAnimation = true;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-        });
-
-        sqeedHandFadein = new AlphaAnimation(0, 1);
-        sqeedHandFadein.setDuration(300);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(600);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
     }
 
     @Override
@@ -243,6 +213,36 @@ public class Tale14 extends BaseFragment {
                         bubbleSoundPool.play(soundID, 1, 1, 0, 0, 1);
                     }
                 });
+
+                fadein = new AlphaAnimation(0, 1);
+                fadein.setDuration(1500);
+
+                lightFadein = new AlphaAnimation(0, 1);
+                lightFadein.setStartOffset(700);
+                lightFadein.setDuration(1500);
+                lightFadein.setAnimationListener(new MyAnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        bell.startAnimation(blink);
+                        checkedAnimation = true;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
+
+                sqeedHandFadein = new AlphaAnimation(0, 1);
+                sqeedHandFadein.setDuration(300);
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(600);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 sqeedHandScaleAnimSet = new AnimationSet(false);
                 sqeedHandAfterClinkAnimSet = new AnimationSet(false);

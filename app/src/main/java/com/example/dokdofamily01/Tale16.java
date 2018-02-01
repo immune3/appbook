@@ -93,66 +93,6 @@ public class Tale16 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(500);
-        fadein.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        bomb.startAnimation(bombFadeout);
-                        bubble.startAnimation(bubbleFadein);
-                    }
-                }, 1000);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-//        fadein.setFillAfter(true);
-
-        fadeout = new AlphaAnimation(1, 0);
-        fadeout.setDuration(500);
-//        fadeout.setFillAfter(true);
-
-        blink = new AlphaAnimation(1, 0.6f);
-        blink.setDuration(600);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
-        bubbleFadein = new AlphaAnimation(0, 1);
-        bubbleFadein.setDuration(800);
-        bubbleFadein.setFillAfter(true);
-        bubbleFadein.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                bomb.setVisibility(View.INVISIBLE);
-                bubble.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animationFlag = 0;
-                bubble.startAnimation(bubbleScaleAni);
-                moon.startAnimation(blink);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        bombFadeout = new AlphaAnimation(1, 0);
-        bombFadeout.setFillAfter(true);
-        bombFadeout.setDuration(800);
     }
 
     @Override
@@ -275,6 +215,67 @@ public class Tale16 extends BaseFragment {
                         }
                     }
                 });
+
+                fadein = new AlphaAnimation(0, 1);
+                fadein.setDuration(500);
+                fadein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                bomb.startAnimation(bombFadeout);
+                                bubble.startAnimation(bubbleFadein);
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+//        fadein.setFillAfter(true);
+
+                fadeout = new AlphaAnimation(1, 0);
+                fadeout.setDuration(500);
+//        fadeout.setFillAfter(true);
+
+                blink = new AlphaAnimation(1, 0.6f);
+                blink.setDuration(600);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
+                bubbleFadein = new AlphaAnimation(0, 1);
+                bubbleFadein.setDuration(800);
+                bubbleFadein.setFillAfter(true);
+                bubbleFadein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        bomb.setVisibility(View.INVISIBLE);
+                        bubble.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+                        bubble.startAnimation(bubbleScaleAni);
+                        moon.startAnimation(blink);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                bombFadeout = new AlphaAnimation(1, 0);
+                bombFadeout.setFillAfter(true);
+                bombFadeout.setDuration(800);
 
                 moonAppearAnimation = new TranslateAnimation(0, 0, -moon.getHeight() * 1.3f, 0);
                 moonAppearAnimation.setDuration(2000);

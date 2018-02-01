@@ -120,22 +120,6 @@ public class Tale09 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setStartOffset(280);
-        fadeIn.setDuration(500);
-//        fadeIn.setFillAfter(true);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setStartOffset(-200);
-        fadeOut.setDuration(800);
-        fadeOut.setFillAfter(true);
-
-        blink = new AlphaAnimation(0.3f, 1);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
     }
 
     @Override
@@ -388,6 +372,22 @@ public class Tale09 extends BaseFragment {
 
                 int birdsWidth = birds2.getWidth();
                 int birdsHeight = (int) (birds2.getHeight() * 1.3);
+
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setStartOffset(280);
+                fadeIn.setDuration(500);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setStartOffset(-200);
+                fadeOut.setDuration(800);
+                fadeOut.setFillAfter(true);
+
+                blink = new AlphaAnimation(0.3f, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 seagullAppear = new ScaleAnimation(0, 1, 0, 1, birdsWidth, birdsHeight);
                 seagullAppear.setDuration(1000);
 //                seagullAppear.setFillAfter(true);

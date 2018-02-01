@@ -87,10 +87,6 @@ public class Tale02 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -183,6 +179,11 @@ public class Tale02 extends BaseFragment {
 
                 int width = (int) (seagullHand.getWidth() * 0.85);
                 int height = (int) (seagullHand.getHeight() * 0.8);
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 seagullAlpha = new AlphaAnimation(0, 1);
                 seagullAlpha.setDuration(500);

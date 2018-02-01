@@ -65,6 +65,16 @@ public class Tale17 extends BaseFragment {
         star.post(new Runnable() {
             @Override
             public void run() {
+                fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(3000);
+                fadeIn.setFillAfter(true);
+                fadeIn.setAnimationListener(new MyAnimationListener());
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 if (blink != null) {
                     animationFlag = 0;
                     star.startAnimation(blink);
@@ -77,15 +87,6 @@ public class Tale17 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(3000);
-        fadeIn.setFillAfter(true);
-        fadeIn.setAnimationListener(new MyAnimationListener());
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override

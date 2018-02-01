@@ -103,17 +103,6 @@ public class Tale12 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        sqeedHandFadein = new AlphaAnimation(0, 1);
-        sqeedHandFadein.setDuration(800);
-
-        sqeedHandFadeout = new AlphaAnimation(1, 0);
-        sqeedHandFadeout.setDuration(800);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(600);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -190,6 +179,18 @@ public class Tale12 extends BaseFragment {
         sea1.post(new Runnable() {
             @Override
             public void run() {
+                sqeedHandFadein = new AlphaAnimation(0, 1);
+                sqeedHandFadein.setDuration(800);
+
+                sqeedHandFadeout = new AlphaAnimation(1, 0);
+                sqeedHandFadeout.setDuration(800);
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(600);
+                blink.setInterpolator(new LinearInterpolator());
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 whackSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
                 handSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
                 whackSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {

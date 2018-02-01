@@ -100,61 +100,7 @@ public class Tale08 extends BaseFragment {
 
     @Override
     public void setAnimation() {
-        leafFadeout = new AlphaAnimation(1, 0);
-        leafFadeout.setStartOffset(3000);
-        leafFadeout.setDuration(1500);
-        leafFadeout.setInterpolator(new AccelerateDecelerateInterpolator());
-        leafFadeout.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                leaves.setVisibility(View.INVISIBLE);
-                smile.startAnimation(afterLeafFadeout);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-        });
-
-        afterLeafFadeout = new AlphaAnimation(1, 0);
-        afterLeafFadeout.setStartOffset(500);
-        afterLeafFadeout.setDuration(500);
-        afterLeafFadeout.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animationFlag = 0;
-//                treeHand.startAnimation(fadeout);
-                checkedAnimation = true;
-                byul.startAnimation(blink);
-                eyeBlack.startAnimation(treeEyeRotate);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-                treeHand.startAnimation(fadeout);
-                byul.clearAnimation();
-            }
-        });
-
-        leafFadein = new AlphaAnimation(0, 1);
-        leafFadein.setStartOffset(1200);
-        leafFadein.setDuration(500);
-        leafFadein.setInterpolator(new AccelerateDecelerateInterpolator());
-
         super.setAnimation();
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setInterpolator(new LinearInterpolator());
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -239,7 +185,8 @@ public class Tale08 extends BaseFragment {
                 treeHandSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 laughingSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
-                    public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                    public void onLoadComplete(SoundPool soundPool, int i, int
+                            i1) {
                         laughingSoundPool.play(laughingSound, 1, 1, 1, 0, 1);
                     }
                 });
@@ -256,6 +203,61 @@ public class Tale08 extends BaseFragment {
                         treeHandSoundPool.play(treeHandSound, 0.8f, 0.8f, 1, 0, 1);
                     }
                 });
+
+                leafFadeout = new AlphaAnimation(1, 0);
+                leafFadeout.setStartOffset(3000);
+                leafFadeout.setDuration(1500);
+                leafFadeout.setInterpolator(new AccelerateDecelerateInterpolator());
+                leafFadeout.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        leaves.setVisibility(View.INVISIBLE);
+                        smile.startAnimation(afterLeafFadeout);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
+
+                afterLeafFadeout = new AlphaAnimation(1, 0);
+                afterLeafFadeout.setStartOffset(500);
+                afterLeafFadeout.setDuration(500);
+                afterLeafFadeout.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        animationFlag = 0;
+//                treeHand.startAnimation(fadeout);
+                        checkedAnimation = true;
+                        byul.startAnimation(blink);
+                        eyeBlack.startAnimation(treeEyeRotate);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        treeHand.startAnimation(fadeout);
+                        byul.clearAnimation();
+                    }
+                });
+
+                leafFadein = new AlphaAnimation(0, 1);
+                leafFadein.setStartOffset(1200);
+                leafFadein.setDuration(500);
+                leafFadein.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setInterpolator(new LinearInterpolator());
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 plantAnimation = new TranslateAnimation(-plant.getWidth(), 0, 0, 0);
                 plantAnimation.setDuration(1200);

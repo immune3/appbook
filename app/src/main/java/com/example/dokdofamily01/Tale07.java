@@ -90,11 +90,6 @@ public class Tale07 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -257,6 +252,11 @@ public class Tale07 extends BaseFragment {
         seagull[0].post(new Runnable() {
             @Override
             public void run() {
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
+
                 seagull[0].clearAnimation();
                 seagull[0].startAnimation(blink);
             }

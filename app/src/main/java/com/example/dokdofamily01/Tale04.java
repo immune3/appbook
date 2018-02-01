@@ -68,16 +68,6 @@ public class Tale04 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        sunLightAppear = new AlphaAnimation(0, 1);
-        sunLightAppear.setDuration(3000);
-        sunLightAppear.setFillAfter(true);
-
-        blink = new AlphaAnimation(1, 0.3f);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
-
-
     }
 
     @Override
@@ -160,7 +150,15 @@ public class Tale04 extends BaseFragment {
         dokdo.post(new Runnable() {
             @Override
             public void run() {
-//                sun.setTranslationY(sun.getHeight()*0.6f);
+
+                sunLightAppear = new AlphaAnimation(0, 1);
+                sunLightAppear.setDuration(3000);
+                sunLightAppear.setFillAfter(true);
+
+                blink = new AlphaAnimation(1, 0.3f);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 sunRiseAni = new TranslateAnimation(0, 0, 0, -(sun.getHeight()*0.5f));
                 sunRiseAni.setDuration(3000);

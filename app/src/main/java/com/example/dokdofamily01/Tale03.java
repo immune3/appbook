@@ -102,13 +102,6 @@ public class Tale03 extends BaseFragment {
     @Override
     public void setAnimation() {
         super.setAnimation();
-        fadein = new AlphaAnimation(0, 1);
-        fadein.setDuration(1000);
-
-        blink = new AlphaAnimation(0.3f, 1);
-        blink.setDuration(500);
-        blink.setRepeatCount(Animation.INFINITE);
-        blink.setRepeatMode(Animation.REVERSE);
     }
 
     @Override
@@ -196,7 +189,6 @@ public class Tale03 extends BaseFragment {
             @Override
             public void run() {
                 wingSp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1){
                     //사용가능한 버전이 아님
                     wingSp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -205,7 +197,6 @@ public class Tale03 extends BaseFragment {
                             wingSp.play(soundID, 1, 1, 1, 2, 1);
                         }
                     });
-
                 }
                 else{
                     //사용가능한 버전
@@ -215,7 +206,6 @@ public class Tale03 extends BaseFragment {
                             wingSp.play(soundID, 1, 1, 1, 1, 1);
                         }
                     });
-
                 }
 
                 sp = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
@@ -225,6 +215,14 @@ public class Tale03 extends BaseFragment {
                         sp.play(soundID, 1, 1, 1, 0, 1);
                     }
                 });
+
+                fadein = new AlphaAnimation(0, 1);
+                fadein.setDuration(1000);
+
+                blink = new AlphaAnimation(0.3f, 1);
+                blink.setDuration(500);
+                blink.setRepeatCount(Animation.INFINITE);
+                blink.setRepeatMode(Animation.REVERSE);
 
                 // 왼쪽 위 구름(cloud[0])
                 headHeight = (int)(head.getHeight()*0.2);
