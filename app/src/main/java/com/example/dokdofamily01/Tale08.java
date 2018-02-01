@@ -59,9 +59,8 @@ public class Tale08 extends BaseFragment {
     int animationFlag = 0;
     Boolean isAuto;
 
-    SoundPool laughingSoundPool, eyeSoundPool;
-    int laughingSound;
-    int eyeSound;
+    SoundPool laughingSoundPool, eyeSoundPool, treeHandSoundPool;
+    int laughingSound, eyeSound, treeHandSound;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -173,9 +172,7 @@ public class Tale08 extends BaseFragment {
 //                    eyeBlack.clearAnimation();
             checkedAnimation = false;
             byul.clearAnimation();
-            treeHand.setVisibility(View.VISIBLE);
             leaves.setVisibility(View.VISIBLE);
-            treeHand.startAnimation(treeHandRotate);
             leaves.startAnimation(leafAniSet);
             eyeBlack.startAnimation(treeEyeToByul);
             smile.startAnimation(fadeIn);
@@ -239,6 +236,7 @@ public class Tale08 extends BaseFragment {
             public void run() {
                 laughingSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 eyeSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                treeHandSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 laughingSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
@@ -250,6 +248,12 @@ public class Tale08 extends BaseFragment {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
                         eyeSoundPool.play(eyeSound, 1, 1, 1, 0, 1);
+                    }
+                });
+                treeHandSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                        treeHandSoundPool.play(treeHandSound, 0.8f, 0.8f, 1, 0, 1);
                     }
                 });
 
@@ -346,27 +350,6 @@ public class Tale08 extends BaseFragment {
                 treeAnimation.setDuration(800);
                 treeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 
-//                treeAnimation2 = new TranslateAnimation((int) (treeBody.getWidth() * 0.3), 0, treeBody.getHeight()*1.5f, 0);
-//                treeAnimation2.setStartOffset(800);
-//                treeAnimation2.setDuration(800);
-//                treeAnimation2.setInterpolator(new AccelerateDecelerateInterpolator());
-//                treeAnimation2.setAnimationListener(new Animation.AnimationListener(){
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-////                        eyeBlack.setVisibility(View.INVISIBLE);
-////                        eyeBlack.startAnimation(treeEyeRotate);
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//                    }
-//
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-//                        eyeBlack.clearAnimation();
-////                        eyeBlack.setVisibility(View.INVISIBLE);
-//                    }
-//                });
 
                 eyeBlackAniSet = new AnimationSet(false);
                 eyeBlackAniSet.addAnimation(treeAnimation);
@@ -393,13 +376,43 @@ public class Tale08 extends BaseFragment {
                 treeEyeToByul.setDuration(300);
                 treeEyeToByul.setInterpolator(new AccelerateDecelerateInterpolator());
                 treeEyeToByul.setFillAfter(true);
+                treeEyeToByul.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        treeHand.startAnimation(treeHandRotate);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 treeHandRotate = new RotateAnimation(-100, 0, 0, treeHand.getHeight());
-                treeHandRotate.setStartOffset(1000);
+//                treeHandRotate.setStartOffset(1000);
                 treeHandRotate.setDuration(1000);
-//                treeHandRotate.setInterpolator(new AccelerateDecelerateInterpolator());
-//                treeHandRotate.setInterpolator(new AnticipateOvershootInterpolator());
                 treeHandRotate.setInterpolator(new BounceInterpolator());
+                treeHandRotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        treeHand.setVisibility(View.VISIBLE);
+                        treeHandSound = treeHandSoundPool.load(getContext(), R.raw.effect_03_clouds, 0);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
                 leafTranslateAni = new TranslateAnimation(0, 0, 0, leaves.getHeight() * 0.2f);
                 leafTranslateAni.setStartOffset(1200);
@@ -458,6 +471,9 @@ public class Tale08 extends BaseFragment {
             }
             if (eyeSoundPool != null) {
                 eyeSoundPool.release();
+            }
+            if(treeHandSoundPool != null) {
+                treeHandSoundPool.release();
             }
         }
     }

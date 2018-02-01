@@ -424,7 +424,9 @@ public class Tale03 extends BaseFragment {
 
 
         for(int i=0; i< cloudAnimation.length; i++) {
-            cloudAnimation[i].cancel();
+            if(cloudAnimation[i] != null) {
+                cloudAnimation[i].cancel();
+            }
             cloudAnimation[i] = null;
         }
         cloudAnimation = null;
