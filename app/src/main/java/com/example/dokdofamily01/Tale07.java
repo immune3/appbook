@@ -26,8 +26,8 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale07 extends BaseFragment {
     ImageView dokdo;
-    ImageView seagull[] = new ImageView[3];
-    ImageView shadow[] = new ImageView[3];
+    ImageView seagull[];
+    ImageView shadow[];
 
     RotateAnimation seagullAppear1;
     RotateAnimation seagullDisappear1;
@@ -68,6 +68,10 @@ public class Tale07 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        seagull = new ImageView[3];
+        shadow = new ImageView[3];
+
         dokdo = (ImageView) layout.findViewById(R.id.dokdo);
         seagull[0] = (ImageView) layout.findViewById(R.id.seagull1);
         seagull[1] = (ImageView) layout.findViewById(R.id.seagull2);
@@ -223,8 +227,10 @@ public class Tale07 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_7, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_7, vp,
                     new int[]{R.drawable.sub_07_01, 5300},
                     new int[]{R.drawable.sub_07_02, 11500},
                     new int[]{R.drawable.sub_07_03, 18000},
@@ -236,7 +242,7 @@ public class Tale07 extends BaseFragment {
                     new int[]{R.drawable.sub_07_09, 99999});
 
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_07_01,
                     R.drawable.sub_07_02,
                     R.drawable.sub_07_03,
@@ -318,7 +324,7 @@ public class Tale07 extends BaseFragment {
                 moveDokdo.addAnimation(rotateDokdo);
 
                 animationFlag = 1;
-                checkedAnimation = false;
+
                 dokdo.clearAnimation();
                 seagull[1].clearAnimation();
                 seagull[2].clearAnimation();
@@ -360,8 +366,39 @@ public class Tale07 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        dokdo = null;
+        seagull = null;
+        shadow = null;
+
+        if(seagullAppear1 != null) seagullAppear1.cancel();
+        if(seagullDisappear1 != null) seagullDisappear1.cancel();
+        if(seagullAppear2 != null) seagullAppear2.cancel();
+        if(seagullAppear3 != null) seagullAppear3.cancel();
+        if(seagullAppear4 != null) seagullAppear4.cancel();
+        if(seagullDisappear3 != null) seagullDisappear3.cancel();
+        if(rotateDokdo != null) rotateDokdo.cancel();
+        if(scaleDokdo != null) scaleDokdo.cancel();
+        if(blink != null) blink.cancel();
+        if(moveDokdo != null) moveDokdo.cancel();
+
+        seagullAppear1 = null;
+        seagullDisappear1 = null;
+        seagullAppear2 = null;
+        seagullAppear3 = null;
+        seagullAppear4 = null;
+        seagullDisappear3 = null;
+        rotateDokdo = null;
+        scaleDokdo = null;
+        blink = null;
+        moveDokdo = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

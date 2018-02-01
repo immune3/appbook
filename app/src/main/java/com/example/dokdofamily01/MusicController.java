@@ -1,6 +1,7 @@
 package com.example.dokdofamily01;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -18,7 +19,6 @@ import java.util.TimerTask;
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
 import static com.example.dokdofamily01.TaleActivity.homeKeyFlag;
 import static com.example.dokdofamily01.TaleActivity.screenFlag;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 
 //import static com.example.dokdofamily01.Tale20.cutainText;
 //import static com.example.dokdofamily01.Tale20.endFlag;
@@ -29,7 +29,6 @@ import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 
 public class MusicController {
 
-    private Context mContext;
     private int resID;
     static ArrayList<SubTitleData> subtitleList1;
     static ArrayList<SubTitleDataById> subtitleList;
@@ -37,6 +36,7 @@ public class MusicController {
     private MyThread subtitleThread;
     private CustomViewPager vp;
     int subtitleIndex = 0;
+    private TaleActivity taleActivity;
 
     AlphaAnimation fadein;
     int animFlag;
@@ -44,14 +44,14 @@ public class MusicController {
     Handler delayedPagingHandler;
     Runnable delayedPagingRunnable;
 
-    public MusicController(Context context, int audioID) {
-        this.mContext = context;
+    public MusicController(TaleActivity context, int audioID) {
+        this.taleActivity = context;
         this.resID = audioID;
         animFlag = 0;
     }
 
-    public MusicController(Context context, int audioID, CustomViewPager viewPager, int[]... sub) {
-        this.mContext = context;
+    public MusicController(TaleActivity taleAct, int audioID, CustomViewPager viewPager, int[]... sub) {
+        setTaleActivity(taleAct);
         this.resID = audioID;
         vp = viewPager;
         fadein = new AlphaAnimation(0, 1);
@@ -61,6 +61,20 @@ public class MusicController {
         makeSubTitleList(sub);
         excuteAsync();
 
+    }
+
+    private void setTaleActivity(TaleActivity taleAct) {
+        if(taleActivity == null) {
+            taleActivity = taleAct;
+        }
+    }
+
+    private TaleActivity getTaleActivity() {
+        if(taleActivity != null) return taleActivity;
+        else {
+            Log.d("taleActivity", "NULL : setTaleActivity를 먼저 사용하여야 합니다.");
+            return null;
+        }
     }
 
     public void setVP(CustomViewPager vp) {
@@ -135,6 +149,9 @@ public class MusicController {
         }
     }
 
+    public void destroyAsyncTask() {
+        createMP = null;
+    }
 
     public ArrayList<SubTitleData> makeSubTitleList(String[]... params) {
         subtitleList1 = new ArrayList<>();
@@ -152,12 +169,12 @@ public class MusicController {
 
     class MyAsynTask extends AsyncTask<Void, Void, MediaPlayer> {
         MediaPlayer mp;
+
         @Override
         protected MediaPlayer doInBackground(Void... voids) {
-            try{
-                mp = MediaPlayer.create(mContext, resID);
-            }
-            catch(Exception e){
+            try {
+                mp = MediaPlayer.create(taleActivity, resID);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return mp;
@@ -352,26 +369,16 @@ public class MusicController {
         public void handleMessage(Message msg) {
 
             if (msg.what >= 0) {
-//                subtitleTextView.setText(subtitleList1.get(msg.what).getSubTitle());
-                subtitleImageVIew.setImageDrawable(null);
+                getTaleActivity().subtitleImageVIew.setImageDrawable(null);
+//                ((BitmapDrawable) subtitleImageVIew.getDrawable()).getBitmap().recycle();
                 try {
-//                    if(endFlag == 1 && msg.what == 8) {
-//                        if(animFlag == 0) {
-//                            animFlag = 1;
-//                            cutainText.startAnimation(fadein);
-//                        }
-//                    }
-//                    else{
-                    subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
-//                    }
+                    getTaleActivity().subtitleImageVIew.setImageResource(subtitleList.get(msg.what).getSubTitle());
+//                    subtitleImageVIew.setImageDrawable(mContext.getResources().getDrawable(subtitleList.get(msg.what).getSubTitle()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                subtitleImageVIew.setTag((Integer)msg.what);
-//                if(subtitleImageVIew.getVisibility() == View.INVISIBLE || subtitleImageVIew.getVisibility() == View.GONE) subtitleImageVIew.setVisibility(View.VISIBLE);
             } else
-                subtitleImageVIew.setImageDrawable(null);
-
+                getTaleActivity().subtitleImageVIew.setImageDrawable(null);
         }
     };
 

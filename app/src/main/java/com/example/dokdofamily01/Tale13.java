@@ -33,18 +33,18 @@ public class Tale13 extends BaseFragment {
     private android.widget.ImageView ivFishes13;
     Boolean isAuto;
     ImageView bubble;
-    ImageView[] wave = new ImageView[4];
+    ImageView[] wave;
 
     private TranslateAnimation wallAnimation, bottomAnimation, characterAnimation, fishAnimation;
     AlphaAnimation bubbleAlpha;
     TranslateAnimation bubbleTranslate;
-    TranslateAnimation[] wavingTransAni = new TranslateAnimation[4];
-    AlphaAnimation[] wavingFadeinAni = new AlphaAnimation[4];
-    AnimationSet[] wavingAniSet = new AnimationSet[4];
+    TranslateAnimation[] wavingTransAni;
+    AlphaAnimation[] wavingFadeinAni;
+    AnimationSet[] wavingAniSet;
     AnimationSet bubbleAppear;
     AlphaAnimation blink;
     int animationFlag = 0;
-    int clickFlag=0;
+    int clickFlag = 0;
 
     private SoundPool bubbleSoundPool, tickSoundPool;
     private int bubbleSound, tickSound;
@@ -67,11 +67,17 @@ public class Tale13 extends BaseFragment {
     }
 
 
-
     @Override
 
     public void bindViews() {
         super.bindViews();
+
+        wave = new ImageView[4];
+
+        wavingTransAni = new TranslateAnimation[4];
+        wavingFadeinAni = new AlphaAnimation[4];
+        wavingAniSet = new AnimationSet[4];
+
         this.sv = (CustomScrollView) layout.findViewById(R.id.sv);
         this.sl = (ScalableLayout) layout.findViewById(R.id.sl);
         this.ivBottom13 = (ImageView) layout.findViewById(R.id.ivBottom13);
@@ -107,8 +113,8 @@ public class Tale13 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(clickFlag==0) {
-            clickFlag=1;
+        if (clickFlag == 0) {
+            clickFlag = 1;
             checkedAnimation = false;
             ivBuyl13.clearAnimation();
             bubble.startAnimation(bubbleAppear);
@@ -148,7 +154,7 @@ public class Tale13 extends BaseFragment {
 
     private void animationClear() {
         animationFlag = 0;
-        clickFlag=0;
+        clickFlag = 0;
         ivFishes13.clearAnimation();
         ivWall13.clearAnimation();
         ivBottom13.clearAnimation();
@@ -158,12 +164,15 @@ public class Tale13 extends BaseFragment {
         wave[2].clearAnimation();
         wave[3].clearAnimation();
     }
+
     @Override
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_13, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_13, vp,
                     new int[]{R.drawable.sub_13_01, 5000},
                     new int[]{R.drawable.sub_13_02, 10000},
                     new int[]{R.drawable.sub_13_03, 14000},
@@ -171,7 +180,7 @@ public class Tale13 extends BaseFragment {
                     new int[]{R.drawable.sub_13_05, 29500},
                     new int[]{R.drawable.sub_13_06, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_13_01,
                     R.drawable.sub_13_02,
                     R.drawable.sub_13_03,
@@ -239,7 +248,7 @@ public class Tale13 extends BaseFragment {
                     public void onAnimationEnd(Animation animation) {
                         checkedAnimation = true;
                         ivBuyl13.startAnimation(blink);
-                        clickFlag=0;
+                        clickFlag = 0;
                     }
 
                     @Override
@@ -303,23 +312,20 @@ public class Tale13 extends BaseFragment {
                 wavingFadeinAni[3].setRepeatCount(Animation.INFINITE);
                 wavingFadeinAni[3].setRepeatMode(Animation.REVERSE);
 
-                for(int iter=0; iter < 4; iter++) {
+                for (int iter = 0; iter < 4; iter++) {
                     wavingAniSet[iter] = new AnimationSet(false);
                     wavingAniSet[iter].addAnimation(wavingTransAni[iter]);
                     wavingAniSet[iter].addAnimation(wavingFadeinAni[iter]);
                 }
 
+                animationClear();
+                checkedAnimation = false;
+                animationFlag = 1;
+                ivBottom13.startAnimation(bottomAnimation);
+                ivWall13.startAnimation(wallAnimation);
+                ivBuyl13.startAnimation(characterAnimation);
+                ivFishes13.startAnimation(fishAnimation);
 
-//                if (animationFlag == 0 && bottomAnimation != null) {
-//                if (animationFlag == 0) {
-                    animationClear();
-                    checkedAnimation = false;
-                    animationFlag = 1;
-                    ivBottom13.startAnimation(bottomAnimation);
-                    ivWall13.startAnimation(wallAnimation);
-                    ivBuyl13.startAnimation(characterAnimation);
-                    ivFishes13.startAnimation(fishAnimation);
-//                }
             }
         });
     }
@@ -333,10 +339,10 @@ public class Tale13 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(bubbleSoundPool != null) {
+            if (bubbleSoundPool != null) {
                 bubbleSoundPool.release();
             }
-            if(tickSoundPool != null) {
+            if (tickSoundPool != null) {
                 tickSoundPool.release();
             }
         }
@@ -347,8 +353,63 @@ public class Tale13 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        ivBuyl13 = null;
+        ivWall13 = null;
+        ivBottom13 = null;
+        ivFishes13 = null;
+        bubble = null;
+        wave = null;
+
+        if (wallAnimation != null) wallAnimation.cancel();
+        if (bottomAnimation != null) bottomAnimation.cancel();
+        if (characterAnimation != null) characterAnimation.cancel();
+        if (fishAnimation != null) fishAnimation.cancel();
+        if (bubbleAlpha != null) bubbleAlpha.cancel();
+        if (bubbleTranslate != null) bubbleTranslate.cancel();
+        if (blink != null) blink.cancel();
+        if (bubbleAppear != null) bubbleAppear.cancel();
+
+        wallAnimation = null;
+        bottomAnimation = null;
+        characterAnimation = null;
+        fishAnimation = null;
+        bubbleAlpha = null;
+        bubbleTranslate = null;
+        blink = null;
+
+        try {
+            for (int i = 0; i < wavingTransAni.length; i++) {
+                wavingTransAni[i].cancel();
+                wavingTransAni[i] = null;
+            }
+            wavingTransAni = null;
+
+            for (int i = 0; i < wavingFadeinAni.length; i++) {
+                wavingFadeinAni[i].cancel();
+                wavingFadeinAni[i] = null;
+            }
+            wavingFadeinAni = null;
+
+            AnimationSet[] wavingAniSet = new AnimationSet[4];
+
+            for (int i = 0; i < wavingAniSet.length; i++) {
+                if (wavingAniSet[i] != null) wavingAniSet[i].cancel();
+                wavingAniSet[i] = null;
+            }
+            wavingAniSet = null;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

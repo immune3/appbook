@@ -22,7 +22,7 @@ import static com.example.dokdofamily01.TaleActivity.screenFlag;
  * Created by heronation on 2017-11-17.
  */
 
-public class BaseFragment extends Fragment{
+public class BaseFragment extends Fragment {
     CustomScrollView sv;
     ScalableLayout sl;
     RelativeLayout rl;
@@ -34,12 +34,12 @@ public class BaseFragment extends Fragment{
     boolean isAttached = false;
     public CustomViewPager vp;
     public TaleActivity taleAct;
-    MyChangeListener change ;
+    MyChangeListener change;
 
     public Context context;
 
     CustomHorizontalScrollView hv;
-    int innerWidth,innerHeight;
+    int innerWidth, innerHeight;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class BaseFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layout = (RelativeLayout) inflater.inflate(xml,container, false);
+        layout = (RelativeLayout) inflater.inflate(xml, container, false);
 
         bindViews();
         setValues();
@@ -80,24 +80,24 @@ public class BaseFragment extends Fragment{
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void bindViews(){
-        rl = (RelativeLayout)layout.findViewById(R.id.rl) ;
-        sv = (CustomScrollView)layout.findViewById(R.id.sv);
-        sl = (ScalableLayout)layout.findViewById(R.id.sl);
+    public void bindViews() {
+        rl = (RelativeLayout) layout.findViewById(R.id.rl);
+        sv = (CustomScrollView) layout.findViewById(R.id.sv);
+        sl = (ScalableLayout) layout.findViewById(R.id.sl);
     }
 
-    public void setValues(){
-
-    }
-
-    public void setAnimation(){
+    public void setValues() {
 
     }
 
-    public void setupEvents(){
+    public void setAnimation() {
+
+    }
+
+    public void setupEvents() {
 
         vp = ((TaleActivity) getActivity()).vp;
-        taleAct = (TaleActivity)getActivity();
+        taleAct = (TaleActivity) getActivity();
         hv = new CustomHorizontalScrollView(getContext());
         HorizontalScrollView.LayoutParams lp = new HorizontalScrollView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         hv.setLayoutParams(lp);
@@ -112,9 +112,9 @@ public class BaseFragment extends Fragment{
                 innerHeight = sl.getHeight();
                 Log.d("slWidth", sl.getWidth() + "");
 
-                float ratio = (float)deviceWidth/(float)deviceHeight;
-                Log.e("ratio", ""+ratio);
-                if(ratio<=1.66){
+                float ratio = (float) deviceWidth / (float) deviceHeight;
+                Log.e("ratio", "" + ratio);
+                if (ratio <= 1.66) {
 
                     sv.removeView(sl);
                     rl.removeView(sv);
@@ -126,16 +126,16 @@ public class BaseFragment extends Fragment{
                         public void run() {
 
                             innerWidth = hv.getChildAt(0).getWidth();
-                            Log.e("innerWidth", ""+innerWidth);
-                            hv.scrollTo((innerWidth-deviceWidth)/2,0);
+                            Log.e("innerWidth", "" + innerWidth);
+                            hv.scrollTo((innerWidth - deviceWidth) / 2, 0);
                             hv.setScrolling(false);
                             hv.setHorizontalScrollBarEnabled(false);
 
                         }
                     });
 
-                }else{
-                    sv.scrollTo(0,(innerHeight-deviceHeight)/2);
+                } else {
+                    sv.scrollTo(0, (innerHeight - deviceHeight) / 2);
                     Log.e("innerHeight", innerHeight + "");
                     sv.setScrolling(false);
                     sv.setVerticalScrollBarEnabled(false);
@@ -150,7 +150,7 @@ public class BaseFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         isAttached = true;
 
-        Log.d("VP",vp+"");
+        Log.d("VP", vp + "");
     }
 
     @Override
@@ -178,7 +178,22 @@ public class BaseFragment extends Fragment{
 
     }
 
-    class BlockObjListener extends CustomTouchListener{
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
+    public void returnBackgroundMemory() {
+        sl = null;
+        sv = null;
+        rl = null;
+
+        System.gc();
+    }
+
+    class BlockObjListener extends CustomTouchListener {
 
         public BlockObjListener(AsyncResponse asyncResponse) {
             super.delegate = asyncResponse;
@@ -210,35 +225,35 @@ public class BaseFragment extends Fragment{
 
         @Override
         public void decreaseFunc() {
-            Log.d("Start","DESC");
-            if(musicController != null){
-                Log.d("Start","DESC");
+            Log.d("Start", "DESC");
+            if (musicController != null) {
+                Log.d("Start", "DESC");
 
-                if(musicController.previousPart()){
+                if (musicController.previousPart()) {
 
-                }else{
+                } else {
                     super.decreaseFunc();
                 }
-            } else if(subtitleController != null) {
+            } else if (subtitleController != null) {
                 subtitleController.front();
             }
         }
 
         @Override
         public void increaseFunc() {
-            Log.d("Start","ASC");
-            if(musicController!=null){
-                Log.d("Start","ASC2");
-                if(musicController.nextPart()){
-                    Log.d("nextPart","if");
-                }else{
-                    Log.d("nextPart","else");
+            Log.d("Start", "ASC");
+            if (musicController != null) {
+                Log.d("Start", "ASC2");
+                if (musicController.nextPart()) {
+                    Log.d("nextPart", "if");
+                } else {
+                    Log.d("nextPart", "else");
                     super.increaseFunc();
                 }
-            } else if(subtitleController != null) {
+            } else if (subtitleController != null) {
                 Log.d("ASC", "nextSub");
                 subtitleController.next();
-            }else{
+            } else {
                 super.increaseFunc();
             }
         }
@@ -256,7 +271,7 @@ public class BaseFragment extends Fragment{
         }
     }
 
-    public void blockAnimFunc(){
+    public void blockAnimFunc() {
 
     }
 
@@ -264,7 +279,7 @@ public class BaseFragment extends Fragment{
 
     }
 
-    class MyChangeListener extends CustomTouchListener{
+    class MyChangeListener extends CustomTouchListener {
 
         public MyChangeListener(AsyncResponse asyncResponse) {
             super.delegate = asyncResponse;
@@ -286,7 +301,7 @@ public class BaseFragment extends Fragment{
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Log.d("Touch","On");
+            Log.d("Touch", "On");
             this.mContext = context;
             customViewPager = vp;
             return super.onTouch(view, motionEvent);
@@ -294,17 +309,17 @@ public class BaseFragment extends Fragment{
 
         @Override
         public void decreaseFunc() {
-            Log.d("Start","DESC");
-            if(musicController != null){
-                Log.d("Start","DESC");
+            Log.d("Start", "DESC");
+            if (musicController != null) {
+                Log.d("Start", "DESC");
 
-                if(musicController.previousPart()){
+                if (musicController.previousPart()) {
                     Log.d("DESC", "previous");
-                }else{
+                } else {
                     Log.d("DESC", "else");
                     super.decreaseFunc();
                 }
-            } else if(subtitleController != null) {
+            } else if (subtitleController != null) {
                 subtitleController.front();
             }
         }
@@ -326,27 +341,25 @@ public class BaseFragment extends Fragment{
 
         @Override
         public void increaseFunc() {
-            Log.d("Start","ASC");
-            if(musicController!=null){
-                Log.d("Start","ASC2");
-                if(musicController.nextPart()){
+            Log.d("Start", "ASC");
+            if (musicController != null) {
+                Log.d("Start", "ASC2");
+                if (musicController.nextPart()) {
                     Log.d("ASC", "next");
-                }else{
+                } else {
                     Log.d("ASC", "nextPart");
                     super.increaseFunc();
                 }
 
-            } else if(subtitleController != null) {
+            } else if (subtitleController != null) {
                 Log.d("ASC", "nextSub");
                 subtitleController.next();
-            }else{
+            } else {
                 super.increaseFunc();
             }
         }
 
     }
-
-
 
 
     @Override
@@ -359,14 +372,33 @@ public class BaseFragment extends Fragment{
         super.onResume();
     }
 
+    private void destroyMemory() {
+        sv = null;
+        sl = null;
+        rl = null;
+        layout = null;
+//        musicController.destroyAsyncTask();
+        musicController = null;
+        subtitleController = null;
+        vp = null;
+        taleAct = null;
+        change = null;
+        context = null;
+
+        hv = null;
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        layout = null;
         if (musicController != null) {
             CheckMP checkMP = new CheckMP(musicController);
             checkMP.execute();
         }
+
+        destroyMemory();
     }
 
 }

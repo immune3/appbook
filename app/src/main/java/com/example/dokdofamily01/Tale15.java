@@ -229,8 +229,10 @@ public class Tale15 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_15, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_15, vp,
                     new int[]{R.drawable.sub_15_01, 2500},
                     new int[]{R.drawable.sub_15_02, 10500},
                     new int[]{R.drawable.sub_15_03, 16500},
@@ -240,7 +242,7 @@ public class Tale15 extends BaseFragment {
                     new int[]{R.drawable.sub_15_07, 41000},
                     new int[]{R.drawable.sub_15_08, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_15_01,
                     R.drawable.sub_15_02,
                     R.drawable.sub_15_03,
@@ -250,8 +252,6 @@ public class Tale15 extends BaseFragment {
                     R.drawable.sub_15_07,
                     R.drawable.sub_15_08);
         }
-
-        checkedAnimation = true;
 
         sl.post(new Runnable() {
             @Override
@@ -360,8 +360,39 @@ public class Tale15 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        ivCave15 = null;
+        manImage1 = null;
+        manImage2 = null;
+        manImage3 = null;
+        manImage4 = null;
+        ivByul15 = null;
+        seaweadImage = null;
+        fish = null;
+        sl = null;
+        ivLand15 = null;
+
+        if(fadeIn != null) fadeIn.cancel();
+        if(fadeOut != null) fadeOut.cancel();
+        if(blink != null) blink.cancel();
+        if(landAnimation != null) landAnimation.cancel();
+        if(byulAnimation != null) byulAnimation.cancel();
+        if(caveAnimation != null) caveAnimation.cancel();
+
+        fadeIn = null;
+        fadeOut = null;
+        blink = null;
+        landAnimation = null;
+        byulAnimation = null;
+        caveAnimation = null;
+
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

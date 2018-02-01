@@ -131,8 +131,10 @@ public class Tale17 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_17, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_17, vp,
                     new int[]{R.drawable.sub_17_01, 1500},
                     new int[]{R.drawable.sub_17_02, 5000},
                     new int[]{R.drawable.sub_17_03, 9500},
@@ -140,7 +142,7 @@ public class Tale17 extends BaseFragment {
                     new int[]{R.drawable.sub_17_05, 19000},
                     new int[]{R.drawable.sub_17_06, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_17_01,
                     R.drawable.sub_17_02,
                     R.drawable.sub_17_03,
@@ -148,7 +150,6 @@ public class Tale17 extends BaseFragment {
                     R.drawable.sub_17_05,
                     R.drawable.sub_17_06);
         }
-        checkedAnimation = true;
 
         sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -163,6 +164,8 @@ public class Tale17 extends BaseFragment {
             dokdo_under_sea.clearAnimation();
             star.startAnimation(blink);
         }
+
+        checkedAnimation = true;
     }
 
     @Override
@@ -185,8 +188,23 @@ public class Tale17 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        dokdo_under_sea = null;
+        wave_shadow1 = null;
+        wave_shadow2 = null;
+        star = null;
+
+        if(fadeIn != null) fadeIn.cancel();
+        if(blink != null) blink.cancel();
+
+        fadeIn = null;
+        blink = null;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

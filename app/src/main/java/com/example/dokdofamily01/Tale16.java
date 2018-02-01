@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -234,8 +233,10 @@ public class Tale16 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if (isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_16, vp,
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_16, vp,
                     new int[]{R.drawable.sub_16_01, 4000},
                     new int[]{R.drawable.sub_16_02, 10000},
                     new int[]{R.drawable.sub_16_03, 16500},
@@ -248,7 +249,7 @@ public class Tale16 extends BaseFragment {
                     new int[]{R.drawable.sub_16_10, 55000},
                     new int[]{R.drawable.sub_16_11, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_16_01,
                     R.drawable.sub_16_02,
                     R.drawable.sub_16_03,
@@ -283,10 +284,14 @@ public class Tale16 extends BaseFragment {
                 moonAppearAnimation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        animationFlag = 0;
-                        bubble.startAnimation(bubbleScaleAni);
-                        checkedAnimation = true;
-                        moon.startAnimation(blink);
+
+                        if (!checkedAnimation) {
+                            animationFlag = 0;
+                            bubble.startAnimation(bubbleScaleAni);
+                            checkedAnimation = true;
+                            moon.startAnimation(blink);
+                        }
+
 //            moon.startAnimation(blink);
                     }
 
@@ -354,7 +359,7 @@ public class Tale16 extends BaseFragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        bubble.startAnimation(bubbleScaleAni2);
+                        if (bubble != null && bubbleScaleAni2 != null) bubble.startAnimation(bubbleScaleAni2);
                     }
 
                 });
@@ -374,7 +379,7 @@ public class Tale16 extends BaseFragment {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        bubble.startAnimation(bubbleScaleAni);
+                        if(bubble != null && bubbleScaleAni != null) bubble.startAnimation(bubbleScaleAni);
                     }
                 });
 
@@ -412,9 +417,48 @@ public class Tale16 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        moon = null;
+        bubble = null;
+        bomb = null;
+        dokdo_father = null;
+        dokdo_mom = null;
+        wave = null;
+
+
+        if (moonAppearAnimation != null) moonAppearAnimation.cancel();
+        if (dokdoFatherAppearAnimation != null) dokdoFatherAppearAnimation.cancel();
+        if (dokdoMomAppearAnimation != null) dokdoMomAppearAnimation.cancel();
+        if (waveAppearAnimation != null) waveAppearAnimation.cancel();
+        if (wavingAnimation != null) wavingAnimation.cancel();
+        if (bubbleScaleAni != null) bubbleScaleAni.cancel();
+        if (bubbleScaleAni2 != null) bubbleScaleAni2.cancel();
+        if (blink != null) blink.cancel();
+        if (fadein != null) fadein.cancel();
+        if (fadeout != null) fadeout.cancel();
+        if (bubbleFadein != null) bubbleFadein.cancel();
+        if (bombFadeout != null) bombFadeout.cancel();
+
+        moonAppearAnimation = null;
+        dokdoFatherAppearAnimation = null;
+        dokdoMomAppearAnimation = null;
+        waveAppearAnimation = null;
+        wavingAnimation = null;
+        bubbleScaleAni = null;
+        bubbleScaleAni2 = null;
+        blink = null;
+        fadein = null;
+        fadeout = null;
+        bubbleFadein = null;
+        bombFadeout = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 
 }

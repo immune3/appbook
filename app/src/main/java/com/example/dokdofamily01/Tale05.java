@@ -20,9 +20,9 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
  */
 
 public class Tale05 extends BaseFragment {
-    ImageView[] letter = new ImageView[6];
+    ImageView[] letter;
     AlphaAnimation letterAppear;
-//    Animation letterDisappear;
+    //    Animation letterDisappear;
     int animationFlag = 0;
 
     SoundPool sp;
@@ -49,6 +49,9 @@ public class Tale05 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        letter = new ImageView[6];
+
         letter[0] = (ImageView) layout.findViewById(R.id.letter0);
         letter[1] = (ImageView) layout.findViewById(R.id.letter1);
         letter[2] = (ImageView) layout.findViewById(R.id.letter2);
@@ -175,8 +178,10 @@ public class Tale05 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_5, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_5, vp,
                     new int[]{R.drawable.sub_05_01, 2500},
                     new int[]{R.drawable.sub_05_02, 11000},
                     new int[]{R.drawable.sub_05_03, 17500},
@@ -185,7 +190,7 @@ public class Tale05 extends BaseFragment {
                     new int[]{R.drawable.sub_05_06, 99999});
 
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_05_01,
                     R.drawable.sub_05_02,
                     R.drawable.sub_05_03,
@@ -193,8 +198,6 @@ public class Tale05 extends BaseFragment {
                     R.drawable.sub_05_05,
                     R.drawable.sub_05_06);
         }
-
-        checkedAnimation = true;
 
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -216,13 +219,15 @@ public class Tale05 extends BaseFragment {
         letter[5].clearAnimation();
 
         letter[0].clearAnimation();
+
         letter[0].post(new Runnable() {
             @Override
             public void run() {
+
                 letter[0].startAnimation(blink);
+                checkedAnimation = true;
             }
         });
-
 
     }
 
@@ -235,7 +240,7 @@ public class Tale05 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(sp != null) {
+            if (sp != null) {
                 sp.release();
             }
         }
@@ -246,9 +251,27 @@ public class Tale05 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+        letter[0].clearAnimation();
+        letter[1].clearAnimation();
+        letter[2].clearAnimation();
+        letter[3].clearAnimation();
+        letter[4].clearAnimation();
+        letter[5].clearAnimation();
+
+        letter = null;
+
+        if (blink != null) blink.cancel();
+        if (letterAppear != null) letterAppear.cancel();
+
+        blink = null;
+        letterAppear = null;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }
 

@@ -49,11 +49,11 @@ public class Tale19 extends BaseFragment {
     AlphaAnimation fadeout;
     AlphaAnimation starLightFadeout;
     AlphaAnimation starFadeout;
-    AlphaAnimation[] miniStarFadein = new AlphaAnimation[10];
-    AlphaAnimation[] miniStarFadeout = new AlphaAnimation[10];
-    TranslateAnimation[] miniStarAppear = new TranslateAnimation[10];
-    TranslateAnimation[] miniStarDisappear = new TranslateAnimation[10];
-    AnimationSet[] miniStarAppearAniSet = new AnimationSet[10];
+    AlphaAnimation[] miniStarFadein;
+    AlphaAnimation[] miniStarFadeout;
+    TranslateAnimation[] miniStarAppear;
+    TranslateAnimation[] miniStarDisappear;
+    AnimationSet[] miniStarAppearAniSet;
 
     AlphaAnimation blink;
     AnimationSet starAppearAniSet;
@@ -79,10 +79,16 @@ public class Tale19 extends BaseFragment {
     }
 
 
-
     @Override
     public void bindViews() {
         super.bindViews();
+
+        miniStarFadein = new AlphaAnimation[10];
+        miniStarFadeout = new AlphaAnimation[10];
+        miniStarAppear = new TranslateAnimation[10];
+        miniStarDisappear = new TranslateAnimation[10];
+        miniStarAppearAniSet = new AnimationSet[10];
+
         byul = (ImageView) layout.findViewById(R.id.byul);
         starLight = (ImageView) layout.findViewById(R.id.starLight);
         star1 = (ImageView) layout.findViewById(R.id.star1);
@@ -159,7 +165,7 @@ public class Tale19 extends BaseFragment {
     @Override
     public void blockAnimFunc() {
 
-        if(animationFlag == 0) {
+        if (animationFlag == 0) {
             starAppearEffect = starAppearSp.load(getContext(), R.raw.effect_18_appear, 1);
             checkedAnimation = false;
             starFallCount = 0;
@@ -210,8 +216,10 @@ public class Tale19 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_19, vp,
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_19, vp,
                     new int[]{R.drawable.sub_19_01, 9000},
                     new int[]{R.drawable.sub_19_02, 15000},
                     new int[]{R.drawable.sub_19_03, 20500},
@@ -221,7 +229,7 @@ public class Tale19 extends BaseFragment {
                     new int[]{R.drawable.sub_19_07, 38000},
                     new int[]{R.drawable.sub_19_08, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_19_01,
                     R.drawable.sub_19_02,
                     R.drawable.sub_19_03,
@@ -280,20 +288,20 @@ public class Tale19 extends BaseFragment {
 
                 for (int iter = 0; iter < 10; iter++) {
                     miniStarFadein[iter] = new AlphaAnimation(0, 1);
-                    miniStarFadein[iter].setStartOffset(iter*offsetDelay);
+                    miniStarFadein[iter].setStartOffset(iter * offsetDelay);
                     miniStarFadein[iter].setDuration(1000);
 
-                    miniStarAppear[iter] = new TranslateAnimation(0, 0, -star1.getHeight()*1.5f, 0);
-                    miniStarAppear[iter].setStartOffset(iter*offsetDelay);
+                    miniStarAppear[iter] = new TranslateAnimation(0, 0, -star1.getHeight() * 1.5f, 0);
+                    miniStarAppear[iter].setStartOffset(iter * offsetDelay);
                     miniStarAppear[iter].setDuration(1500);
                     miniStarAppear[iter].setInterpolator(new BounceInterpolator());
 
                     miniStarFadeout[iter] = new AlphaAnimation(1, 0);
-                    miniStarFadeout[iter].setStartOffset(iter*offsetDelay + 5500);
+                    miniStarFadeout[iter].setStartOffset(iter * offsetDelay + 5500);
                     miniStarFadeout[iter].setDuration(1000);
 
                     miniStarDisappear[iter] = new TranslateAnimation(0, 0, 0, star2.getHeight());
-                    miniStarDisappear[iter].setStartOffset(iter*offsetDelay + 5000);
+                    miniStarDisappear[iter].setStartOffset(iter * offsetDelay + 5000);
                     miniStarDisappear[iter].setDuration(1000);
                     miniStarDisappear[iter].setInterpolator(new AnticipateInterpolator());
 
@@ -375,7 +383,6 @@ public class Tale19 extends BaseFragment {
                     }
                 });
 
-                checkedAnimation = false;
                 star1.setVisibility(View.INVISIBLE);
                 starLight.clearAnimation();
                 light.clearAnimation();
@@ -418,8 +425,83 @@ public class Tale19 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+
+        byul = null;
+        starLight = null;
+        star1 = null;
+        star2 = null;
+        star3 = null;
+        star4 = null;
+        star5 = null;
+        star6 = null;
+        star7 = null;
+        star8 = null;
+        star9 = null;
+        star10 = null;
+        star11 = null;
+        light = null;
+
+        if (starAppear != null) starAppear.cancel();
+        if (starFall != null) starFall.cancel();
+        if (fadein != null) fadein.cancel();
+        if (fadeout != null) fadeout.cancel();
+        if (starLightFadeout != null) starLightFadeout.cancel();
+        if (starFadeout != null) starFadeout.cancel();
+        if (blink != null) blink.cancel();
+        if (starAppearAniSet != null) starAppearAniSet.cancel();
+        if (starDisappearAniSet != null) starDisappearAniSet.cancel();
+
+        starAppear = null;
+        starFall = null;
+        fadein = null;
+        fadeout = null;
+        starLightFadeout = null;
+        starFadeout = null;
+        blink = null;
+        starAppearAniSet = null;
+        starDisappearAniSet = null;
+
+        for (int i = 0; i < miniStarFadein.length; i++) {
+            if (miniStarFadein[i] != null) miniStarFadein[i].cancel();
+            miniStarFadein[i] = null;
+        }
+        miniStarFadein = null;
+
+        for (int i = 0; i < miniStarFadeout.length; i++) {
+            if (miniStarFadeout[i] != null) miniStarFadeout[i].cancel();
+            miniStarFadeout[i] = null;
+        }
+        miniStarFadeout = null;
+
+
+        for (int i = 0; i < miniStarAppear.length; i++) {
+            if (miniStarAppear[i] != null) miniStarAppear[i].cancel();
+            miniStarAppear[i] = null;
+        }
+        miniStarAppear = null;
+
+        for (int i = 0; i < miniStarDisappear.length; i++) {
+            if (miniStarDisappear[i] != null) miniStarDisappear[i].cancel();
+            miniStarDisappear[i] = null;
+        }
+        miniStarDisappear = null;
+
+        for (int i = 0; i < miniStarAppearAniSet.length; i++) {
+            if (miniStarAppearAniSet[i] != null) {
+                miniStarAppearAniSet[i].cancel();
+            }
+
+            miniStarAppearAniSet[i] = null;
+        }
+
+        miniStarAppearAniSet = null;
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

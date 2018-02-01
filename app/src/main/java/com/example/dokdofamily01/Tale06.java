@@ -28,20 +28,20 @@ public class Tale06 extends BaseFragment {
     ImageView sea;
     ImageView waveshadow;
     ImageView momDokdo;
-    ImageView[] smallwave = new ImageView[4];
-    ImageView[] bigwave = new ImageView[3];
-    ImageView[] seagull = new ImageView[2];
+    ImageView[] smallwave;
+    ImageView[] bigwave;
+    ImageView[] seagull;
     Boolean isAuto;
 
     TranslateAnimation waveAppear;
     TranslateAnimation backgroundWaving;
     TranslateAnimation momAppear;
-    TranslateAnimation[] wavingTranslateAni = new TranslateAnimation[7];
-    TranslateAnimation[] wavingUpperAndLower = new TranslateAnimation[3];
+    TranslateAnimation[] wavingTranslateAni;
+    TranslateAnimation[] wavingUpperAndLower;
     AlphaAnimation seagullFadein;
     AlphaAnimation blink;
     AlphaAnimation fadeIn;
-    AnimationSet[] wavingAniSet = new AnimationSet[3];
+    AnimationSet[] wavingAniSet;
     int animationFlag = 0;
 
     SoundPool gullSoundPool, waveSoundPool;
@@ -67,6 +67,14 @@ public class Tale06 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        smallwave = new ImageView[4];
+        bigwave = new ImageView[3];
+        seagull = new ImageView[2];
+
+        wavingTranslateAni = new TranslateAnimation[7];
+        wavingUpperAndLower = new TranslateAnimation[3];
+        wavingAniSet = new AnimationSet[3];
 
         sea = (ImageView) layout.findViewById(R.id.sea);
         waveshadow = (ImageView) layout.findViewById(R.id.waveshadow);
@@ -130,7 +138,7 @@ public class Tale06 extends BaseFragment {
 
     @Override
     public void blockAnimFunc() {
-        if(animationFlag == 0) {
+        if (animationFlag == 0) {
             checkedAnimation = false;
             animationFlag = 1;
             bigwave[0].startAnimation(wavingAniSet[0]);
@@ -140,8 +148,8 @@ public class Tale06 extends BaseFragment {
             smallwave[1].startAnimation(wavingTranslateAni[4]);
             smallwave[2].startAnimation(wavingTranslateAni[5]);
             smallwave[3].startAnimation(wavingTranslateAni[6]);
-            gullSound = gullSoundPool.load(getContext(),R.raw.effect_06_gull,1);
-            waveSound = waveSoundPool.load(getContext(),R.raw.effect_06_wave,1);
+            gullSound = gullSoundPool.load(getContext(), R.raw.effect_06_gull, 1);
+            waveSound = waveSoundPool.load(getContext(), R.raw.effect_06_wave, 1);
         }
 
         super.blockAnimFunc();
@@ -176,20 +184,22 @@ public class Tale06 extends BaseFragment {
     public void soundPlayFunc() {
         this.isAuto = getArguments().getBoolean("isAuto");
 
-        if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_6, vp,
-                new int[]{R.drawable.sub_06_01, 8000},
-                new int[]{R.drawable.sub_06_02, 16500},
-                new int[]{R.drawable.sub_06_03, 20500},
-                new int[]{R.drawable.sub_06_04, 25500},
-                new int[]{R.drawable.sub_06_05, 29000},
-                new int[]{R.drawable.sub_06_06, 31500},
-                new int[]{R.drawable.sub_06_07, 33000},
-                new int[]{R.drawable.sub_06_08, 36500},
-                new int[]{R.drawable.sub_06_09, 40000},
-                new int[]{R.drawable.sub_06_10, 99999});
+        checkedAnimation = false;
+
+        if (isAuto) {
+            musicController = new MusicController(((TaleActivity) getActivity()), R.raw.scene_6, vp,
+                    new int[]{R.drawable.sub_06_01, 8000},
+                    new int[]{R.drawable.sub_06_02, 16500},
+                    new int[]{R.drawable.sub_06_03, 20500},
+                    new int[]{R.drawable.sub_06_04, 25500},
+                    new int[]{R.drawable.sub_06_05, 29000},
+                    new int[]{R.drawable.sub_06_06, 31500},
+                    new int[]{R.drawable.sub_06_07, 33000},
+                    new int[]{R.drawable.sub_06_08, 36500},
+                    new int[]{R.drawable.sub_06_09, 40000},
+                    new int[]{R.drawable.sub_06_10, 99999});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity) getActivity()), vp,
                     R.drawable.sub_06_01,
                     R.drawable.sub_06_02,
                     R.drawable.sub_06_03,
@@ -202,11 +212,12 @@ public class Tale06 extends BaseFragment {
                     R.drawable.sub_06_10);
         }
 
+
         sea.post(new Runnable() {
             @Override
             public void run() {
-                gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-                waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+                gullSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+                waveSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
                 gullSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
@@ -214,7 +225,7 @@ public class Tale06 extends BaseFragment {
                     }
                 });
 
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1){
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
                     //사용가능한 버전이 아님
                     waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                         @Override
@@ -223,8 +234,7 @@ public class Tale06 extends BaseFragment {
                         }
                     });
 
-                }
-                else{
+                } else {
                     //사용가능한 버전
                     waveSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                         @Override
@@ -244,6 +254,7 @@ public class Tale06 extends BaseFragment {
                     public void onAnimationStart(Animation animation) {
 
                     }
+
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         smallwave[0].startAnimation(fadeIn);
@@ -293,14 +304,14 @@ public class Tale06 extends BaseFragment {
                 backgroundWaving.setRepeatMode(Animation.REVERSE);
 
                 int baseDuration = 2000;
-                for(int iter = 0; iter < 3; iter++){
+                for (int iter = 0; iter < 3; iter++) {
                     wavingTranslateAni[iter] = new TranslateAnimation(0, bigwave[iter].getWidth() * 0.1f, 0, 0);
                     wavingTranslateAni[iter].setDuration(baseDuration);
                     wavingTranslateAni[iter].setInterpolator(new AccelerateDecelerateInterpolator());
                     wavingTranslateAni[iter].setRepeatCount(3);
                     wavingTranslateAni[iter].setRepeatMode(Animation.REVERSE);
 
-                    wavingUpperAndLower[iter] = new TranslateAnimation(0,0,0 , bigwave[iter].getHeight() * 0.2f);
+                    wavingUpperAndLower[iter] = new TranslateAnimation(0, 0, 0, bigwave[iter].getHeight() * 0.2f);
                     wavingUpperAndLower[iter].setDuration(baseDuration);
                     wavingUpperAndLower[iter].setInterpolator(new AccelerateDecelerateInterpolator());
                     wavingUpperAndLower[iter].setRepeatCount(3);
@@ -328,7 +339,7 @@ public class Tale06 extends BaseFragment {
                 wavingTranslateAni[5].setInterpolator(new CycleInterpolator(0.5f));
                 wavingTranslateAni[5].setRepeatCount(3);
                 wavingTranslateAni[5].setRepeatMode(Animation.REVERSE);
-                wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener(){
+                wavingTranslateAni[5].setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         animationFlag = 0;
@@ -367,6 +378,7 @@ public class Tale06 extends BaseFragment {
                     bigwave[2].startAnimation(waveAppear);
                     momDokdo.startAnimation(momAppear);
                 }
+
             }
         });
 
@@ -381,13 +393,58 @@ public class Tale06 extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser) {
-            if(gullSoundPool != null) {
+            if (gullSoundPool != null) {
                 gullSoundPool.release();
             }
-            if(waveSoundPool != null) {
+            if (waveSoundPool != null) {
                 waveSoundPool.release();
             }
         }
+    }
+
+    private void returnMemory() {
+        animationClear();
+
+        sea = null;
+        waveshadow = null;
+        momDokdo = null;
+        smallwave = null;
+        bigwave = null;
+        seagull = null;
+
+        if (waveAppear != null) waveAppear.cancel();
+        if (backgroundWaving != null) backgroundWaving.cancel();
+        if (momAppear != null) momAppear.cancel();
+        if (blink != null) blink.cancel();
+        if (fadeIn != null) fadeIn.cancel();
+        if (seagullFadein != null) seagullFadein.cancel();
+
+        waveAppear = null;
+        backgroundWaving = null;
+        momAppear = null;
+        blink = null;
+        fadeIn = null;
+        seagullFadein = null;
+
+        for (int i = 0; i < wavingTranslateAni.length; i++) {
+            if (wavingTranslateAni[i] != null) wavingTranslateAni[i].cancel();
+            wavingTranslateAni[i] = null;
+        }
+        wavingTranslateAni = null;
+
+        for (int i = 0; i < wavingUpperAndLower.length; i++) {
+            if (wavingUpperAndLower[i] != null) wavingUpperAndLower[i].cancel();
+            wavingUpperAndLower[i] = null;
+        }
+
+        wavingUpperAndLower = null;
+
+        for (int i = 0; i < wavingAniSet.length; i++) {
+            if (wavingAniSet[i] != null) wavingAniSet[i].cancel();
+            wavingAniSet[i] = null;
+        }
+        wavingAniSet = null;
+
     }
 
     @Override
@@ -398,5 +455,6 @@ public class Tale06 extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        returnMemory();
     }
 }

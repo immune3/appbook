@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,9 @@ import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 public class Tale03 extends BaseFragment {
 
-    ImageView[] cloud = new ImageView[6];
+    ImageView[] cloud;
+    ImageView[] wing;
     ImageView byulHand;
-    ImageView[] wing = new ImageView[4];
     ImageView blinkStar;
     ImageView head;
     ImageView body;
@@ -38,7 +39,7 @@ public class Tale03 extends BaseFragment {
     AlphaAnimation blink;
     AlphaAnimation wingAppear1;
     AlphaAnimation wingAppear2;
-    TranslateAnimation[] cloudAnimation = new TranslateAnimation[5];
+    TranslateAnimation[] cloudAnimation;
     int animationFlag = 0;
     int repeatFlag=0;
     int headHeight=0;
@@ -70,6 +71,12 @@ public class Tale03 extends BaseFragment {
     @Override
     public void bindViews() {
         super.bindViews();
+
+        cloud = new ImageView[6];
+        wing = new ImageView[4];
+
+        cloudAnimation = new TranslateAnimation[5];
+
         cloud[0] = (ImageView) layout.findViewById(R.id.cloud0);
         cloud[1] = (ImageView) layout.findViewById(R.id.cloud1);
         cloud[2] = (ImageView) layout.findViewById(R.id.cloud2);
@@ -133,7 +140,7 @@ public class Tale03 extends BaseFragment {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            if (animationFlag == 1) {
+            if (animationFlag == 1 && !checkedAnimation) {
                 animationFlag = 0;
                 byulHand.setVisibility(View.VISIBLE);
                 byulHand.startAnimation(fadein);
@@ -167,15 +174,17 @@ public class Tale03 extends BaseFragment {
 
         this.isAuto = getArguments().getBoolean("isAuto");
 
+        checkedAnimation = false;
+
         if(isAuto) {
-            musicController = new MusicController(getActivity(), R.raw.scene_3, vp,
+            musicController = new MusicController(((TaleActivity)getActivity()), R.raw.scene_3, vp,
                     new int[]{R.drawable.sub_03_01, 4000},
                     new int[]{R.drawable.sub_03_02, 12500},
                     new int[]{R.drawable.sub_03_03, 20000},
                     new int[]{R.drawable.sub_03_04, 23500},
                     new int[]{R.drawable.sub_03_05, 31000});
         } else {
-            subtitleController = new SubtitleController(vp,
+            subtitleController = new SubtitleController(((TaleActivity)getActivity()), vp,
                     R.drawable.sub_03_01,
                     R.drawable.sub_03_02,
                     R.drawable.sub_03_03,
@@ -347,6 +356,7 @@ public class Tale03 extends BaseFragment {
                 cloud[3].startAnimation(cloudAnimation[2]);
                 cloud[4].startAnimation(cloudAnimation[3]);
                 cloud[5].startAnimation(cloudAnimation[4]);
+
             }
         });
     }
@@ -392,6 +402,36 @@ public class Tale03 extends BaseFragment {
         super.onResume();
     }
 
+    private void returnMemory() {
+        animationClear();
+        byulHand = null;
+        blinkStar = null;
+        head = null;
+        body = null;
+
+        cloud = null;
+        wing = null;
+
+        if(fadein != null) fadein.cancel();
+        if(blink != null) blink.cancel();
+        if(wingAppear1 != null) wingAppear1.cancel();
+        if(wingAppear2 != null) wingAppear2.cancel();
+
+        fadein = null;
+        blink = null;
+        wingAppear1 = null;
+        wingAppear2 = null;
+
+
+        for(int i=0; i< cloudAnimation.length; i++) {
+            cloudAnimation[i].cancel();
+            cloudAnimation[i] = null;
+        }
+        cloudAnimation = null;
+
+        Log.d("Tale03", "return Memory");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -399,5 +439,7 @@ public class Tale03 extends BaseFragment {
             postSoundHandler.removeCallbacks(postSoundRun);
             postSoundHandler = null;
         }
+
+        returnMemory();
     }
 }

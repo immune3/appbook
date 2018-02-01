@@ -20,7 +20,6 @@ import com.example.dokdofamily01.Data.SubTitleData;
 import java.util.ArrayList;
 
 import static com.example.dokdofamily01.TaleActivity.checkedAnimation;
-import static com.example.dokdofamily01.TaleActivity.subtitleImageVIew;
 import static com.example.dokdofamily01.TaleActivity.subtitleTextView;
 
 /**
@@ -296,7 +295,7 @@ public class Prologue extends BaseFragment {
             } else {
 //                CheckMP checkMP = new CheckMP(musicController);
 //                checkMP.execute();
-                subtitleImageVIew.setVisibility(View.VISIBLE);
+//                subtitleImageVIew.setVisibility(View.VISIBLE);
                 if (musicPlayer != null) {
                     musicPlayer.release();
                     musicPlayer = null;
@@ -320,7 +319,7 @@ public class Prologue extends BaseFragment {
             musicPlayer.release();
             musicPlayer = null;
         }
-        subtitleImageVIew.setVisibility(View.GONE);
+//        subtitleImageVIew.setVisibility(View.GONE);
         musicPlayer = new MediaPlayer();
         musicPlayer = MediaPlayer.create(getContext(), R.raw.prologue);
         musicPlayer.setLooping(false);
