@@ -251,7 +251,7 @@ public class Tale11 extends BaseFragment {
                 beeSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                        beeSoundPool.play(beeSound, 0.5f, 0.5f, 0, 0, 1);
+                        beeSoundPool.play(beeSound, 0.2f, 0.2f, 0, 3, 1);
                     }
                 });
                 originalFlowerAnimation = new TranslateAnimation(originalFlower.getWidth(), 0, originalFlower.getHeight(), 0);
